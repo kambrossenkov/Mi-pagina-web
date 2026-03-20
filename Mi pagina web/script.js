@@ -1,64 +1,50 @@
 // Translations dictionary
 const translations = {
   en: {
+    "nav-curiosities": "Curiosities",
+    "nav-inventions": "Inventions",
+    "nav-contact": "Contact Me",
     "nav-home": "Home",
     "nav-articles": "Articles",
     "nav-wellness": "Wellness",
     "nav-travel": "Travel",
     "nav-about": "About",
     "nav-join": "Join Now",
-    "hero-title": "Journey<br/>Through<br/>Life's<br/>Spectrum",
-    "hero-desc": "Welcome to Perspective's Blog: A Realm of Reflection, Inspiration, and Discovery. Where Words Illuminate Paths of Meaning and Thoughts Unravel the Mysteries of Life's Spectrum.",
-    "hero-btn": "Join Now",
+    "hero-title": "Journey through the spectrum of my life and my curiosities",
+    "hero-desc": "Welcome to my page of inventions and personal developments, I am Konstantino Ambrossenkov and if you want to know me this is the place",
+    "hero-btn": "Contact Me",
     "articles-title": "Featured Articles",
     "articles-view": "View all →",
-    "news-title": "Stay inspired.",
-    "news-desc": "Subscribe to receive our latest articles and insights directly in your inbox.",
-    "news-btn": "Subscribe",
-    "ft-explore": "Explore",
-    "ft-creativity": "Creativity",
-    "ft-growth": "Growth",
-    "ft-about": "About",
-    "ft-story": "Our Story",
-    "ft-authors": "Authors",
-    "ft-contact": "Contact",
-    "ft-resources": "Resources",
-    "ft-style": "Style Guide",
-    "ft-news": "Newsletter",
-    "ft-legal": "Legal",
-    "ft-privacy": "Privacy Policy",
-    "ft-terms": "Terms of Service",
-    "ft-copy": "© 2026 Perspective. All rights reserved."
+    "chat-title": "Want to Chat?",
+    "chat-desc": "Send me your email or message me on WhatsApp",
+    "chat-placeholder": "Your email address",
+    "chat-btn-send": "Send",
+    "chat-btn-wpp": "Message",
+    "ft-contact-title": "Contact me",
+    "ft-help": "I'm here to help"
   },
   es: {
+    "nav-curiosities": "Curiosidades",
+    "nav-inventions": "Inventos",
+    "nav-contact": "Contactarme",
     "nav-home": "Inicio",
     "nav-articles": "Artículos",
     "nav-wellness": "Bienestar",
     "nav-travel": "Viajes",
     "nav-about": "Nosotros",
     "nav-join": "Unirse",
-    "hero-title": "Viaje a<br/>Través del<br/>Espectro<br/>de la Vida",
-    "hero-desc": "Bienvenido al Blog de Perspective: Un reino de reflexión, inspiración y descubrimiento. Donde las palabras iluminan caminos y los pensamientos revelan los misterios de la vida.",
-    "hero-btn": "Unirse",
+    "hero-title": "Viaje atraves del espectro de mi vida y mis curiosidades",
+    "hero-desc": "Bienvenido a mi pagina de inventos y desarrollos personales, soy kosntantino ambrossenkov y si queres conocerme este es el lugar",
+    "hero-btn": "Contactarme",
     "articles-title": "Artículos Destacados",
     "articles-view": "Ver todos →",
-    "news-title": "Mantente inspirado.",
-    "news-desc": "Suscríbete para recibir nuestros últimos artículos directamente en tu correo.",
-    "news-btn": "Suscribirse",
-    "ft-explore": "Explorar",
-    "ft-creativity": "Creatividad",
-    "ft-growth": "Crecimiento",
-    "ft-about": "Nosotros",
-    "ft-story": "Nuestra Historia",
-    "ft-authors": "Autores",
-    "ft-contact": "Contacto",
-    "ft-resources": "Recursos",
-    "ft-style": "Guía de Estilo",
-    "ft-news": "Boletín",
-    "ft-legal": "Legal",
-    "ft-privacy": "Privacidad",
-    "ft-terms": "Términos de Servicio",
-    "ft-copy": "© 2026 Perspective. Todos los derechos reservados."
+    "chat-title": "¿Queres Charlar?",
+    "chat-desc": "mandame tu email o escribime por wpp",
+    "chat-placeholder": "Tu correo electrónico",
+    "chat-btn-send": "enviar",
+    "chat-btn-wpp": "escribir",
+    "ft-contact-title": "Contactame",
+    "ft-help": "Estoy para ayudar"
   }
 };
 
@@ -168,6 +154,15 @@ function updateLanguage() {
     }
   });
 
+  // Translate placeholders specifically
+  const placeholders = document.querySelectorAll('[data-i18n-placeholder]');
+  placeholders.forEach(el => {
+    const key = el.getAttribute('data-i18n-placeholder');
+    if (translations[currentLang][key]) {
+      el.placeholder = translations[currentLang][key];
+    }
+  });
+
   // Re-render articles
   renderArticles();
   
@@ -182,10 +177,10 @@ function renderArticles() {
 
   container.innerHTML = ''; // clear before adding
 
-  const featuredArticles = articlesList[currentLang].slice(0, 6);
+  const featuredArticles = articlesList[currentLang].slice(0, 3);
 
   featuredArticles.forEach((article, index) => {
-    const staggerNumber = Math.min(index + 1, 6);
+    const staggerNumber = Math.min(index + 1, 3);
     const delay = staggerNumber * 100 + 100; // Base delay + stagger
     
     // HTML structure replacing the React <ArticleCard /> component
