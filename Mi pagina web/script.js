@@ -3,6 +3,7 @@ const translations = {
   en: {
     "nav-curiosities": "Curiosities",
     "nav-inventions": "Inventions",
+    "nav-home": "Home",
     "nav-contact": "Contact Me",
     "nav-home": "Home",
     "nav-articles": "Articles",
@@ -26,6 +27,7 @@ const translations = {
   es: {
     "nav-curiosities": "Curiosidades",
     "nav-inventions": "Inventos",
+    "nav-home": "Inicio",
     "nav-contact": "Contactarme",
     "nav-home": "Inicio",
     "nav-articles": "Artículos",
@@ -243,4 +245,14 @@ document.addEventListener('DOMContentLoaded', () => {
   updateTheme();
   // apply initial language
   updateLanguage();
+
+  // Mobile menu toggle
+  const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+  if (mobileMenuBtn && mobileMenu) {
+    mobileMenuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+      mobileMenu.classList.toggle('flex');
+    });
+  }
 });
