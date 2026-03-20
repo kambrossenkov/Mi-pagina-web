@@ -1,58 +1,176 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Perspective</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="styles.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['Georgia', 'serif'],
+          },
+          colors: {
+            background: '#2c2c2c',
+            card: '#3b3b3b',
+            muted: {
+              DEFAULT: '#4b4b4b',
+              foreground: '#a3a3a3'
+            },
+            accent: '#ffffff',
+            primary: {
+              DEFAULT: '#ffffff',
+              foreground: '#2c2c2c'
+            },
+            border: '#4b4b4b',
+            input: '#4b4b4b',
+            ring: '#94a3b8'
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="min-h-screen bg-background text-white animate-fade-in">
+  
+  <!-- Header Component -->
+  <header class="py-6 border-b border-border/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-background font-bold text-xl">P</div>
+        <h1 class="text-2xl font-bold tracking-tight text-white font-serif">Perspective</h1>
+      </div>
+      <nav class="hidden md:flex gap-8 items-center text-sm font-medium text-white/90">
+        <a href="#" class="hover:text-white transition-colors">Home</a>
+        <a href="#articles" class="hover:text-white transition-colors">Articles</a>
+        <a href="#" class="hover:text-white transition-colors">Wellness</a>
+        <a href="#" class="hover:text-white transition-colors">Travel</a>
+        <a href="#" class="hover:text-white transition-colors">About</a>
+      </nav>
+      <div class="hidden md:flex items-center gap-6">
+        <button class="text-white hover:text-white/80 transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+        </button>
+        <button class="px-6 py-2 rounded-full bg-white text-background font-medium hover:bg-white/90 transition-all">
+          Join Now
+        </button>
+      </div>
+    </div>
+  </header>
 
-    <div className="min-h-screen bg-background animate-fade-in">
-      <Header />
-      
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Hero Section */}
-        <HeroSection />
-
-        {/* Intro Section */}
-        <IntroSection />
-
-        {/* Featured Articles Grid */}
-        <section id="articles" className="py-12">
-          <div className="flex items-center justify-between mb-12 animate-slide-up">
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Featured Articles</h2>
-            <a href="#all" className="text-sm font-medium text-muted-foreground hover:text-accent transition-colors px-4 py-2 rounded-full hover:bg-muted/60">
-              View all →
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    
+    <!-- Hero Section Component -->
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-20 animate-slide-up">
+      <div class="relative h-[600px] rounded-[32px] overflow-hidden order-last md:order-first">
+        <img src="https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?auto=format&fit=crop&q=80&w=800" alt="Desk setup with coffee" class="w-full h-full object-cover" />
+      </div>
+      <div class="px-4 md:px-8">
+        <h1 class="text-6xl md:text-8xl font-bold tracking-tight mb-8 font-serif leading-[1.05] text-white">
+          Journey<br/>Through<br/>Life's<br/>Spectrum
+        </h1>
+        <p class="text-lg text-white/70 mb-10 leading-relaxed max-w-lg">
+          Welcome to Perspective's Blog: A Realm of Reflection, Inspiration, and Discovery. Where Words Illuminate Paths of Meaning and Thoughts Unravel the Mysteries of Life's Spectrum.
+        </p>
+        <div class="flex items-center gap-8">
+          <button class="px-8 py-3 rounded-full bg-white text-background font-medium hover:bg-white/90 transition-all">
+            Join Now
+          </button>
+          <div class="flex items-center gap-5 text-white/80">
+            <a href="#" class="hover:text-white transition-colors">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+            </a>
+            <a href="#" class="hover:text-white transition-colors">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+            </a>
+            <a href="#" class="hover:text-white transition-colors">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
             </a>
           </div>
+        </div>
+      </div>
+    </section>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {featuredArticles.map((article, index) => (
-              <div key={article.id} className={`animate-slide-up stagger-${Math.min(index + 1, 6)}`}>
-                <ArticleCard {...article} size="small" />
-              </div>
-            ))}
-          </div>
-        </section>
+    <!-- Featured Articles Grid Component -->
+    <section id="articles" class="py-12">
+      <div class="flex items-center justify-between mb-12 animate-slide-up" style="animation-delay: 200ms;">
+        <h2 class="text-3xl md:text-4xl font-bold tracking-tight">Featured Articles</h2>
+        <a href="#all" class="text-sm font-medium text-muted-foreground hover:text-accent transition-colors px-4 py-2 rounded-full hover:bg-muted/60">
+          View all →
+        </a>
+      </div>
 
-        {/* Newsletter Section */}
-        <section className="my-20 rounded-[2.5rem] bg-card p-12 md:p-16 text-center animate-scale-in">
-          <div className="max-w-2xl mx-auto space-y-8">
-            <h2 className="text-4xl md:text-5xl font-bold tracking-tight">Stay inspired.</h2>
-            <p className="text-xl text-muted-foreground leading-relaxed">
-              Subscribe to receive our latest articles and insights directly in your inbox.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-              <input
-                type="email"
-                placeholder="Your email"
-                className="flex-1 px-6 py-4 rounded-full border border-input bg-background focus:outline-none focus:ring-2 focus:ring-ring transition-all"
-              />
-              <button className="px-10 py-4 rounded-full bg-primary text-primary-foreground font-medium hover:bg-primary/90 hover:scale-105 transition-all">
-                Subscribe
-              </button>
-            </div>
-          </div>
-        </section>
-      </main>
+      <!-- Articles are injected here by JS -->
+      <div id="articles-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      </div>
+    </section>
 
-      {/* Footer */}
-      <footer className="border-t border-border mt-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8">
-            <div>
-              <h3 className="font-semibold mb-4">Explore</h3>
-              <ul className="space-y-2 text-sm text-muted-foreground">
-export default Index;
+    <!-- Newsletter Section Component -->
+    <section class="my-20 rounded-[2.5rem] bg-card p-12 md:p-16 text-center animate-scale-in border border-border">
+      <div class="max-w-2xl mx-auto space-y-8">
+        <h2 class="text-4xl md:text-5xl font-bold tracking-tight">Stay inspired.</h2>
+        <p class="text-xl text-muted-foreground leading-relaxed">
+          Subscribe to receive our latest articles and insights directly in your inbox.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+          <input
+            type="email"
+            placeholder="Your email"
+            class="flex-1 px-6 py-4 rounded-full border border-input bg-background focus:outline-none focus:ring-2 focus:ring-ring transition-all"
+          />
+          <button class="px-10 py-4 rounded-full bg-primary text-primary-foreground text-white font-medium hover:bg-primary/90 hover:scale-105 transition-all">
+            Subscribe
+          </button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer Component -->
+  <footer class="border-t border-border mt-16 bg-card/30">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8">
+        <div>
+          <h3 class="font-semibold mb-4">Explore</h3>
+          <ul class="space-y-2 text-sm text-muted-foreground">
+            <li><a href="/wellness" class="hover:text-accent transition-colors">Wellness</a></li>
+            <li><a href="/travel" class="hover:text-accent transition-colors">Travel</a></li>
+            <li><a href="/creativity" class="hover:text-accent transition-colors">Creativity</a></li>
+            <li><a href="/growth" class="hover:text-accent transition-colors">Growth</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="font-semibold mb-4">About</h3>
+          <ul class="space-y-2 text-sm text-muted-foreground">
+            <li><a href="/about" class="hover:text-accent transition-colors">Our Story</a></li>
+            <li><a href="/authors" class="hover:text-accent transition-colors">Authors</a></li>
+            <li><a href="/contact" class="hover:text-accent transition-colors">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="font-semibold mb-4">Resources</h3>
+          <ul class="space-y-2 text-sm text-muted-foreground">
+            <li><a href="/style-guide" class="hover:text-accent transition-colors">Style Guide</a></li>
+            <li><a href="#newsletter" class="hover:text-accent transition-colors">Newsletter</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="font-semibold mb-4">Legal</h3>
+          <ul class="space-y-2 text-sm text-muted-foreground">
+            <li><a href="/privacy" class="hover:text-accent transition-colors">Privacy Policy</a></li>
+            <li><a href="/terms" class="hover:text-accent transition-colors">Terms of Service</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="pt-8 border-t border-border text-center text-sm text-muted-foreground">
+        <p>© 2026 Perspective. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
