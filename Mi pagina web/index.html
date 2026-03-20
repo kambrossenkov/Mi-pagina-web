@@ -8,53 +8,61 @@
   <link rel="stylesheet" href="styles.css">
   <script>
     tailwind.config = {
+      darkMode: 'class',
       theme: {
         extend: {
           fontFamily: {
             serif: ['Georgia', 'serif'],
           },
           colors: {
-            background: '#2c2c2c',
-            card: '#3b3b3b',
+            background: 'var(--background)',
+            card: 'var(--card)',
+            text: 'var(--text)',
             muted: {
-              DEFAULT: '#4b4b4b',
-              foreground: '#a3a3a3'
+              DEFAULT: 'var(--muted)',
+              foreground: 'var(--muted-fg)'
             },
-            accent: '#ffffff',
+            accent: '#3b82f6', // constant color 
             primary: {
-              DEFAULT: '#ffffff',
-              foreground: '#2c2c2c'
+              DEFAULT: 'var(--primary)',
+              foreground: 'var(--primary-fg)'
             },
-            border: '#4b4b4b',
-            input: '#4b4b4b',
-            ring: '#94a3b8'
+            border: 'var(--border)',
+            input: 'var(--input)',
+            ring: 'var(--ring)'
           }
         }
       }
     }
   </script>
 </head>
-<body class="min-h-screen bg-background text-white animate-fade-in">
+<body class="min-h-screen bg-background text-text animate-fade-in transition-colors duration-300">
   
   <!-- Header Component -->
-  <header class="py-6 border-b border-border/10">
+  <header class="py-6 border-b border-border/20 transition-colors duration-300">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
       <div class="flex items-center gap-3">
-        <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-background font-bold text-xl">P</div>
-        <h1 class="text-2xl font-bold tracking-tight text-white font-serif">Perspective</h1>
+        <div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center text-primary-foreground font-bold text-xl transition-colors duration-300">P</div>
+        <h1 class="text-2xl font-bold tracking-tight text-text font-serif transition-colors duration-300">Perspective</h1>
       </div>
-      <nav class="hidden md:flex gap-8 items-center text-sm font-medium text-white/90">
-        <a href="#" class="hover:text-white transition-colors">Home</a>
-        <a href="#articles" class="hover:text-white transition-colors">Articles</a>
-        <a href="#" class="hover:text-white transition-colors">Wellness</a>
-        <a href="#" class="hover:text-white transition-colors">Travel</a>
-        <a href="#" class="hover:text-white transition-colors">About</a>
+      <nav class="hidden md:flex gap-8 items-center text-sm font-medium text-text/90">
+        <a href="#" data-i18n="nav-home" class="hover:text-accent transition-colors">Home</a>
+        <a href="#articles" data-i18n="nav-articles" class="hover:text-accent transition-colors">Articles</a>
+        <a href="#" data-i18n="nav-wellness" class="hover:text-accent transition-colors">Wellness</a>
+        <a href="#" data-i18n="nav-travel" class="hover:text-accent transition-colors">Travel</a>
+        <a href="#" data-i18n="nav-about" class="hover:text-accent transition-colors">About</a>
       </nav>
-      <div class="hidden md:flex items-center gap-6">
-        <button class="text-white hover:text-white/80 transition-colors">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+      <div class="flex items-center gap-4 md:gap-6">
+        <button id="lang-toggle" class="text-text hover:text-accent transition-colors text-sm font-bold uppercase w-8">
+          ES
         </button>
-        <button class="px-6 py-2 rounded-full bg-white text-background font-medium hover:bg-white/90 transition-all">
+        <button id="theme-toggle" class="text-text hover:text-accent transition-colors">
+          <!-- Sun Icon (shown in dark mode) -->
+          <svg id="icon-sun" class="hidden w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+          <!-- Moon Icon (shown in light mode) -->
+          <svg id="icon-moon" class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        </button>
+        <button data-i18n="nav-join" class="hidden md:block px-6 py-2 rounded-full bg-primary text-primary-foreground font-medium hover:opacity-90 transition-all">
           Join Now
         </button>
       </div>
@@ -65,28 +73,28 @@
     
     <!-- Hero Section Component -->
     <section class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-20 animate-slide-up">
-      <div class="relative h-[600px] rounded-[32px] overflow-hidden order-last md:order-first">
-        <img src="https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?auto=format&fit=crop&q=80&w=800" alt="Desk setup with coffee" class="w-full h-full object-cover" />
+      <div class="relative h-[400px] md:h-[600px] rounded-[32px] overflow-hidden order-last md:order-first shadow-xl">
+        <img src="https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?auto=format&fit=crop&q=80&w=800" alt="Desk setup" class="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
       </div>
       <div class="px-4 md:px-8">
-        <h1 class="text-6xl md:text-8xl font-bold tracking-tight mb-8 font-serif leading-[1.05] text-white">
+        <h1 data-i18n="hero-title" class="text-5xl sm:text-6xl md:text-8xl font-bold tracking-tight mb-8 font-serif leading-[1.05] text-text transition-colors duration-300">
           Journey<br/>Through<br/>Life's<br/>Spectrum
         </h1>
-        <p class="text-lg text-white/70 mb-10 leading-relaxed max-w-lg">
+        <p data-i18n="hero-desc" class="text-lg text-text/70 mb-10 leading-relaxed max-w-lg transition-colors duration-300">
           Welcome to Perspective's Blog: A Realm of Reflection, Inspiration, and Discovery. Where Words Illuminate Paths of Meaning and Thoughts Unravel the Mysteries of Life's Spectrum.
         </p>
         <div class="flex items-center gap-8">
-          <button class="px-8 py-3 rounded-full bg-white text-background font-medium hover:bg-white/90 transition-all">
+          <button data-i18n="hero-btn" class="px-8 py-3 rounded-full bg-primary text-primary-foreground font-medium hover:opacity-90 shadow-lg hover:shadow-xl transition-all">
             Join Now
           </button>
-          <div class="flex items-center gap-5 text-white/80">
-            <a href="#" class="hover:text-white transition-colors">
+          <div class="flex items-center gap-5 text-text/80 transition-colors duration-300">
+            <a href="#" class="hover:text-accent transition-colors">
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
             </a>
-            <a href="#" class="hover:text-white transition-colors">
+            <a href="#" class="hover:text-accent transition-colors">
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
             </a>
-            <a href="#" class="hover:text-white transition-colors">
+            <a href="#" class="hover:text-accent transition-colors">
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
             </a>
           </div>
@@ -97,8 +105,8 @@
     <!-- Featured Articles Grid Component -->
     <section id="articles" class="py-12">
       <div class="flex items-center justify-between mb-12 animate-slide-up" style="animation-delay: 200ms;">
-        <h2 class="text-3xl md:text-4xl font-bold tracking-tight">Featured Articles</h2>
-        <a href="#all" class="text-sm font-medium text-muted-foreground hover:text-accent transition-colors px-4 py-2 rounded-full hover:bg-muted/60">
+        <h2 data-i18n="articles-title" class="text-3xl md:text-4xl font-bold tracking-tight text-text transition-colors duration-300">Featured Articles</h2>
+        <a href="#all" data-i18n="articles-view" class="text-sm font-medium text-muted-foreground hover:text-accent transition-colors px-4 py-2 rounded-full hover:bg-muted/60">
           View all →
         </a>
       </div>
@@ -109,19 +117,20 @@
     </section>
 
     <!-- Newsletter Section Component -->
-    <section class="my-20 rounded-[2.5rem] bg-card p-12 md:p-16 text-center animate-scale-in border border-border">
+    <section class="my-20 rounded-[2.5rem] bg-card p-12 md:p-16 text-center animate-scale-in border border-border transition-colors duration-300 shadow-sm">
       <div class="max-w-2xl mx-auto space-y-8">
-        <h2 class="text-4xl md:text-5xl font-bold tracking-tight">Stay inspired.</h2>
-        <p class="text-xl text-muted-foreground leading-relaxed">
+        <h2 data-i18n="news-title" class="text-4xl md:text-5xl font-bold tracking-tight text-text">Stay inspired.</h2>
+        <p data-i18n="news-desc" class="text-xl text-muted-foreground leading-relaxed">
           Subscribe to receive our latest articles and insights directly in your inbox.
         </p>
         <div class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
           <input
+            id="email-input"
             type="email"
             placeholder="Your email"
-            class="flex-1 px-6 py-4 rounded-full border border-input bg-background focus:outline-none focus:ring-2 focus:ring-ring transition-all"
+            class="flex-1 px-6 py-4 rounded-full border border-input bg-background focus:outline-none focus:ring-2 focus:ring-accent transition-all text-text"
           />
-          <button class="px-10 py-4 rounded-full bg-primary text-primary-foreground text-white font-medium hover:bg-primary/90 hover:scale-105 transition-all">
+          <button data-i18n="news-btn" class="px-10 py-4 rounded-full bg-primary text-primary-foreground font-medium hover:opacity-90 shadow hover:-translate-y-1 transition-all">
             Subscribe
           </button>
         </div>
@@ -130,43 +139,43 @@
   </main>
 
   <!-- Footer Component -->
-  <footer class="border-t border-border mt-16 bg-card/30">
+  <footer class="border-t border-border mt-16 bg-card/50 transition-colors duration-300">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8">
         <div>
-          <h3 class="font-semibold mb-4">Explore</h3>
+          <h3 data-i18n="ft-explore" class="font-semibold mb-4 text-text">Explore</h3>
           <ul class="space-y-2 text-sm text-muted-foreground">
-            <li><a href="/wellness" class="hover:text-accent transition-colors">Wellness</a></li>
-            <li><a href="/travel" class="hover:text-accent transition-colors">Travel</a></li>
-            <li><a href="/creativity" class="hover:text-accent transition-colors">Creativity</a></li>
-            <li><a href="/growth" class="hover:text-accent transition-colors">Growth</a></li>
+            <li><a href="/wellness" data-i18n="nav-wellness" class="hover:text-accent transition-colors">Wellness</a></li>
+            <li><a href="/travel" data-i18n="nav-travel" class="hover:text-accent transition-colors">Travel</a></li>
+            <li><a href="/creativity" data-i18n="ft-creativity" class="hover:text-accent transition-colors">Creativity</a></li>
+            <li><a href="/growth" data-i18n="ft-growth" class="hover:text-accent transition-colors">Growth</a></li>
           </ul>
         </div>
         <div>
-          <h3 class="font-semibold mb-4">About</h3>
+          <h3 data-i18n="ft-about" class="font-semibold mb-4 text-text">About</h3>
           <ul class="space-y-2 text-sm text-muted-foreground">
-            <li><a href="/about" class="hover:text-accent transition-colors">Our Story</a></li>
-            <li><a href="/authors" class="hover:text-accent transition-colors">Authors</a></li>
-            <li><a href="/contact" class="hover:text-accent transition-colors">Contact</a></li>
+            <li><a href="/about" data-i18n="ft-story" class="hover:text-accent transition-colors">Our Story</a></li>
+            <li><a href="/authors" data-i18n="ft-authors" class="hover:text-accent transition-colors">Authors</a></li>
+            <li><a href="/contact" data-i18n="ft-contact" class="hover:text-accent transition-colors">Contact</a></li>
           </ul>
         </div>
         <div>
-          <h3 class="font-semibold mb-4">Resources</h3>
+          <h3 data-i18n="ft-resources" class="font-semibold mb-4 text-text">Resources</h3>
           <ul class="space-y-2 text-sm text-muted-foreground">
-            <li><a href="/style-guide" class="hover:text-accent transition-colors">Style Guide</a></li>
-            <li><a href="#newsletter" class="hover:text-accent transition-colors">Newsletter</a></li>
+            <li><a href="/style-guide" data-i18n="ft-style" class="hover:text-accent transition-colors">Style Guide</a></li>
+            <li><a href="#newsletter" data-i18n="ft-news" class="hover:text-accent transition-colors">Newsletter</a></li>
           </ul>
         </div>
         <div>
-          <h3 class="font-semibold mb-4">Legal</h3>
+          <h3 data-i18n="ft-legal" class="font-semibold mb-4 text-text">Legal</h3>
           <ul class="space-y-2 text-sm text-muted-foreground">
-            <li><a href="/privacy" class="hover:text-accent transition-colors">Privacy Policy</a></li>
-            <li><a href="/terms" class="hover:text-accent transition-colors">Terms of Service</a></li>
+            <li><a href="/privacy" data-i18n="ft-privacy" class="hover:text-accent transition-colors">Privacy Policy</a></li>
+            <li><a href="/terms" data-i18n="ft-terms" class="hover:text-accent transition-colors">Terms of Service</a></li>
           </ul>
         </div>
       </div>
-      <div class="pt-8 border-t border-border text-center text-sm text-muted-foreground">
-        <p>© 2026 Perspective. All rights reserved.</p>
+      <div class="pt-8 border-t border-border text-center text-sm text-muted-foreground transition-colors duration-300">
+        <p data-i18n="ft-copy">© 2026 Perspective. All rights reserved.</p>
       </div>
     </div>
   </footer>
