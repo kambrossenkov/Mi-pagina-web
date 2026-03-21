@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="es" class="dark" style="background-color: #000; color-scheme: dark;">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Invento Meme | Perspective Blog</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="styles.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['Georgia', 'serif'],
+          },
+          colors: {
+            background: 'var(--background)',
+            card: 'var(--card)',
+            text: 'var(--text)',
+            muted: {
+              DEFAULT: 'var(--muted)',
+              foreground: 'var(--muted-fg)'
+            },
+            accent: '#3b82f6',
+            primary: {
+              DEFAULT: 'var(--primary)',
+              foreground: 'var(--primary-fg)'
+            },
+            border: 'var(--border)',
+            input: 'var(--input)',
+            ring: 'var(--ring)'
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="min-h-screen bg-black overflow-x-hidden text-white animate-fade-in transition-colors duration-300 flex flex-col">
+  
+  <canvas id="smoke-bg" class="fixed inset-0 z-0 w-full h-full pointer-events-none"></canvas>
+
+  <!-- Header Component -->
+  <header class="relative z-10 sticky top-0 py-4 md:py-6 border-b border-border/20 bg-background/90 backdrop-blur-sm transition-colors duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 md:w-10 md:h-10 border-2 border-text flex items-center justify-center text-text font-bold text-lg md:text-xl transition-colors duration-300">K</div>
+        <h1 class="text-xl md:text-2xl font-bold tracking-tight text-text font-serif transition-colors duration-300 hidden sm:block">Ambrossenkov</h1>
+      </div>
+      <nav class="hidden md:flex gap-8 items-center text-sm font-medium text-text/90">
+        <a href="curiosidades.html" data-i18n="nav-curiosities" class="hover:text-accent transition-colors">Curiosidades</a>
+        <a href="index.html" data-i18n="nav-home" class="hover:text-accent transition-colors">Inicio</a>
+        <a href="inventos.html" data-i18n="nav-inventions" class="hover:text-accent transition-colors">Inventos</a>
+      </nav>
+      <div class="flex items-center gap-4 md:gap-6">
+        <button id="lang-toggle" class="text-text hover:text-accent transition-colors text-sm font-bold uppercase w-8 flex-shrink-0">
+          ES
+        </button>
+        <a href="contacto.html" target="_blank" data-i18n="nav-contact" class="hidden md:block px-6 py-2 rounded-full bg-primary text-primary-foreground font-medium hover:opacity-90 transition-all text-center whitespace-nowrap">
+          Contactarme
+        </a>
+        <!-- Hamburger Menu Button -->
+        <button id="mobile-menu-btn" class="md:hidden text-text hover:text-accent transition-colors focus:outline-none ml-2">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+        </button>
+      </div>
+    </div>
+    <!-- Mobile Navigation -->
+    <nav id="mobile-menu" class="hidden flex-col gap-4 px-4 pt-4 pb-6 bg-black border-b border-white/10 md:hidden w-full shadow-lg">
+      <a href="curiosidades.html" data-i18n="nav-curiosities" class="block text-base font-medium text-text/90 hover:text-accent">Curiosidades</a>
+      <a href="index.html" data-i18n="nav-home" class="block text-base font-medium text-text/90 hover:text-accent">Inicio</a>
+      <a href="inventos.html" data-i18n="nav-inventions" class="block text-base font-medium text-text/90 hover:text-accent">Inventos</a>
+      <a href="contacto.html" target="_blank" data-i18n="nav-contact" class="block text-base font-medium text-primary hover:text-accent mt-2">Contactarme</a>
+    </nav>
+  </header>
+
+  <main class="relative z-10 w-full min-h-screen pt-24 pb-12 flex flex-col items-center justify-center"></main>
+
+  <!-- Footer Component -->
+  <footer class="relative z-10 w-full border-t border-border mt-auto bg-black/50 backdrop-blur-md transition-colors duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex flex-col items-center gap-10">
+      <div class="w-full text-center md:text-left">
+        <h3 data-i18n="ft-contact-title" class="text-2xl font-bold text-text">Contactame</h3>
+      </div>
+      <div class="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16 w-full">
+        <a href="mailto:k.ambrossenkov@gmail.com" class="flex items-center gap-3 text-text hover:text-accent transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+          <span class="font-medium text-lg">k.ambrossenkov@gmail.com</span>
+        </a>
+        <a href="https://www.instagram.com/konsta_ambrossenkov/?__d=1" target="_blank" class="flex items-center gap-3 text-text hover:text-accent transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+          <span class="sr-only">Instagram</span>
+        </a>
+        <a href="https://www.linkedin.com/in/konstantino-ambrossenkov/" target="_blank" class="flex items-center gap-3 text-text hover:text-accent transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
+          <span class="sr-only">LinkedIn</span>
+        </a>
+      </div>
+      <div class="mt-4">
+        <img src="Fotos/firma AK.jfif" alt="Firma AK" class="h-16 object-contain" onerror="this.outerHTML='<span class=\'text-2xl font-serif italic text-text opacity-70\'>Firma AK</span>'" />
+      </div>
+      <div class="pt-8 w-full border-t border-border/50 text-center text-muted-foreground transition-colors duration-300">
+        <p data-i18n="ft-help" class="font-medium text-lg">Estoy para ayudar</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+
+  <!-- WebGL Spooky Smoke Effect -->
+  <script>
+    const canvas = document.getElementById('smoke-bg');
+    const gl = canvas.getContext('webgl2');
+
+    if (!gl) {
+        console.error('WebGL2 not supported');
+    }
+
+    const vertexSrc = `#version 300 es
+    in vec2 a_position;
+    out vec2 v_uv;
+    void main() {
+        v_uv = a_position * 0.5 + 0.5;
+        gl_Position = vec4(a_position, 0.0, 1.0);
+    }`;
+
+    // Translating React logic constraints implicitly to a clean FBM visualizer
+    const fragmentShaderSource = `#version 300 es
+    precision highp float;
+    
+    uniform vec2 resolution;
+    uniform float time;
+    uniform vec3 u_color;
+    
+    out vec4 fragColor;
+    
+    // Hash function for pseudo-random noise
+    float hash(vec2 p) {
+        p = fract(p * vec2(123.34, 456.21));
+        p += dot(p, p + 45.32);
+        return fract(p.x * p.y);
+    }
+    
+    // Value noise
+    float noise(vec2 x) {
+        vec2 p = floor(x);
+        vec2 f = fract(x);
+        f = f * f * (3.0 - 2.0 * f);
+        return mix(
+            mix(hash(p + vec2(0.0, 0.0)), hash(p + vec2(1.0, 0.0)), f.x),
+            mix(hash(p + vec2(0.0, 1.0)), hash(p + vec2(1.0, 1.0)), f.x),
+            f.y
+        );
+    }
+    
+    // Fractal Brownian Motion for Smoke Base
+    float fbm(vec2 p) {
+        float f = 0.0;
+        float amp = 0.5;
+        for(int i = 0; i < 6; i++) {
+            f += amp * noise(p);
+            p *= 2.0;
+            p -= time * 0.2; // Move smoke upwards slowly
+            amp *= 0.5;
+        }
+        return f;
+    }
+    
+    void main() {
+        vec2 uv = gl_FragCoord.xy / resolution.xy;
+        uv.x *= resolution.x / resolution.y; // Fix aspect ratio
+        
+        // Distortion layering for ethereal smoke effect
+        vec2 q = vec2(fbm(uv + time * 0.1), fbm(uv + vec2(1.0)));
+        vec2 r = vec2(fbm(uv + 1.0 * q + vec2(1.7, 9.2) + 0.15 * time),
+                      fbm(uv + 1.0 * q + vec2(8.3, 2.8) + 0.126 * time));
+                      
+        float n = fbm(uv + r);
+        
+        // Deep cosmic blending
+        vec3 color = mix(vec3(0.0), u_color, n * n * 2.0);
+        
+        // Illuminate core ribbon center
+        color += u_color * (n * n * n * n) * 1.5;
+        
+        fragColor = vec4(color, 1.0);
+    }`;
+
+    // Boilerplate WebGL wrapper logic
+    function compileShader(gl, type, source) {
+        const shader = gl.createShader(type);
+        gl.shaderSource(shader, source);
+        gl.compileShader(shader);
+        if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+            console.error('An error occurred compiling the shaders: ' + gl.getShaderInfoLog(shader));
+            gl.deleteShader(shader);
+            return null;
+        }
+        return shader;
+    }
+
+    const vertexShader = compileShader(gl, gl.VERTEX_SHADER, vertexSrc);
+    const fragmentShader = compileShader(gl, gl.FRAGMENT_SHADER, fragmentShaderSource);
+
+    const program = gl.createProgram();
+    gl.attachShader(program, vertexShader);
+    gl.attachShader(program, fragmentShader);
+    gl.linkProgram(program);
+
+    if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+        console.error('Unable to initialize the shader program: ' + gl.getProgramInfoLog(program));
+    }
+    gl.useProgram(program);
+
+    // EXACT BUFFER SEQUENCE REQUESTED
+    const positionBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+    const vertices = new Float32Array([
+        -1,  1, 
+        -1, -1, 
+         1,  1, 
+         1, -1
+    ]);
+    gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
+
+    const positionAttributeLocation = gl.getAttribLocation(program, "a_position");
+    gl.enableVertexAttribArray(positionAttributeLocation);
+    gl.vertexAttribPointer(positionAttributeLocation, 2, gl.FLOAT, false, 0, 0);
+
+    const resolutionLocation = gl.getUniformLocation(program, "resolution");
+    const timeLocation = gl.getUniformLocation(program, "time");
+    const colorLocation = gl.getUniformLocation(program, "u_color");
+
+    // SOFT BLUE COLOR DEFINITION
+    gl.uniform3fv(colorLocation, [0.3, 0.6, 0.9]);
+
+    function resizeCanvas() {
+        const displayWidth  = Math.floor(window.innerWidth * window.devicePixelRatio);
+        const displayHeight = Math.floor(window.innerHeight * window.devicePixelRatio);
+
+        if (canvas.width !== displayWidth || canvas.height !== displayHeight) {
+            canvas.width = displayWidth;
+            canvas.height = displayHeight;
+            gl.viewport(0, 0, canvas.width, canvas.height);
+            gl.uniform2f(resolutionLocation, canvas.width, canvas.height);
+        }
+    }
+    
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    function render(timeMs) {
+        const time = timeMs * 0.001;
+        
+        resizeCanvas();
+        gl.clearColor(0.0, 0.0, 0.0, 1.0);
+        gl.clear(gl.COLOR_BUFFER_BIT);
+
+        gl.uniform1f(timeLocation, time);
+
+        // Uses TRIANGLE_STRIP for 4 points
+        gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+        
+        requestAnimationFrame(render);
+    }
+
+    requestAnimationFrame(render);
+  </script>
+</body>
+</html>
