@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Curiosidades | Perspective Blog</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <link rel="stylesheet" href="styles.css">
   <script>
     tailwind.config = {
@@ -36,9 +37,13 @@
   </script>
 </head>
 <body class="min-h-screen bg-background text-text animate-fade-in transition-colors duration-300 flex flex-col">
+  <div id="shader-bg" class="fixed inset-0 w-full h-full z-0 pointer-events-none"></div>
   
-  <!-- Header Component -->
-  <header class="sticky top-0 z-50 py-4 md:py-6 border-b border-border/20 bg-background/90 backdrop-blur-sm transition-colors duration-300">
+  <!-- Wrapper para deslizar contenido sobre el canvas fijo -->
+  <div class="relative z-10 w-full min-h-screen flex flex-col">
+    
+    <!-- Header Component -->
+    <header class="sticky top-0 z-50 w-full bg-black/50 backdrop-blur-md border-b border-white/10 py-4 md:py-6 transition-colors duration-300">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
       <div class="flex items-center gap-3">
         <div class="w-8 h-8 md:w-10 md:h-10 border-2 border-text flex items-center justify-center text-text font-bold text-lg md:text-xl transition-colors duration-300">K</div>
@@ -71,9 +76,7 @@
     </nav>
   </header>
 
-  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
-    <!-- Contenido vacío para que el usuario lo llene después -->
-  </main>
+    <main class="w-full min-h-screen pt-24 pb-12"></main>
 
   <!-- Footer Component -->
   <footer class="border-t border-border mt-auto bg-card/50 transition-colors duration-300">
@@ -103,8 +106,130 @@
       </div>
     </div>
   </footer>
+  </div> <!-- Fin del Wrapper -->
 
   <!-- Include App Logic -->
   <script src="script.js"></script>
+
+  <!-- WebGL James Webb Nebula Shader -->
+  <script>
+    const container = document.getElementById('shader-bg');
+    const scene = new THREE.Scene();
+    const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+    
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(window.devicePixelRatio);
+    container.appendChild(renderer.domElement);
+    
+    const vertexShader = `
+      void main() { 
+        gl_Position = vec4(position, 1.0); 
+      }
+    `;
+    
+    const fragmentShader = `
+      uniform float iTime;
+      uniform vec2 iResolution;
+
+      float hash(vec2 p) {
+          p = fract(p * vec2(123.34, 456.21));
+          p += dot(p, p + 45.32);
+          return fract(p.x * p.y);
+      }
+
+      float noise(vec2 p) {
+          vec2 i = floor(p);
+          vec2 f = fract(p);
+          f = f * f * (3.0 - 2.0 * f);
+          return mix(
+              mix(hash(i + vec2(0.0)), hash(i + vec2(1.0, 0.0)), f.x),
+              mix(hash(i + vec2(0.0, 1.0)), hash(i + vec2(1.0, 1.0)), f.x), f.y);
+      }
+
+      float fbm(vec2 p) {
+          float f = 0.0;
+          float amp = 0.5;
+          for(int i = 0; i < 5; i++) {
+              f += amp * noise(p);
+              p *= 2.0;
+              amp *= 0.5;
+          }
+          return f;
+      }
+
+      void main() {
+          vec2 uv = gl_FragCoord.xy / iResolution.xy;
+          vec2 p = uv * 2.0 - 1.0;
+          p.x *= iResolution.x / iResolution.y;
+
+          // Deep space base color with a tiny dark blue tint
+          vec3 color = vec3(0.01, 0.02, 0.05);
+          
+          if(hash(p * 100.0) > 0.99) {
+              color += vec3(1.0) * (0.5 + 0.5 * sin(iTime * 1.5 + hash(p)*100.0));
+          }
+
+          vec3 auroraColors = vec3(0.0);
+          
+          for(int i = 0; i < 35; i++) {
+              float fi = float(i);
+              
+              vec2 q = p + vec2(iTime * 0.04, fi * 0.02);
+              
+              float structuralNoise = fbm(q * 3.0 + iTime * 0.08);
+              
+              float tailNoise = smoothstep(0.2, 0.8, structuralNoise) * exp(-fi * 0.1);
+              
+              // Warm cosmic nebula: coppers, oranges, golds, deep blues
+              float t1 = fi * 0.2 + iTime * 0.4;
+              float t2 = fi * 0.3 + iTime * 0.5;
+              float t3 = fi * 0.4 + iTime * 0.3;
+              
+              vec3 bandColor = vec3(
+                  0.8 + 0.2 * sin(t1),
+                  0.4 + 0.3 * cos(t2),
+                  0.2 + 0.5 * sin(t3)
+              );
+              
+              auroraColors += bandColor * tailNoise * 0.035;
+          }
+          
+          color += auroraColors;
+          
+          gl_FragColor = vec4(color, 1.0);
+      }
+    `;
+    
+    const uniforms = {
+      iTime: { value: 0.0 },
+      iResolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) }
+    };
+    
+    const material = new THREE.ShaderMaterial({
+      vertexShader,
+      fragmentShader,
+      uniforms,
+      depthWrite: false,
+      depthTest: false
+    });
+    
+    const geometry = new THREE.PlaneGeometry(2, 2);
+    const mesh = new THREE.Mesh(geometry, material);
+    scene.add(mesh);
+    
+    function animate() {
+      requestAnimationFrame(animate);
+      uniforms.iTime.value += 0.016;
+      renderer.render(scene, camera);
+    }
+    
+    animate();
+    
+    window.addEventListener('resize', () => {
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      uniforms.iResolution.value.set(window.innerWidth, window.innerHeight);
+    });
+  </script>
 </body>
 </html>
