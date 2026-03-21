@@ -1,27 +1,14 @@
 /* Base CSS custom properties for Themes */
 :root {
-  --background: #ffffff;
-  --card: #f8fafc;
-  --text: #0f172a;
-  --muted: #f1f5f9;
-  --muted-fg: #64748b;
-  --primary: #0f172a;
-  --primary-fg: #ffffff;
-  --border: #e2e8f0;
-  --input: #e2e8f0;
-  --ring: #94a3b8;
-}
-
-html.dark {
-  --background: #2c2c2c;
-  --card: #3b3b3b;
+  --background: #000000;
+  --card: #1c1c1c;
   --text: #ffffff;
-  --muted: #4b4b4b;
+  --muted: #2a2a2a;
   --muted-fg: #a3a3a3;
   --primary: #ffffff;
-  --primary-fg: #2c2c2c;
-  --border: #4b4b4b;
-  --input: #4b4b4b;
+  --primary-fg: #000000;
+  --border: #333333;
+  --input: #333333;
   --ring: #94a3b8;
 }
 

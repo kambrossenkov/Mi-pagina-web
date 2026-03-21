@@ -132,14 +132,9 @@ const articlesList = {
 
 // Current State
 let currentLang = localStorage.getItem('lang') || 'en';
-// Default to dark mode based on the image mockup, though the logic can toggle
-let isDark = localStorage.getItem('theme') !== 'light';
 
 // DOM Elements
 const langToggleBtn = document.getElementById('lang-toggle');
-const themeToggleBtn = document.getElementById('theme-toggle');
-const iconSun = document.getElementById('icon-sun');
-const iconMoon = document.getElementById('icon-moon');
 const htmlEl = document.documentElement;
 
 // Function to update the DOM based on the current language
@@ -212,37 +207,14 @@ function renderArticles() {
   });
 }
 
-// Function to update Theme
-function updateTheme() {
-  if (isDark) {
-    htmlEl.classList.add('dark');
-    iconSun.classList.remove('hidden');
-    iconMoon.classList.add('hidden');
-  } else {
-    htmlEl.classList.remove('dark');
-    iconSun.classList.add('hidden');
-    iconMoon.classList.remove('hidden');
-  }
-  
-  // Save pref
-  localStorage.setItem('theme', isDark ? 'dark' : 'light');
-}
-
 // Event Listeners
 langToggleBtn.addEventListener('click', () => {
   currentLang = currentLang === 'en' ? 'es' : 'en';
   updateLanguage();
 });
 
-themeToggleBtn.addEventListener('click', () => {
-  isDark = !isDark;
-  updateTheme();
-});
-
 // Initialization on DOM load
 document.addEventListener('DOMContentLoaded', () => {
-  // apply initial theme
-  updateTheme();
   // apply initial language
   updateLanguage();
 
