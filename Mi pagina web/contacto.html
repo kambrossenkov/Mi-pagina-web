@@ -78,38 +78,40 @@
       </div>
 
       <!-- Form -->
-      <form id="contacto" class="space-y-6" onsubmit="event.preventDefault(); alert('Enviado!');">
+      <form id="contacto" class="space-y-6" action="https://api.web3forms.com/submit" method="POST">
+        <input type="hidden" name="access_key" value="477b2e2f-0dd9-4167-b205-2e239525342b">
+        <input type="hidden" name="redirect" value="index.html">
         
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div class="space-y-2">
             <label for="nombre" class="block text-sm font-medium text-text">Nombre <span class="text-red-500">*</span></label>
-            <input type="text" id="nombre" name="nombre" required class="w-full px-4 py-3 rounded-lg border border-input bg-card focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all text-text shadow-sm" />
+            <input type="text" id="nombre" name="Nombre" required class="w-full px-4 py-3 rounded-lg border border-input bg-card focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all text-text shadow-sm" />
           </div>
           <div class="space-y-2">
             <label for="apellido" class="block text-sm font-medium text-text">Apellido <span class="text-red-500">*</span></label>
-            <input type="text" id="apellido" name="apellido" required class="w-full px-4 py-3 rounded-lg border border-input bg-card focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all text-text shadow-sm" />
+            <input type="text" id="apellido" name="Apellido" required class="w-full px-4 py-3 rounded-lg border border-input bg-card focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all text-text shadow-sm" />
           </div>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div class="space-y-2">
             <label for="email" class="block text-sm font-medium text-text">Email <span class="text-red-500">*</span></label>
-            <input type="email" id="email" name="email" required class="w-full px-4 py-3 rounded-lg border border-input bg-card focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all text-text shadow-sm" />
+            <input type="email" id="email" name="Email" required class="w-full px-4 py-3 rounded-lg border border-input bg-card focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all text-text shadow-sm" />
           </div>
           <div class="space-y-2">
             <label for="telefono" class="block text-sm font-medium text-text">Teléfono / WhatsApp (opcional)</label>
-            <input type="tel" id="telefono" name="telefono" class="w-full px-4 py-3 rounded-lg border border-input bg-card focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all text-text shadow-sm" />
+            <input type="tel" id="telefono" name="Telefono_WhatsApp" class="w-full px-4 py-3 rounded-lg border border-input bg-card focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all text-text shadow-sm" />
           </div>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div class="space-y-2">
             <label for="empresa_institucion_proyecto" class="block text-sm font-medium text-text">Empresa / Institución / Proyecto</label>
-            <input type="text" id="empresa_institucion_proyecto" name="empresa_institucion_proyecto" class="w-full px-4 py-3 rounded-lg border border-input bg-card focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all text-text shadow-sm" />
+            <input type="text" id="empresa_institucion_proyecto" name="Empresa_Institucion" class="w-full px-4 py-3 rounded-lg border border-input bg-card focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all text-text shadow-sm" />
           </div>
           <div class="space-y-2">
             <label for="cargo_rol" class="block text-sm font-medium text-text">Cargo / Rol</label>
-            <input type="text" id="cargo_rol" name="cargo_rol" class="w-full px-4 py-3 rounded-lg border border-input bg-card focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all text-text shadow-sm" />
+            <input type="text" id="cargo_rol" name="Cargo_Rol" class="w-full px-4 py-3 rounded-lg border border-input bg-card focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all text-text shadow-sm" />
           </div>
         </div>
 
@@ -117,7 +119,7 @@
           <div class="space-y-2">
             <label for="tipo_contacto" class="block text-sm font-medium text-text">Tipo de contacto</label>
             <div class="relative">
-              <select id="tipo_contacto" name="tipo_contacto" class="w-full px-4 py-3 rounded-lg border border-input bg-card focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all text-text appearance-none shadow-sm cursor-pointer pr-10">
+              <select id="tipo_contacto" name="Tipo_de_contacto" class="w-full px-4 py-3 rounded-lg border border-input bg-card focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all text-text appearance-none shadow-sm cursor-pointer pr-10">
                 <option value="" disabled selected>Seleccionar...</option>
                 <option value="RR.HH. / Recruiter">RR.HH. / Recruiter</option>
                 <option value="Profesor / Institución académica">Profesor / Institución académica</option>
@@ -134,7 +136,7 @@
           <div class="space-y-2">
             <label for="motivo_contacto" class="block text-sm font-medium text-text">¿Por qué querés contactarme? <span class="text-red-500">*</span></label>
             <div class="relative">
-              <select id="motivo_contacto" name="motivo_contacto" required class="w-full px-4 py-3 rounded-lg border border-input bg-card focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all text-text appearance-none shadow-sm cursor-pointer pr-10">
+              <select id="motivo_contacto" name="Motivo_contacto" required class="w-full px-4 py-3 rounded-lg border border-input bg-card focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all text-text appearance-none shadow-sm cursor-pointer pr-10">
                 <option value="" disabled selected>Seleccionar...</option>
                 <option value="Oportunidad laboral">Oportunidad laboral</option>
                 <option value="Ayudantía / docencia">Ayudantía / docencia</option>
@@ -152,29 +154,29 @@
 
         <div class="space-y-2">
           <label for="asunto" class="block text-sm font-medium text-text">Asunto / Tema <span class="text-red-500">*</span></label>
-          <input type="text" id="asunto" name="asunto" required class="w-full px-4 py-3 rounded-lg border border-input bg-card focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all text-text shadow-sm" />
+          <input type="text" id="asunto" name="Asunto" required class="w-full px-4 py-3 rounded-lg border border-input bg-card focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all text-text shadow-sm" />
         </div>
 
         <div class="space-y-2">
           <label for="mensaje" class="block text-sm font-medium text-text">Contame brevemente qué necesitás <span class="text-red-500">*</span></label>
-          <textarea id="mensaje" name="mensaje" required rows="4" placeholder="Ej.: búsqueda para un rol, propuesta de proyecto, colaboración académica, consultoría o alianza." class="w-full px-4 py-3 rounded-lg border border-input bg-card focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all text-text resize-y shadow-sm"></textarea>
+          <textarea id="mensaje" name="Mensaje_Necesidad" required rows="4" placeholder="Ej.: búsqueda para un rol, propuesta de proyecto, colaboración académica, consultoría o alianza." class="w-full px-4 py-3 rounded-lg border border-input bg-card focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all text-text resize-y shadow-sm"></textarea>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div class="space-y-2">
             <label for="linkedin_web_empresa" class="block text-sm font-medium text-text">LinkedIn / Web / Empresa</label>
-            <input type="text" id="linkedin_web_empresa" name="linkedin_web_empresa" class="w-full px-4 py-3 rounded-lg border border-input bg-card focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all text-text shadow-sm" />
+            <input type="text" id="linkedin_web_empresa" name="LinkedIn_Web" class="w-full px-4 py-3 rounded-lg border border-input bg-card focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all text-text shadow-sm" />
           </div>
           <div class="space-y-2">
             <label for="origen" class="block text-sm font-medium text-text">¿Cómo llegaste a mi página?</label>
-            <input type="text" id="origen" name="origen" class="w-full px-4 py-3 rounded-lg border border-input bg-card focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all text-text shadow-sm" />
+            <input type="text" id="origen" name="Como_llegaste" class="w-full px-4 py-3 rounded-lg border border-input bg-card focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all text-text shadow-sm" />
           </div>
         </div>
 
         <div class="space-y-2">
           <label for="disponibilidad" class="block text-sm font-medium text-text">Disponibilidad estimada para hablar</label>
           <div class="relative">
-            <select id="disponibilidad" name="disponibilidad" class="w-full px-4 py-3 rounded-lg border border-input bg-card focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all text-text appearance-none shadow-sm cursor-pointer pr-10">
+            <select id="disponibilidad" name="Disponibilidad" class="w-full px-4 py-3 rounded-lg border border-input bg-card focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all text-text appearance-none shadow-sm cursor-pointer pr-10">
               <option value="" disabled selected>Seleccionar...</option>
               <option value="Esta semana">Esta semana</option>
               <option value="Este mes">Este mes</option>
@@ -189,7 +191,7 @@
         <div class="space-y-2 pt-2">
           <label class="flex items-start gap-4 cursor-pointer p-4 rounded-xl border border-border/50 bg-card/50 hover:bg-card transition-colors">
             <div class="flex items-center h-6">
-              <input type="checkbox" id="consentimiento" name="consentimiento" required class="w-5 h-5 rounded border border-input text-accent focus:ring-accent transition-all bg-background cursor-pointer" />
+              <input type="checkbox" id="consentimiento" name="Acepta_ser_contactado" required class="w-5 h-5 rounded border border-input text-accent focus:ring-accent transition-all bg-background cursor-pointer" />
             </div>
             <span class="text-sm font-medium text-text leading-relaxed mt-0.5">
               Acepto ser contactado en relación con esta consulta <span class="text-red-500">*</span>
