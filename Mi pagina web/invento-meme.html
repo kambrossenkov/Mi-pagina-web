@@ -34,6 +34,113 @@
       }
     }
   </script>
+  <style>
+    /* Panorama Slider Styling */
+    .panorama-stage {
+      perspective: 1200px;
+      width: 100%;
+      height: 60vh;
+      min-height: 400px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .panorama-track {
+      width: 250px;
+      height: 350px;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+      cursor: grab;
+    }
+    .panorama-track:active {
+      cursor: grabbing;
+      transition: none; /* Instant follow when dragging */
+    }
+
+    @media (min-width: 768px) {
+      .panorama-track {
+        width: 320px;
+        height: 450px;
+      }
+    }
+
+    .slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 1rem;
+      overflow: hidden;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+      user-select: none;
+    }
+
+    .nav-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: white;
+      font-size: 24px;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      cursor: pointer;
+      z-index: 20;
+      backdrop-filter: blur(5px);
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .nav-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-50%) scale(1.1);
+    }
+
+    .nav-btn.prev {
+      left: 5%;
+    }
+
+    .nav-btn.next {
+      right: 5%;
+    }
+
+    .pagination {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      cursor: pointer;
+      transition: background 0.3s, transform 0.3s;
+    }
+
+    .dot.active {
+      background: white;
+      transform: scale(1.3);
+    }
+    
+    .hero-label {
+      font-size: 2rem;
+      font-weight: bold;
+      font-family: 'Georgia', serif;
+      color: white;
+      text-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    }
+  </style>
 </head>
 <body class="min-h-screen bg-black overflow-x-hidden text-white animate-fade-in transition-colors duration-300 flex flex-col">
   
@@ -73,7 +180,16 @@
     </nav>
   </header>
 
-  <main class="relative z-10 w-full min-h-screen pt-24 pb-12 flex flex-col items-center justify-center"></main>
+  <main class="relative z-10 w-full min-h-screen pt-24 pb-12 flex flex-col items-center justify-center">
+    <p class="hero-label mt-10 text-center relative z-10">La Evolución del Diseño</p>
+    <div class="panorama-stage relative z-10" id="stage">
+      <button class="nav-btn prev" id="prevBtn" aria-label="Anterior">&#8592;</button>
+      <div class="panorama-track" id="track"></div>
+      <button class="nav-btn next" id="nextBtn" aria-label="Siguiente">&#8594;</button>
+    </div>
+    <div class="pagination relative z-10" id="pagination"></div>
+    <p class="hint text-center relative z-10 mb-10">← arrastra o usa las flechas →</p>
+  </main>
 
   <!-- Footer Component -->
   <footer class="relative z-10 w-full border-t border-border mt-auto bg-black/50 backdrop-blur-md transition-colors duration-300">
@@ -105,6 +221,163 @@
   </footer>
 
   <script src="script.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const track = document.getElementById('track');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const pagination = document.getElementById('pagination');
+        
+        // Configuration: 8 Placeholder slides as requested
+        const slides = [1, 2, 3, 4, 5, 6, 7, 8];
+        const numSlides = slides.length;
+        const angleIncrement = 360 / numSlides;
+        
+        let radius = 0;
+        
+        // BUILD DOM
+        const slideEls = slides.map((item, i) => {
+            const div = document.createElement('div');
+            div.className = 'slide flex items-center justify-center text-5xl md:text-7xl font-bold text-white border border-white/20 bg-black/50 backdrop-blur-md transition-all duration-300';
+            div.textContent = item; // Show the numbers
+            
+            // Pagination mapping
+            const dot = document.createElement('div');
+            dot.className = 'dot';
+            if(i === 0) dot.classList.add('active');
+            dot.addEventListener('click', () => goToSlide(i));
+            pagination.appendChild(dot);
+            
+            track.appendChild(div);
+            return { el: div, dot: dot };
+        });
+
+        function init3D() {
+            const slideWidth = slideEls[0].el.offsetWidth;
+            // Radius math formula: Width / (2 * tan(PI / N)) 
+            radius = Math.round((slideWidth / 2) / Math.tan(Math.PI / numSlides)) + 40;
+            
+            slideEls.forEach((slide, i) => {
+                const angle = i * angleIncrement;
+                slide.el.style.transform = `rotateY(${angle}deg) translateZ(${radius}px)`;
+            });
+            updateCarousel();
+        }
+
+        let currentIndex = 0;
+        let currentRotation = 0;
+        
+        function updateCarousel() {
+            currentRotation = currentIndex * -angleIncrement;
+            track.style.transform = `rotateY(${currentRotation}deg)`;
+            
+            slideEls.forEach((s, idx) => {
+                if (idx === getNormalizedIndex(currentIndex)) {
+                    s.dot.classList.add('active');
+                } else {
+                    s.dot.classList.remove('active');
+                }
+            });
+        }
+
+        function getNormalizedIndex(index) {
+            return ((index % numSlides) + numSlides) % numSlides;
+        }
+
+        function goToSlide(index) {
+            let targetIndex = index;
+            const currentNorm = getNormalizedIndex(currentIndex);
+            const diff = targetIndex - currentNorm;
+            
+            if (diff > numSlides / 2) {
+                targetIndex -= numSlides;
+            } else if (diff < -numSlides / 2) {
+                targetIndex += numSlides;
+            }
+            
+            currentIndex += targetIndex - currentNorm;
+            updateCarousel();
+            resetAutoPlay();
+        }
+
+        // Action Buttons
+        prevBtn.addEventListener('click', () => {
+            currentIndex--;
+            updateCarousel();
+            resetAutoPlay();
+        });
+
+        nextBtn.addEventListener('click', () => {
+            currentIndex++;
+            updateCarousel();
+            resetAutoPlay();
+        });
+
+        // 3D Drag Interface
+        let startX = 0;
+        let isDragging = false;
+        let startRotation = 0;
+
+        track.addEventListener('pointerdown', (e) => {
+            isDragging = true;
+            startX = e.clientX;
+            track.style.transition = 'none';
+            startRotation = currentRotation;
+            pauseAutoPlay();
+        });
+
+        window.addEventListener('pointermove', (e) => {
+            if (!isDragging) return;
+            const dx = e.clientX - startX;
+            const rotationDiff = (dx / window.innerWidth) * 180; 
+            track.style.transform = `rotateY(${startRotation + rotationDiff}deg)`;
+        });
+
+        window.addEventListener('pointerup', (e) => {
+            if (!isDragging) return;
+            isDragging = false;
+            track.style.transition = 'transform 0.5s cubic-bezier(0.25, 1, 0.5, 1)';
+            
+            const dx = e.clientX - startX;
+            if (Math.abs(dx) > 50) {
+                if (dx > 0) currentIndex--;
+                else currentIndex++;
+            }
+            updateCarousel();
+            resumeAutoPlay();
+        });
+
+        // Auto-Play Logic
+        let autoPlayTimer;
+        function startAutoPlay() {
+            autoPlayTimer = setInterval(() => {
+                currentIndex++;
+                updateCarousel();
+            }, 3000);
+        }
+        function pauseAutoPlay() {
+            clearInterval(autoPlayTimer);
+        }
+        function resumeAutoPlay() {
+            pauseAutoPlay();
+            startAutoPlay();
+        }
+        function resetAutoPlay() {
+            resumeAutoPlay();
+        }
+
+        // Start Up
+        window.addEventListener('resize', () => {
+            setTimeout(init3D, 100);
+        });
+        
+        setTimeout(() => {
+            init3D();
+            startAutoPlay();
+        }, 100);
+    });
+  </script>
 
   <!-- WebGL Spooky Smoke Effect -->
   <script>
