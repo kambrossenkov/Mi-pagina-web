@@ -42,6 +42,36 @@
   animation: scaleIn 0.8s ease-out forwards;
 }
 
+@keyframes meteor-shower {
+  0% { transform: rotate(215deg) translateX(0); opacity: 1; }
+  70% { opacity: 1; }
+  100% { transform: rotate(215deg) translateX(-2500px); opacity: 0; }
+}
+
+.meteor {
+  position: absolute;
+  width: 100px;
+  height: 1px;
+  background: linear-gradient(90deg, #00d4ff, transparent);
+  border-radius: 999px;
+  animation: meteor-shower linear infinite;
+  pointer-events: none;
+  transform: rotate(215deg);
+}
+
+.meteor::before {
+  content: '';
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #fff;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 0;
+  box-shadow: 0 0 12px 3px rgba(0, 212, 255, 0.7);
+}
+
 /* Original CSS provided */
 #root {
   max-width: 1280px;
