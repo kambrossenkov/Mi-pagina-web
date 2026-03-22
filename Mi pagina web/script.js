@@ -54,10 +54,10 @@ const translations = {
 const articlesList = {
   en: [
     {
-      id: 1, title: "10 Tips for Better Web Design",
-      excerpt: "Learn how to create visually appealing and user-friendly websites with these top ten tips.",
-      category: "Design", date: "Mar 10, 2026",
-      imageUrl: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&q=80&w=800",
+      id: 1, title: "<span class=\"text-accent text-xl font-bold mb-2\">Calistenia</span>",
+      excerpt: "<p class=\"text-muted-foreground leading-relaxed text-sm md:text-base\">Una disciplina que me enseñó a desarrollar mi mente y mi físico, lo cual me ayuda a superarme en muchas características de la vida de una persona y el bienestar de uno mismo.</p>",
+      category: "HOBBIES", date: "Próximamente",
+      imageUrl: "Fotos/foto_portada_calistenia.png",
     },
     {
       id: 2, title: "Finalización de mi cursada en la carrera",
@@ -92,10 +92,10 @@ const articlesList = {
   ],
   es: [
     {
-      id: 1, title: "10 Consejos para un Mejor Diseño",
-      excerpt: "Aprende a crear sitios web visualmente atractivos y fáciles de usar con estos consejos.",
-      category: "Diseño", date: "10 Mar, 2026",
-      imageUrl: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&q=80&w=800",
+      id: 1, title: "<span class=\"text-accent text-xl font-bold mb-2\">Calistenia</span>",
+      excerpt: "<p class=\"text-muted-foreground leading-relaxed text-sm md:text-base\">Una disciplina que me enseñó a desarrollar mi mente y mi físico, lo cual me ayuda a superarme en muchas características de la vida de una persona y el bienestar de uno mismo.</p>",
+      category: "HOBBIES", date: "Próximamente",
+      imageUrl: "Fotos/foto_portada_calistenia.png",
     },
     {
       id: 2, title: "Finalizacion de mi cursada en la carrera",
@@ -180,6 +180,7 @@ function renderArticles() {
     const staggerNumber = Math.min(index + 1, 3);
     const delay = staggerNumber * 100 + 100; // Base delay + stagger
     
+    const isCalistenia = index === 0;
     const isTrayectoria = index === 1;
     const isMeme = index === 2;
     
@@ -187,7 +188,11 @@ function renderArticles() {
     let wrapperHref = '';
     let objectFitClass = 'object-cover';
     
-    if (isTrayectoria) {
+    if (isCalistenia) {
+      wrapperTag = 'a';
+      wrapperHref = 'href="pasatiempos.html"';
+      objectFitClass = 'object-contain';
+    } else if (isTrayectoria) {
       wrapperTag = 'a';
       wrapperHref = 'href="curiosidades.html"';
       objectFitClass = 'object-contain bg-black';
@@ -197,6 +202,7 @@ function renderArticles() {
     }
 
     const dateLabel = isTrayectoria ? article.date : `<span class="text-xs font-bold uppercase tracking-wider text-accent">${article.category}</span><span class="text-xs text-muted-foreground ml-2">• ${article.date}</span>`;
+    const excerptHtml = isCalistenia ? article.excerpt : `<p class="text-muted-foreground line-clamp-3 text-sm leading-relaxed">${article.excerpt}</p>`;
 
     const articleHTML = `
       <${wrapperTag} ${wrapperHref}
