@@ -1,11 +1,11 @@
 // Translations dictionary
 const translations = {
   en: {
-    "nav-curiosities": "Curiosities",
+    "nav-hobbies": "Hobbies",
+    "nav-trajectory": "My Journey",
     "nav-inventions": "Inventions",
     "nav-home": "Home",
     "nav-contact": "Contact Me",
-    "nav-home": "Home",
     "nav-articles": "Articles",
     "nav-wellness": "Wellness",
     "nav-travel": "Travel",
@@ -25,11 +25,11 @@ const translations = {
     "ft-help": "I'm here to help"
   },
   es: {
-    "nav-curiosities": "Curiosidades",
+    "nav-hobbies": "Pasatiempos",
+    "nav-trajectory": "Mi trayectoria",
     "nav-inventions": "Inventos",
     "nav-home": "Inicio",
     "nav-contact": "Contactarme",
-    "nav-home": "Inicio",
     "nav-articles": "Artículos",
     "nav-wellness": "Bienestar",
     "nav-travel": "Viajes",

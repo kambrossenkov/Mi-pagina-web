@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es" class="dark" style="background-color: #000; color-scheme: dark;">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pasatiempos | Perspective</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="styles.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['Georgia', 'serif'],
+          },
+          animation: {
+            'spin-slow': 'spin 8s linear infinite',
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="min-h-screen bg-black text-white flex flex-col font-sans antialiased selection:bg-blue-600 selection:text-white">
+  
+  <!-- Header Component -->
+  <header class="sticky top-0 z-50 py-4 md:py-6 border-b border-white/10 bg-black/90 backdrop-blur-md transition-colors duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 md:w-10 md:h-10 border-2 border-white flex items-center justify-center text-white font-bold text-lg md:text-xl">K</div>
+        <h1 class="text-xl md:text-2xl font-bold tracking-tight text-white font-serif hidden sm:block">Ambrossenkov</h1>
+      </div>
+      <nav class="hidden md:flex gap-8 items-center text-sm font-medium text-white/90">
+        <a href="pasatiempos.html" data-i18n="nav-hobbies" class="hover:text-blue-400 transition-colors">Pasatiempos</a>
+        <a href="curiosidades.html" data-i18n="nav-trajectory" class="hover:text-blue-400 transition-colors">Mi trayectoria</a>
+        <a href="index.html" data-i18n="nav-home" class="hover:text-blue-400 transition-colors">Inicio</a>
+        <a href="inventos.html" data-i18n="nav-inventions" class="hover:text-blue-400 transition-colors">Inventos</a>
+      </nav>
+      <div class="flex items-center gap-4 md:gap-6">
+        <button id="lang-toggle" class="text-white hover:text-blue-400 transition-colors text-sm font-bold uppercase w-8 flex-shrink-0">
+          ES
+        </button>
+        <a href="contacto.html" target="_blank" data-i18n="nav-contact" class="hidden md:block px-6 py-2 rounded-full bg-blue-600 text-white font-medium hover:bg-blue-700 transition-all text-center whitespace-nowrap shadow-[0_0_15px_rgba(37,99,235,0.4)]">
+          Contactarme
+        </a>
+        <!-- Hamburger Menu Button -->
+        <button id="mobile-menu-btn" class="md:hidden text-white hover:text-blue-400 transition-colors focus:outline-none ml-2">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+        </button>
+      </div>
+    </div>
+    <!-- Mobile Navigation -->
+    <nav id="mobile-menu" class="hidden flex-col gap-4 px-4 pt-4 pb-6 bg-black border-b border-white/10 md:hidden w-full shadow-lg">
+      <a href="pasatiempos.html" data-i18n="nav-hobbies" class="block text-base font-medium text-white/90 hover:text-blue-400">Pasatiempos</a>
+      <a href="curiosidades.html" data-i18n="nav-trajectory" class="block text-base font-medium text-white/90 hover:text-blue-400">Mi trayectoria</a>
+      <a href="index.html" data-i18n="nav-home" class="block text-base font-medium text-white/90 hover:text-blue-400">Inicio</a>
+      <a href="inventos.html" data-i18n="nav-inventions" class="block text-base font-medium text-white/90 hover:text-blue-400">Inventos</a>
+      <a href="contacto.html" target="_blank" data-i18n="nav-contact" class="block text-base font-medium text-blue-500 hover:text-blue-400 mt-2">Contactarme</a>
+    </nav>
+  </header>
+
+  <!-- Main Content (Void with Construction logic) -->
+  <main class="flex-grow flex items-center justify-center min-h-[60vh] relative overflow-hidden">
+    <!-- Subtle technological noise elements -->
+    <div class="absolute inset-0 z-0 opacity-20 pointer-events-none" style="background-image: radial-gradient(circle at 50% 50%, rgba(37, 99, 235, 0.1) 0%, transparent 50%);"></div>
+    
+    <div class="relative z-10 text-center px-4">
+      <h1 data-i18n="under-construction" class="text-4xl md:text-5xl md:text-7xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-400 uppercase animate-pulse select-none" style="filter: drop-shadow(0 0 15px rgba(59,130,246,0.3));">
+        En construcción
+      </h1>
+      <div class="mt-6 flex flex-col items-center gap-4 opacity-50">
+        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="animate-spin-slow text-white"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+      </div>
+    </div>
+  </main>
+
+  <!-- ================= STANDARD FOOTER ================= -->
+  <footer class="relative w-full border-t border-white/10 bg-black mt-auto overflow-hidden">
+    <div class="absolute inset-0 z-0 opacity-10 pointer-events-none" style="background-image: linear-gradient(rgba(255, 255, 255, 0.2) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.2) 1px, transparent 1px); background-size: 30px 30px;"></div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex flex-col items-center gap-10 relative z-10">
+      <div class="w-full text-center md:text-left">
+        <h3 data-i18n="ft-contact-title" class="text-2xl font-bold text-white tracking-widest uppercase">Contactame</h3>
+      </div>
+      <div class="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16 w-full text-white">
+        <a href="mailto:k.ambrossenkov@gmail.com" class="flex items-center gap-3 hover:text-blue-400 transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+          <span class="font-medium text-lg">k.ambrossenkov@gmail.com</span>
+        </a>
+        <a href="https://www.instagram.com/konsta_ambrossenkov/?__d=1" target="_blank" class="flex items-center gap-3 hover:text-blue-400 transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+        </a>
+        <a href="https://www.linkedin.com/in/konstantino-ambrossenkov/" target="_blank" class="flex items-center gap-3 hover:text-blue-400 transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
+        </a>
+      </div>
+      <div class="mt-4">
+        <img src="Fotos/firma AK.jfif" alt="Firma AK" class="h-16 object-contain" onerror="this.outerHTML='<span class=\'text-2xl font-serif italic text-white opacity-70\'>Firma AK</span>'" />
+      </div>
+      <div class="pt-8 w-full border-t border-white/10 text-center text-gray-500">
+        <p data-i18n="ft-help" class="font-medium text-lg tracking-widest">Estoy para ayudar</p>
+      </div>
+    </div>
+  </footer>
+  
+  <script src="script.js" onerror="console.info('Scripts running')"></script>
+</body>
+</html>
