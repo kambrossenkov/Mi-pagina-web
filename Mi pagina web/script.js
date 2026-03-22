@@ -66,10 +66,10 @@ const articlesList = {
       imageUrl: "Fotos/foto_de_recibida.jpg",
     },
     {
-      id: 3, title: "Mindfulness in Modern Life",
-      excerpt: "A guide to staying present and managing stress in our fast-paced, always-connected world.",
-      category: "Wellness", date: "Mar 15, 2026",
-      imageUrl: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&q=80&w=800",
+      id: 3, title: "Evolución del Diseño",
+      excerpt: "Un recorrido visual por la historia y transformación del diseño gráfico y digital, desde los símbolos antiguos hasta la era de la Inteligencia Artificial.",
+      category: "INVENTOS", date: "01-abr-2025",
+      imageUrl: "Fotos/MEME.jpg",
     },
     {
       id: 4, title: "Sustainable Travel Guide",
@@ -104,10 +104,10 @@ const articlesList = {
       imageUrl: "Fotos/foto_de_recibida.jpg",
     },
     {
-      id: 3, title: "Mindfulness en la Vida Moderna",
-      excerpt: "Una guía para mantenerte presente y manejar el estrés en nuestro mundo siempre conectado.",
-      category: "Bienestar", date: "15 Mar, 2026",
-      imageUrl: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&q=80&w=800",
+      id: 3, title: "Evolución del Diseño",
+      excerpt: "Un recorrido visual por la historia y transformación del diseño gráfico y digital, desde los símbolos antiguos hasta la era de la Inteligencia Artificial.",
+      category: "INVENTOS", date: "01-abr-2025",
+      imageUrl: "Fotos/MEME.jpg",
     },
     {
       id: 4, title: "Guía de Viaje Sustentable",
@@ -181,10 +181,22 @@ function renderArticles() {
     const delay = staggerNumber * 100 + 100; // Base delay + stagger
     
     const isTrayectoria = index === 1;
-    const wrapperTag = isTrayectoria ? 'a' : 'article';
-    const wrapperHref = isTrayectoria ? 'href="curiosidades.html"' : '';
-    const dateLabel = isTrayectoria ? article.date : `<span class="text-xs font-bold uppercase tracking-wider text-accent">${article.category}</span><span class="text-xs text-muted-foreground">• ${article.date}</span>`;
-    const objectFitClass = isTrayectoria ? 'object-contain bg-black' : 'object-cover';
+    const isMeme = index === 2;
+    
+    let wrapperTag = 'article';
+    let wrapperHref = '';
+    let objectFitClass = 'object-cover';
+    
+    if (isTrayectoria) {
+      wrapperTag = 'a';
+      wrapperHref = 'href="curiosidades.html"';
+      objectFitClass = 'object-contain bg-black';
+    } else if (isMeme) {
+      wrapperTag = 'a';
+      wrapperHref = 'href="invento-meme.html"';
+    }
+
+    const dateLabel = isTrayectoria ? article.date : `<span class="text-xs font-bold uppercase tracking-wider text-accent">${article.category}</span><span class="text-xs text-muted-foreground ml-2">• ${article.date}</span>`;
 
     const articleHTML = `
       <${wrapperTag} ${wrapperHref}
