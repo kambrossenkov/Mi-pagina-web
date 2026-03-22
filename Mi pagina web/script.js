@@ -60,10 +60,10 @@ const articlesList = {
       imageUrl: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&q=80&w=800",
     },
     {
-      id: 2, title: "The Future of Artificial Intelligence",
-      excerpt: "Exploring the potential impacts and advancements of AI technology in the next decade.",
-      category: "Technology", date: "Mar 12, 2026",
-      imageUrl: "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=800",
+      id: 2, title: "Finalización de mi cursada en la carrera",
+      excerpt: "Luego de un recorrido de 4 años y medio en la carrera de Lic. en Gestión de Negocios, pude finalizarla en tiempo y forma gracias a la beca obtenida.",
+      category: "", date: "12-dic-2024",
+      imageUrl: "Fotos/foto_de_recibida.jpg",
     },
     {
       id: 3, title: "Mindfulness in Modern Life",
@@ -98,10 +98,10 @@ const articlesList = {
       imageUrl: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&q=80&w=800",
     },
     {
-      id: 2, title: "El Futuro de la Inteligencia Artificial",
-      excerpt: "Explorando los impactos potenciales y avances de la tecnología IA en la próxima década.",
-      category: "Tecnología", date: "12 Mar, 2026",
-      imageUrl: "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=800",
+      id: 2, title: "Finalizacion de mi cursada en la carrera",
+      excerpt: "Luego de un recorrido de 4 años y medio en la carrera de Lic. en gestion de negocios pude finalizarla en tiempo y en forma por la beca obtenida",
+      category: "", date: "12-dic-2024",
+      imageUrl: "Fotos/foto_de_recibida.jpg",
     },
     {
       id: 3, title: "Mindfulness en la Vida Moderna",
@@ -180,27 +180,34 @@ function renderArticles() {
     const staggerNumber = Math.min(index + 1, 3);
     const delay = staggerNumber * 100 + 100; // Base delay + stagger
     
-    // HTML structure replacing the React <ArticleCard /> component
-    // Added text-text and other variables explicitly
+    const isTrayectoria = index === 1;
+    const wrapperTag = isTrayectoria ? 'a' : 'article';
+    const wrapperHref = isTrayectoria ? 'href="curiosidades.html"' : '';
+    const dateLabel = isTrayectoria ? article.date : `<span class="text-xs font-bold uppercase tracking-wider text-accent">${article.category}</span><span class="text-xs text-muted-foreground">• ${article.date}</span>`;
+    const objectFitClass = isTrayectoria ? 'object-contain bg-black' : 'object-cover';
+
     const articleHTML = `
-      <article 
-        class="bg-card rounded-2xl overflow-hidden border border-border shadow-sm hover:shadow-md transition-all duration-300 animate-slide-up group" 
+      <${wrapperTag} ${wrapperHref}
+        class="block bg-card rounded-2xl overflow-hidden border border-border shadow-sm hover:shadow-md transition-all duration-300 animate-slide-up group" 
         style="animation-delay: ${delay}ms;"
       >
         <div class="h-48 overflow-hidden relative">
-          <img src="${article.imageUrl}" alt="${article.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+          <img src="${article.imageUrl}" alt="${article.title}" class="w-full h-full ${objectFitClass} group-hover:scale-105 transition-transform duration-500" />
         </div>
-        <div class="p-6">
-          <div class="flex items-center gap-2 mb-3">
-            <span class="text-xs font-bold uppercase tracking-wider text-accent">${article.category}</span>
-            <span class="text-xs text-muted-foreground">• ${article.date}</span>
+        <div class="p-6 flex flex-col justify-between h-[calc(100%-12rem)]">
+          <div>
+            <div class="flex items-center gap-2 mb-3">
+              ${dateLabel}
+            </div>
+            <h3 class="text-xl font-bold mb-2 tracking-tight group-hover:text-accent text-text transition-colors">
+              ${article.title}
+            </h3>
+            <p class="text-muted-foreground line-clamp-3 text-sm leading-relaxed">
+              ${article.excerpt}
+            </p>
           </div>
-          <h3 class="text-xl font-bold mb-2 tracking-tight group-hover:text-accent text-text transition-colors">
-            <a href="#">${article.title}</a>
-          </h3>
-          <p class="text-muted-foreground text-sm line-clamp-2">${article.excerpt}</p>
         </div>
-      </article>
+      </${wrapperTag}>
     `;
     
     container.innerHTML += articleHTML;
