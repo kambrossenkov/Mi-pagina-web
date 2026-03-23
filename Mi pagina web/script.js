@@ -62,7 +62,7 @@ const articlesList = {
     {
       id: 2, title: "Finalización de mi cursada en la carrera",
       excerpt: "Luego de un recorrido de 4 años y medio en la carrera de Lic. en Gestión de Negocios, pude finalizarla en tiempo y forma gracias a la beca obtenida.",
-      category: "", date: "12-dic-2024",
+      category: "MI TRAYECTORIA", date: "12-dic-2024",
       imageUrl: "Fotos/foto_de_recibida.jpg",
     },
     {
@@ -201,7 +201,7 @@ function renderArticles() {
       wrapperHref = 'href="invento-meme.html"';
     }
 
-    const dateLabel = isTrayectoria ? article.date : `<span class="text-xs font-bold uppercase tracking-wider text-accent">${article.category}</span><span class="text-xs text-muted-foreground ml-2">• ${article.date}</span>`;
+    const dateLabel = `<span class="text-xs font-bold uppercase tracking-wider text-accent">${article.category}</span><span class="text-xs text-muted-foreground ml-2">• ${article.date}</span>`;
     const excerptHtml = isCalistenia ? article.excerpt : `<p class="text-muted-foreground line-clamp-3 text-sm leading-relaxed">${article.excerpt}</p>`;
 
     const articleHTML = `
