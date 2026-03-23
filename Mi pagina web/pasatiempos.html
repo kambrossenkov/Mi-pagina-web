@@ -59,18 +59,21 @@
     </nav>
   </header>
 
-  <!-- Main Content (Void with Construction logic) -->
-  <main class="flex-grow flex items-center justify-center min-h-[60vh] relative overflow-hidden">
-    <!-- Subtle technological noise elements -->
-    <div class="absolute inset-0 z-0 opacity-20 pointer-events-none" style="background-image: radial-gradient(circle at 50% 50%, rgba(37, 99, 235, 0.1) 0%, transparent 50%);"></div>
-    
-    <div class="relative z-10 text-center px-4">
-      <h1 data-i18n="under-construction" class="text-4xl md:text-5xl md:text-7xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-400 uppercase animate-pulse select-none" style="filter: drop-shadow(0 0 15px rgba(59,130,246,0.3));">
-        En construcción
+  <!-- Main Content (Animated Hero) -->
+  <main class="relative w-full h-screen overflow-hidden bg-black flex flex-col items-center justify-center">
+    <canvas id="noise-canvas" class="absolute inset-0 z-0 pointer-events-none opacity-50"></canvas>
+    <canvas id="beams-canvas" class="absolute inset-0 z-10 pointer-events-none"></canvas>
+
+    <div class="relative z-20 flex flex-col items-center text-center px-4">
+      <h1 class="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-white mb-6 flex flex-col items-center gap-2 md:gap-4 w-full text-center">
+        <span>Pasatiempos que me</span>
+        <div class="relative h-[1.3em] w-full max-w-4xl overflow-hidden flex items-center justify-center">
+          <span id="animated-word" class="absolute text-accent whitespace-nowrap transition-transform duration-700 ease-in-out transform translate-y-full opacity-0"></span>
+        </div>
       </h1>
-      <div class="mt-6 flex flex-col items-center gap-4 opacity-50">
-        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="animate-spin-slow text-white"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
-      </div>
+      <p class="text-lg md:text-xl text-gray-400 max-w-2xl mt-4">
+        Explorando intereses que complementan mi desarrollo profesional y personal.
+      </p>
     </div>
   </main>
 
@@ -102,6 +105,166 @@
     </div>
   </footer>
   
+  <!-- Canvas Beams Physics Engine -->
+  <script>
+  document.addEventListener('DOMContentLoaded', () => {
+      // 1. Text Animation Logic
+      const words = ["apasionan", "dan energía"];
+      let currentWordIndex = 0;
+      const animatedWordElement = document.getElementById('animated-word');
+  
+      function animateText() {
+          // Animate Out
+          animatedWordElement.style.transform = 'translateY(-100%)';
+          animatedWordElement.style.opacity = '0';
+  
+          setTimeout(() => {
+              // Update Word
+              currentWordIndex = (currentWordIndex + 1) % words.length;
+              animatedWordElement.textContent = words[currentWordIndex];
+              
+              // Prepare for Animate In (start from bottom)
+              animatedWordElement.style.transition = 'none';
+              animatedWordElement.style.transform = 'translateY(100%)';
+              
+              // Force reflow
+              void animatedWordElement.offsetWidth;
+              
+              // Animate In
+              animatedWordElement.style.transition = 'transform 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.7s ease-in-out';
+              animatedWordElement.style.transform = 'translateY(0)';
+              animatedWordElement.style.opacity = '1';
+          }, 700); // Wait for animate out to finish
+      }
+  
+      // Initial setup
+      animatedWordElement.textContent = words[0];
+      animatedWordElement.style.transform = 'translateY(0)';
+      animatedWordElement.style.opacity = '1';
+  
+      setInterval(animateText, 3000);
+  
+      // 2. Canvas Background Logic (Bluish Beams & Noise)
+      const canvas = document.getElementById('beams-canvas');
+      const noiseCanvas = document.getElementById('noise-canvas');
+      if (!canvas || !noiseCanvas) return;
+      
+      const ctx = canvas.getContext("2d");
+      const nCtx = noiseCanvas.getContext("2d");
+      
+      let beams = [];
+      const LAYERS = 3;
+      const BEAMS_PER_LAYER = 8;
+      let animationFrameId;
+  
+      function createBeam(width, height, layer) {
+          const angle = -35 + Math.random() * 10;
+          const baseSpeed = 0.2 + layer * 0.2;
+          const baseOpacity = 0.08 + layer * 0.05;
+          const baseWidth = 10 + layer * 5;
+          return {
+              x: Math.random() * width,
+              y: Math.random() * height,
+              width: baseWidth,
+              length: height * 2.5,
+              angle,
+              speed: baseSpeed + Math.random() * 0.2,
+              opacity: baseOpacity + Math.random() * 0.1,
+              pulse: Math.random() * Math.PI * 2,
+              pulseSpeed: 0.01 + Math.random() * 0.015,
+              layer,
+          };
+      }
+  
+      function resizeCanvas() {
+          const dpr = window.devicePixelRatio || 1;
+          
+          canvas.width = window.innerWidth * dpr;
+          canvas.height = window.innerHeight * dpr;
+          canvas.style.width = `${window.innerWidth}px`;
+          canvas.style.height = `${window.innerHeight}px`;
+          ctx.setTransform(1, 0, 0, 1, 0, 0);
+          ctx.scale(dpr, dpr);
+          
+          noiseCanvas.width = window.innerWidth * dpr;
+          noiseCanvas.height = window.innerHeight * dpr;
+          noiseCanvas.style.width = `${window.innerWidth}px`;
+          noiseCanvas.style.height = `${window.innerHeight}px`;
+          nCtx.setTransform(1, 0, 0, 1, 0, 0);
+          nCtx.scale(dpr, dpr);
+          
+          beams = [];
+          for (let layer = 1; layer <= LAYERS; layer++) {
+              for (let i = 0; i < BEAMS_PER_LAYER; i++) {
+                  beams.push(createBeam(window.innerWidth, window.innerHeight, layer));
+              }
+          }
+      }
+  
+      function generateNoise() {
+          const imgData = nCtx.createImageData(noiseCanvas.width, noiseCanvas.height);
+          for (let i = 0; i < imgData.data.length; i += 4) {
+              const v = Math.random() * 255;
+              imgData.data[i] = v;
+              imgData.data[i + 1] = v;
+              imgData.data[i + 2] = v;
+              imgData.data[i + 3] = 12; // Very subtle alpha
+          }
+          nCtx.putImageData(imgData, 0, 0);
+      }
+  
+      function drawBeam(beam) {
+          ctx.save();
+          ctx.translate(beam.x, beam.y);
+          ctx.rotate((beam.angle * Math.PI) / 180);
+          
+          const pulsingOpacity = Math.min(1, beam.opacity * (0.8 + Math.sin(beam.pulse) * 0.4));
+          const gradient = ctx.createLinearGradient(0, 0, 0, beam.length);
+          
+          // Changed to bluish hues matching text-accent (#3b82f6 approx rgb(59, 130, 246))
+          gradient.addColorStop(0, `rgba(59, 130, 246, 0)`);
+          gradient.addColorStop(0.2, `rgba(59, 130, 246, ${pulsingOpacity * 0.5})`);
+          gradient.addColorStop(0.5, `rgba(59, 130, 246, ${pulsingOpacity})`);
+          gradient.addColorStop(0.8, `rgba(59, 130, 246, ${pulsingOpacity * 0.5})`);
+          gradient.addColorStop(1, `rgba(59, 130, 246, 0)`);
+          
+          ctx.fillStyle = gradient;
+          ctx.filter = `blur(${2 + beam.layer * 2}px)`;
+          ctx.fillRect(-beam.width / 2, 0, beam.width, beam.length);
+          ctx.restore();
+      }
+  
+      function animate() {
+          const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+          gradient.addColorStop(0, "#000000"); // Deep black
+          gradient.addColorStop(1, "#0a0f1a"); // Very dark blue/black at bottom
+          
+          ctx.fillStyle = gradient;
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+          
+          beams.forEach((beam) => {
+              beam.y -= beam.speed * (beam.layer / LAYERS + 0.5);
+              beam.pulse += beam.pulseSpeed;
+              if (beam.y + beam.length < -50) {
+                  beam.y = window.innerHeight + 50;
+                  beam.x = Math.random() * window.innerWidth;
+              }
+              drawBeam(beam);
+          });
+          
+          // Optionally generate noise every frame (can be heavy on performance, uncomment if needed)
+          // generateNoise(); 
+          
+          animationFrameId = requestAnimationFrame(animate);
+      }
+  
+      window.addEventListener("resize", resizeCanvas);
+      resizeCanvas();
+      generateNoise(); // Generate noise once to save performance
+      animate();
+  });
+  </script>
+
   <script src="script.js" onerror="console.info('Scripts running')"></script>
 </body>
 </html>
