@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="es" class="dark" style="background-color: #000; color-scheme: dark;">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Músicas | Perspective</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="styles.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['Georgia', 'serif'],
+          },
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Hero scroll container */
+    #hero-scroll-root {
+      position: relative;
+      height: 200vh;
+      background: #000;
+    }
+
+    /* ── Section 1 — portada con foto ── */
+    #hero-s1 {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform-origin: center center;
+      will-change: transform;
+    }
+
+    /* Foto de fondo */
+    #hero-s1-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('Fotos/portada_musicas.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      filter: brightness(0.55);
+      transform-origin: center center;
+      will-change: transform;
+    }
+
+    /* Grilla decorativa sobre la foto */
+    #hero-s1-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(to right,  rgba(255,255,255,0.06) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,0.06) 1px, transparent 1px);
+      background-size: 54px 54px;
+      -webkit-mask-image: radial-gradient(ellipse 60% 50% at 50% 0%, #000 70%, transparent 100%);
+      mask-image:         radial-gradient(ellipse 60% 50% at 50% 0%, #000 70%, transparent 100%);
+      pointer-events: none;
+    }
+
+    /* Texto Section 1 */
+    #hero-s1-text {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 0 2rem;
+      color: #fff;
+      max-width: 900px;
+    }
+    #hero-s1-text h1 {
+      font-size: clamp(2rem, 5vw, 4.5rem);
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      margin: 0;
+      text-shadow: 0 2px 30px rgba(0,0,0,0.6);
+    }
+    #hero-s1-text p {
+      margin-top: 1.2rem;
+      font-size: clamp(0.9rem, 1.8vw, 1.2rem);
+      font-weight: 300;
+      color: rgba(255,255,255,0.75);
+      letter-spacing: 0.04em;
+    }
+
+    /* Scroll hint arrow */
+    #hero-scroll-hint {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      color: rgba(255,255,255,0.45);
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      animation: hero-bounce 1.6s ease infinite;
+    }
+    #hero-scroll-hint svg {
+      width: 20px;
+      height: 20px;
+      opacity: 0.5;
+    }
+    @keyframes hero-bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0);   opacity: 0.45; }
+      50%       { transform: translateX(-50%) translateY(6px); opacity: 0.9;  }
+    }
+
+    /* ── Section 2 — contenido (galería) ── */
+    #hero-s2 {
+      position: relative;
+      min-height: 100vh;
+      background: linear-gradient(to bottom, #1a1919, #06060e);
+      transform-origin: center top;
+      will-change: transform;
+      overflow: hidden;
+    }
+
+    /* Grilla decorativa Section 2 */
+    #hero-s2-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(to right,  rgba(79,79,79,0.18) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(79,79,79,0.18) 1px, transparent 1px);
+      background-size: 54px 54px;
+      -webkit-mask-image: radial-gradient(ellipse 60% 50% at 50% 0%, #000 70%, transparent 100%);
+      mask-image:         radial-gradient(ellipse 60% 50% at 50% 0%, #000 70%, transparent 100%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Contenido dentro de Section 2 */
+    #hero-s2-content {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      height: 100vh;
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-black text-white flex flex-col font-sans antialiased selection:bg-blue-600 selection:text-white">
+
+  <!-- Header Component -->
+  <header class="sticky top-0 z-50 py-4 md:py-6 border-b border-white/10 bg-black/90 backdrop-blur-md transition-colors duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 md:w-10 md:h-10 border-2 border-white flex items-center justify-center text-white font-bold text-lg md:text-xl">K</div>
+        <h1 class="text-xl md:text-2xl font-bold tracking-tight text-white font-serif hidden sm:block">Ambrossenkov</h1>
+      </div>
+      <nav class="hidden md:flex gap-8 items-center text-sm font-medium text-white/90">
+        <a href="pasatiempos.html" data-i18n="nav-hobbies" class="hover:text-blue-400 transition-colors">Pasatiempos</a>
+        <a href="curiosidades.html" data-i18n="nav-trajectory" class="hover:text-blue-400 transition-colors">Mi trayectoria</a>
+        <a href="index.html" data-i18n="nav-home" class="hover:text-blue-400 transition-colors">Inicio</a>
+        <a href="inventos.html" data-i18n="nav-inventions" class="hover:text-blue-400 transition-colors">Inventos</a>
+      </nav>
+      <div class="flex items-center gap-4 md:gap-6">
+        <button id="lang-toggle" class="text-white hover:text-blue-400 transition-colors text-sm font-bold uppercase w-8 flex-shrink-0">
+          ES
+        </button>
+        <a href="contacto.html" target="_blank" data-i18n="nav-contact" class="hidden md:block px-6 py-2 rounded-full bg-blue-600 text-white font-medium hover:bg-blue-700 transition-all text-center whitespace-nowrap shadow-[0_0_15px_rgba(37,99,235,0.4)]">
+          Contactarme
+        </a>
+        <!-- Hamburger Menu Button -->
+        <button id="mobile-menu-btn" class="md:hidden text-white hover:text-blue-400 transition-colors focus:outline-none ml-2">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+        </button>
+      </div>
+    </div>
+    <!-- Mobile Navigation -->
+    <nav id="mobile-menu" class="hidden flex-col gap-4 px-4 pt-4 pb-6 bg-black border-b border-white/10 md:hidden w-full shadow-lg">
+      <a href="pasatiempos.html" data-i18n="nav-hobbies" class="block text-base font-medium text-white/90 hover:text-blue-400">Pasatiempos</a>
+      <a href="curiosidades.html" data-i18n="nav-trajectory" class="block text-base font-medium text-white/90 hover:text-blue-400">Mi trayectoria</a>
+      <a href="index.html" data-i18n="nav-home" class="block text-base font-medium text-white/90 hover:text-blue-400">Inicio</a>
+      <a href="inventos.html" data-i18n="nav-inventions" class="block text-base font-medium text-white/90 hover:text-blue-400">Inventos</a>
+      <a href="contacto.html" target="_blank" data-i18n="nav-contact" class="block text-base font-medium text-blue-500 hover:text-blue-400 mt-2">Contactarme</a>
+    </nav>
+  </header>
+
+  <!-- Hero Scroll -->
+  <div id="hero-scroll-root">
+
+    <!-- Section 1: portada -->
+    <section id="hero-s1">
+      <div id="hero-s1-bg"></div>
+      <div id="hero-s1-grid"></div>
+
+      <div id="hero-s1-text">
+        <h1>Acá está mi galería<br>de músicas 🎵</h1>
+        <p>Me gusta siempre ordenarla —<br>scrolleá para ver las que más destaco</p>
+      </div>
+
+      <div id="hero-scroll-hint">
+        <span>Scroll</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 5v14M5 12l7 7 7-7"/>
+        </svg>
+      </div>
+    </section>
+
+    <!-- Section 2: galería de música -->
+    <section id="hero-s2">
+      <div id="hero-s2-grid"></div>
+      <div id="hero-s2-content">
+        <!-- GALERÍA 3D VA ACÁ -->
+      </div>
+    </section>
+
+  </div>
+
+  <!-- ================= STANDARD FOOTER ================= -->
+  <footer class="relative w-full border-t border-white/10 bg-black mt-auto overflow-hidden">
+    <div class="absolute inset-0 z-0 opacity-10 pointer-events-none" style="background-image: linear-gradient(rgba(255, 255, 255, 0.2) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.2) 1px, transparent 1px); background-size: 30px 30px;"></div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex flex-col items-center gap-10 relative z-10">
+      <div class="w-full text-center md:text-left">
+        <h3 data-i18n="ft-contact-title" class="text-2xl font-bold text-white tracking-widest uppercase">Contactame</h3>
+      </div>
+      <div class="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16 w-full text-white">
+        <a href="mailto:k.ambrossenkov@gmail.com" class="flex items-center gap-3 hover:text-blue-400 transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+          <span class="font-medium text-lg">k.ambrossenkov@gmail.com</span>
+        </a>
+        <a href="https://www.instagram.com/konsta_ambrossenkov/?__d=1" target="_blank" class="flex items-center gap-3 hover:text-blue-400 transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+        </a>
+        <a href="https://www.linkedin.com/in/konstantino-ambrossenkov/" target="_blank" class="flex items-center gap-3 hover:text-blue-400 transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
+        </a>
+      </div>
+      <div class="mt-4">
+        <img src="Fotos/firma AK.jfif" alt="Firma AK" class="h-16 object-contain" onerror="this.outerHTML='<span class=\'text-2xl font-serif italic text-white opacity-70\'>Firma AK</span>'" />
+      </div>
+      <div class="pt-8 w-full border-t border-white/10 text-center text-gray-500">
+        <p data-i18n="ft-help" class="font-medium text-lg tracking-widest">Estoy para ayudar</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js" onerror="console.info('Scripts running')"></script>
+
+  <!-- GSAP + ScrollTrigger -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <script>
+  (function() {
+    gsap.registerPlugin(ScrollTrigger);
+
+    const root = document.getElementById('hero-scroll-root');
+    const s1   = document.getElementById('hero-s1');
+    const s2   = document.getElementById('hero-s2');
+
+    /* Section 1: escala hacia abajo + leve rotación mientras scrolleás */
+    gsap.to(s1, {
+      scale:  0.8,
+      rotate: -5,
+      ease:   'none',
+      scrollTrigger: {
+        trigger: root,
+        start:   'top top',
+        end:     'bottom bottom',
+        scrub:   true,
+      }
+    });
+
+    /* Section 2: arranca pequeña y rotada, crece al llegar */
+    gsap.fromTo(s2,
+      { scale: 0.8, rotate: 5  },
+      { scale: 1,   rotate: 0,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: root,
+          start:   'top top',
+          end:     'bottom bottom',
+          scrub:   true,
+        }
+      }
+    );
+
+    /* Parallax sutil en la foto de fondo */
+    gsap.to('#hero-s1-bg', {
+      yPercent: 20,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: s1,
+        start:   'top top',
+        end:     'bottom top',
+        scrub:   true,
+      }
+    });
+
+  })();
+  </script>
+</body>
+</html>
