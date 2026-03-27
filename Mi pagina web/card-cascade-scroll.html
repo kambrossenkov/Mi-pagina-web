@@ -5,8 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>The Gravitational Card-Cascade</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
   <style>
     body {
@@ -43,66 +41,112 @@
       pointer-events: none;
     }
 
-    /* Fixed Pulsing Star Logo */
-    .fixed-star {
+    /* ── Loading overlay ── */
+    #sva-loader {
       position: fixed;
-      top: 100px; /* Spaced to avoid header collision */
-      left: 30px;
-      z-index: 40;
-      width: 45px;
-      height: 45px;
-      animation: pulseStar 4s ease-in-out infinite;
+      inset: 0;
+      background: #0a0a0a;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      gap: 24px;
+      transition: opacity 0.6s ease;
     }
-    @keyframes pulseStar {
-      0%, 100% { transform: scale(1); opacity: 0.8; filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.5)); }
-      50% { transform: scale(1.15) rotate(15deg); opacity: 1; filter: drop-shadow(0 0 25px rgba(139, 92, 246, 0.8)); }
+    #sva-loader.sva-hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+    #sva-pct {
+      font-size: 28px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: #fff;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    .sva-loader-label {
+      font-size: 13px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #888;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    .sva-progress-track {
+      width: 220px;
+      height: 2px;
+      background: #222;
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .sva-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #555, #fff);
+      border-radius: 2px;
+      width: 0%;
+      transition: width 0.1s linear;
     }
 
-    .scroll-track {
-      height: 400vh;
+    /* ── Scroll stage ── */
+    #sva-stage {
       position: relative;
+      height: 500vh;
     }
-    
-    .sticky-container {
+    #sva-sticky-wrap {
       position: sticky;
       top: 0;
-      width: 100vw;
+      width: 100%;
       height: 100vh;
-      overflow: hidden;
       display: flex;
       align-items: center;
       justify-content: center;
-      z-index: 10;
+      overflow: hidden;
+      background: #0a0a0a;
+    }
+    #sva-canvas {
+      display: block;
+      max-width: 100%;
+      max-height: 100vh;
+      width: auto;
+      height: auto;
     }
 
-    /* Single Target Element */
-    .target-image {
-      position: absolute;
-      width: 100%;
-      max-width: 650px;
-      height: 85vh;
-      object-fit: contain;
-      top: 50%;
+    /* ── Scroll hint ── */
+    #sva-hint {
+      position: fixed;
+      bottom: 32px;
       left: 50%;
-      transform: translate(-50%, -50%);
-      opacity: 0; /* Fully hidden initially */
-      z-index: 20;
-    }
-
-    /* Data Nebula Canvas */
-    #nebula-canvas {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 30; /* Overlaps target image to show particle tearing */
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      opacity: 1;
+      transition: opacity 0.4s;
       pointer-events: none;
+      z-index: 100;
     }
-
-    /* Main content area: white background */
-    main {
-      background-color: #ffffff;
+    #sva-hint.sva-gone {
+      opacity: 0;
+    }
+    #sva-hint span {
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #666;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    .sva-chevron {
+      width: 20px;
+      height: 20px;
+      border-right: 2px solid #555;
+      border-bottom: 2px solid #555;
+      transform: rotate(45deg);
+      animation: sva-bounce 1.4s ease infinite;
+    }
+    @keyframes sva-bounce {
+      0%, 100% { transform: rotate(45deg) translateY(0);   opacity: 0.4; }
+      50%       { transform: rotate(45deg) translateY(4px); opacity: 1;   }
     }
   </style>
 </head>
@@ -131,24 +175,31 @@
     </div>
   </header>
 
-  <!-- ================= FIXED STAR ================= -->
-  <svg class="fixed-star" viewBox="0 0 100 100">
-    <defs>
-      <linearGradient id="starGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stop-color="#3b82f6" />
-        <stop offset="100%" stop-color="#8b5cf6" />
-      </linearGradient>
-    </defs>
-    <path d="M50 5 L63 38 L98 43 L73 68 L79 100 L50 84 L21 100 L27 68 L2 43 L37 38 Z" fill="url(#starGrad)" />
-  </svg>
+  <!-- ================= SCROLL ANIMATION ================= -->
 
-  <!-- ================= MAIN VOID & SCROLL SPACE ================= -->
-  <main class="scroll-track flex-grow">
-    <div class="sticky-container">
-      <img src="Fotos/foto_portada_de_cartas.png" alt="Stack Cascade" class="target-image" id="target-image">
-      <canvas id="nebula-canvas"></canvas>
+  <!-- Loading overlay -->
+  <div id="sva-loader">
+    <div id="sva-pct">0%</div>
+    <div class="sva-progress-track">
+      <div class="sva-progress-fill" id="sva-bar"></div>
     </div>
-  </main>
+    <div class="sva-loader-label">Cargando</div>
+  </div>
+
+  <!-- Scroll stage -->
+  <div id="sva-stage">
+    <div id="sva-sticky-wrap">
+      <canvas id="sva-canvas" width="1280" height="720"></canvas>
+    </div>
+  </div>
+
+  <!-- Scroll hint -->
+  <div id="sva-hint">
+    <span>Scroll</span>
+    <div class="sva-chevron"></div>
+  </div>
+
+  <!-- ================= FIN SCROLL ANIMATION ================= -->
 
   <!-- ================= STANDARD FOOTER ================= -->
   <footer class="relative w-full border-t border-white/20 bg-black z-50">
@@ -178,165 +229,100 @@
     </div>
   </footer>
 
+  <!-- ================= SCROLL ANIMATION JS ================= -->
   <script>
-    gsap.registerPlugin(ScrollTrigger);
+  (function () {
+    'use strict';
 
-    const targetImg = document.getElementById('target-image');
-    
-    // Core Scrolling Timeline (3 Phases)
-    let tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: ".scroll-track",
-        start: "top top",
-        end: "bottom bottom",
-        scrub: 1.2
-      }
+    var CONFIG = {
+      FRAMES_PATH  : 'frames_de_cartas/',
+      TOTAL_FRAMES : 192,
+      FRAME_WIDTH  : 1280,
+      FRAME_HEIGHT : 720,
+    };
+
+    function framePath(i) {
+      return CONFIG.FRAMES_PATH + 'frame_' + String(i).padStart(4, '0') + '.webp';
+    }
+
+    var canvas  = document.getElementById('sva-canvas');
+    var ctx     = canvas.getContext('2d');
+    var loader  = document.getElementById('sva-loader');
+    var bar     = document.getElementById('sva-bar');
+    var pct     = document.getElementById('sva-pct');
+    var stage   = document.getElementById('sva-stage');
+    var hint    = document.getElementById('sva-hint');
+
+    var frames       = new Array(CONFIG.TOTAL_FRAMES);
+    var loadedCount  = 0;
+    var currentFrame = 0;
+    var rafPending   = false;
+
+    function preload() {
+      return new Promise(function (resolve) {
+        for (var i = 0; i < CONFIG.TOTAL_FRAMES; i++) {
+          (function (index) {
+            var img = new Image();
+            img.onload = img.onerror = function () {
+              loadedCount++;
+              var p = (loadedCount / CONFIG.TOTAL_FRAMES) * 100;
+              bar.style.width      = p + '%';
+              pct.textContent      = Math.floor(p) + '%';
+              if (loadedCount === CONFIG.TOTAL_FRAMES) resolve();
+            };
+            img.src    = framePath(index + 1);
+            frames[index] = img;
+          })(i);
+        }
+      });
+    }
+
+    function drawFrame(index) {
+      var img = frames[index];
+      if (!img || !img.complete) return;
+      ctx.clearRect(0, 0, CONFIG.FRAME_WIDTH, CONFIG.FRAME_HEIGHT);
+      ctx.drawImage(img, 0, 0, CONFIG.FRAME_WIDTH, CONFIG.FRAME_HEIGHT);
+    }
+
+    function onScroll() {
+      if (rafPending) return;
+      rafPending = true;
+      requestAnimationFrame(function () {
+        rafPending = false;
+
+        var stageTop    = stage.getBoundingClientRect().top + window.scrollY;
+        var stageHeight = stage.offsetHeight - window.innerHeight;
+        var scrolled    = Math.max(0, window.scrollY - stageTop);
+        var progress    = Math.min(1, scrolled / stageHeight);
+
+        var frameIndex  = Math.min(
+          CONFIG.TOTAL_FRAMES - 1,
+          Math.round(progress * (CONFIG.TOTAL_FRAMES - 1))
+        );
+
+        if (frameIndex !== currentFrame) {
+          currentFrame = frameIndex;
+          drawFrame(currentFrame);
+        }
+
+        if (window.scrollY > 40) hint.classList.add('sva-gone');
+        else                      hint.classList.remove('sva-gone');
+      });
+    }
+
+    preload().then(function () {
+      loader.classList.add('sva-hidden');
+      setTimeout(function () { loader.style.display = 'none'; }, 700);
+
+      drawFrame(0);
+
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', function () { drawFrame(currentFrame); });
     });
 
-    // Phase 1 (0% -> 25%): The void holds, then image materializes from darkness
-    tl.to(targetImg, { opacity: 1, duration: 0.25 }, 0);
-    
-    // Phase 2 (25% -> 50%): Image holds steady, fully visible
-    tl.to(targetImg, { scale: 1.05, duration: 0.25 }, 0.25);
-
-    // Phase 3 (50% -> 100%): Image disintegrates while giving birth to Data Nebula
-    tl.to(targetImg, { opacity: 0, scale: 0.85, filter: "blur(10px)", duration: 0.5 }, 0.5);
-
-    /* ── DATA NEBULA PARTICLE ENGINE ── */
-    const canvas = document.getElementById('nebula-canvas');
-    const ctx = canvas.getContext('2d');
-    let width, height;
-    
-    function resize() {
-      width = window.innerWidth;
-      height = window.innerHeight;
-      canvas.width = width;
-      canvas.height = height;
-    }
-    window.addEventListener('resize', resize);
-    resize();
-
-    const symbols = ['♠', '♥', '♦', '♣', '0', '1', '+', '*'];
-    
-    class DataParticle {
-      constructor() {
-        this.reset();
-        this.active = false;
-      }
-      reset() {
-        // Explode from the center frame where image rests
-        this.x = width / 2 + (Math.random() - 0.5) * 400;
-        this.y = height / 2 + (Math.random() - 0.5) * 500; 
-        
-        // Initial violent vector
-        this.vx = (Math.random() - 0.5) * 8;
-        this.vy = (Math.random() - 0.5) * 8;
-        
-        this.life = 1;
-        this.decay = Math.random() * 0.02 + 0.008; // Variability in flame death
-        
-        this.symbol = symbols[Math.floor(Math.random() * symbols.length)];
-        this.size = Math.random() * 22 + 10;
-        
-        const hue = 180 + Math.random() * 100; // Cyan to Purple
-        this.color = `hsla(${hue}, 100%, 75%, `;
-      }
-      
-      update(gravX, gravY, intensity) {
-        if(!this.active) return;
-        
-        const dx = gravX - this.x;
-        const dy = gravY - this.y;
-        const dist = Math.sqrt(dx*dx + dy*dy) || 1;
-        
-        // Gravitational pull directly synced to scroll intensity
-        this.vx += (dx / dist) * Math.min(intensity, 1) * 2;
-        this.vy += (dy / dist) * Math.min(intensity, 1) * 2;
-        
-        // Quantum noise
-        this.vx += (Math.random() - 0.5) * 1.5;
-        this.vy += (Math.random() - 0.5) * 1.5;
-        
-        this.vx *= 0.90; // Cosmic Friction
-        this.vy *= 0.90;
-        
-        this.x += this.vx;
-        this.y += this.vy;
-        
-        this.life -= this.decay * (1 - intensity * 0.4); 
-        
-        if(this.life <= 0) {
-          if (nebulaIntensity > 0.05) {
-            this.reset();
-            this.active = true;
-          } else {
-            this.active = false;
-          }
-        }
-      }
-      
-      draw() {
-        if(!this.active) return;
-        ctx.fillStyle = this.color + (this.life * Math.min(nebulaIntensity * 2.5, 1)) + ')';
-        ctx.font = `${this.size}px monospace`;
-        ctx.fillText(this.symbol, this.x, this.y);
-      }
-    }
-
-    const maxParticles = 500;
-    const particles = Array.from({length: maxParticles}, () => new DataParticle());
-    
-    let nebulaIntensity = 0;
-    
-    // Sync specifically to the Phase 3 disintegration bounds (50% to 100% of body)
-    ScrollTrigger.create({
-      trigger: ".scroll-track",
-      start: "50% top",
-      end: "100% top",
-      onUpdate: (self) => {
-        nebulaIntensity = self.progress; 
-        
-        // Spawn/wake up particles correlating with disintegration level
-        const countToActivate = Math.floor(nebulaIntensity * maxParticles);
-        for(let i = 0; i < countToActivate; i++) {
-          if(!particles[i].active) {
-            particles[i].reset();
-            particles[i].active = true;
-          }
-        }
-      }
-    });
-
-    let time = 0;
-    function render() {
-      // True black clear
-      ctx.clearRect(0, 0, width, height);
-      
-      time += 0.02;
-      
-      if(nebulaIntensity > 0) {
-        // Roaming gravitational center
-        const gravX = width/2 + Math.sin(time * 0.7) * (width * 0.35);
-        const gravY = height/2 + Math.cos(time * 0.4) * (height * 0.35);
-        
-        const force = nebulaIntensity * 1.2; 
-        
-        // Luminous overlapping effects
-        ctx.globalCompositeOperation = 'screen';
-        
-        particles.forEach(p => {
-          p.update(gravX, gravY, force);
-          p.draw();
-        });
-        
-        ctx.globalCompositeOperation = 'source-over';
-      }
-
-      requestAnimationFrame(render);
-    }
-    
-    render();
-
+  })();
   </script>
+  <!-- ================= FIN SCROLL ANIMATION JS ================= -->
+
 </body>
 </html>
