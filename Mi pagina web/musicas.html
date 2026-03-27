@@ -21,7 +21,7 @@
     /* Hero scroll container */
     #hero-scroll-root {
       position: relative;
-      height: 200vh;
+      min-height: 200vh;
       background: #000;
     }
 
@@ -145,7 +145,180 @@
       position: relative;
       z-index: 1;
       width: 100%;
-      height: 100vh;
+      height: auto;
+      min-height: 100vh;
+    }
+
+    /* ── Glare Cards Grid ── */
+    .glare-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+      padding: 4rem 2rem;
+      place-items: center;
+      box-sizing: border-box;
+    }
+    @media (min-width: 768px) {
+      .glare-grid {
+        grid-template-columns: repeat(2, 1fr);
+        padding: 4rem;
+      }
+    }
+
+    /* ── Single card container ── */
+    .glare-card-wrap {
+      --m-x: 50%;
+      --m-y: 50%;
+      --r-x: 0deg;
+      --r-y: 0deg;
+      --bg-x: 50%;
+      --bg-y: 50%;
+      --duration: 300ms;
+      --foil-size: 100%;
+      --opacity: 0;
+      --radius: 24px;
+      --easing: ease;
+
+      position: relative;
+      width: 320px;
+      aspect-ratio: 17 / 21;
+      perspective: 600px;
+      transition: transform var(--duration) var(--easing);
+      will-change: transform;
+      isolation: isolate;
+      contain: layout style;
+    }
+
+    /* ── Inner rotating layer ── */
+    .glare-card-inner {
+      width: 100%;
+      height: 100%;
+      display: grid;
+      transform-origin: center;
+      transform: rotateY(var(--r-x)) rotateX(var(--r-y));
+      transition: transform var(--duration) var(--easing);
+      border-radius: var(--radius);
+      border: 1px solid rgba(100,116,139,0.5);
+      overflow: hidden;
+      will-change: transform;
+    }
+    .glare-card-inner:hover {
+      --duration: 200ms;
+      --easing: linear;
+    }
+
+    /* Each layer uses the same grid area (stacked) */
+    .glare-layer {
+      grid-area: 1 / 1;
+      width: 100%;
+      height: 100%;
+      border-radius: var(--radius);
+    }
+
+    /* Base content layer */
+    .glare-layer-base {
+      background: #020617;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      mix-blend-mode: normal;
+      clip-path: inset(0 0 0 0 round var(--radius));
+    }
+
+    /* Glare highlight layer */
+    .glare-layer-highlight {
+      mix-blend-mode: soft-light;
+      clip-path: inset(0 0 1px 0 round var(--radius));
+      opacity: var(--opacity);
+      transition: opacity var(--duration) var(--easing),
+                  background var(--duration) var(--easing);
+      will-change: background;
+      background: radial-gradient(
+        farthest-corner circle at var(--m-x) var(--m-y),
+        rgba(255,255,255,0.8) 10%,
+        rgba(255,255,255,0.65) 20%,
+        rgba(255,255,255,0) 90%
+      );
+      pointer-events: none;
+    }
+
+    /* Foil rainbow layer */
+    .glare-layer-foil {
+      --step: 5%;
+      mix-blend-mode: color-dodge;
+      clip-path: inset(0 0 1px 0 round var(--radius));
+      opacity: var(--opacity);
+      will-change: background;
+      transition: opacity var(--duration) var(--easing);
+      background-blend-mode: hue, hue, hue, overlay;
+      background:
+        url("data:image/svg+xml,%3Csvg width='26' height='26' viewBox='0 0 26 26' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M2.99994 3.419C2.99994 3.419 21.6142 7.43646 22.7921 12.153C23.97 16.8695 3.41838 23.0306 3.41838 23.0306' stroke='white' stroke-width='5' stroke-miterlimit='3.86874' stroke-linecap='round' style='mix-blend-mode:darken'/%3E%3C/svg%3E") center / 100% no-repeat,
+        repeating-linear-gradient(
+          0deg,
+          rgb(255,119,115) calc(var(--step) * 1),
+          rgba(255,237,95,1) calc(var(--step) * 2),
+          rgba(168,255,95,1) calc(var(--step) * 3),
+          rgba(131,255,247,1) calc(var(--step) * 4),
+          rgba(120,148,255,1) calc(var(--step) * 5),
+          rgb(216,117,255) calc(var(--step) * 6),
+          rgb(255,119,115) calc(var(--step) * 7)
+        ) 0% var(--bg-y) / 200% 700% no-repeat,
+        repeating-linear-gradient(
+          128deg,
+          #0e152e 0%,
+          hsl(180,10%,60%) 3.8%,
+          hsl(180,10%,60%) 4.5%,
+          hsl(180,10%,60%) 5.2%,
+          #0e152e 10%,
+          #0e152e 12%
+        ) var(--bg-x) var(--bg-y) / 300% no-repeat,
+        radial-gradient(
+          farthest-corner circle at var(--m-x) var(--m-y),
+          rgba(255,255,255,0.1) 12%,
+          rgba(255,255,255,0.15) 20%,
+          rgba(255,255,255,0.25) 120%
+        ) var(--bg-x) var(--bg-y) / 300% no-repeat;
+      pointer-events: none;
+    }
+
+    /* Hover: show glare + foil */
+    .glare-card-inner:hover .glare-layer-highlight,
+    .glare-card-inner:hover .glare-layer-foil {
+      --opacity: 0.6;
+    }
+
+    /* ── Card content helpers ── */
+    .glare-bottom-left {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-end;
+      padding: 2rem 1.5rem;
+      width: 100%;
+      height: 100%;
+      box-sizing: border-box;
+    }
+    .glare-cover img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .glare-text-title {
+      font-weight: 700;
+      color: #fff;
+      font-size: 1.125rem;
+      margin: 0;
+    }
+    .glare-text-body {
+      font-weight: 400;
+      color: #e5e5e5;
+      font-size: 0.95rem;
+      margin-top: 1rem;
+      line-height: 1.5;
     }
   </style>
 </head>
@@ -212,7 +385,114 @@
     <section id="hero-s2">
       <div id="hero-s2-grid"></div>
       <div id="hero-s2-content">
-        <!-- GALERÍA 3D VA ACÁ -->
+        <div class="glare-grid">
+
+          <!-- Par 1 -->
+          <div class="glare-card-wrap" data-glare>
+            <div class="glare-card-inner">
+              <div class="glare-layer glare-layer-base glare-cover">
+                <img src="https://images.unsplash.com/photo-1512618831669-521d4b375f5d?w=600" alt="Álbum 1" />
+              </div>
+              <div class="glare-layer glare-layer-highlight"></div>
+              <div class="glare-layer glare-layer-foil"></div>
+            </div>
+          </div>
+          <div class="glare-card-wrap" data-glare>
+            <div class="glare-card-inner">
+              <div class="glare-layer glare-layer-base glare-bottom-left">
+                <p class="glare-text-title">Álbum 1</p>
+                <p class="glare-text-body">Descripción del álbum 1</p>
+              </div>
+              <div class="glare-layer glare-layer-highlight"></div>
+              <div class="glare-layer glare-layer-foil"></div>
+            </div>
+          </div>
+
+          <!-- Par 2 -->
+          <div class="glare-card-wrap" data-glare>
+            <div class="glare-card-inner">
+              <div class="glare-layer glare-layer-base glare-cover">
+                <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=600" alt="Álbum 2" />
+              </div>
+              <div class="glare-layer glare-layer-highlight"></div>
+              <div class="glare-layer glare-layer-foil"></div>
+            </div>
+          </div>
+          <div class="glare-card-wrap" data-glare>
+            <div class="glare-card-inner">
+              <div class="glare-layer glare-layer-base glare-bottom-left">
+                <p class="glare-text-title">Álbum 2</p>
+                <p class="glare-text-body">Descripción del álbum 2</p>
+              </div>
+              <div class="glare-layer glare-layer-highlight"></div>
+              <div class="glare-layer glare-layer-foil"></div>
+            </div>
+          </div>
+
+          <!-- Par 3 -->
+          <div class="glare-card-wrap" data-glare>
+            <div class="glare-card-inner">
+              <div class="glare-layer glare-layer-base glare-cover">
+                <img src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=600" alt="Álbum 3" />
+              </div>
+              <div class="glare-layer glare-layer-highlight"></div>
+              <div class="glare-layer glare-layer-foil"></div>
+            </div>
+          </div>
+          <div class="glare-card-wrap" data-glare>
+            <div class="glare-card-inner">
+              <div class="glare-layer glare-layer-base glare-bottom-left">
+                <p class="glare-text-title">Álbum 3</p>
+                <p class="glare-text-body">Descripción del álbum 3</p>
+              </div>
+              <div class="glare-layer glare-layer-highlight"></div>
+              <div class="glare-layer glare-layer-foil"></div>
+            </div>
+          </div>
+
+          <!-- Par 4 -->
+          <div class="glare-card-wrap" data-glare>
+            <div class="glare-card-inner">
+              <div class="glare-layer glare-layer-base glare-cover">
+                <img src="https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=600" alt="Álbum 4" />
+              </div>
+              <div class="glare-layer glare-layer-highlight"></div>
+              <div class="glare-layer glare-layer-foil"></div>
+            </div>
+          </div>
+          <div class="glare-card-wrap" data-glare>
+            <div class="glare-card-inner">
+              <div class="glare-layer glare-layer-base glare-bottom-left">
+                <p class="glare-text-title">Álbum 4</p>
+                <p class="glare-text-body">Descripción del álbum 4</p>
+              </div>
+              <div class="glare-layer glare-layer-highlight"></div>
+              <div class="glare-layer glare-layer-foil"></div>
+            </div>
+          </div>
+
+          <!-- Par 5 -->
+          <div class="glare-card-wrap" data-glare>
+            <div class="glare-card-inner">
+              <div class="glare-layer glare-layer-base glare-cover">
+                <img src="https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=600" alt="Álbum 5" />
+              </div>
+              <div class="glare-layer glare-layer-highlight"></div>
+              <div class="glare-layer glare-layer-foil"></div>
+            </div>
+          </div>
+          <div class="glare-card-wrap" data-glare>
+            <div class="glare-card-inner">
+              <div class="glare-layer glare-layer-base glare-bottom-left">
+                <p class="glare-text-title">Álbum 5</p>
+                <p class="glare-text-body">Descripción del álbum 5</p>
+              </div>
+              <div class="glare-layer glare-layer-highlight"></div>
+              <div class="glare-layer glare-layer-foil"></div>
+            </div>
+          </div>
+
+        </div>
       </div>
     </section>
 
@@ -247,6 +527,52 @@
   </footer>
 
   <script src="script.js" onerror="console.info('Scripts running')"></script>
+
+  <!-- Glare Cards -->
+  <script>
+  (function() {
+    document.querySelectorAll('[data-glare]').forEach(card => {
+      let inside = false;
+
+      card.addEventListener('pointermove', e => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const px = (100 / rect.width)  * x;
+        const py = (100 / rect.height) * y;
+        const dx = px - 50;
+        const dy = py - 50;
+        const factor = 0.4;
+
+        const rx = -(dx / 3.5) * factor;
+        const ry =  (dy / 2)   * factor;
+        const bgX = 50 + px / 4 - 12.5;
+        const bgY = 50 + py / 3 - 16.67;
+
+        card.style.setProperty('--m-x',  `${px}%`);
+        card.style.setProperty('--m-y',  `${py}%`);
+        card.style.setProperty('--r-x',  `${rx}deg`);
+        card.style.setProperty('--r-y',  `${ry}deg`);
+        card.style.setProperty('--bg-x', `${bgX}%`);
+        card.style.setProperty('--bg-y', `${bgY}%`);
+      });
+
+      card.addEventListener('pointerenter', () => {
+        inside = true;
+        setTimeout(() => {
+          if (inside) card.style.setProperty('--duration', '0s');
+        }, 300);
+      });
+
+      card.addEventListener('pointerleave', () => {
+        inside = false;
+        card.style.removeProperty('--duration');
+        card.style.setProperty('--r-x', '0deg');
+        card.style.setProperty('--r-y', '0deg');
+      });
+    });
+  })();
+  </script>
 
   <!-- GSAP + ScrollTrigger -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
