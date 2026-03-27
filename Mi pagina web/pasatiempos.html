@@ -6,6 +6,95 @@
   <title>Pasatiempos | Perspective</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="styles.css">
+  <style>
+  .generating-card {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    background: #080810;
+    border-radius: inherit;
+    padding: 2rem;
+    box-sizing: border-box;
+  }
+
+  .generating-loader-text {
+    display: flex;
+    gap: 2px;
+  }
+
+  .generating-loader-letter {
+    font-size: 1.4rem;
+    font-weight: 600;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    color: #fff;
+    animation: generating-wave 1.4s ease-in-out infinite;
+  }
+
+  .generating-loader-letter:nth-child(1)  { animation-delay: 0.0s; }
+  .generating-loader-letter:nth-child(2)  { animation-delay: 0.1s; }
+  .generating-loader-letter:nth-child(3)  { animation-delay: 0.2s; }
+  .generating-loader-letter:nth-child(4)  { animation-delay: 0.3s; }
+  .generating-loader-letter:nth-child(5)  { animation-delay: 0.4s; }
+  .generating-loader-letter:nth-child(6)  { animation-delay: 0.5s; }
+  .generating-loader-letter:nth-child(7)  { animation-delay: 0.6s; }
+  .generating-loader-letter:nth-child(8)  { animation-delay: 0.7s; }
+  .generating-loader-letter:nth-child(9)  { animation-delay: 0.8s; }
+  .generating-loader-letter:nth-child(10) { animation-delay: 0.9s; }
+
+  @keyframes generating-wave {
+    0%, 100% {
+      transform: translateY(0px);
+      color: rgba(255, 255, 255, 0.3);
+    }
+    50% {
+      transform: translateY(-10px);
+      color: rgba(255, 255, 255, 1);
+    }
+  }
+
+  .generating-loader-bar {
+    width: 140px;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 99px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .generating-loader-bar::after {
+    content: '';
+    position: absolute;
+    top: 0; left: -40%;
+    width: 40%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.8),
+      transparent
+    );
+    border-radius: 99px;
+    animation: generating-slide 1.6s ease-in-out infinite;
+  }
+
+  @keyframes generating-slide {
+    0%   { left: -40%; }
+    100% { left: 140%; }
+  }
+
+  .generating-subtitle {
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.2);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    margin-top: 4px;
+  }
+  </style>
   <script>
     tailwind.config = {
       theme: {
@@ -276,8 +365,8 @@
           { id: 1, title: 'Calistenia', imageUrl: 'Fotos/foto_portada_calistenia.png' }, // User's custom image
           { id: 2, title: 'Asados', imageUrl: 'Fotos/asado_portada.jpg', link: 'asados.html' },
           { id: 3, title: 'Músicas', imageUrl: 'Fotos/portada_musicas.jpg', link: 'musicas.html' },
-          { id: 4, title: 'Lectura', imageUrl: 'https://images.unsplash.com/photo-1512820790803-83ca734da794?q=80&w=2098&auto=format&fit=crop' },
-          { id: 5, title: 'Tecnología', imageUrl: 'https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2070&auto=format&fit=crop' }
+          { id: 4, title: 'Próximamente', generating: true },
+          { id: 5, title: 'Próximamente', generating: true }
       ];
   
       const accordionContainer = document.getElementById('accordion-container');
@@ -292,39 +381,67 @@
               
               // Create item container
               const itemDiv = document.createElement('div');
-              // CSS Classes for animation and sizing
-              itemDiv.className = `relative h-full rounded-2xl overflow-hidden cursor-pointer transition-all duration-700 ease-in-out shrink-0 border border-white/10 ${isActive ? 'w-[200px] md:w-[300px] lg:w-[350px]' : 'w-[40px] md:w-[50px] lg:w-[60px]'}`;
-              
-              // Background Image
-              const img = document.createElement('img');
-              img.src = item.imageUrl;
-              img.alt = item.title;
-              img.className = 'absolute inset-0 w-full h-full object-cover';
-              // Use object-contain specifically for the Calistenia image if needed, else cover
-              if(item.title === 'Calistenia') {
-                 img.classList.remove('object-cover');
-                 img.classList.add('object-contain', 'bg-black');
+              const cursorClass = item.generating ? 'cursor-default' : 'cursor-pointer';
+              itemDiv.className = `relative h-full rounded-2xl overflow-hidden ${cursorClass} transition-all duration-700 ease-in-out shrink-0 border border-white/10 ${isActive ? 'w-[200px] md:w-[300px] lg:w-[350px]' : 'w-[40px] md:w-[50px] lg:w-[60px]'}`;
+
+              if (item.generating) {
+                  // Generating animation card
+                  const genCard = document.createElement('div');
+                  genCard.className = 'generating-card';
+                  genCard.innerHTML = `
+                    <div class="generating-loader-text">
+                      <span class="generating-loader-letter">G</span>
+                      <span class="generating-loader-letter">e</span>
+                      <span class="generating-loader-letter">n</span>
+                      <span class="generating-loader-letter">e</span>
+                      <span class="generating-loader-letter">r</span>
+                      <span class="generating-loader-letter">a</span>
+                      <span class="generating-loader-letter">t</span>
+                      <span class="generating-loader-letter">i</span>
+                      <span class="generating-loader-letter">n</span>
+                      <span class="generating-loader-letter">g</span>
+                    </div>
+                    <div class="generating-loader-bar"></div>
+                    <p class="generating-subtitle">Próximamente</p>
+                  `;
+                  // Title when inactive (rotated)
+                  const titleSpan = document.createElement('span');
+                  titleSpan.className = `absolute text-white font-semibold whitespace-nowrap transition-all duration-700 ease-in-out flex items-center justify-center ` +
+                      (isActive
+                          ? 'bottom-6 left-1/2 -translate-x-1/2 rotate-0 text-xl lg:text-2xl drop-shadow-lg opacity-0'
+                          : 'bottom-[10%] left-1/2 -translate-x-1/2 -rotate-90 origin-center text-sm tracking-widest uppercase opacity-70');
+                  titleSpan.textContent = item.title;
+                  itemDiv.appendChild(genCard);
+                  itemDiv.appendChild(titleSpan);
+              } else {
+                  // Background Image
+                  const img = document.createElement('img');
+                  img.src = item.imageUrl;
+                  img.alt = item.title;
+                  img.className = 'absolute inset-0 w-full h-full object-cover';
+                  if(item.title === 'Calistenia') {
+                     img.classList.remove('object-cover');
+                     img.classList.add('object-contain', 'bg-black');
+                  }
+                  img.onerror = function() { this.src = 'https://placehold.co/400x450/111111/3b82f6?text=Image+Not+Found'; };
+
+                  // Dark Overlay
+                  const overlay = document.createElement('div');
+                  overlay.className = 'absolute inset-0 bg-black transition-opacity duration-700 ' + (isActive ? 'bg-opacity-20' : 'bg-opacity-60 hover:bg-opacity-40');
+
+                  // Title Span
+                  const titleSpan = document.createElement('span');
+                  titleSpan.className = `absolute text-white font-semibold whitespace-nowrap transition-all duration-700 ease-in-out flex items-center justify-center ` +
+                      (isActive
+                          ? 'bottom-6 left-1/2 -translate-x-1/2 rotate-0 text-xl lg:text-2xl drop-shadow-lg'
+                          : 'bottom-[10%] left-1/2 -translate-x-1/2 -rotate-90 origin-center text-sm tracking-widest uppercase opacity-70');
+                  titleSpan.textContent = item.title;
+
+                  itemDiv.appendChild(img);
+                  itemDiv.appendChild(overlay);
+                  itemDiv.appendChild(titleSpan);
               }
-              img.onerror = function() { this.src = 'https://placehold.co/400x450/111111/3b82f6?text=Image+Not+Found'; };
-              
-              // Dark Overlay
-              const overlay = document.createElement('div');
-              overlay.className = 'absolute inset-0 bg-black transition-opacity duration-700 ' + (isActive ? 'bg-opacity-20' : 'bg-opacity-60 hover:bg-opacity-40');
-              
-              // Title Span
-              const titleSpan = document.createElement('span');
-              // Logic for rotating text when inactive
-              titleSpan.className = `absolute text-white font-semibold whitespace-nowrap transition-all duration-700 ease-in-out flex items-center justify-center ` +
-                  (isActive
-                      ? 'bottom-6 left-1/2 -translate-x-1/2 rotate-0 text-xl lg:text-2xl drop-shadow-lg'
-                      : 'bottom-[10%] left-1/2 -translate-x-1/2 -rotate-90 origin-center text-sm tracking-widest uppercase opacity-70');
-              titleSpan.textContent = item.title;
-  
-              // Assemble
-              itemDiv.appendChild(img);
-              itemDiv.appendChild(overlay);
-              itemDiv.appendChild(titleSpan);
-  
+
               // Add Event Listener for Hover
               itemDiv.addEventListener('mouseenter', () => {
                   if (activeIndex !== index) {
@@ -338,9 +455,8 @@
                   itemDiv.addEventListener('click', () => {
                       window.location.href = item.link;
                   });
-                  itemDiv.style.cursor = 'pointer';
               }
-  
+
               accordionContainer.appendChild(itemDiv);
           });
       }
