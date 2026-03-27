@@ -6,6 +6,141 @@
   <title>Invento Meme | Perspective Blog</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Jost:wght@200;300;400&display=swap" rel="stylesheet">
+  <style>
+    /* ============================================================
+       PANORAMA CURVED SLIDER — clases prefijadas "pano-"
+    ============================================================ */
+    #pano-slider-section {
+      --pano-accent:  #c8a96e;
+      --pano-card-w:  480px;
+      --pano-card-h:  300px;
+      --pano-trans:   0.6s cubic-bezier(0.22, 1, 0.36, 1);
+      background: transparent;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 4rem 0;
+      font-family: 'Jost', sans-serif;
+      color: #fff;
+    }
+
+    .pano-slider-stage {
+      position: relative;
+      width: 100vw;
+      height: calc(var(--pano-card-h) + 80px);
+      overflow: hidden;
+      perspective: 1400px;
+      perspective-origin: 50% 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .pano-slider-track {
+      position: relative;
+      width: 100%;
+      height: var(--pano-card-h);
+      transform-style: preserve-3d;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .pano-card {
+      position: absolute;
+      width: var(--pano-card-w);
+      height: var(--pano-card-h);
+      border-radius: 14px;
+      overflow: hidden;
+      cursor: pointer;
+      will-change: transform, opacity;
+      transition:
+        transform  var(--pano-trans),
+        opacity    var(--pano-trans),
+        filter     var(--pano-trans),
+        box-shadow var(--pano-trans);
+    }
+    .pano-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      pointer-events: none;
+    }
+    .pano-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(8, 8, 12, 0.52);
+      transition: opacity var(--pano-trans);
+      pointer-events: none;
+      border-radius: inherit;
+    }
+    .pano-card.pano-active::after { opacity: 0; }
+
+    .pano-nav-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 40;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      backdrop-filter: blur(10px);
+      color: #fff;
+      width: 46px; height: 46px;
+      border-radius: 50%;
+      font-size: 1rem;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.22s, border-color 0.22s, transform 0.2s;
+      outline: none;
+    }
+    .pano-nav-btn:hover {
+      background: rgba(200,169,110,0.16);
+      border-color: var(--pano-accent);
+      transform: translateY(-50%) scale(1.1);
+    }
+    .pano-nav-btn.pano-prev { left: clamp(14px, 3vw, 52px); }
+    .pano-nav-btn.pano-next { right: clamp(14px, 3vw, 52px); }
+
+    .pano-slider-dots {
+      display: flex;
+      gap: 8px;
+      margin-top: 2rem;
+      align-items: center;
+    }
+    .pano-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.18);
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      transition: background 0.3s, width 0.3s, border-radius 0.3s;
+    }
+    .pano-dot.pano-active { background: var(--pano-accent); width: 22px; border-radius: 3px; }
+
+    .pano-slider-counter {
+      margin-top: 0.85rem;
+      font-size: 0.66rem;
+      font-weight: 200;
+      letter-spacing: 0.18em;
+      color: rgba(255,255,255,0.18);
+      text-transform: uppercase;
+    }
+    .pano-slider-counter strong { color: rgba(255,255,255,0.5); font-weight: 300; }
+
+    /* Navbar fijo */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+  </style>
   <script>
     tailwind.config = {
       theme: {
@@ -34,138 +169,6 @@
       }
     }
   </script>
-  <style>
-    :root {
-      --bg: transparent;
-      --accent: #c8a96e;
-      --dot-inactive: rgba(255,255,255,0.25);
-      --dot-active: #c8a96e;
-      --slide-w: 480px;
-      --slide-h: 270px;
-      --slide-gap: 30px; 
-    }
-
-    /* Panorama Slider Styling */
-    .panorama-stage {
-      position: relative;
-      width: 100vw;
-      height: 450px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      perspective: 1100px;
-      perspective-origin: 50% 50%;
-    }
-
-    .panorama-track {
-      width: var(--slide-w);
-      height: var(--slide-h);
-      position: relative;
-      transform-style: preserve-3d;
-      transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
-      cursor: grab;
-    }
-    .panorama-track:active {
-      cursor: grabbing;
-      transition: none; /* Instant follow when dragging */
-    }
-
-    @media (min-width: 768px) {
-      .panorama-track {
-        width: 320px;
-        height: 450px;
-      }
-    }
-
-    .slide {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: var(--slide-w);
-      max-width: 85vw; /* Protección para móviles */
-      height: var(--slide-h);
-      border-radius: 14px;
-      overflow: hidden;
-      box-shadow: 0 15px 35px rgba(0,0,0,0.5);
-      user-select: none;
-    }
-
-    /* Modificar selector img para evitar recortes */
-    .slide img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      background-color: rgba(0,0,0,0.6);
-      display: block;
-      pointer-events: none;
-      transition: transform 0.65s cubic-bezier(0.22,1,0.36,1);
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%); /* Centrado absoluto */
-    }
-
-    .nav-btn {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      color: white;
-      font-size: 24px;
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      cursor: pointer;
-      z-index: 20;
-      backdrop-filter: blur(5px);
-      transition: all 0.3s ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .nav-btn:hover {
-      background: rgba(255, 255, 255, 0.2);
-      transform: translateY(-50%) scale(1.1);
-    }
-
-    .nav-btn.prev {
-      left: 5%;
-    }
-
-    .nav-btn.next {
-      right: 5%;
-    }
-
-    .pagination {
-      display: flex;
-      gap: 10px;
-      margin-top: 20px;
-    }
-
-    .dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.3);
-      cursor: pointer;
-      transition: background 0.3s, transform 0.3s;
-    }
-
-    .dot.active {
-      background: white;
-      transform: scale(1.3);
-    }
-    
-    .hero-label {
-      font-size: 2rem;
-      font-weight: bold;
-      font-family: 'Georgia', serif;
-      color: white;
-      text-shadow: 0 4px 10px rgba(0,0,0,0.5);
-    }
-  </style>
 </head>
 <body class="min-h-screen bg-black overflow-x-hidden text-white animate-fade-in transition-colors duration-300 flex flex-col">
   
@@ -207,23 +210,29 @@
     </nav>
   </header>
 
-  <main class="relative z-10 w-full min-h-screen pt-[350px] pb-24 flex flex-col items-center justify-start">
-    <div class="panorama-stage relative z-10 mt-[100px]" id="stage">
-      <button class="nav-btn prev" id="prevBtn" aria-label="Anterior">&#8592;</button>
-      <div class="panorama-track" id="track"></div>
-      <button class="nav-btn next" id="nextBtn" aria-label="Siguiente">&#8594;</button>
-    </div>
-    <div class="pagination relative z-10" id="pagination"></div>
-    <p class="hint text-center relative z-10 mb-10">← arrastra o usa las flechas →</p>
+  <main class="relative z-10 w-full flex flex-col items-center justify-start">
 
-    <section class="relative z-10 w-full max-w-7xl mx-auto px-6 mt-32 mb-24 flex flex-col items-center">
+    <!-- ================= PANORAMA CURVED SLIDER ================= -->
+    <section id="pano-slider-section">
+      <div class="pano-slider-stage" id="pano-stage">
+        <button class="pano-nav-btn pano-prev" id="pano-prevBtn" aria-label="Anterior">&#8592;</button>
+        <div class="pano-slider-track" id="pano-track"></div>
+        <button class="pano-nav-btn pano-next" id="pano-nextBtn" aria-label="Siguiente">&#8594;</button>
+      </div>
+
+      <div class="pano-slider-dots" id="pano-dots"></div>
+      <p class="pano-slider-counter"><strong id="pano-cur">1</strong> / <span id="pano-tot">8</span></p>
+    </section>
+    <!-- ================= FIN PANORAMA CURVED SLIDER ================= -->
+
+    <section class="relative z-10 w-full max-w-7xl mx-auto px-6 mt-16 mb-24 flex flex-col items-center">
         <h1 class="text-5xl md:text-6xl font-extrabold text-white mb-6 text-center">La Evolución del Diseño</h1>
-        
+
         <p class="text-sm md:text-base text-blue-200 tracking-wider uppercase font-medium mb-12 text-center opacity-80">Una mirada visual a la transformación de la estética digital.</p>
-        
+
         <div class="w-full max-w-3xl text-lg text-gray-200 space-y-8 leading-relaxed font-light">
             <p>Este proyecto, <span class="text-white font-medium">La Evolución del Diseño</span>, surgió como una exploración personal sobre cómo los memes, como vehículos culturales, han adoptado y transformado los lenguajes visuales. Desde los primeros días de los gráficos de 8 bits y los símbolos simples hasta la era de la alta fidelidad y la Inteligencia Artificial...</p>
-            
+
             <p>Explora la galería superior para navegar por hitos visuales. Cada slide representa una etapa diferente, mezclando nostalgia con técnicas avanzadas de diseño. *[Texto placeholder: Aquí puedes añadir tu propia descripción detallada del contenido que se cliqueó]*.</p>
         </div>
     </section>
@@ -260,197 +269,132 @@
 
   <script src="script.js"></script>
 
+  <!-- ================= PANORAMA CURVED SLIDER JS ================= -->
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const track = document.getElementById('track');
-        const prevBtn = document.getElementById('prevBtn');
-        const nextBtn = document.getElementById('nextBtn');
-        const pagination = document.getElementById('pagination');
-        
-        /* ── CONFIG ── */
-        const SLIDE_W  = 480;      // Coincide con CSS
-        const SLIDE_H  = 270;      // Coincide con CSS
-        const GAP      = 30;       // Coincide con CSS
-        const VISIBLE  = 2;        
-        const SCALE_STEP  = 0.13;  
-        const OPACITY_STEP = 0.18; 
-        const ROT_DEG  = 22;       
-        const Z_STEP   = 90;       
-        
-        const slides = [
-          { src: 'Fotos/MEME.jpg', alt: 'Slide 1' },
-          { src: 'Fotos/MEME_2.jpg', alt: 'Slide 2' },
-          { src: 'Fotos/MEME_3.jpg', alt: 'Slide 3' },
-          { src: 'Fotos/MEME_4.jpg', alt: 'Slide 4' },
-          { src: 'Fotos/MEME_5.jpg', alt: 'Slide 5' },
-          { src: 'Fotos/MEME_6.jpg', alt: 'Slide 6' },
-          { src: 'Fotos/MEME_7.jpg', alt: 'Slide 7' },
-          { src: 'Fotos/MEME_8.jpg', alt: 'Slide 8' }
-        ];
-        
-        const numSlides = slides.length;
-        const angleIncrement = 360 / numSlides;
-        
-        let radius = 0;
-        
-        /* ── BUILD DOM ── */
-        // Vaciamos por si quedó basura
-        track.innerHTML = '';
-        pagination.innerHTML = '';
-        
-        const slideEls = slides.map((s, i) => {
-            const div = document.createElement('div');
-            div.className = 'slide bg-transparent overflow-hidden';
-            div.setAttribute('data-index', i);
-            
-            // ¡CRÍTICO! Vaciamos el div para asegurarnos de que NO haya números
-            div.innerHTML = '';
-            
-            // Creamos la etiqueta de imagen real
-            const img = document.createElement('img');
-            img.src = s.src;
-            img.alt = s.alt;
-            img.loading = 'lazy';
-            
-            div.appendChild(img);
-            div.addEventListener('click', () => { if (!isDragging) goToSlide(i); });
-            track.appendChild(div);
-            
-            // Pagination mapping adaptado para no romper getNormalizedIndex
-            const dot = document.createElement('div');
-            dot.className = 'dot';
-            if(i === 0) dot.classList.add('active');
-            dot.addEventListener('click', () => { if (!isDragging) goToSlide(i); });
-            pagination.appendChild(dot);
-            
-            return { el: div, dot: dot };
-        });
+  (function () {
+    'use strict';
 
-        function init3D() {
-            const slideWidth = slideEls[0].el.offsetWidth;
-            // Radius math formula: Width / (2 * tan(PI / N)) 
-            radius = Math.round((slideWidth / 2) / Math.tan(Math.PI / numSlides)) + 40;
-            
-            slideEls.forEach((slide, i) => {
-                const angle = i * angleIncrement;
-                slide.el.style.transform = `rotateY(${angle}deg) translateZ(${radius}px)`;
-            });
-            updateCarousel();
-        }
+    var PANO_SLIDES = [
+      { src: 'Fotos/MEME.jpg',   label: 'Meme 1', sub: 'La Evolución del Diseño' },
+      { src: 'Fotos/MEME_2.jpg', label: 'Meme 2', sub: 'La Evolución del Diseño' },
+      { src: 'Fotos/MEME_3.jpg', label: 'Meme 3', sub: 'La Evolución del Diseño' },
+      { src: 'Fotos/MEME_4.jpg', label: 'Meme 4', sub: 'La Evolución del Diseño' },
+      { src: 'Fotos/MEME_5.jpg', label: 'Meme 5', sub: 'La Evolución del Diseño' },
+      { src: 'Fotos/MEME_6.jpg', label: 'Meme 6', sub: 'La Evolución del Diseño' },
+      { src: 'Fotos/MEME_7.jpg', label: 'Meme 7', sub: 'La Evolución del Diseño' },
+      { src: 'Fotos/MEME_8.jpg', label: 'Meme 8', sub: 'La Evolución del Diseño' },
+    ];
 
-        let currentIndex = 0;
-        let currentRotation = 0;
-        
-        function updateCarousel() {
-            currentRotation = currentIndex * -angleIncrement;
-            track.style.transform = `rotateY(${currentRotation}deg)`;
-            
-            slideEls.forEach((s, idx) => {
-                if (idx === getNormalizedIndex(currentIndex)) {
-                    s.dot.classList.add('active');
-                } else {
-                    s.dot.classList.remove('active');
-                }
-            });
-        }
+    var CFG = {
+      ROT_Y   : 10,
+      SPREAD  : 290,
+      Z_DEPTH : 55,
+      SCALE   : 0.88,
+      VISIBLE : 3,
+    };
 
-        function getNormalizedIndex(index) {
-            return ((index % numSlides) + numSlides) % numSlides;
-        }
+    var panoCurrent   = 0;
+    var panoAnimating = false;
+    var panoTotal     = PANO_SLIDES.length;
 
-        function goToSlide(index) {
-            let targetIndex = index;
-            const currentNorm = getNormalizedIndex(currentIndex);
-            const diff = targetIndex - currentNorm;
-            
-            if (diff > numSlides / 2) {
-                targetIndex -= numSlides;
-            } else if (diff < -numSlides / 2) {
-                targetIndex += numSlides;
-            }
-            
-            currentIndex += targetIndex - currentNorm;
-            updateCarousel();
-            resetAutoPlay();
-        }
+    var panoTrack  = document.getElementById('pano-track');
+    var panoDotsEl = document.getElementById('pano-dots');
+    document.getElementById('pano-tot').textContent = panoTotal;
 
-        // Action Buttons
-        prevBtn.addEventListener('click', () => {
-            currentIndex--;
-            updateCarousel();
-            resetAutoPlay();
-        });
-
-        nextBtn.addEventListener('click', () => {
-            currentIndex++;
-            updateCarousel();
-            resetAutoPlay();
-        });
-
-        // 3D Drag Interface
-        let startX = 0;
-        let isDragging = false;
-        let startRotation = 0;
-
-        track.addEventListener('pointerdown', (e) => {
-            isDragging = true;
-            startX = e.clientX;
-            track.style.transition = 'none';
-            startRotation = currentRotation;
-            pauseAutoPlay();
-        });
-
-        window.addEventListener('pointermove', (e) => {
-            if (!isDragging) return;
-            const dx = e.clientX - startX;
-            const rotationDiff = (dx / window.innerWidth) * 180; 
-            track.style.transform = `rotateY(${startRotation + rotationDiff}deg)`;
-        });
-
-        window.addEventListener('pointerup', (e) => {
-            if (!isDragging) return;
-            isDragging = false;
-            track.style.transition = 'transform 0.5s cubic-bezier(0.25, 1, 0.5, 1)';
-            
-            const dx = e.clientX - startX;
-            if (Math.abs(dx) > 50) {
-                if (dx > 0) currentIndex--;
-                else currentIndex++;
-            }
-            updateCarousel();
-            resumeAutoPlay();
-        });
-
-        // Auto-Play Logic
-        let autoPlayTimer;
-        function startAutoPlay() {
-            autoPlayTimer = setInterval(() => {
-                currentIndex++;
-                updateCarousel();
-            }, 3000);
-        }
-        function pauseAutoPlay() {
-            clearInterval(autoPlayTimer);
-        }
-        function resumeAutoPlay() {
-            pauseAutoPlay();
-            startAutoPlay();
-        }
-        function resetAutoPlay() {
-            resumeAutoPlay();
-        }
-
-        // Start Up
-        window.addEventListener('resize', () => {
-            setTimeout(init3D, 100);
-        });
-        
-        setTimeout(() => {
-            init3D();
-            startAutoPlay();
-        }, 100);
+    var panoCardEls = PANO_SLIDES.map(function (s, i) {
+      var el = document.createElement('div');
+      el.className = 'pano-card';
+      el.innerHTML =
+        '<img src="' + s.src + '" alt="' + s.label + '" loading="lazy"/>';
+      el.addEventListener('click', (function (idx) {
+        return function () { if (!panoAnimating) panoGoTo(idx); };
+      })(i));
+      panoTrack.appendChild(el);
+      return el;
     });
+
+    var panoDotEls = PANO_SLIDES.map(function (_, i) {
+      var d = document.createElement('button');
+      d.className = 'pano-dot';
+      d.setAttribute('aria-label', 'Slide ' + (i + 1));
+      d.addEventListener('click', (function (idx) {
+        return function () { if (!panoAnimating) panoGoTo(idx); };
+      })(i));
+      panoDotsEl.appendChild(d);
+      return d;
+    });
+
+    function panoPositionAll(animate) {
+      if (animate === undefined) animate = true;
+      panoCardEls.forEach(function (el, i) {
+        var rel = i - panoCurrent;
+        if (rel >  panoTotal / 2) rel -= panoTotal;
+        if (rel < -panoTotal / 2) rel += panoTotal;
+
+        var abs     = Math.abs(rel);
+        var visible = abs <= CFG.VISIBLE + 1;
+        var tx      = rel * CFG.SPREAD;
+        var tz      = -(abs * CFG.Z_DEPTH);
+        var rotY    = rel * -CFG.ROT_Y;
+        var scale   = abs === 0 ? 1 : Math.max(0.5, CFG.SCALE - (abs - 1) * 0.07);
+        var opacity = visible ? Math.max(0, 1 - abs * 0.22) : 0;
+
+        if (!animate) el.style.transition = 'none';
+        else          el.style.transition = '';
+
+        el.style.transform     = 'translateX(' + tx + 'px) translateZ(' + tz + 'px) rotateY(' + rotY + 'deg) scale(' + scale + ')';
+        el.style.opacity       = opacity;
+        el.style.zIndex        = 100 - abs;
+        el.style.pointerEvents = abs > CFG.VISIBLE ? 'none' : 'auto';
+        el.style.boxShadow     = abs === 0
+          ? '0 28px 65px rgba(0,0,0,0.75), 0 0 0 1px rgba(200,169,110,0.28)'
+          : 'none';
+        el.classList.toggle('pano-active', i === panoCurrent);
+      });
+      panoDotEls.forEach(function (d, i) { d.classList.toggle('pano-active', i === panoCurrent); });
+      document.getElementById('pano-cur').textContent = panoCurrent + 1;
+    }
+
+    function panoGoTo(index, skipAnim) {
+      if (panoAnimating && !skipAnim) return;
+      panoAnimating = true;
+      panoCurrent   = ((index % panoTotal) + panoTotal) % panoTotal;
+      panoPositionAll(!skipAnim);
+      setTimeout(function () { panoAnimating = false; }, 650);
+    }
+
+    panoPositionAll(false);
+    requestAnimationFrame(function () {
+      panoCardEls.forEach(function (el) { el.style.transition = ''; });
+    });
+
+    document.getElementById('pano-prevBtn').addEventListener('click', function () { panoGoTo(panoCurrent - 1); });
+    document.getElementById('pano-nextBtn').addEventListener('click', function () { panoGoTo(panoCurrent + 1); });
+
+    var panoDragX  = null;
+    var panoStageEl = document.getElementById('pano-stage');
+    panoStageEl.addEventListener('mousedown',  function (e) { panoDragX = e.clientX; });
+    panoStageEl.addEventListener('mouseup',    function (e) { panoTrySwipe(e.clientX); });
+    panoStageEl.addEventListener('mouseleave', function ()  { panoDragX = null; });
+    panoStageEl.addEventListener('touchstart', function (e) { panoDragX = e.touches[0].clientX; }, { passive: true });
+    panoStageEl.addEventListener('touchend',   function (e) { panoTrySwipe(e.changedTouches[0].clientX); }, { passive: true });
+
+    function panoTrySwipe(x) {
+      if (panoDragX === null) return;
+      if (Math.abs(panoDragX - x) > 40) panoGoTo(panoDragX - x > 0 ? panoCurrent + 1 : panoCurrent - 1);
+      panoDragX = null;
+    }
+
+    var panoTimer = setInterval(function () { panoGoTo(panoCurrent + 1); }, 4000);
+    panoStageEl.addEventListener('mouseenter', function () { clearInterval(panoTimer); });
+    panoStageEl.addEventListener('mouseleave', function () {
+      clearInterval(panoTimer);
+      panoTimer = setInterval(function () { panoGoTo(panoCurrent + 1); }, 4000);
+    });
+
+  })();
   </script>
+  <!-- ================= FIN PANORAMA CURVED SLIDER JS ================= -->
 
   <!-- WebGL Spooky Smoke Effect -->
   <script>
