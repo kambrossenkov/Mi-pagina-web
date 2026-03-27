@@ -5,35 +5,111 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Asados | Perspective</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <style>
-    #gallery-3d-container {
-      width: 100%;
-      height: 100vh;
-      position: relative;
-      overflow: hidden;
-      background: transparent;
-    }
-    #gallery-3d-container canvas {
-      display: block;
-      width: 100% !important;
-      height: 100% !important;
-    }
-    #gallery-hint {
-      position: absolute;
-      bottom: 24px;
-      left: 0; right: 0;
-      text-align: center;
-      font-family: monospace;
-      font-size: 11px;
-      font-weight: 600;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.55);
-      pointer-events: none;
-      letter-spacing: 0.12em;
-    }
-    #gallery-hint p { margin: 3px 0; }
-    #gallery-hint p:last-child { opacity: 0.45; }
+  #sg-stage {
+    position: relative;
+    height: 900vh;
+  }
+
+  #sg-sticky {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: #000;
+  }
+
+  #sg-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+  }
+
+  /* Canvas foto siguiente (fondo) */
+  #sg-canvas-next {
+    position: absolute;
+    display: block;
+    max-width: 100%;
+    max-height: 100vh;
+    width: auto;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.8);
+    transform: scale(0.88);
+    opacity: 0;
+    z-index: 1;
+  }
+
+  /* Canvas foto actual (frente) */
+  #sg-canvas-curr {
+    position: absolute;
+    display: block;
+    max-width: 100%;
+    max-height: 100vh;
+    width: auto;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.8);
+    transform: scale(1);
+    opacity: 1;
+    z-index: 2;
+  }
+
+  #sg-counter {
+    position: absolute;
+    bottom: 28px;
+    right: 32px;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    color: rgba(255,255,255,0.35);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-variant-numeric: tabular-nums;
+    pointer-events: none;
+    z-index: 10;
+  }
+
+  #sg-hint {
+    position: absolute;
+    bottom: 28px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    opacity: 1;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+    z-index: 10;
+  }
+  #sg-hint.gone { opacity: 0; }
+  #sg-hint span {
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  #sg-chevron {
+    width: 18px;
+    height: 18px;
+    border-right: 1.5px solid rgba(255,255,255,0.3);
+    border-bottom: 1.5px solid rgba(255,255,255,0.3);
+    transform: rotate(45deg);
+    animation: sg-bounce 1.5s ease infinite;
+  }
+  @keyframes sg-bounce {
+    0%, 100% { transform: rotate(45deg) translateY(0);   opacity: 0.3; }
+    50%       { transform: rotate(45deg) translateY(5px); opacity: 0.9; }
+  }
   </style>
   <link rel="stylesheet" href="styles.css">
   <script>
@@ -97,11 +173,18 @@
       </p>
     </div>
 
-    <!-- Galería 3D -->
-    <div id="gallery-3d-container">
-      <div id="gallery-hint">
-        <p>Usá la rueda del mouse o las flechas para navegar</p>
-        <p>El auto-play se reanuda tras 3 segundos de inactividad</p>
+    <!-- Galería scroll-driven -->
+    <div id="sg-stage">
+      <div id="sg-sticky">
+        <div id="sg-wrap">
+          <canvas id="sg-canvas-next" width="1280" height="853"></canvas>
+          <canvas id="sg-canvas-curr" width="1280" height="853"></canvas>
+        </div>
+        <div id="sg-counter">1 / 13</div>
+        <div id="sg-hint">
+          <span>Scroll</span>
+          <div id="sg-chevron"></div>
+        </div>
       </div>
     </div>
 
@@ -138,308 +221,141 @@
   <script src="script.js" onerror="console.info('Scripts running')"></script>
 
   <script>
-  (function() {
-    'use strict';
+(function() {
+  'use strict';
 
-    const IMAGES = [
-      'Fotos/asado_portada.jpg',
-      'Fotos/asado1.jpg',
-      'Fotos/asado2.jpg',
-      'Fotos/asado3.jpg',
-      'Fotos/asado4.jpg',
-      'Fotos/asado5.jpg',
-      'Fotos/asado6.jpg',
-      'Fotos/asado7.jpg',
-      'Fotos/asado8.jpg',
-      'Fotos/asado9.jpg',
-      'Fotos/asado10.jpg',
-      'Fotos/asado11.jpg',
-      'Fotos/asado12.jpg',
-    ];
+  const PHOTOS = [
+    'Fotos/asado_portada.jpg',
+    'Fotos/asado1.jpg',
+    'Fotos/asado2.jpg',
+    'Fotos/asado3.jpg',
+    'Fotos/asado4.jpg',
+    'Fotos/asado5.jpg',
+    'Fotos/asado6.jpg',
+    'Fotos/asado7.jpg',
+    'Fotos/asado8.jpg',
+    'Fotos/asado9.jpg',
+    'Fotos/asado10.jpg',
+    'Fotos/asado11.jpg',
+    'Fotos/asado12.jpg',
+  ];
 
-    const CFG = {
-      speed:        1.2,
-      visibleCount: 12,
-      depthRange:   50,
-      autoPlaySpeed:0.3,
-      autoPlayDelay:3000,
-      damping:      0.95,
-      fadeIn:  { start: 0.05, end: 0.25 },
-      fadeOut: { start: 0.40, end: 0.43 },
-      maxBlur:      8.0,
+  const TOTAL = PHOTOS.length;
+
+  const stage      = document.getElementById('sg-stage');
+  const canvasCurr = document.getElementById('sg-canvas-curr');
+  const canvasNext = document.getElementById('sg-canvas-next');
+  const ctxCurr    = canvasCurr.getContext('2d');
+  const ctxNext    = canvasNext.getContext('2d');
+  const counter    = document.getElementById('sg-counter');
+  const hint       = document.getElementById('sg-hint');
+
+  const images = new Array(TOTAL);
+  let loaded   = 0;
+  let allReady = false;
+  let rafPending    = false;
+  let lastIndex     = -1;
+  let lastNextIndex = -1;
+
+  /* ── Helpers ── */
+  function setCanvasSize(canvas, img) {
+    const aspect = img.naturalWidth / img.naturalHeight;
+    const maxW   = Math.min(window.innerWidth * 0.88, 1400);
+    const maxH   = window.innerHeight * 0.88;
+    let w, h;
+    if (maxW / aspect <= maxH) { w = maxW; h = maxW / aspect; }
+    else                        { h = maxH; w = maxH * aspect; }
+    canvas.width        = img.naturalWidth;
+    canvas.height       = img.naturalHeight;
+    canvas.style.width  = Math.round(w) + 'px';
+    canvas.style.height = Math.round(h) + 'px';
+  }
+
+  function drawTo(canvas, ctx, index) {
+    const img = images[index];
+    if (!img || !img.complete || !img.naturalWidth) return;
+    setCanvasSize(canvas, img);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+  }
+
+  /* ── Preload ── */
+  PHOTOS.forEach((src, i) => {
+    const img = new Image();
+    img.onload = () => {
+      loaded++;
+      if (loaded === TOTAL) { allReady = true; init(); }
     };
+    img.onerror = () => { loaded++; };
+    img.src = src;
+    images[i] = img;
+  });
 
-    const container = document.getElementById('gallery-3d-container');
+  function init() {
+    drawTo(canvasCurr, ctxCurr, 0);
+    lastIndex = 0;
+    if (TOTAL > 1) { drawTo(canvasNext, ctxNext, 1); lastNextIndex = 1; }
+    counter.textContent = `1 / ${TOTAL}`;
+  }
 
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.setSize(container.clientWidth, container.clientHeight);
-    renderer.setClearColor(0x000000, 0);
-    container.insertBefore(renderer.domElement, container.firstChild);
+  /* ── Scroll → crossfade ── */
+  function onScroll() {
+    if (!allReady) return;
+    if (rafPending) return;
+    rafPending = true;
 
-    const scene  = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(55, container.clientWidth / container.clientHeight, 0.1, 200);
-    camera.position.set(0, 0, 0);
+    requestAnimationFrame(() => {
+      rafPending = false;
 
-    const vertexShader = `
-      uniform float scrollForce;
-      uniform float time;
-      uniform float isHovered;
-      varying vec2 vUv;
+      const stageTop    = stage.getBoundingClientRect().top + window.scrollY;
+      const stageHeight = stage.offsetHeight - window.innerHeight;
+      const scrolled    = Math.max(0, window.scrollY - stageTop);
+      const progress    = Math.min(1, scrolled / stageHeight);
 
-      void main() {
-        vUv = uv;
-        vec3 pos = position;
-        float curveIntensity = scrollForce * 0.3;
-        float distanceFromCenter = length(pos.xy);
-        float curve = distanceFromCenter * distanceFromCenter * curveIntensity;
+      const fullProgress = progress * (TOTAL - 1);
+      const index        = Math.min(TOTAL - 1, Math.floor(fullProgress));
+      const nextIndex    = Math.min(TOTAL - 1, index + 1);
+      const t            = fullProgress - index;
 
-        float ripple1 = sin(pos.x * 2.0 + scrollForce * 3.0) * 0.02;
-        float ripple2 = sin(pos.y * 2.5 + scrollForce * 2.0) * 0.015;
-        float clothEffect = (ripple1 + ripple2) * abs(curveIntensity) * 2.0;
+      /* Transición empieza al 50% del segmento */
+      const T_START = 0.5;
+      let cf = t > T_START ? (t - T_START) / (1 - T_START) : 0;
+      /* easeInOut suave */
+      cf = cf * cf * (3 - 2 * cf);
 
-        float flagWave = 0.0;
-        if (isHovered > 0.5) {
-          float wavePhase = pos.x * 3.0 + time * 8.0;
-          float dampening = smoothstep(-0.5, 0.5, pos.x);
-          flagWave = sin(wavePhase) * 0.1 * dampening;
-          flagWave += sin(pos.x * 5.0 + time * 12.0) * 0.03 * dampening;
-        }
-
-        pos.z -= (curve + clothEffect + flagWave);
-        gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
+      if (index !== lastIndex) {
+        drawTo(canvasCurr, ctxCurr, index);
+        lastIndex = index;
       }
-    `;
-
-    const fragmentShader = `
-      uniform sampler2D map;
-      uniform float opacity;
-      uniform float blurAmount;
-      uniform float scrollForce;
-      varying vec2 vUv;
-
-      void main() {
-        vec4 color = texture2D(map, vUv);
-
-        if (blurAmount > 0.01) {
-          vec2 texelSize = vec2(0.002) * blurAmount;
-          vec4 blurred = vec4(0.0);
-          float total = 0.0;
-          for (float x = -2.0; x <= 2.0; x += 1.0) {
-            for (float y = -2.0; y <= 2.0; y += 1.0) {
-              vec2 offset = vec2(x, y) * texelSize;
-              float weight = 1.0 / (1.0 + length(vec2(x, y)));
-              blurred += texture2D(map, vUv + offset) * weight;
-              total += weight;
-            }
-          }
-          color = blurred / total;
-        }
-
-        color.rgb += vec3(abs(scrollForce) * 0.005);
-        gl_FragColor = vec4(color.rgb, color.a * opacity);
+      if (nextIndex !== lastNextIndex) {
+        drawTo(canvasNext, ctxNext, nextIndex);
+        lastNextIndex = nextIndex;
       }
-    `;
 
-    function createMaterial() {
-      return new THREE.ShaderMaterial({
-        transparent: true,
-        uniforms: {
-          map:         { value: null },
-          opacity:     { value: 1.0 },
-          blurAmount:  { value: 0.0 },
-          scrollForce: { value: 0.0 },
-          time:        { value: 0.0 },
-          isHovered:   { value: 0.0 },
-        },
-        vertexShader,
-        fragmentShader,
-      });
-    }
+      const currScale = 1 - cf * 0.08;
+      const nextScale = 0.88 + cf * 0.12;
 
-    function getSpatialPositions(count) {
-      const positions = [];
-      for (let i = 0; i < count; i++) {
-        const ha = (i * 2.618) % (Math.PI * 2);
-        const va = (i * 1.618 + Math.PI / 3) % (Math.PI * 2);
-        const hr = (i % 3) * 1.2;
-        const vr = ((i + 1) % 4) * 0.8;
-        positions.push({
-          x: Math.sin(ha) * hr * 8 / 3,
-          y: Math.cos(va) * vr * 8 / 4,
-        });
-      }
-      return positions;
-    }
+      canvasCurr.style.transform = `scale(${currScale})`;
+      canvasCurr.style.opacity   = String(1 - cf);
 
-    const loader   = new THREE.TextureLoader();
-    const textures = IMAGES.map(src => {
-      const t = loader.load(src);
-      t.crossOrigin = 'anonymous';
-      return t;
+      canvasNext.style.transform = `scale(${nextScale})`;
+      canvasNext.style.opacity   = String(cf);
+
+      counter.textContent = `${index + 1} / ${TOTAL}`;
+
+      if (window.scrollY > 60) hint.classList.add('gone');
+      else                      hint.classList.remove('gone');
     });
+  }
 
-    const materials  = Array.from({ length: CFG.visibleCount }, createMaterial);
-    const geometry   = new THREE.PlaneGeometry(1, 1, 32, 32);
-    const meshes     = [];
-    const spatialPos = getSpatialPositions(CFG.visibleCount);
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', () => {
+    if (!allReady) return;
+    if (lastIndex >= 0)     drawTo(canvasCurr, ctxCurr, lastIndex);
+    if (lastNextIndex >= 0) drawTo(canvasNext, ctxNext, lastNextIndex);
+  });
 
-    const planesData = Array.from({ length: CFG.visibleCount }, (_, i) => ({
-      index:      i,
-      z:          (CFG.depthRange / CFG.visibleCount * i) % CFG.depthRange,
-      imageIndex: i % IMAGES.length,
-      x:          spatialPos[i].x,
-      y:          spatialPos[i].y,
-    }));
-
-    planesData.forEach((plane, i) => {
-      const mesh = new THREE.Mesh(geometry, materials[i]);
-      scene.add(mesh);
-      meshes.push(mesh);
-    });
-
-    function updateMaterialTexture(planeIndex) {
-      const mat = materials[planeIndex];
-      const tex = textures[planesData[planeIndex].imageIndex];
-      if (mat && tex) mat.uniforms.map.value = tex;
-    }
-    planesData.forEach((_, i) => updateMaterialTexture(i));
-
-    let scrollVelocity  = 0;
-    let autoPlay        = true;
-    let lastInteraction = Date.now();
-    let lastTime        = performance.now();
-    const raycaster     = new THREE.Raycaster();
-    const mouse         = new THREE.Vector2(-9999, -9999);
-
-    renderer.domElement.addEventListener('wheel', e => {
-      e.preventDefault();
-      scrollVelocity += e.deltaY * 0.01 * CFG.speed;
-      autoPlay = false;
-      lastInteraction = Date.now();
-    }, { passive: false });
-
-    document.addEventListener('keydown', e => {
-      if (e.key === 'ArrowUp'   || e.key === 'ArrowLeft')  { scrollVelocity -= 2 * CFG.speed; autoPlay = false; lastInteraction = Date.now(); }
-      if (e.key === 'ArrowDown' || e.key === 'ArrowRight') { scrollVelocity += 2 * CFG.speed; autoPlay = false; lastInteraction = Date.now(); }
-    });
-
-    let touchStartY = null;
-    renderer.domElement.addEventListener('touchstart', e => { touchStartY = e.touches[0].clientY; }, { passive: true });
-    renderer.domElement.addEventListener('touchmove', e => {
-      if (touchStartY === null) return;
-      const delta = touchStartY - e.touches[0].clientY;
-      scrollVelocity += delta * 0.05 * CFG.speed;
-      touchStartY = e.touches[0].clientY;
-      autoPlay = false; lastInteraction = Date.now();
-    }, { passive: true });
-
-    renderer.domElement.addEventListener('mousemove', e => {
-      const rect = renderer.domElement.getBoundingClientRect();
-      mouse.x =  ((e.clientX - rect.left) / rect.width)  * 2 - 1;
-      mouse.y = -((e.clientY - rect.top)  / rect.height) * 2 + 1;
-    });
-    renderer.domElement.addEventListener('mouseleave', () => { mouse.set(-9999, -9999); });
-
-    setInterval(() => {
-      if (Date.now() - lastInteraction > CFG.autoPlayDelay) autoPlay = true;
-    }, 1000);
-
-    function animate() {
-      requestAnimationFrame(animate);
-
-      const now   = performance.now();
-      const delta = Math.min((now - lastTime) / 1000, 0.1);
-      lastTime    = now;
-      const time  = now / 1000;
-
-      if (autoPlay) scrollVelocity += CFG.autoPlaySpeed * delta;
-      scrollVelocity *= CFG.damping;
-
-      raycaster.setFromCamera(mouse, camera);
-      const intersects = raycaster.intersectObjects(meshes);
-      const hit = intersects.length > 0 ? intersects[0].object : null;
-      meshes.forEach((m, i) => {
-        materials[i].uniforms.isHovered.value = (m === hit) ? 1.0 : 0.0;
-      });
-
-      const imageAdvance = CFG.visibleCount % IMAGES.length || IMAGES.length;
-
-      planesData.forEach((plane, i) => {
-        let newZ = plane.z + scrollVelocity * delta * 10;
-        let wrapsF = 0, wrapsB = 0;
-
-        if (newZ >= CFG.depthRange) {
-          wrapsF = Math.floor(newZ / CFG.depthRange);
-          newZ  -= CFG.depthRange * wrapsF;
-        } else if (newZ < 0) {
-          wrapsB = Math.ceil(-newZ / CFG.depthRange);
-          newZ  += CFG.depthRange * wrapsB;
-        }
-
-        if (wrapsF > 0) {
-          const prev = plane.imageIndex;
-          plane.imageIndex = (plane.imageIndex + wrapsF * imageAdvance) % IMAGES.length;
-          if (plane.imageIndex !== prev) updateMaterialTexture(i);
-        }
-        if (wrapsB > 0) {
-          const prev = plane.imageIndex;
-          const step = plane.imageIndex - wrapsB * imageAdvance;
-          plane.imageIndex = ((step % IMAGES.length) + IMAGES.length) % IMAGES.length;
-          if (plane.imageIndex !== prev) updateMaterialTexture(i);
-        }
-
-        plane.z = ((newZ % CFG.depthRange) + CFG.depthRange) % CFG.depthRange;
-
-        const worldZ = plane.z - CFG.depthRange / 2;
-        const norm   = plane.z / CFG.depthRange;
-
-        let opacity = 1;
-        if      (norm < CFG.fadeIn.start)  opacity = 0;
-        else if (norm < CFG.fadeIn.end)    opacity = (norm - CFG.fadeIn.start) / (CFG.fadeIn.end - CFG.fadeIn.start);
-        else if (norm > CFG.fadeOut.end)   opacity = 0;
-        else if (norm > CFG.fadeOut.start) opacity = 1 - (norm - CFG.fadeOut.start) / (CFG.fadeOut.end - CFG.fadeOut.start);
-        opacity = Math.max(0, Math.min(1, opacity));
-
-        let blur = 0;
-        const blurOutStart = CFG.fadeOut.start, blurOutEnd = CFG.fadeOut.end;
-        if      (norm < 0.1)          blur = CFG.maxBlur * (1 - norm / 0.1);
-        else if (norm > blurOutStart) blur = CFG.maxBlur * Math.min(1, (norm - blurOutStart) / Math.max(blurOutEnd - blurOutStart, 0.001));
-        blur = Math.max(0, Math.min(CFG.maxBlur, blur));
-
-        const tex = textures[plane.imageIndex];
-        let sx = 2, sy = 2;
-        if (tex.image && tex.image.width && tex.image.height) {
-          const aspect = tex.image.width / tex.image.height;
-          sx = aspect > 1 ? 2 * aspect : 2;
-          sy = aspect > 1 ? 2 : 2 / aspect;
-        }
-
-        const mesh = meshes[i];
-        mesh.position.set(plane.x, plane.y, worldZ);
-        mesh.scale.set(sx, sy, 1);
-
-        const mat = materials[i];
-        mat.uniforms.opacity.value     = opacity;
-        mat.uniforms.blurAmount.value  = blur;
-        mat.uniforms.scrollForce.value = scrollVelocity;
-        mat.uniforms.time.value        = time;
-      });
-
-      renderer.render(scene, camera);
-    }
-
-    animate();
-
-    window.addEventListener('resize', () => {
-      const w = container.clientWidth;
-      const h = container.clientHeight;
-      camera.aspect = w / h;
-      camera.updateProjectionMatrix();
-      renderer.setSize(w, h);
-    });
-
-  })();
+})();
   </script>
 </body>
 </html>
