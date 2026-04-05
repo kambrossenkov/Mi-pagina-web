@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Store – KIOSKO BOX OESTE</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --rojo: #e8192c;
+  --rojo-oscuro: #c0001f;
+  --amarillo: #ffd600;
+  --verde: #22c55e;
+  --gris-bg: #f5f5f5;
+  --gris-borde: #e0e0e0;
+  --texto: #1a1a1a;
+  --texto-suave: #666;
+  --blanco: #fff;
+  --sombra: 0 2px 12px rgba(0,0,0,.10);
+  --sombra-hover: 0 6px 24px rgba(0,0,0,.18);
+  --radio: 12px;
+  --transition: .2s ease;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Nunito', sans-serif; background: var(--gris-bg); color: var(--texto); }
+a { text-decoration: none; color: inherit; }
+button { cursor: pointer; font-family: inherit; border: none; background: none; }
+input { font-family: inherit; }
+
+/* ─── TOPBAR ─── */
+.topbar {
+  background: var(--rojo);
+  color: #fff;
+  font-size: .75rem;
+  font-weight: 700;
+  text-align: center;
+  padding: 6px 16px;
+  letter-spacing: .04em;
+}
+.topbar-inner { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 4px 20px; }
+.topbar span::before { content: "•"; margin-right: 6px; opacity: .6; }
+.topbar span:first-child::before { content: ""; margin: 0; }
+.topbar a { color: var(--amarillo); text-decoration: underline; }
+
+/* ─── HEADER ─── */
+header {
+  background: var(--blanco);
+  box-shadow: 0 2px 10px rgba(0,0,0,.08);
+  position: sticky; top: 0; z-index: 300;
+}
+.header-inner {
+  max-width: 1280px; margin: 0 auto;
+  display: flex; align-items: center; gap: 16px;
+  padding: 12px 20px;
+}
+.logo { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+.logo-icon {
+  width: 44px; height: 44px;
+  background: var(--rojo);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.4rem;
+}
+.logo-text { line-height: 1.1; }
+.logo-text strong { display: block; font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem; color: var(--rojo); letter-spacing: .05em; }
+.logo-text small { font-size: .68rem; color: var(--texto-suave); font-weight: 600; text-transform: uppercase; letter-spacing: .08em; }
+
+.search-wrap { flex: 1; position: relative; max-width: 520px; }
+.search-wrap input {
+  width: 100%; padding: 10px 44px 10px 16px;
+  border: 2px solid var(--gris-borde); border-radius: 30px;
+  font-size: .9rem; outline: none; transition: border-color var(--transition);
+  background: var(--gris-bg);
+}
+.search-wrap input:focus { border-color: var(--rojo); background: #fff; }
+.search-wrap .search-btn {
+  position: absolute; right: 6px; top: 50%; transform: translateY(-50%);
+  background: var(--rojo); color: #fff;
+  width: 32px; height: 32px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: .9rem; transition: background var(--transition);
+}
+.search-wrap .search-btn:hover { background: var(--rojo-oscuro); }
+
+.cart-btn {
+  position: relative; flex-shrink: 0;
+  background: var(--rojo); color: #fff;
+  border-radius: 30px; padding: 10px 18px;
+  font-weight: 800; font-size: .9rem;
+  display: flex; align-items: center; gap: 8px;
+  transition: background var(--transition), transform var(--transition);
+}
+.cart-btn:hover { background: var(--rojo-oscuro); transform: translateY(-1px); }
+.cart-btn .cart-icon { font-size: 1.1rem; }
+.cart-badge {
+  position: absolute; top: -6px; right: -6px;
+  background: var(--amarillo); color: #1a1a1a;
+  border-radius: 50%; width: 20px; height: 20px;
+  font-size: .7rem; font-weight: 900;
+  display: flex; align-items: center; justify-content: center;
+  display: none;
+}
+.cart-badge.show { display: flex; }
+
+/* ─── CATEGORY BAR ─── */
+.cat-bar {
+  background: var(--blanco);
+  border-bottom: 2px solid var(--gris-borde);
+  overflow-x: auto; scrollbar-width: none;
+}
+.cat-bar::-webkit-scrollbar { display: none; }
+.cat-bar-inner {
+  max-width: 1280px; margin: 0 auto;
+  display: flex; gap: 4px;
+  padding: 0 20px;
+}
+.cat-pill {
+  flex-shrink: 0; padding: 10px 16px;
+  font-size: .82rem; font-weight: 700;
+  border-bottom: 3px solid transparent;
+  color: var(--texto-suave); transition: all var(--transition);
+  white-space: nowrap; cursor: pointer;
+  display: flex; align-items: center; gap: 5px;
+}
+.cat-pill:hover { color: var(--rojo); border-bottom-color: var(--rojo); background: #fff5f5; }
+.cat-pill.active { color: var(--rojo); border-bottom-color: var(--rojo); }
+
+/* ─── AVISO MÍNIMO ─── */
+.aviso-minimo {
+  background: linear-gradient(90deg, #fff9e6, #fff3cc);
+  border: 1.5px solid var(--amarillo);
+  text-align: center; padding: 9px 20px;
+  font-size: .82rem; font-weight: 700; color: #7a5900;
+}
+.aviso-minimo span { color: var(--rojo); }
+
+/* ─── LAYOUT MAIN ─── */
+.main-wrap {
+  max-width: 1280px; margin: 0 auto;
+  display: grid; grid-template-columns: 260px 1fr;
+  gap: 24px; padding: 24px 20px;
+  align-items: start;
+}
+@media (max-width: 900px) { .main-wrap { grid-template-columns: 1fr; } }
+
+/* ─── SIDEBAR ─── */
+.sidebar { display: flex; flex-direction: column; gap: 16px; }
+@media (max-width: 900px) { .sidebar { display: none; } }
+
+.sidebar-card {
+  background: var(--blanco);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+  padding: 18px;
+  overflow: hidden;
+}
+.sidebar-card h3 {
+  font-size: .85rem; font-weight: 900; text-transform: uppercase;
+  letter-spacing: .06em; color: var(--texto-suave); margin-bottom: 14px;
+  padding-bottom: 10px; border-bottom: 1.5px solid var(--gris-borde);
+}
+.filter-cat-list { display: flex; flex-direction: column; gap: 2px; }
+.filter-cat-item {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 8px 10px; border-radius: 8px; cursor: pointer;
+  font-size: .88rem; font-weight: 700; transition: background var(--transition);
+}
+.filter-cat-item:hover { background: #f5f5f5; }
+.filter-cat-item.active { background: #fff0f0; color: var(--rojo); }
+.filter-cat-item .cat-count {
+  background: var(--gris-borde); color: var(--texto-suave);
+  font-size: .72rem; font-weight: 800;
+  padding: 2px 7px; border-radius: 20px;
+}
+.filter-cat-item.active .cat-count { background: var(--rojo); color: #fff; }
+
+/* Price slider */
+.price-range { margin-top: 4px; }
+.price-labels { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: .83rem; font-weight: 700; color: var(--rojo); }
+input[type=range] { width: 100%; accent-color: var(--rojo); cursor: pointer; }
+
+/* Info local */
+.info-local p { font-size: .84rem; margin-bottom: 8px; display: flex; align-items: flex-start; gap: 8px; line-height: 1.4; }
+.info-local p span:first-child { font-size: 1rem; flex-shrink: 0; }
+
+/* ─── CONTENT ─── */
+.content { min-width: 0; }
+
+.toolbar {
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 10px; margin-bottom: 18px;
+}
+.toolbar-left { font-size: .88rem; color: var(--texto-suave); font-weight: 600; }
+.toolbar-left strong { color: var(--texto); }
+.toolbar-right { display: flex; align-items: center; gap: 10px; }
+.sort-select {
+  padding: 8px 14px; border: 2px solid var(--gris-borde); border-radius: 8px;
+  font-size: .84rem; font-weight: 700; outline: none; cursor: pointer;
+  background: var(--blanco); transition: border-color var(--transition);
+}
+.sort-select:focus { border-color: var(--rojo); }
+
+/* Product grid */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
+  gap: 16px;
+}
+.product-card {
+  background: var(--blanco);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+  overflow: hidden;
+  cursor: pointer;
+  transition: box-shadow var(--transition), transform var(--transition);
+  position: relative;
+  display: flex; flex-direction: column;
+}
+.product-card:hover { box-shadow: var(--sombra-hover); transform: translateY(-3px); }
+.product-card.sin-stock { opacity: .55; pointer-events: none; }
+
+.product-img {
+  height: 130px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 4rem; background: var(--gris-bg);
+  position: relative;
+}
+.product-badge {
+  position: absolute; top: 8px; right: 8px;
+  background: var(--verde); color: #fff;
+  font-size: .65rem; font-weight: 900; padding: 3px 7px;
+  border-radius: 20px; text-transform: uppercase; letter-spacing: .04em;
+}
+.product-badge.agotado { background: #999; }
+.product-badge.oferta { background: var(--rojo); }
+
+.product-info { padding: 12px; flex: 1; display: flex; flex-direction: column; gap: 6px; }
+.product-cat { font-size: .68rem; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; color: var(--texto-suave); }
+.product-name { font-size: .88rem; font-weight: 800; line-height: 1.3; flex: 1; }
+.product-price { font-size: 1.05rem; font-weight: 900; color: var(--rojo); }
+.product-price small { font-size: .75rem; color: var(--texto-suave); font-weight: 600; text-decoration: line-through; margin-right: 4px; }
+.add-btn {
+  margin-top: 6px;
+  background: var(--rojo); color: #fff;
+  width: 100%; padding: 8px;
+  border-radius: 8px; font-size: .82rem; font-weight: 800;
+  transition: background var(--transition);
+}
+.add-btn:hover { background: var(--rojo-oscuro); }
+
+/* No results */
+.no-results {
+  text-align: center; padding: 60px 20px;
+  color: var(--texto-suave); font-size: 1rem;
+  grid-column: 1 / -1;
+}
+.no-results .big { font-size: 3rem; margin-bottom: 10px; }
+
+/* ─── PAGINACIÓN ─── */
+.pagination {
+  display: flex; justify-content: center; align-items: center;
+  gap: 6px; margin-top: 28px; flex-wrap: wrap;
+}
+.page-btn {
+  padding: 8px 14px; border-radius: 8px;
+  font-size: .85rem; font-weight: 800;
+  border: 2px solid var(--gris-borde);
+  background: var(--blanco); color: var(--texto);
+  transition: all var(--transition);
+}
+.page-btn:hover { border-color: var(--rojo); color: var(--rojo); }
+.page-btn.active { background: var(--rojo); border-color: var(--rojo); color: #fff; }
+.page-btn:disabled { opacity: .4; cursor: not-allowed; }
+
+/* ─── MODAL PRODUCTO ─── */
+.overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.55); backdrop-filter: blur(3px);
+  z-index: 500; display: flex; align-items: center; justify-content: center;
+  padding: 20px; opacity: 0; pointer-events: none;
+  transition: opacity .25s ease;
+}
+.overlay.open { opacity: 1; pointer-events: all; }
+.modal {
+  background: var(--blanco); border-radius: 18px;
+  max-width: 500px; width: 100%;
+  box-shadow: 0 20px 60px rgba(0,0,0,.25);
+  overflow: hidden; transform: translateY(20px);
+  transition: transform .25s ease;
+}
+.overlay.open .modal { transform: translateY(0); }
+.modal-img {
+  height: 200px; background: var(--gris-bg);
+  display: flex; align-items: center; justify-content: center; font-size: 6rem;
+}
+.modal-body { padding: 24px; }
+.modal-cat { font-size: .72rem; font-weight: 800; text-transform: uppercase; letter-spacing: .08em; color: var(--texto-suave); margin-bottom: 6px; }
+.modal-name { font-size: 1.4rem; font-weight: 900; margin-bottom: 8px; line-height: 1.2; }
+.modal-desc { font-size: .88rem; color: var(--texto-suave); margin-bottom: 14px; line-height: 1.5; }
+.modal-price { font-size: 1.8rem; font-weight: 900; color: var(--rojo); margin-bottom: 18px; }
+.modal-qty-row { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+.qty-ctrl {
+  display: flex; align-items: center; gap: 0;
+  border: 2px solid var(--gris-borde); border-radius: 10px; overflow: hidden;
+}
+.qty-ctrl button {
+  width: 36px; height: 36px; font-size: 1.1rem; font-weight: 900;
+  transition: background var(--transition);
+}
+.qty-ctrl button:hover { background: #f5f5f5; }
+.qty-ctrl input {
+  width: 50px; text-align: center; font-size: 1rem; font-weight: 800;
+  border: none; border-left: 2px solid var(--gris-borde); border-right: 2px solid var(--gris-borde);
+  padding: 6px 0; outline: none;
+}
+.modal-add-btn {
+  flex: 1; background: var(--rojo); color: #fff;
+  padding: 12px 20px; border-radius: 10px;
+  font-size: .95rem; font-weight: 800;
+  transition: background var(--transition);
+}
+.modal-add-btn:hover { background: var(--rojo-oscuro); }
+.modal-close {
+  position: absolute; top: 14px; right: 14px;
+  width: 32px; height: 32px; border-radius: 50%;
+  background: rgba(0,0,0,.15); color: #fff;
+  font-size: 1rem; display: flex; align-items: center; justify-content: center;
+  transition: background var(--transition);
+}
+.modal-close:hover { background: rgba(0,0,0,.35); }
+
+/* ─── CARRITO DRAWER ─── */
+.cart-drawer {
+  position: fixed; top: 0; right: -420px; height: 100vh; width: 420px;
+  max-width: 100vw;
+  background: var(--blanco); z-index: 600;
+  box-shadow: -6px 0 40px rgba(0,0,0,.18);
+  display: flex; flex-direction: column;
+  transition: right .3s cubic-bezier(.4,0,.2,1);
+}
+.cart-drawer.open { right: 0; }
+.cart-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,.4);
+  z-index: 590; opacity: 0; pointer-events: none;
+  transition: opacity .3s ease;
+}
+.cart-overlay.open { opacity: 1; pointer-events: all; }
+
+.drawer-header {
+  padding: 18px 20px; border-bottom: 2px solid var(--gris-borde);
+  display: flex; align-items: center; justify-content: space-between; flex-shrink: 0;
+}
+.drawer-header h2 { font-size: 1.1rem; font-weight: 900; }
+.drawer-close {
+  width: 34px; height: 34px; border-radius: 50%;
+  background: var(--gris-bg); font-size: 1.1rem;
+  display: flex; align-items: center; justify-content: center;
+  transition: background var(--transition);
+}
+.drawer-close:hover { background: var(--gris-borde); }
+
+/* Progress bar */
+.progress-wrap { padding: 14px 20px; border-bottom: 1.5px solid var(--gris-borde); flex-shrink: 0; }
+.progress-label { font-size: .8rem; font-weight: 700; margin-bottom: 6px; display: flex; justify-content: space-between; }
+.progress-bar { height: 8px; background: var(--gris-borde); border-radius: 4px; overflow: hidden; }
+.progress-fill { height: 100%; background: var(--verde); border-radius: 4px; transition: width .4s ease; }
+.progress-fill.warning { background: var(--amarillo); }
+.progress-fill.danger { background: var(--rojo); }
+
+/* Cart items */
+.cart-items { flex: 1; overflow-y: auto; padding: 12px 20px; }
+.cart-empty { text-align: center; padding: 40px 20px; color: var(--texto-suave); }
+.cart-empty .big { font-size: 3rem; margin-bottom: 8px; }
+.cart-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 0; border-bottom: 1px solid var(--gris-borde);
+}
+.cart-item-emoji { font-size: 2rem; flex-shrink: 0; width: 48px; text-align: center; }
+.cart-item-info { flex: 1; min-width: 0; }
+.cart-item-name { font-size: .88rem; font-weight: 800; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cart-item-price { font-size: .82rem; color: var(--rojo); font-weight: 700; }
+.cart-item-qty {
+  display: flex; align-items: center; gap: 6px; flex-shrink: 0;
+}
+.cart-item-qty button {
+  width: 28px; height: 28px; border-radius: 8px;
+  background: var(--gris-bg); font-size: .9rem; font-weight: 900;
+  display: flex; align-items: center; justify-content: center;
+  transition: background var(--transition);
+}
+.cart-item-qty button:hover { background: var(--gris-borde); }
+.cart-item-qty span { font-size: .9rem; font-weight: 800; min-width: 20px; text-align: center; }
+.remove-item { color: #ccc; font-size: .9rem; transition: color var(--transition); }
+.remove-item:hover { color: var(--rojo); }
+
+/* Drawer footer */
+.drawer-footer { padding: 16px 20px; border-top: 2px solid var(--gris-borde); flex-shrink: 0; }
+.cart-total { display: flex; justify-content: space-between; font-size: 1.1rem; font-weight: 900; margin-bottom: 14px; }
+.cart-total span:last-child { color: var(--rojo); }
+.confirm-btn {
+  width: 100%; padding: 14px;
+  background: var(--verde); color: #fff;
+  border-radius: 12px; font-size: 1rem; font-weight: 900;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  transition: background var(--transition), transform var(--transition);
+}
+.confirm-btn:hover { background: #16a34a; transform: translateY(-1px); }
+.confirm-btn:disabled { background: #ccc; cursor: not-allowed; transform: none; }
+
+/* ─── TOAST ─── */
+.toast-container { position: fixed; bottom: 80px; right: 20px; z-index: 900; display: flex; flex-direction: column; gap: 8px; }
+.toast {
+  background: var(--texto); color: #fff;
+  padding: 12px 18px; border-radius: 12px; font-size: .88rem; font-weight: 700;
+  box-shadow: 0 4px 20px rgba(0,0,0,.2);
+  transform: translateX(120%); transition: transform .3s cubic-bezier(.4,0,.2,1);
+  max-width: 280px;
+}
+.toast.show { transform: translateX(0); }
+.toast.success { background: var(--verde); }
+.toast.error { background: var(--rojo); }
+
+/* ─── FAB WHATSAPP ─── */
+.fab-wa {
+  position: fixed; bottom: 20px; right: 20px; z-index: 400;
+  background: #25d366; color: #fff;
+  width: 56px; height: 56px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.6rem; box-shadow: 0 4px 18px rgba(37,211,102,.45);
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+.fab-wa:hover { transform: scale(1.1); box-shadow: 0 6px 26px rgba(37,211,102,.6); }
+
+/* ─── BOTÓN VOLVER ─── */
+.btn-volver {
+  position: fixed; top: 70px; left: 14px; z-index: 350;
+  background: rgba(255,255,255,.92); color: var(--texto);
+  border: 1.5px solid var(--gris-borde);
+  border-radius: 30px; padding: 7px 14px;
+  font-size: .8rem; font-weight: 800;
+  display: flex; align-items: center; gap: 5px;
+  box-shadow: 0 2px 10px rgba(0,0,0,.1);
+  transition: background var(--transition), box-shadow var(--transition);
+  backdrop-filter: blur(4px);
+}
+.btn-volver:hover { background: #fff; box-shadow: 0 4px 16px rgba(0,0,0,.15); }
+
+/* ─── FOOTER ─── */
+footer {
+  background: #1a1a1a; color: #ccc;
+  text-align: center; padding: 28px 20px;
+  font-size: .82rem; margin-top: 40px;
+}
+footer strong { color: var(--amarillo); }
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 600px) {
+  .header-inner { padding: 10px 14px; gap: 10px; }
+  .logo-text small { display: none; }
+  .product-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .product-img { height: 100px; font-size: 3rem; }
+  .cart-drawer { width: 100vw; }
+}
+</style>
+</head>
+<body>
+
+<!-- BOTÓN VOLVER -->
+<button class="btn-volver" onclick="history.back()">← Volver</button>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="topbar-inner">
+    <span>🚀 Envíos a todo el AMBA</span>
+    <span>📦 Compra mínima $6.000</span>
+    <span>💳 Efectivo · Transferencia · Mercado Pago</span>
+    <span>📲 <a href="https://wa.me/5491167065426" target="_blank">Consultas por WhatsApp</a></span>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <div class="logo">
+      <div class="logo-icon">🏪</div>
+      <div class="logo-text">
+        <strong>KIOSKO BOX OESTE</strong>
+        <small>Distribuidora · AMBA</small>
+      </div>
+    </div>
+    <div class="search-wrap">
+      <input type="text" id="searchInput" placeholder="Buscar productos…" autocomplete="off"/>
+      <button class="search-btn">🔍</button>
+    </div>
+    <button class="cart-btn" id="cartBtn">
+      <span class="cart-icon">🛒</span>
+      <span id="cartTotal">$0</span>
+      <span class="cart-badge" id="cartBadge">0</span>
+    </button>
+  </div>
+</header>
+
+<!-- CATEGORY BAR -->
+<nav class="cat-bar">
+  <div class="cat-bar-inner" id="catBar"></div>
+</nav>
+
+<!-- AVISO MÍNIMO -->
+<div class="aviso-minimo">
+  ⚠️ Compra mínima <span>$6.000</span> — armá tu pedido y confirmá por WhatsApp
+</div>
+
+<!-- MAIN -->
+<div class="main-wrap">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-card">
+      <h3>Categorías</h3>
+      <div class="filter-cat-list" id="sidebarCats"></div>
+    </div>
+    <div class="sidebar-card">
+      <h3>Precio máximo</h3>
+      <div class="price-range">
+        <div class="price-labels">
+          <span>$0</span>
+          <span id="priceLabel">$5.000</span>
+        </div>
+        <input type="range" id="priceRange" min="0" max="5000" value="5000" step="50"/>
+      </div>
+    </div>
+    <div class="sidebar-card info-local">
+      <h3>Info del local</h3>
+      <p><span>📍</span><span>Zona Oeste del Gran Buenos Aires</span></p>
+      <p><span>📞</span><span>+54 9 11 6706-5426</span></p>
+      <p><span>🕐</span><span>Lun–Sáb 8:00–20:00 hs</span></p>
+      <p><span>🚚</span><span>Entrega en 24–48 hs hábiles</span></p>
+      <p><span>💰</span><span>Precio mayorista desde caja completa</span></p>
+    </div>
+  </aside>
+
+  <!-- CONTENT -->
+  <div class="content">
+    <div class="toolbar">
+      <div class="toolbar-left">Mostrando <strong id="countLabel">0</strong> productos</div>
+      <div class="toolbar-right">
+        <select class="sort-select" id="sortSelect">
+          <option value="default">Destacados</option>
+          <option value="price-asc">Precio: menor a mayor</option>
+          <option value="price-desc">Precio: mayor a menor</option>
+          <option value="name-asc">Nombre A–Z</option>
+          <option value="name-desc">Nombre Z–A</option>
+        </select>
+      </div>
+    </div>
+    <div class="product-grid" id="productGrid"></div>
+    <div class="pagination" id="pagination"></div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p><strong>KIOSKO BOX OESTE</strong> — Distribuidora mayorista · Gran Buenos Aires</p>
+  <p style="margin-top:6px">Pedidos por WhatsApp · <a href="https://wa.me/5491167065426" style="color:var(--amarillo)">+54 9 11 6706-5426</a></p>
+</footer>
+
+<!-- MODAL PRODUCTO -->
+<div class="overlay" id="productOverlay">
+  <div class="modal" style="position:relative">
+    <button class="modal-close" id="modalClose">✕</button>
+    <div class="modal-img" id="modalImg"></div>
+    <div class="modal-body">
+      <div class="modal-cat" id="modalCat"></div>
+      <div class="modal-name" id="modalName"></div>
+      <div class="modal-desc" id="modalDesc"></div>
+      <div class="modal-price" id="modalPrice"></div>
+      <div class="modal-qty-row">
+        <div class="qty-ctrl">
+          <button id="modalQtyMinus">−</button>
+          <input type="number" id="modalQty" value="1" min="1" max="99"/>
+          <button id="modalQtyPlus">+</button>
+        </div>
+        <button class="modal-add-btn" id="modalAddBtn">Agregar al carrito</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CARRITO DRAWER -->
+<div class="cart-overlay" id="cartOverlay"></div>
+<div class="cart-drawer" id="cartDrawer">
+  <div class="drawer-header">
+    <h2>🛒 Tu carrito</h2>
+    <button class="drawer-close" id="drawerClose">✕</button>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-label">
+      <span id="progressText">Agregá más para llegar al mínimo</span>
+      <span id="progressPct">0%</span>
+    </div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressFill" style="width:0%"></div>
+    </div>
+  </div>
+  <div class="cart-items" id="cartItems"></div>
+  <div class="drawer-footer">
+    <div class="cart-total">
+      <span>Total</span>
+      <span id="drawerTotal">$0</span>
+    </div>
+    <button class="confirm-btn" id="confirmBtn" disabled>
+      💬 Confirmar por WhatsApp
+    </button>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- FAB WHATSAPP -->
+<a class="fab-wa" href="https://wa.me/5491167065426" target="_blank" title="Escribinos por WhatsApp">💬</a>
+
+<script>
+/* ════════════════════════════════════════════════
+   DATOS DE PRODUCTOS
+════════════════════════════════════════════════ */
+const CATEGORIAS = [
+  { id: "todas", label: "Todos", icon: "🏪" },
+  { id: "golosinas", label: "Golosinas", icon: "🍬" },
+  { id: "chocolates", label: "Chocolates", icon: "🍫" },
+  { id: "bebidas", label: "Bebidas", icon: "🥤" },
+  { id: "snacks", label: "Snacks", icon: "🍿" },
+  { id: "alfajores", label: "Alfajores", icon: "🍪" },
+  { id: "chicles", label: "Chicles", icon: "🫧" },
+  { id: "cigarrillos", label: "Cigarrillos", icon: "🚬" },
+  { id: "higiene", label: "Higiene", icon: "🧴" },
+  { id: "varios", label: "Varios", icon: "📦" },
+];
+
+const PRODUCTOS = [
+  // GOLOSINAS
+  { id:1,  cat:"golosinas",   emoji:"🍬", nombre:"Caramelos Ricola surtidos",       precio:320,  stock:true },
+  { id:2,  cat:"golosinas",   emoji:"🍭", nombre:"Chupetín Globo Pop x12",          precio:580,  stock:true },
+  { id:3,  cat:"golosinas",   emoji:"🍬", nombre:"Caramelos Menthoplus caja",        precio:410,  stock:true },
+  { id:4,  cat:"golosinas",   emoji:"🍡", nombre:"Gomitas Haribo 200g",              precio:950,  stock:true },
+  { id:5,  cat:"golosinas",   emoji:"🍭", nombre:"Chupetines Arcor x24",            precio:760,  stock:false },
+  { id:6,  cat:"golosinas",   emoji:"🍬", nombre:"Palitos salados Exquisita x10",   precio:480,  stock:true },
+  { id:7,  cat:"golosinas",   emoji:"🍡", nombre:"Gomitas Mogul surtidas 250g",     precio:1100, stock:true },
+  { id:8,  cat:"golosinas",   emoji:"🍬", nombre:"Caramelos Halls x20",             precio:390,  stock:true },
+  // CHOCOLATES
+  { id:9,  cat:"chocolates",  emoji:"🍫", nombre:"Turron Felfort x24",              precio:1850, stock:true },
+  { id:10, cat:"chocolates",  emoji:"🍫", nombre:"Chocolate Toblerone 100g",        precio:1200, stock:true },
+  { id:11, cat:"chocolates",  emoji:"🍫", nombre:"Bubaloo Chocolate x30",           precio:2100, stock:true },
+  { id:12, cat:"chocolates",  emoji:"🍫", nombre:"Caja Bon o Bon x30",              precio:3400, stock:true },
+  { id:13, cat:"chocolates",  emoji:"🍫", nombre:"Chocolate Milka 150g",            precio:1450, stock:true },
+  { id:14, cat:"chocolates",  emoji:"🍫", nombre:"Tableta Águila Cabsha x30",       precio:2800, stock:false },
+  { id:15, cat:"chocolates",  emoji:"🍫", nombre:"Rocklets Arcor x20",              precio:1650, stock:true },
+  { id:16, cat:"chocolates",  emoji:"🍫", nombre:"Kit Kat 4F x24",                  precio:2200, stock:true },
+  // BEBIDAS
+  { id:17, cat:"bebidas",     emoji:"🥤", nombre:"Gaseosa Coca-Cola 1.5L x6",      precio:4200, stock:true },
+  { id:18, cat:"bebidas",     emoji:"🧃", nombre:"Jugo Cepita del Valle x12",       precio:3600, stock:true },
+  { id:19, cat:"bebidas",     emoji:"💧", nombre:"Agua Villavicencio 500ml x12",    precio:2800, stock:true },
+  { id:20, cat:"bebidas",     emoji:"🥤", nombre:"Fanta Naranja 2L x6",             precio:3900, stock:true },
+  { id:21, cat:"bebidas",     emoji:"⚡", nombre:"Monster Energy 473ml x24",        precio:4800, stock:true },
+  { id:22, cat:"bebidas",     emoji:"🍵", nombre:"Té Lipton surtido x100",          precio:1900, stock:true },
+  { id:23, cat:"bebidas",     emoji:"☕", nombre:"Café La Virginia x500g",          precio:2400, stock:true },
+  { id:24, cat:"bebidas",     emoji:"🧃", nombre:"Cunnington Lima-Limón 1.5L x6",   precio:2600, stock:false },
+  // SNACKS
+  { id:25, cat:"snacks",      emoji:"🍿", nombre:"Palomitas Pop Corn x12",          precio:1400, stock:true },
+  { id:26, cat:"snacks",      emoji:"🥨", nombre:"Papas Lays Original 150g x12",   precio:3200, stock:true },
+  { id:27, cat:"snacks",      emoji:"🍟", nombre:"Cheetos Flaming Hot x24",         precio:2100, stock:true },
+  { id:28, cat:"snacks",      emoji:"🥜", nombre:"Maní Confitado Pehuamar x24",    precio:1800, stock:true },
+  { id:29, cat:"snacks",      emoji:"🍿", nombre:"Tortrix Queso x18",              precio:1950, stock:true },
+  { id:30, cat:"snacks",      emoji:"🥨", nombre:"Crackers Club Social x10",       precio:1600, stock:true },
+  { id:31, cat:"snacks",      emoji:"🍟", nombre:"Ruffles Crema y Cebolla 130g x12",precio:2900,stock:true },
+  { id:32, cat:"snacks",      emoji:"🌽", nombre:"Chizitos Arcor x24",             precio:1750, stock:true },
+  // ALFAJORES
+  { id:33, cat:"alfajores",   emoji:"🍪", nombre:"Alfajor Havanna x6 blanco",      precio:2800, stock:true },
+  { id:34, cat:"alfajores",   emoji:"🍪", nombre:"Alfajor Jorgito x24",            precio:1950, stock:true },
+  { id:35, cat:"alfajores",   emoji:"🍪", nombre:"Alfajor Milka Triple x24",       precio:3600, stock:true },
+  { id:36, cat:"alfajores",   emoji:"🍪", nombre:"Alfajor Mantecol x24",           precio:2100, stock:false },
+  { id:37, cat:"alfajores",   emoji:"🍪", nombre:"Alfajor Felfort x24",            precio:1800, stock:true },
+  { id:38, cat:"alfajores",   emoji:"🍪", nombre:"Alfajor Guaymallén x24",         precio:1650, stock:true },
+  { id:39, cat:"alfajores",   emoji:"🍪", nombre:"Alfajor Rogers x12",             precio:2200, stock:true },
+  { id:40, cat:"alfajores",   emoji:"🍪", nombre:"Alfajor Cordobés 3 capas x24",   precio:2400, stock:true },
+  // CHICLES
+  { id:41, cat:"chicles",     emoji:"🫧", nombre:"Chiclets Adams x200",             precio:1200, stock:true },
+  { id:42, cat:"chicles",     emoji:"🫧", nombre:"Beldent Menta x100",             precio:980,  stock:true },
+  { id:43, cat:"chicles",     emoji:"🫧", nombre:"Trident Frutilla x50",            precio:850,  stock:true },
+  { id:44, cat:"chicles",     emoji:"🫧", nombre:"Bazooka Tutti Frutti x100",       precio:1100, stock:true },
+  { id:45, cat:"chicles",     emoji:"🫧", nombre:"Bubbaloo Fresa x60",             precio:760,  stock:false },
+  // CIGARRILLOS
+  { id:46, cat:"cigarrillos", emoji:"🚬", nombre:"Marlboro Rojo x20 (cartón)",     precio:4200, stock:true },
+  { id:47, cat:"cigarrillos", emoji:"🚬", nombre:"Derby Clásico x20 (cartón)",     precio:3100, stock:true },
+  { id:48, cat:"cigarrillos", emoji:"🚬", nombre:"Particulares x20 (cartón)",      precio:2900, stock:true },
+  { id:49, cat:"cigarrillos", emoji:"🚬", nombre:"Camel Azul x20 (cartón)",        precio:3800, stock:true },
+  { id:50, cat:"cigarrillos", emoji:"🚬", nombre:"Philip Morris x20 (cartón)",     precio:3600, stock:true },
+  // HIGIENE
+  { id:51, cat:"higiene",     emoji:"🧴", nombre:"Shampoo Head & Shoulders 375ml", precio:1950, stock:true },
+  { id:52, cat:"higiene",     emoji:"🪥", nombre:"Cepillo dental Colgate x12",     precio:2800, stock:true },
+  { id:53, cat:"higiene",     emoji:"🧴", nombre:"Desodorante Rexona x6",          precio:3200, stock:true },
+  { id:54, cat:"higiene",     emoji:"🧼", nombre:"Jabón Dove x3 x8",              precio:2100, stock:true },
+  { id:55, cat:"higiene",     emoji:"🪒", nombre:"Gillette Prestobarba x8",        precio:1800, stock:false },
+  { id:56, cat:"higiene",     emoji:"🧴", nombre:"Crema dental Colgate Triple x12",precio:3400, stock:true },
+  // VARIOS
+  { id:57, cat:"varios",      emoji:"🕯️", nombre:"Velas cumpleaños Candelita x12", precio:480,  stock:true },
+  { id:58, cat:"varios",      emoji:"🔋", nombre:"Pilas AA Duracell x4 x12",       precio:2600, stock:true },
+  { id:59, cat:"varios",      emoji:"📋", nombre:"Cuaderno gloria x10",            precio:3100, stock:true },
+  { id:60, cat:"varios",      emoji:"✏️", nombre:"Lapicera Bic x50",               precio:1900, stock:true },
+  { id:61, cat:"varios",      emoji:"🎁", nombre:"Papel regalo surtido x10",       precio:980,  stock:true },
+  { id:62, cat:"varios",      emoji:"📦", nombre:"Bolsas de nylon x100",           precio:560,  stock:true },
+  { id:63, cat:"golosinas",   emoji:"🍬", nombre:"Marroc Felfort x30",             precio:2100, stock:true },
+  { id:64, cat:"chocolates",  emoji:"🍫", nombre:"Shot Chocolate Blanco x30",      precio:1950, stock:true },
+  { id:65, cat:"bebidas",     emoji:"🧉", nombre:"Yerba Mate La Merced 1kg x6",    precio:4800, stock:true },
+];
+
+const MIN_COMPRA = 6000;
+const WA_NUM = "5491167065426";
+const PER_PAGE = 20;
+
+/* ════════════════════════════════════════════════
+   ESTADO
+════════════════════════════════════════════════ */
+let catActiva = "todas";
+let busqueda = "";
+let precioMax = 5000;
+let orden = "default";
+let paginaActual = 1;
+let carrito = {}; // { id: qty }
+let modalProducto = null;
+
+/* ════════════════════════════════════════════════
+   UTILIDADES
+════════════════════════════════════════════════ */
+const fmt = n => "$" + n.toLocaleString("es-AR");
+
+function showToast(msg, type = "success") {
+  const c = document.getElementById("toastContainer");
+  const t = document.createElement("div");
+  t.className = `toast ${type}`;
+  t.textContent = msg;
+  c.appendChild(t);
+  requestAnimationFrame(() => { requestAnimationFrame(() => t.classList.add("show")); });
+  setTimeout(() => { t.classList.remove("show"); setTimeout(() => t.remove(), 400); }, 2800);
+}
+
+/* ════════════════════════════════════════════════
+   FILTRO Y ORDEN
+════════════════════════════════════════════════ */
+function filtrarProductos() {
+  let lista = PRODUCTOS.filter(p => {
+    const enCat = catActiva === "todas" || p.cat === catActiva;
+    const enBusq = p.nombre.toLowerCase().includes(busqueda.toLowerCase());
+    const enPrecio = p.precio <= precioMax;
+    return enCat && enBusq && enPrecio;
+  });
+
+  if (orden === "price-asc")  lista.sort((a,b) => a.precio - b.precio);
+  if (orden === "price-desc") lista.sort((a,b) => b.precio - a.precio);
+  if (orden === "name-asc")   lista.sort((a,b) => a.nombre.localeCompare(b.nombre));
+  if (orden === "name-desc")  lista.sort((a,b) => b.nombre.localeCompare(a.nombre));
+
+  return lista;
+}
+
+/* ════════════════════════════════════════════════
+   RENDER CATEGORÍAS
+════════════════════════════════════════════════ */
+function renderCatBar() {
+  const bar = document.getElementById("catBar");
+  bar.innerHTML = CATEGORIAS.map(c => `
+    <button class="cat-pill ${catActiva === c.id ? "active" : ""}" data-cat="${c.id}">
+      ${c.icon} ${c.label}
+    </button>
+  `).join("");
+  bar.querySelectorAll(".cat-pill").forEach(btn => {
+    btn.addEventListener("click", () => {
+      catActiva = btn.dataset.cat;
+      paginaActual = 1;
+      render();
+    });
+  });
+}
+
+function renderSidebarCats() {
+  const el = document.getElementById("sidebarCats");
+  el.innerHTML = CATEGORIAS.map(c => {
+    const count = c.id === "todas" ? PRODUCTOS.length : PRODUCTOS.filter(p => p.cat === c.id).length;
+    return `
+      <div class="filter-cat-item ${catActiva === c.id ? "active" : ""}" data-cat="${c.id}">
+        <span>${c.icon} ${c.label}</span>
+        <span class="cat-count">${count}</span>
+      </div>
+    `;
+  }).join("");
+  el.querySelectorAll(".filter-cat-item").forEach(item => {
+    item.addEventListener("click", () => {
+      catActiva = item.dataset.cat;
+      paginaActual = 1;
+      render();
+    });
+  });
+}
+
+/* ════════════════════════════════════════════════
+   RENDER PRODUCTOS
+════════════════════════════════════════════════ */
+function renderProductos(lista) {
+  const grid = document.getElementById("productGrid");
+  const start = (paginaActual - 1) * PER_PAGE;
+  const pagina = lista.slice(start, start + PER_PAGE);
+
+  document.getElementById("countLabel").textContent = lista.length;
+
+  if (lista.length === 0) {
+    grid.innerHTML = `<div class="no-results"><div class="big">🔍</div><p>No encontramos productos con ese filtro.</p></div>`;
+    return;
+  }
+
+  grid.innerHTML = pagina.map(p => `
+    <div class="product-card ${!p.stock ? "sin-stock" : ""}" data-id="${p.id}">
+      <div class="product-img">
+        ${p.emoji}
+        <div class="product-badge ${!p.stock ? "agotado" : ""}">${p.stock ? "Stock" : "Agotado"}</div>
+      </div>
+      <div class="product-info">
+        <div class="product-cat">${CATEGORIAS.find(c=>c.id===p.cat)?.label}</div>
+        <div class="product-name">${p.nombre}</div>
+        <div class="product-price">${fmt(p.precio)}</div>
+        <button class="add-btn" data-id="${p.id}">${carrito[p.id] ? `✓ ${carrito[p.id]} en carrito` : "Agregar"}</button>
+      </div>
+    </div>
+  `).join("");
+
+  grid.querySelectorAll(".product-card").forEach(card => {
+    card.addEventListener("click", e => {
+      if (e.target.classList.contains("add-btn")) {
+        e.stopPropagation();
+        agregarAlCarrito(parseInt(e.target.dataset.id), 1);
+      } else {
+        abrirModal(parseInt(card.dataset.id));
+      }
+    });
+  });
+}
+
+/* ════════════════════════════════════════════════
+   PAGINACIÓN
+════════════════════════════════════════════════ */
+function renderPaginacion(total) {
+  const totalPags = Math.ceil(total / PER_PAGE);
+  const el = document.getElementById("pagination");
+  if (totalPags <= 1) { el.innerHTML = ""; return; }
+
+  let html = `<button class="page-btn" id="prevPage" ${paginaActual===1?"disabled":""}>← Ant</button>`;
+  for (let i = 1; i <= totalPags; i++) {
+    if (totalPags > 7 && Math.abs(i - paginaActual) > 2 && i !== 1 && i !== totalPags) {
+      if (i === paginaActual - 3 || i === paginaActual + 3) html += `<span style="padding:8px 4px">…</span>`;
+      continue;
+    }
+    html += `<button class="page-btn ${i===paginaActual?"active":""}" data-page="${i}">${i}</button>`;
+  }
+  html += `<button class="page-btn" id="nextPage" ${paginaActual===totalPags?"disabled":""}>Sig →</button>`;
+  el.innerHTML = html;
+
+  el.querySelectorAll("[data-page]").forEach(btn => {
+    btn.addEventListener("click", () => { paginaActual = parseInt(btn.dataset.page); render(); window.scrollTo({top:0,behavior:"smooth"}); });
+  });
+  el.querySelector("#prevPage")?.addEventListener("click", () => { if(paginaActual>1){paginaActual--;render();window.scrollTo({top:0,behavior:"smooth"});} });
+  el.querySelector("#nextPage")?.addEventListener("click", () => { if(paginaActual<totalPags){paginaActual++;render();window.scrollTo({top:0,behavior:"smooth"});} });
+}
+
+/* ════════════════════════════════════════════════
+   RENDER COMPLETO
+════════════════════════════════════════════════ */
+function render() {
+  const lista = filtrarProductos();
+  renderCatBar();
+  renderSidebarCats();
+  renderProductos(lista);
+  renderPaginacion(lista.length);
+  renderCarrito();
+}
+
+/* ════════════════════════════════════════════════
+   CARRITO
+════════════════════════════════════════════════ */
+function agregarAlCarrito(id, qty) {
+  const p = PRODUCTOS.find(x => x.id === id);
+  if (!p || !p.stock) return;
+  carrito[id] = (carrito[id] || 0) + qty;
+  renderCarrito();
+  showToast(`✓ ${p.nombre} agregado`, "success");
+  render();
+}
+
+function calcTotal() {
+  return Object.entries(carrito).reduce((sum, [id, qty]) => {
+    const p = PRODUCTOS.find(x => x.id === parseInt(id));
+    return sum + (p ? p.precio * qty : 0);
+  }, 0);
+}
+
+function calcItems() {
+  return Object.values(carrito).reduce((s, q) => s + q, 0);
+}
+
+function renderCarrito() {
+  const total = calcTotal();
+  const items = calcItems();
+  const pct = Math.min(100, Math.round((total / MIN_COMPRA) * 100));
+
+  // Badge
+  const badge = document.getElementById("cartBadge");
+  badge.textContent = items;
+  items > 0 ? badge.classList.add("show") : badge.classList.remove("show");
+  document.getElementById("cartTotal").textContent = fmt(total);
+
+  // Progress
+  const fill = document.getElementById("progressFill");
+  fill.style.width = pct + "%";
+  fill.className = "progress-fill" + (pct >= 100 ? "" : pct >= 60 ? " warning" : " danger");
+  document.getElementById("progressPct").textContent = pct + "%";
+  document.getElementById("progressText").textContent =
+    pct >= 100
+      ? "✅ ¡Listo para confirmar!"
+      : `Te faltan ${fmt(MIN_COMPRA - total)} para el mínimo`;
+
+  // Confirm btn
+  document.getElementById("confirmBtn").disabled = total < MIN_COMPRA;
+
+  // Items list
+  const container = document.getElementById("cartItems");
+  if (items === 0) {
+    container.innerHTML = `<div class="cart-empty"><div class="big">🛒</div><p>Tu carrito está vacío</p></div>`;
+  } else {
+    container.innerHTML = Object.entries(carrito).map(([id, qty]) => {
+      const p = PRODUCTOS.find(x => x.id === parseInt(id));
+      if (!p) return "";
+      return `
+        <div class="cart-item">
+          <div class="cart-item-emoji">${p.emoji}</div>
+          <div class="cart-item-info">
+            <div class="cart-item-name">${p.nombre}</div>
+            <div class="cart-item-price">${fmt(p.precio * qty)}</div>
+          </div>
+          <div class="cart-item-qty">
+            <button class="qty-minus" data-id="${id}">−</button>
+            <span>${qty}</span>
+            <button class="qty-plus" data-id="${id}">+</button>
+          </div>
+          <button class="remove-item" data-id="${id}">🗑️</button>
+        </div>
+      `;
+    }).join("");
+
+    container.querySelectorAll(".qty-minus").forEach(b => b.addEventListener("click", () => {
+      const id = parseInt(b.dataset.id);
+      if (carrito[id] > 1) carrito[id]--; else delete carrito[id];
+      render();
+    }));
+    container.querySelectorAll(".qty-plus").forEach(b => b.addEventListener("click", () => {
+      carrito[parseInt(b.dataset.id)]++;
+      render();
+    }));
+    container.querySelectorAll(".remove-item").forEach(b => b.addEventListener("click", () => {
+      delete carrito[parseInt(b.dataset.id)];
+      render();
+    }));
+  }
+
+  document.getElementById("drawerTotal").textContent = fmt(total);
+}
+
+/* ════════════════════════════════════════════════
+   MODAL
+════════════════════════════════════════════════ */
+function abrirModal(id) {
+  const p = PRODUCTOS.find(x => x.id === id);
+  if (!p) return;
+  modalProducto = p;
+
+  document.getElementById("modalImg").textContent = p.emoji;
+  document.getElementById("modalCat").textContent = CATEGORIAS.find(c=>c.id===p.cat)?.label;
+  document.getElementById("modalName").textContent = p.nombre;
+  document.getElementById("modalDesc").textContent = `Producto disponible en presentación mayorista. Precio por caja/unidad mayorista. Consultar disponibilidad de stock por WhatsApp.`;
+  document.getElementById("modalPrice").textContent = fmt(p.precio);
+  document.getElementById("modalQty").value = 1;
+
+  document.getElementById("productOverlay").classList.add("open");
+}
+
+function cerrarModal() {
+  document.getElementById("productOverlay").classList.remove("open");
+  modalProducto = null;
+}
+
+/* ════════════════════════════════════════════════
+   CONFIRMAR WHATSAPP
+════════════════════════════════════════════════ */
+function confirmarPorWhatsApp() {
+  const lines = Object.entries(carrito).map(([id, qty]) => {
+    const p = PRODUCTOS.find(x => x.id === parseInt(id));
+    return p ? `• ${p.nombre} x${qty} → ${fmt(p.precio * qty)}` : "";
+  }).filter(Boolean);
+
+  const total = calcTotal();
+  const msg = encodeURIComponent(
+    `¡Hola! Quiero hacer el siguiente pedido:\n\n${lines.join("\n")}\n\n*TOTAL: ${fmt(total)}*\n\n¿Pueden confirmar stock y coordinar entrega? 🙏`
+  );
+  window.open(`https://wa.me/${WA_NUM}?text=${msg}`, "_blank");
+  showToast("¡Pedido enviado por WhatsApp! ✅", "success");
+}
+
+/* ════════════════════════════════════════════════
+   EVENTOS
+════════════════════════════════════════════════ */
+// Buscador
+document.getElementById("searchInput").addEventListener("input", e => {
+  busqueda = e.target.value;
+  paginaActual = 1;
+  render();
+});
+
+// Precio máximo
+document.getElementById("priceRange").addEventListener("input", e => {
+  precioMax = parseInt(e.target.value);
+  document.getElementById("priceLabel").textContent = fmt(precioMax);
+  paginaActual = 1;
+  render();
+});
+
+// Orden
+document.getElementById("sortSelect").addEventListener("change", e => {
+  orden = e.target.value;
+  paginaActual = 1;
+  render();
+});
+
+// Abrir carrito
+document.getElementById("cartBtn").addEventListener("click", () => {
+  document.getElementById("cartDrawer").classList.add("open");
+  document.getElementById("cartOverlay").classList.add("open");
+});
+
+// Cerrar carrito
+function cerrarCarrito() {
+  document.getElementById("cartDrawer").classList.remove("open");
+  document.getElementById("cartOverlay").classList.remove("open");
+}
+document.getElementById("drawerClose").addEventListener("click", cerrarCarrito);
+document.getElementById("cartOverlay").addEventListener("click", cerrarCarrito);
+
+// Confirmar WhatsApp
+document.getElementById("confirmBtn").addEventListener("click", confirmarPorWhatsApp);
+
+// Modal cerrar
+document.getElementById("modalClose").addEventListener("click", cerrarModal);
+document.getElementById("productOverlay").addEventListener("click", e => {
+  if (e.target === document.getElementById("productOverlay")) cerrarModal();
+});
+
+// Modal qty
+document.getElementById("modalQtyMinus").addEventListener("click", () => {
+  const input = document.getElementById("modalQty");
+  if (parseInt(input.value) > 1) input.value = parseInt(input.value) - 1;
+});
+document.getElementById("modalQtyPlus").addEventListener("click", () => {
+  const input = document.getElementById("modalQty");
+  input.value = parseInt(input.value) + 1;
+});
+document.getElementById("modalAddBtn").addEventListener("click", () => {
+  if (!modalProducto) return;
+  const qty = parseInt(document.getElementById("modalQty").value) || 1;
+  agregarAlCarrito(modalProducto.id, qty);
+  cerrarModal();
+});
+
+// Precio inicial
+document.getElementById("priceRange").max = Math.max(...PRODUCTOS.map(p=>p.precio)) + 500;
+document.getElementById("priceRange").value = document.getElementById("priceRange").max;
+precioMax = parseInt(document.getElementById("priceRange").max);
+document.getElementById("priceLabel").textContent = fmt(precioMax);
+
+// Iniciar
+render();
+</script>
+</body>
+</html>
