@@ -5,6 +5,28 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>La moda de las páginas webs</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { serif: ['Georgia', 'serif'] },
+          colors: {
+            background: 'var(--background)',
+            card: 'var(--card)',
+            text: 'var(--text)',
+            muted: { DEFAULT: 'var(--muted)', foreground: 'var(--muted-fg)' },
+            accent: '#3b82f6',
+            primary: { DEFAULT: 'var(--primary)', foreground: 'var(--primary-fg)' },
+            border: 'var(--border)',
+            input: 'var(--input)',
+            ring: 'var(--ring)'
+          }
+        }
+      }
+    }
+  </script>
   <style>
     *, *::before, *::after {
       margin: 0;
@@ -47,6 +69,7 @@
     #content {
       position: fixed;
       inset: 0;
+      padding-top: 72px;
       z-index: 10;
       display: flex;
       flex-direction: column;
@@ -227,6 +250,40 @@
       background: linear-gradient(to right, #3b82f6, #a855f7);
     }
 
+    /* ── Navbar texto blanco en webmoda.html ── */
+    header a,
+    header nav a {
+      color: #ffffff !important;
+      opacity: 1 !important;
+    }
+
+    header nav a:hover {
+      color: #60a5fa !important; /* accent blue */
+    }
+
+    /* Logo K y nombre Ambrossenkov */
+    header h1,
+    header div[class*="border-text"],
+    header div[class*="text-text"] {
+      color: #ffffff !important;
+    }
+
+    /* Botón idioma ES */
+    header button#lang-toggle {
+      color: #ffffff !important;
+    }
+
+    /* Botón Contactarme */
+    header a[href="contacto.html"] {
+      background-color: #ffffff !important;
+      color: #000000 !important;
+    }
+
+    /* Mobile menu links */
+    #mobile-menu a {
+      color: #ffffff !important;
+    }
+
     /* ── Botón Volver ── */
     #btn-back {
       position: fixed;
@@ -261,6 +318,41 @@
 
   <!-- Fondo partículas -->
   <div id="particles-js"></div>
+
+  <!-- Navbar -->
+  <header class="sticky top-0 z-50 py-4 md:py-6 border-b border-border/20 bg-background/90 backdrop-blur-sm transition-colors duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 md:w-10 md:h-10 border-2 border-text flex items-center justify-center text-text font-bold text-lg md:text-xl transition-colors duration-300">K</div>
+        <h1 class="text-xl md:text-2xl font-bold tracking-tight text-text font-serif transition-colors duration-300 hidden sm:block">Ambrossenkov</h1>
+      </div>
+      <nav class="hidden md:flex gap-8 items-center text-sm font-medium text-text/90">
+        <a href="pasatiempos.html" data-i18n="nav-hobbies" class="hover:text-accent transition-colors">Pasatiempos</a>
+        <a href="curiosidades.html" data-i18n="nav-trajectory" class="hover:text-accent transition-colors">Mi trayectoria</a>
+        <a href="index.html" data-i18n="nav-home" class="hover:text-accent transition-colors">Inicio</a>
+        <a href="inventos.html" data-i18n="nav-inventions" class="hover:text-accent transition-colors">Inventos</a>
+      </nav>
+      <div class="flex items-center gap-4 md:gap-6">
+        <button id="lang-toggle" class="text-text hover:text-accent transition-colors text-sm font-bold uppercase w-8 flex-shrink-0">
+          ES
+        </button>
+        <a href="contacto.html" target="_blank" data-i18n="nav-contact" class="hidden md:block px-6 py-2 rounded-full bg-primary text-primary-foreground font-medium hover:opacity-90 transition-all text-center whitespace-nowrap">
+          Contactarme
+        </a>
+        <button id="mobile-menu-btn" class="md:hidden text-text hover:text-accent transition-colors focus:outline-none ml-2">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+        </button>
+      </div>
+    </div>
+    <!-- Mobile Navigation -->
+    <nav id="mobile-menu" class="hidden flex-col gap-4 px-4 pt-4 pb-6 bg-black border-b border-white/10 md:hidden w-full shadow-lg">
+      <a href="pasatiempos.html" data-i18n="nav-hobbies" class="block text-base font-medium text-text/90 hover:text-accent">Pasatiempos</a>
+      <a href="curiosidades.html" data-i18n="nav-trajectory" class="block text-base font-medium text-text/90 hover:text-accent">Mi trayectoria</a>
+      <a href="index.html" data-i18n="nav-home" class="block text-base font-medium text-text/90 hover:text-accent">Inicio</a>
+      <a href="inventos.html" data-i18n="nav-inventions" class="block text-base font-medium text-text/90 hover:text-accent">Inventos</a>
+      <a href="contacto.html" target="_blank" data-i18n="nav-contact" class="block text-base font-medium text-primary hover:text-accent mt-2">Contactarme</a>
+    </nav>
+  </header>
 
   <!-- Contenido -->
   <main id="content">
@@ -664,6 +756,7 @@
     animate();
   </script>
 
+  <script src="script.js"></script>
   <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
   <script>
     window.addEventListener('load', function () {
