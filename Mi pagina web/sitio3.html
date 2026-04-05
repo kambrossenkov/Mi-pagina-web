@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="es" class="dark" style="background-color: #000; color-scheme: dark;">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sitio 3 — En proceso</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { serif: ['Georgia', 'serif'] },
+          colors: {
+            background: 'var(--background)',
+            card: 'var(--card)',
+            text: 'var(--text)',
+            muted: { DEFAULT: 'var(--muted)', foreground: 'var(--muted-fg)' },
+            accent: '#3b82f6',
+            primary: { DEFAULT: 'var(--primary)', foreground: 'var(--primary-fg)' },
+            border: 'var(--border)',
+            input: 'var(--input)',
+            ring: 'var(--ring)'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #000814;
+      color: white;
+      font-family: 'Inter', -apple-system, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header a, header nav a { color: #ffffff !important; opacity: 1 !important; }
+    header nav a:hover { color: #60a5fa !important; }
+    header h1, header div[class*="border-text"], header div[class*="text-text"] { color: #ffffff !important; }
+    header button#lang-toggle { color: #ffffff !important; }
+    header a[href="contacto.html"] { background-color: #ffffff !important; color: #000000 !important; }
+    #mobile-menu a { color: #ffffff !important; }
+
+    .center-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 32px;
+      padding: 40px 20px;
+    }
+
+    .icon-wrapper {
+      position: relative;
+      width: 120px;
+      height: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .icon-ring {
+      position: absolute;
+      border-radius: 50%;
+      border: 1px solid rgba(0, 229, 255, 0.3);
+      animation: expandRing 2.5s ease-out infinite;
+    }
+    .icon-ring:nth-child(1) { width: 80px;  height: 80px;  animation-delay: 0s; }
+    .icon-ring:nth-child(2) { width: 105px; height: 105px; animation-delay: 0.6s; }
+    .icon-ring:nth-child(3) { width: 130px; height: 130px; animation-delay: 1.2s; }
+
+    @keyframes expandRing {
+      0%   { transform: scale(0.8); opacity: 0.6; }
+      100% { transform: scale(1.4); opacity: 0; }
+    }
+
+    .icon-core {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #003566, #0077b6, #00b4d8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      z-index: 1;
+      box-shadow: 0 0 30px rgba(0, 180, 216, 0.4);
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 20px rgba(0,180,216,0.4); }
+      50%       { box-shadow: 0 0 45px rgba(0,180,216,0.8); }
+    }
+
+    .site-number {
+      font-size: 13px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: rgba(0, 229, 255, 0.7);
+      font-weight: 400;
+    }
+    .site-title {
+      font-size: 2.2rem;
+      font-weight: 300;
+      letter-spacing: 1px;
+      text-align: center;
+    }
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 20px;
+      border: 1px solid rgba(0, 229, 255, 0.3);
+      border-radius: 999px;
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(0, 229, 255, 0.8);
+      background: rgba(0, 180, 216, 0.07);
+    }
+    .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #00e5ff;
+      animation: blink 1.4s ease-in-out infinite;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.2; }
+    }
+    .description {
+      font-size: 1rem;
+      color: rgba(255,255,255,0.45);
+      text-align: center;
+      max-width: 380px;
+      line-height: 1.7;
+      font-weight: 300;
+    }
+
+    .btn-back {
+      position: fixed;
+      bottom: 28px;
+      left: 28px;
+      padding: 10px 20px;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 999px;
+      color: white;
+      font-size: 13px;
+      cursor: pointer;
+      text-decoration: none;
+      backdrop-filter: blur(10px);
+      transition: all 0.2s ease;
+      z-index: 100;
+    }
+    .btn-back:hover {
+      background: rgba(255,255,255,0.14);
+      border-color: rgba(255,255,255,0.3);
+    }
+  </style>
+</head>
+<body>
+
+  <header class="sticky top-0 z-50 py-4 md:py-6 border-b border-border/20 bg-background/90 backdrop-blur-sm transition-colors duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 md:w-10 md:h-10 border-2 border-text flex items-center justify-center text-text font-bold text-lg md:text-xl transition-colors duration-300">K</div>
+        <h1 class="text-xl md:text-2xl font-bold tracking-tight text-text font-serif transition-colors duration-300 hidden sm:block">Ambrossenkov</h1>
+      </div>
+      <nav class="hidden md:flex gap-8 items-center text-sm font-medium text-text/90">
+        <a href="pasatiempos.html" data-i18n="nav-hobbies" class="hover:text-accent transition-colors">Pasatiempos</a>
+        <a href="curiosidades.html" data-i18n="nav-trajectory" class="hover:text-accent transition-colors">Mi trayectoria</a>
+        <a href="index.html" data-i18n="nav-home" class="hover:text-accent transition-colors">Inicio</a>
+        <a href="inventos.html" data-i18n="nav-inventions" class="hover:text-accent transition-colors">Inventos</a>
+      </nav>
+      <div class="flex items-center gap-4 md:gap-6">
+        <button id="lang-toggle" class="text-text hover:text-accent transition-colors text-sm font-bold uppercase w-8 flex-shrink-0">ES</button>
+        <a href="contacto.html" target="_blank" data-i18n="nav-contact" class="hidden md:block px-6 py-2 rounded-full bg-primary text-primary-foreground font-medium hover:opacity-90 transition-all text-center whitespace-nowrap">Contactarme</a>
+        <button id="mobile-menu-btn" class="md:hidden text-text hover:text-accent transition-colors focus:outline-none ml-2">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+        </button>
+      </div>
+    </div>
+    <nav id="mobile-menu" class="hidden flex-col gap-4 px-4 pt-4 pb-6 bg-black border-b border-white/10 md:hidden w-full shadow-lg">
+      <a href="pasatiempos.html" data-i18n="nav-hobbies" class="block text-base font-medium text-text/90 hover:text-accent">Pasatiempos</a>
+      <a href="curiosidades.html" data-i18n="nav-trajectory" class="block text-base font-medium text-text/90 hover:text-accent">Mi trayectoria</a>
+      <a href="index.html" data-i18n="nav-home" class="block text-base font-medium text-text/90 hover:text-accent">Inicio</a>
+      <a href="inventos.html" data-i18n="nav-inventions" class="block text-base font-medium text-text/90 hover:text-accent">Inventos</a>
+      <a href="contacto.html" target="_blank" data-i18n="nav-contact" class="block text-base font-medium text-primary hover:text-accent mt-2">Contactarme</a>
+    </nav>
+  </header>
+
+  <div class="center-content">
+    <p class="site-number">Sitio · 3</p>
+
+    <div class="icon-wrapper">
+      <div class="icon-ring"></div>
+      <div class="icon-ring"></div>
+      <div class="icon-ring"></div>
+      <div class="icon-core">⚙️</div>
+    </div>
+
+    <h1 class="site-title">En proceso</h1>
+
+    <div class="status-badge">
+      <span class="dot"></span>
+      Próximamente
+    </div>
+
+    <p class="description">
+      Este proyecto está siendo desarrollado.<br>
+      Volvé pronto para ver las novedades.
+    </p>
+  </div>
+
+  <a href="webmoda.html" class="btn-back">← Volver</a>
+
+  <script src="script.js"></script>
+</body>
+</html>

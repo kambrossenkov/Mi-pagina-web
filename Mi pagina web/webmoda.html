@@ -99,15 +99,40 @@
       flex-shrink: 0;
     }
 
-    @media (max-width: 560px) {
-      #orbital-container {
-        width: 340px;
-        height: 340px;
+    /* Tamaño del orbital lo maneja JS — solo fallback CSS */
+    @media (max-width: 480px) {
+      #orbital-container { width: 360px; height: 360px; }
+    }
+
+    /* ── Núcleo CPU responsive ── */
+    @media (max-width: 767px) {
+      #nucleus { width: 160px !important; height: 80px !important; }
+    }
+    @media (max-width: 480px) {
+      #nucleus { width: 110px !important; height: 55px !important; }
+    }
+
+    /* ── Título responsive ── */
+    @media (max-width: 767px) {
+      #title { font-size: 1.4rem !important; padding: 0 16px; }
+    }
+    @media (max-width: 480px) {
+      #title { font-size: 1.1rem !important; }
+    }
+
+    /* ── Nodos: área táctil mínima en mobile ── */
+    @media (max-width: 767px) {
+      .node-circle {
+        width: 36px !important;
+        height: 36px !important;
+        font-size: 13px !important;
+        min-width: 44px;
+        min-height: 44px;
       }
     }
 
     /* ── Anillo orbital ── */
-    /* width/height = RADIUS*2 = 200*2 = 400px — debe coincidir con el JS */
+    /* tamaño lo setea JS dinámicamente */
     #orbit-ring {
       position: absolute;
       top: 50%;
@@ -187,10 +212,11 @@
     /* ── Tarjeta de información ── */
     .info-card {
       position: absolute;
-      top: 56px;
       left: 50%;
       transform: translateX(-50%);
       width: 256px;
+      max-height: 70vh;
+      overflow-y: auto;
       background: rgba(0, 0, 0, 0.9);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
@@ -199,13 +225,45 @@
       padding: 16px;
       box-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
       z-index: 300;
-      pointer-events: none;
+      pointer-events: auto;
       animation: cardFadeIn 0.2s ease forwards;
     }
 
     @keyframes cardFadeIn {
       from { opacity: 0; transform: translateX(-50%) translateY(-6px); }
       to   { opacity: 1; transform: translateX(-50%) translateY(0);    }
+    }
+
+    /* Tarjeta debajo del nodo (default) */
+    .card-below {
+      top: 56px;
+      bottom: auto;
+    }
+    .card-below::before {
+      content: '';
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 1px;
+      height: 10px;
+      background: rgba(255,255,255,0.4);
+    }
+
+    /* Tarjeta encima del nodo */
+    .card-above {
+      bottom: 56px;
+      top: auto;
+    }
+    .card-above::before {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 1px;
+      height: 10px;
+      background: rgba(255,255,255,0.4);
     }
 
     .info-card-title {
@@ -282,6 +340,24 @@
     /* Mobile menu links */
     #mobile-menu a {
       color: #ffffff !important;
+    }
+
+    /* ── Botón abrir en tarjeta ── */
+    .card-open-btn {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 6px 16px;
+      background: rgba(0, 229, 255, 0.1);
+      border: 1px solid rgba(0, 229, 255, 0.3);
+      border-radius: 6px;
+      color: #00e5ff;
+      font-size: 11px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .card-open-btn:hover {
+      background: rgba(0, 229, 255, 0.2);
     }
 
     /* ── Botón Volver ── */
@@ -615,14 +691,38 @@
   <script>
     // ─── Orbital ────────────────────────────────────────────────────────────
     const TOTAL         = 8;
-    const RADIUS        = 200;   // px — debe coincidir con orbit-ring width/2 (400/2)
-    const DEG_PER_FRAME = 0.3;   // velocidad de rotación
+    const DEG_PER_FRAME = 0.3;
+
+    function getRadius() {
+      const w = window.innerWidth;
+      if (w < 480)  return 120;
+      if (w < 768)  return 155;
+      if (w < 1024) return 180;
+      return 200;
+    }
+
+    function getContainerSize() {
+      return getRadius() * 2 + 120;
+    }
+
+    function applyContainerSize() {
+      const r    = getRadius();
+      const size = getContainerSize();
+      container.style.width  = size + 'px';
+      container.style.height = size + 'px';
+      const ring = document.getElementById('orbit-ring');
+      ring.style.width  = (r * 2) + 'px';
+      ring.style.height = (r * 2) + 'px';
+    }
 
     let rotationAngle = 0;
     let autoRotate    = true;
     let activeIndex   = null;
 
     const container = document.getElementById('orbital-container');
+
+    // Aplicar tamaño inicial responsive
+    applyContainerSize();
 
     // Crear los 8 nodos
     const nodeWrappers = [];
@@ -662,8 +762,8 @@
         const angle  = ((index / TOTAL) * 360 + rotationAngle) % 360;
         const radian = (angle * Math.PI) / 180;
 
-        const x = RADIUS * Math.cos(radian);
-        const y = RADIUS * Math.sin(radian);
+        const x = getRadius() * Math.cos(radian);
+        const y = getRadius() * Math.sin(radian);
 
         // Efecto pseudo-3D: sin(radian) ∈ [-1,1]
         // nodos "abajo" (sin positivo) → frente → más grandes y opacos
@@ -696,6 +796,49 @@
       rafId = requestAnimationFrame(animate);
     }
 
+    // ── Posicionar tarjeta responsive ────────────────────────────────────
+    function positionCard(nodeEl, cardEl) {
+      const nodeRect = nodeEl.getBoundingClientRect();
+      const winH     = window.innerHeight;
+      const winW     = window.innerWidth;
+      const cardW    = Math.min(260, winW - 32);
+      const nodeCenter = nodeRect.top + nodeRect.height / 2;
+
+      // Ancho máximo responsive
+      cardEl.style.width = cardW + 'px';
+
+      // Vertical: arriba o abajo del nodo
+      if (nodeCenter > winH * 0.55) {
+        cardEl.style.top    = 'auto';
+        cardEl.style.bottom = '56px';
+        cardEl.classList.add('card-above');
+        cardEl.classList.remove('card-below');
+      } else {
+        cardEl.style.bottom = 'auto';
+        cardEl.style.top    = '56px';
+        cardEl.classList.add('card-below');
+        cardEl.classList.remove('card-above');
+      }
+
+      // Horizontal: centrada sobre el nodo pero sin salirse por los costados
+      requestAnimationFrame(() => {
+        const containerRect = nodeEl.closest('#orbital-container').getBoundingClientRect();
+        const nodeRelX  = nodeRect.left - containerRect.left + nodeRect.width / 2;
+        const absLeft   = containerRect.left + nodeRelX - cardW / 2;
+        const margin    = 16;
+        let leftOffset  = -(cardW / 2);
+
+        if (absLeft < margin) {
+          leftOffset = -nodeRelX + margin - containerRect.left + nodeRect.width / 2;
+        } else if (absLeft + cardW > winW - margin) {
+          leftOffset = winW - margin - cardW - containerRect.left - nodeRelX + nodeRect.width / 2;
+        }
+
+        cardEl.style.left      = '50%';
+        cardEl.style.transform = `translateX(calc(-50% + ${leftOffset + cardW / 2}px))`;
+      });
+    }
+
     // ── Seleccionar nodo ──────────────────────────────────────────────────
     function selectNode(index) {
       autoRotate = false;
@@ -721,8 +864,15 @@
         <div class="progress-track">
           <div class="progress-fill"></div>
         </div>
+        <a href="sitio${index + 1}.html" class="card-open-btn">Abrir →</a>
       `;
       wrapper.appendChild(card);
+
+      // Posicionar responsive
+      positionCard(wrapper, card);
+
+      // Evitar que el click en la tarjeta/link dispare el deselect global
+      card.addEventListener('click', (e) => e.stopPropagation());
 
       updateNodes();
     }
@@ -750,6 +900,12 @@
           deselect();
         }
       }
+    });
+
+    // ── Responsive: recalcular al rotar/redimensionar ─────────────────────
+    window.addEventListener('resize', () => {
+      applyContainerSize();
+      if (activeIndex !== null) deselect();
     });
 
     // ── Arrancar ──────────────────────────────────────────────────────────
