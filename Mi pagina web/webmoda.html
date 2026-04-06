@@ -733,7 +733,7 @@
 
       const circle = document.createElement('div');
       circle.className = 'node-circle';
-      circle.textContent = i + 1;
+      circle.textContent = i === 0 ? '🏪' : i + 1;
 
       const label = document.createElement('span');
       label.className = 'node-label';
@@ -857,15 +857,27 @@
       // Crear tarjeta
       const card = document.createElement('div');
       card.className = 'info-card';
-      card.innerHTML = `
-        <div class="info-card-title">Sitio ${index + 1}</div>
-        <div class="info-card-badge">PRÓXIMAMENTE</div>
-        <div class="info-card-desc">Este acceso directo estará disponible pronto.</div>
-        <div class="progress-track">
-          <div class="progress-fill"></div>
-        </div>
-        <a href="sitio${index + 1}.html" class="card-open-btn">Abrir →</a>
-      `;
+      if (index === 0) {
+        card.innerHTML = `
+          <div class="info-card-title">Sitio 1</div>
+          <div class="info-card-badge" style="color: #4ade80; border-color: #4ade80; background: rgba(74, 222, 128, 0.1);">🟢 DISPONIBLE</div>
+          <div class="info-card-desc">Kiosco Box Oeste — Tu kiosco online con alfajores, bebidas, chocolates, helados, salados y mucho más. Pedí desde casa con precios actualizados y stock en tiempo real.</div>
+          <div class="progress-track">
+            <div class="progress-fill" style="width: 100%;"></div>
+          </div>
+          <a href="#" onclick="window.open('Carpeta_con_codigos_de_los sitios webs/kiosco-app.html', '_blank'); return false;" class="card-open-btn" style="color: #4ade80; border-color: rgba(74, 222, 128, 0.3); background: rgba(74, 222, 128, 0.1);">Abrir →</a>
+        `;
+      } else {
+        card.innerHTML = `
+          <div class="info-card-title">Sitio ${index + 1}</div>
+          <div class="info-card-badge">PRÓXIMAMENTE</div>
+          <div class="info-card-desc">Este acceso directo estará disponible pronto.</div>
+          <div class="progress-track">
+            <div class="progress-fill"></div>
+          </div>
+          <a href="sitio${index + 1}.html" class="card-open-btn">Abrir →</a>
+        `;
+      }
       wrapper.appendChild(card);
 
       // Posicionar responsive
