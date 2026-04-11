@@ -299,7 +299,12 @@ const { useState, useRef } = React;
 // Simple router
 function Router({ children }) {
   const [path, setPath] = useState(window.location.hash.replace("#", "") || "/");
-  window._navigate = (p) => { window.location.hash = p; setPath(p); };
+  window._navigate = (p) => {
+    if (typeof p === 'number') { window.history.back(); return; }
+    window.history.pushState(null, '', window.location.pathname + window.location.search);
+    window.location.hash = p;
+    setPath(p);
+  };
   window.addEventListener("hashchange", () => {
     const p = window.location.hash.replace("#", "") || "/";
     setPath(p);
@@ -461,8 +466,9 @@ function PromoBanners() {
 // ─── ProductCard ─────────────────────────────────────────────────────────────
 
 function ProductCard({ name, image, price, originalPrice, category, promoTag }) {
+  const { navigate } = useRouter();
   return (
-    <div className="shadow-hover" style={{ minWidth:180, maxWidth:200, borderRadius:14, border:"1px solid var(--border)", overflow:"hidden", background:"var(--card)", cursor:"pointer", transition:"box-shadow 0.2s" }}>
+    <div onClick={() => navigate("/producto/" + encodeURIComponent(name) + "?cat=" + encodeURIComponent(category || ""))} className="shadow-hover" style={{ minWidth:180, maxWidth:200, borderRadius:14, border:"1px solid var(--border)", overflow:"hidden", background:"var(--card)", cursor:"pointer", transition:"box-shadow 0.2s" }}>
       <div style={{ position:"relative", background:"var(--secondary)", display:"flex", alignItems:"center", justifyContent:"center", padding:16, height:176 }}>
         <img src={image} alt={name} loading="lazy" style={{ height:144, width:"auto", objectFit:"contain", transition:"transform 0.3s" }}
           onMouseEnter={e => e.currentTarget.style.transform="scale(1.06)"}
@@ -555,7 +561,9 @@ function CategoryPage({ slug }) {
         ) : (
           <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill,minmax(170px,1fr))", gap:16, paddingBottom:40 }}>
             {products.map((p, i) => (
-              <div key={i} className="shadow-hover" style={{ background:"var(--card)", borderRadius:14, border:"1px solid var(--border)", overflow:"hidden", transition:"box-shadow 0.2s", cursor:"pointer" }}>
+              <div key={i}
+                onClick={() => !p.agotado && navigate("/producto/" + encodeURIComponent(p.name) + "?cat=" + encodeURIComponent(categoryName))}
+                className="shadow-hover" style={{ background:"var(--card)", borderRadius:14, border:"1px solid var(--border)", overflow:"hidden", transition:"box-shadow 0.2s", cursor: p.agotado ? "default" : "pointer" }}>
                 <div style={{ position:"relative", background:"var(--secondary)", display:"flex", alignItems:"center", justifyContent:"center", padding:16, height:192 }}>
                   <img src={p.image} alt={p.name} loading="lazy"
                     style={{ height:160, width:"auto", objectFit:"contain", transition:"transform 0.3s" }}
@@ -582,11 +590,264 @@ function CategoryPage({ slug }) {
   );
 }
 
+// ─── CART CONTEXT ─────────────────────────────────────────────────────────────
+
+const CartContext = React.createContext(null);
+
+function parsePrice(price) {
+  return parseFloat(price.replace(/[^0-9,]/g, "").replace(",", ".")) || 0;
+}
+
+function CartProvider({ children }) {
+  const [items, setItems] = useState([]);
+
+  const addToCart = (item, quantity) => {
+    setItems(prev => {
+      const existing = prev.find(i => i.name === item.name);
+      if (existing) return prev.map(i => i.name === item.name ? { ...i, quantity: i.quantity + quantity } : i);
+      return [...prev, { ...item, quantity }];
+    });
+  };
+
+  const removeFromCart = (name) => setItems(prev => prev.filter(i => i.name !== name));
+
+  const updateQuantity = (name, quantity) => {
+    if (quantity <= 0) { removeFromCart(name); return; }
+    setItems(prev => prev.map(i => i.name === name ? { ...i, quantity } : i));
+  };
+
+  const totalItems = items.reduce((sum, i) => sum + i.quantity, 0);
+  const totalPrice = items.reduce((sum, i) => sum + parsePrice(i.price) * i.quantity, 0);
+
+  return React.createElement(CartContext.Provider, { value: { items, addToCart, removeFromCart, updateQuantity, totalItems, totalPrice } }, children);
+}
+
+function useCart() {
+  const ctx = React.useContext(CartContext);
+  if (!ctx) throw new Error("useCart outside CartProvider");
+  return ctx;
+}
+
+// ─── CART FLOATING BUTTON ────────────────────────────────────────────────────
+
+function CartFloatingButton() {
+  const { totalItems, totalPrice } = useCart();
+  const { navigate } = useRouter();
+  if (totalItems === 0) return null;
+  return (
+    <button onClick={() => navigate("/carrito")}
+      style={{ position:"fixed", bottom:24, right:24, zIndex:50, background:"var(--primary)", color:"#fff", borderRadius:99, padding:"12px 20px", boxShadow:"0 4px 20px rgba(224,0,78,0.4)", display:"flex", alignItems:"center", gap:12, fontSize:15, fontWeight:700, border:"none", cursor:"pointer" }}>
+      🛒
+      <span style={{ background:"rgba(255,255,255,0.25)", borderRadius:99, padding:"2px 10px" }}>{totalItems}</span>
+      <span style={{ fontSize:13 }}>$ {totalPrice.toLocaleString("es-AR", { minimumFractionDigits: 0 })}</span>
+    </button>
+  );
+}
+
+// ─── PRODUCT DETAIL PAGE ──────────────────────────────────────────────────────
+
+function ProductDetailPage({ slug, cat }) {
+  const { navigate } = useRouter();
+  const { addToCart } = useCart();
+  const [quantity, setQuantity] = useState(1);
+
+  const productName = decodeURIComponent(slug || "");
+  let product = null;
+  let foundCategory = cat || "";
+
+  for (const [catName, products] of Object.entries(categoryProducts)) {
+    const found = products.find(p => p.name.toLowerCase() === productName.toLowerCase());
+    if (found) { product = found; foundCategory = catName; break; }
+  }
+
+  if (!product) return (
+    <div style={{ minHeight:"100vh" }}>
+      <PeyaHeader />
+      <div className="container" style={{ padding:"48px 0", textAlign:"center" }}>
+        <p style={{ color:"var(--muted)" }}>Producto no encontrado.</p>
+        <button onClick={() => window.history.back()} style={{ marginTop:16, color:"var(--primary)", fontWeight:600, background:"none", border:"none", cursor:"pointer" }}>Volver</button>
+      </div>
+    </div>
+  );
+
+  const handleAdd = () => { addToCart({ name: product.name, image: product.image, price: product.price, category: foundCategory }, quantity); window.history.back(); };
+  const related = (categoryProducts[foundCategory] || []).filter(p => p.name !== product.name && !p.agotado);
+
+  return (
+    <div style={{ minHeight:"100vh", background:"var(--bg)" }}>
+      <PeyaHeader />
+      <div className="container" style={{ maxWidth:520, margin:"0 auto", paddingTop:16, paddingBottom:120 }}>
+        <button onClick={() => window.history.back()} style={{ background:"none", border:"none", cursor:"pointer", fontSize:24, marginBottom:16 }}>‹</button>
+
+        {/* Image */}
+        <div style={{ background:"var(--secondary)", borderRadius:20, display:"flex", alignItems:"center", justifyContent:"center", padding:32, marginBottom:24, position:"relative", minHeight:240 }}>
+          <img src={product.image} alt={product.name} style={{ height:224, width:"auto", objectFit:"contain" }} />
+          {product.agotado && (
+            <div style={{ position:"absolute", bottom:16, left:16, background:"rgba(239,68,68,0.9)", color:"#fff", fontSize:12, fontWeight:800, padding:"4px 12px", borderRadius:8 }}>AGOTADO</div>
+          )}
+        </div>
+
+        {/* Info */}
+        <h1 style={{ fontSize:22, fontWeight:800, marginBottom:4 }}>{product.name}</h1>
+        <p style={{ fontSize:13, color:"var(--muted)", marginBottom:8 }}>{foundCategory}</p>
+        <p style={{ fontSize:28, fontWeight:800, marginBottom:4 }}>{product.price}</p>
+        {product.stock !== undefined && !product.agotado && (
+          <p style={{ fontSize:12, color:"var(--muted)", marginBottom:16 }}>Disponible: {product.stock} unidades</p>
+        )}
+
+        {/* Related */}
+        {related.length > 0 && (
+          <div style={{ marginTop:24, marginBottom:16 }}>
+            <h3 style={{ fontSize:17, fontWeight:800, marginBottom:12 }}>Opciones para combinar</h3>
+            <div className="scrollbar-hide" style={{ display:"flex", gap:12, overflowX:"auto", paddingBottom:8 }}>
+              {related.map((r, i) => (
+                <div key={i} onClick={() => navigate("/producto/" + encodeURIComponent(r.name) + "?cat=" + encodeURIComponent(foundCategory))}
+                  style={{ minWidth:140, maxWidth:160, borderRadius:14, border:"1px solid var(--border)", overflow:"hidden", background:"var(--card)", cursor:"pointer" }}>
+                  <div style={{ background:"var(--secondary)", display:"flex", alignItems:"center", justifyContent:"center", padding:12, height:128 }}>
+                    <img src={r.image} alt={r.name} style={{ height:96, width:"auto", objectFit:"contain" }} />
+                  </div>
+                  <div style={{ padding:"8px 10px" }}>
+                    <p className="line-clamp-2" style={{ fontSize:11, fontWeight:600 }}>{r.name}</p>
+                    <p style={{ fontSize:13, fontWeight:800, marginTop:4 }}>{r.price}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Add to cart bar */}
+        {!product.agotado && (
+          <div style={{ position:"fixed", bottom:0, left:0, right:0, background:"var(--bg)", borderTop:"1px solid var(--border)", padding:16, zIndex:40 }}>
+            <div style={{ maxWidth:520, margin:"0 auto" }}>
+              <div style={{ display:"flex", justifyContent:"space-between", marginBottom:12 }}>
+                <span style={{ fontSize:17, fontWeight:700 }}>Tu producto</span>
+                <span style={{ fontSize:17, fontWeight:700 }}>{product.price}</span>
+              </div>
+              <div style={{ display:"flex", alignItems:"center", gap:16 }}>
+                <div style={{ display:"flex", alignItems:"center", gap:12, border:"1px solid var(--border)", borderRadius:99, padding:"8px 12px" }}>
+                  <button onClick={() => setQuantity(Math.max(1, quantity - 1))} style={{ height:32, width:32, borderRadius:99, background:"var(--secondary)", border:"none", cursor:"pointer", fontSize:18, display:"flex", alignItems:"center", justifyContent:"center" }}>−</button>
+                  <span style={{ fontSize:17, fontWeight:700, width:32, textAlign:"center" }}>{quantity}</span>
+                  <button onClick={() => setQuantity(quantity + 1)} style={{ height:32, width:32, borderRadius:99, background:"var(--secondary)", border:"none", cursor:"pointer", fontSize:18, display:"flex", alignItems:"center", justifyContent:"center" }}>+</button>
+                </div>
+                <button onClick={handleAdd} style={{ flex:1, background:"var(--primary)", color:"#fff", fontWeight:700, padding:"14px 0", borderRadius:99, border:"none", cursor:"pointer", fontSize:16 }}>
+                  Agregar
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// ─── CART PAGE ────────────────────────────────────────────────────────────────
+
+const cartBestSellers = [
+  { name: "Bon O Bon Supreme Avellanas x2", image: "https://wsrv.nl/?url=https://kioskoboxoeste.com.ar/wp-content/uploads/2026/04/20260402_153534_0000-300x300.png&w=300&output=webp", price: "$ 1.900,00", category: "Chocolates" },
+  { name: "Oreos 118g", image: "https://wsrv.nl/?url=https://kioskoboxoeste.com.ar/wp-content/uploads/2026/03/20260327_163323_0000-300x300.png&w=300&output=webp", price: "$ 2.000,00", category: "Galletitas" },
+  { name: "Nutella B-Ready", image: "https://wsrv.nl/?url=https://kioskoboxoeste.com.ar/wp-content/uploads/2026/03/20260324_203620_0000-300x300.png&w=300&output=webp", price: "$ 1.800,00", category: "Chocolates" },
+  { name: "Super Pancho", image: "https://wsrv.nl/?url=https://kioskoboxoeste.com.ar/wp-content/uploads/2026/03/20260320_151929_0000-300x300.png&w=300&output=webp", price: "$ 2.300,00", category: "Comidas" },
+  { name: "Alfachurro Maixanas", image: "https://wsrv.nl/?url=https://kioskoboxoeste.com.ar/wp-content/uploads/2026/03/20260325_195926_0000-300x300.png&w=300&output=webp", price: "$ 2.100,00", category: "Alfajores" },
+  { name: "Monster Pipeline Punch", image: "https://wsrv.nl/?url=https://kioskoboxoeste.com.ar/wp-content/uploads/2025/08/20250916_015918_0000-300x300.png&w=300&output=webp", price: "$ 3.300,00", category: "Bebidas" },
+];
+
+function CartPage() {
+  const { navigate } = useRouter();
+  const { items, totalPrice, updateQuantity, removeFromCart, addToCart } = useCart();
+
+  return (
+    <div style={{ minHeight:"100vh", background:"var(--bg)", display:"flex", flexDirection:"column" }}>
+      {/* Header */}
+      <div style={{ position:"sticky", top:0, zIndex:50, background:"var(--bg)", borderBottom:"1px solid var(--border)" }}>
+        <div className="container" style={{ display:"flex", alignItems:"center", gap:12, padding:"12px 2rem" }}>
+          <button onClick={() => window.history.back()} style={{ background:"none", border:"none", cursor:"pointer", fontSize:24 }}>‹</button>
+          <h1 style={{ fontSize:20, fontWeight:800 }}>Tu carrito</h1>
+        </div>
+      </div>
+
+      <div style={{ flex:1, overflowY:"auto", paddingBottom:140 }}>
+        <div className="container" style={{ maxWidth:520, margin:"0 auto", paddingTop:16 }}>
+          {items.length === 0 ? (
+            <div style={{ textAlign:"center", paddingTop:64 }}>
+              <div style={{ fontSize:64, marginBottom:16 }}>🛒</div>
+              <p style={{ fontSize:18, color:"var(--muted)", marginBottom:16 }}>Tu carrito está vacío</p>
+              <button onClick={() => navigate("/")} style={{ color:"var(--primary)", fontWeight:700, background:"none", border:"none", cursor:"pointer", fontSize:15 }}>
+                Volver a la tienda
+              </button>
+            </div>
+          ) : (
+            <>
+              {items.map(item => (
+                <div key={item.name} style={{ display:"flex", gap:12, alignItems:"flex-start", paddingTop:12, paddingBottom:12, borderBottom:"1px solid var(--border)" }}>
+                  <img src={item.image} alt={item.name} onClick={() => navigate("/producto/" + encodeURIComponent(item.name) + "?cat=" + encodeURIComponent(item.category))}
+                    style={{ height:64, width:64, objectFit:"contain", borderRadius:10, background:"var(--secondary)", padding:4, cursor:"pointer" }} />
+                  <div style={{ flex:1, minWidth:0 }}>
+                    <p className="line-clamp-2" style={{ fontSize:13, fontWeight:600 }}>{item.name}</p>
+                    <p style={{ fontSize:16, fontWeight:800, marginTop:4 }}>{item.price}</p>
+                  </div>
+                  <div style={{ display:"flex", alignItems:"center", gap:8, flexShrink:0 }}>
+                    <button onClick={() => removeFromCart(item.name)} style={{ height:32, width:32, display:"flex", alignItems:"center", justifyContent:"center", background:"none", border:"none", cursor:"pointer", fontSize:16 }}>🗑️</button>
+                    <span style={{ fontSize:14, fontWeight:700, width:20, textAlign:"center" }}>{item.quantity}</span>
+                    <button onClick={() => updateQuantity(item.name, item.quantity + 1)} style={{ height:32, width:32, display:"flex", alignItems:"center", justifyContent:"center", background:"var(--secondary)", borderRadius:99, border:"none", cursor:"pointer", fontSize:18 }}>+</button>
+                  </div>
+                </div>
+              ))}
+
+              {/* Suggestions */}
+              <div style={{ paddingTop:24 }}>
+                <h3 style={{ fontSize:17, fontWeight:800, marginBottom:4 }}>Más productos</h3>
+                <p style={{ fontSize:13, color:"var(--muted)", marginBottom:16 }}>Los más vendidos para agregar a tu pedido</p>
+                <div className="scrollbar-hide" style={{ display:"flex", gap:12, overflowX:"auto", paddingBottom:8 }}>
+                  {cartBestSellers.filter(bs => !items.some(i => i.name === bs.name)).map((p, i) => (
+                    <div key={i} style={{ minWidth:150, flexShrink:0 }}>
+                      <div style={{ background:"var(--secondary)", borderRadius:14, display:"flex", alignItems:"center", justifyContent:"center", padding:12, height:144, position:"relative" }}>
+                        <img src={p.image} alt={p.name} style={{ height:112, width:"auto", objectFit:"contain" }} />
+                        <button onClick={() => addToCart({ name: p.name, image: p.image, price: p.price, category: p.category }, 1)}
+                          style={{ position:"absolute", bottom:8, right:8, height:32, width:32, background:"var(--bg)", border:"1px solid var(--border)", borderRadius:99, display:"flex", alignItems:"center", justifyContent:"center", cursor:"pointer", fontSize:18 }}>+</button>
+                      </div>
+                      <p style={{ fontSize:15, fontWeight:800, marginTop:8 }}>{p.price}</p>
+                      <p className="line-clamp-2" style={{ fontSize:11, marginTop:2 }}>{p.name}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </>
+          )}
+        </div>
+      </div>
+
+      {/* Bottom bar */}
+      {items.length > 0 && (
+        <div style={{ position:"fixed", bottom:0, left:0, right:0, background:"var(--bg)", borderTop:"1px solid var(--border)", padding:16, zIndex:50 }}>
+          <div style={{ maxWidth:520, margin:"0 auto" }}>
+            <div style={{ display:"flex", justifyContent:"space-between", marginBottom:12 }}>
+              <span style={{ fontSize:20, fontWeight:800 }}>Subtotal</span>
+              <span style={{ fontSize:20, fontWeight:800 }}>$ {totalPrice.toLocaleString("es-AR", { minimumFractionDigits: 0 })}</span>
+            </div>
+            <button style={{ width:"100%", background:"var(--primary)", color:"#fff", fontWeight:800, padding:"16px 0", borderRadius:99, border:"none", cursor:"pointer", fontSize:17 }}>
+              Ir a pagar
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 // ─── APP ──────────────────────────────────────────────────────────────────────
 
 function App() {
   const { path } = useRouter();
 
+  if (path.startsWith("/producto/")) {
+    const rest = path.replace("/producto/", "");
+    const [slugPart, queryPart] = rest.split("?");
+    const cat = queryPart ? new URLSearchParams(queryPart).get("cat") : "";
+    return <ProductDetailPage slug={slugPart} cat={cat} />;
+  }
+  if (path === "/carrito") return <CartPage />;
   if (path.startsWith("/categoria/")) {
     const slug = path.replace("/categoria/", "");
     return <CategoryPage slug={slug} />;
@@ -597,7 +858,10 @@ function App() {
 function Root() {
   return (
     <Router>
-      <App />
+      <CartProvider>
+        <App />
+        <CartFloatingButton />
+      </CartProvider>
     </Router>
   );
 }

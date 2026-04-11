@@ -2,7 +2,11 @@
   "permissions": {
     "allow": [
       "Bash(python:*)",
-      "Bash(grep:*)"
+      "Bash(grep:*)",
+      "Read(//c/Users/boris/Desktop/**)",
+      "Read(//c/Users/boris/**)",
+      "Bash(npm install:*)",
+      "Bash(npm run:*)"
     ]
   }
 }
