@@ -932,8 +932,8 @@ function useCart() {
 
 function CartFloatingButton() {
   const { totalItems, totalPrice } = useCart();
-  const { navigate } = useRouter();
-  if (totalItems === 0) return null;
+  const { navigate, path } = useRouter();
+  if (totalItems === 0 || path === "/carrito" || path === "/checkout") return null;
   return (
     <button onClick={() => navigate("/carrito")}
       style={{ position:"fixed", bottom:24, right:24, zIndex:50, background:"var(--primary)", color:"#fff", borderRadius:99, padding:"12px 20px", boxShadow:"0 4px 20px rgba(224,0,78,0.4)", display:"flex", alignItems:"center", gap:12, fontSize:15, fontWeight:700, border:"none", cursor:"pointer" }}>
@@ -1062,8 +1062,9 @@ function CartPage() {
       {/* Header */}
       <div style={{ position:"sticky", top:0, zIndex:50, background:"var(--bg)", borderBottom:"1px solid var(--border)" }}>
         <div className="container" style={{ display:"flex", alignItems:"center", gap:12, padding:"12px 2rem" }}>
-          <button onClick={() => window.history.back()} style={{ background:"none", border:"none", cursor:"pointer", fontSize:24 }}>‹</button>
-          <h1 style={{ fontSize:20, fontWeight:800 }}>Tu carrito</h1>
+          <button onClick={() => window.history.back()} style={{ background:"none", border:"none", cursor:"pointer", fontSize:16, fontWeight:700, color:"var(--muted)" }}>
+            ‹ Kiosco Casa Lupi
+          </button>
         </div>
       </div>
 
@@ -1126,12 +1127,166 @@ function CartPage() {
               <span style={{ fontSize:20, fontWeight:800 }}>Subtotal</span>
               <span style={{ fontSize:20, fontWeight:800 }}>$ {totalPrice.toLocaleString("es-AR", { minimumFractionDigits: 0 })}</span>
             </div>
-            <button style={{ width:"100%", background:"var(--primary)", color:"#fff", fontWeight:800, padding:"16px 0", borderRadius:99, border:"none", cursor:"pointer", fontSize:17 }}>
+            <button onClick={() => navigate("/checkout")} style={{ width:"100%", background:"var(--primary)", color:"#fff", fontWeight:800, padding:"16px 0", borderRadius:99, border:"none", cursor:"pointer", fontSize:17 }}>
               Ir a pagar
             </button>
           </div>
         </div>
       )}
+    </div>
+  );
+}
+
+// ─── TRANSFER MODAL ──────────────────────────────────────────────────────────
+
+function TransferModal({ onClose }) {
+  const [copiedAlias, setCopiedAlias] = useState(false);
+  const [copiedCbu, setCopiedCbu] = useState(false);
+
+  const handleCopy = (text, type) => {
+    navigator.clipboard.writeText(text).then(() => {
+      if (type === 'alias') {
+        setCopiedAlias(true);
+        setTimeout(() => setCopiedAlias(false), 2000);
+      } else {
+        setCopiedCbu(true);
+        setTimeout(() => setCopiedCbu(false), 2000);
+      }
+    });
+  };
+
+  return (
+    <div style={{ position:"fixed", inset:0, zIndex:100, display:"flex", alignItems:"center", justifyContent:"center" }}>
+      <div style={{ position:"absolute", inset:0, background:"rgba(0,0,0,0.6)" }} onClick={onClose} />
+      <div style={{ position:"relative", width:"90%", maxWidth:400, background:"var(--bg)", borderRadius:24, padding:24, display:"flex", flexDirection:"column", gap:16, boxShadow:"0 10px 40px rgba(0,0,0,0.2)" }}>
+        <button onClick={onClose} style={{ position:"absolute", top:16, right:16, background:"var(--secondary)", border:"none", borderRadius:99, height:32, width:32, cursor:"pointer", fontSize:16, display:"flex", alignItems:"center", justifyContent:"center" }}>✕</button>
+        
+        <h2 style={{ fontSize:22, fontWeight:800, textAlign:"center", marginTop:8 }}>Datos para transferir</h2>
+        <p style={{ fontSize:14, color:"var(--muted)", textAlign:"center", marginBottom:8 }}>Copiá los datos y hacé la transferencia desde tu cuenta bancaria o billetera virtual.</p>
+
+        {/* Alias Block */}
+        <div style={{ background:"var(--secondary)", borderRadius:16, padding:16, display:"flex", justifyContent:"space-between", alignItems:"center" }}>
+          <div>
+            <span style={{ fontSize:12, color:"var(--muted)", textTransform:"uppercase", fontWeight:700 }}>Alias</span>
+            <div style={{ fontSize:16, fontWeight:800, color:"var(--fg)", marginTop:2 }}>MI.ALIAS.KIOSCO</div>
+          </div>
+          <button onClick={() => handleCopy("MI.ALIAS.KIOSCO", "alias")} style={{ background:"var(--bg)", border:"1px solid var(--border)", borderRadius:8, padding:"6px 12px", fontSize:13, fontWeight:600, cursor:"pointer", color:"var(--fg)", minWidth:80 }}>
+            {copiedAlias ? "¡Copiado!" : "Copiar"}
+          </button>
+        </div>
+
+        {/* CBU Block */}
+        <div style={{ background:"var(--secondary)", borderRadius:16, padding:16, display:"flex", justifyContent:"space-between", alignItems:"center" }}>
+          <div>
+            <span style={{ fontSize:12, color:"var(--muted)", textTransform:"uppercase", fontWeight:700 }}>CVU / CBU</span>
+            <div style={{ fontSize:16, fontWeight:800, color:"var(--fg)", marginTop:2 }}>0000000000000000000000</div>
+          </div>
+          <button onClick={() => handleCopy("0000000000000000000000", "cbu")} style={{ background:"var(--bg)", border:"1px solid var(--border)", borderRadius:8, padding:"6px 12px", fontSize:13, fontWeight:600, cursor:"pointer", color:"var(--fg)", minWidth:80 }}>
+            {copiedCbu ? "¡Copiado!" : "Copiar"}
+          </button>
+        </div>
+
+        <button onClick={() => window.open("https://wa.me/0000000000", "_blank")} style={{ width:"100%", background:"#25D366", color:"#fff", fontWeight:800, padding:"16px 0", borderRadius:99, border:"none", cursor:"pointer", fontSize:16, marginTop:8 }}>
+          Ya transferí - Enviar comprobante
+        </button>
+      </div>
+    </div>
+  );
+}
+
+// ─── CHECKOUT PAGE ────────────────────────────────────────────────────────────
+
+function CheckoutPage() {
+  const { navigate } = useRouter();
+  const { items, totalPrice } = useCart();
+  const [paymentMethod, setPaymentMethod] = useState("transfer"); // "transfer" | "cash"
+  const [showModal, setShowModal] = useState(false);
+
+  const handlePay = () => {
+    if (paymentMethod === "cash") {
+      let msg = "Voy a venir a pagar estos productos , por favor tenerlos preparados .\n\n";
+      items.forEach(item => {
+        msg += `- ${item.quantity}x ${item.name} (${item.price})\n`;
+      });
+      msg += `\nTotal: $ ${totalPrice.toLocaleString("es-AR", { minimumFractionDigits: 0 })}`;
+      const url = `https://wa.me/0000000000?text=${encodeURIComponent(msg)}`;
+      window.open(url, "_blank");
+    } else if (paymentMethod === "transfer") {
+      setShowModal(true);
+    }
+  };
+
+  return (
+    <div style={{ minHeight:"100vh", background:"var(--bg)", display:"flex", flexDirection:"column" }}>
+      {/* Header */}
+      <div style={{ position:"sticky", top:0, zIndex:40, background:"var(--bg)", borderBottom:"1px solid var(--border)" }}>
+        <div className="container" style={{ padding:"12px 2rem", height:48 }}>
+        </div>
+      </div>
+
+      <div style={{ flex:1, overflowY:"auto", paddingBottom:120 }}>
+        <div className="container" style={{ maxWidth:520, margin:"0 auto", paddingTop:24 }}>
+          
+          <h1 style={{ fontSize:28, fontWeight:900, marginBottom:8, color:"var(--fg)", lineHeight:1.2 }}>Último paso</h1>
+          <h2 style={{ fontSize:22, fontWeight:700, marginBottom:24, color:"var(--muted)" }}>¿Cómo querés pagar?</h2>
+
+          {/* Payment Methods Carousel */}
+          <div className="scrollbar-hide" style={{ display:"flex", gap:16, overflowX:"auto", paddingBottom:16, scrollSnapType:"x mandatory" }}>
+            
+            {/* Transfer Card */}
+            <div onClick={() => setPaymentMethod("transfer")} 
+                 style={{ scrollSnapAlign:"start", minWidth:260, flexShrink:0, background:"linear-gradient(135deg, #009EE3, #1159BF)", color:"#fff", borderRadius:20, padding:24, cursor:"pointer", position:"relative", transition:"transform 0.2s, box-shadow 0.2s", transform: paymentMethod === "transfer" ? "scale(1)" : "scale(0.95)", opacity: paymentMethod === "transfer" ? 1 : 0.6, boxShadow: paymentMethod === "transfer" ? "0 8px 24px rgba(0,158,227,0.4)" : "none", border: paymentMethod === "transfer" ? "2px solid #fff" : "2px solid transparent" }}>
+              <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:24 }}>
+                <span style={{ fontSize:32 }}>💳</span>
+                {paymentMethod === "transfer" && <div style={{ background:"#fff", color:"#009EE3", borderRadius:99, height:24, width:24, display:"flex", alignItems:"center", justifyContent:"center", fontSize:14, fontWeight:800 }}>✓</div>}
+              </div>
+              <div style={{ fontSize:20, fontWeight:800, lineHeight:1.2 }}>Transferencia / Mercado Pago</div>
+            </div>
+
+            {/* Cash Card */}
+            <div onClick={() => setPaymentMethod("cash")} 
+                 style={{ scrollSnapAlign:"start", minWidth:260, flexShrink:0, background:"linear-gradient(135deg, #25D366, #00B16A)", color:"#fff", borderRadius:20, padding:24, cursor:"pointer", position:"relative", transition:"transform 0.2s, box-shadow 0.2s", transform: paymentMethod === "cash" ? "scale(1)" : "scale(0.95)", opacity: paymentMethod === "cash" ? 1 : 0.6, boxShadow: paymentMethod === "cash" ? "0 8px 24px rgba(37,211,102,0.4)" : "none", border: paymentMethod === "cash" ? "2px solid #fff" : "2px solid transparent" }}>
+              <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:24 }}>
+                <span style={{ fontSize:32 }}>💵</span>
+                {paymentMethod === "cash" && <div style={{ background:"#fff", color:"#00B16A", borderRadius:99, height:24, width:24, display:"flex", alignItems:"center", justifyContent:"center", fontSize:14, fontWeight:800 }}>✓</div>}
+              </div>
+              <div style={{ fontSize:20, fontWeight:800, lineHeight:1.2 }}>Efectivo</div>
+            </div>
+
+          </div>
+
+          <div style={{ marginTop:32, padding:16, background:"var(--secondary)", borderRadius:16 }}>
+            <div style={{ display:"flex", justifyContent:"space-between", marginBottom:8 }}>
+              <span style={{ fontSize:15, color:"var(--muted)", fontWeight:600 }}>Total a pagar</span>
+              <span style={{ fontSize:20, fontWeight:900, color:"var(--fg)" }}>$ {totalPrice.toLocaleString("es-AR", { minimumFractionDigits: 0 })}</span>
+            </div>
+            {paymentMethod === "cash" && (
+              <p style={{ fontSize:13, color:"var(--muted)", marginTop:8 }}>Al pagar, te enviaremos a WhatsApp para confirmar los productos y que los preparamos.</p>
+            )}
+            {paymentMethod === "transfer" && (
+              <p style={{ fontSize:13, color:"var(--muted)", marginTop:8 }}>Te mostraremos nuestros datos para que puedas transferir y luego enviar el comprobante.</p>
+            )}
+          </div>
+
+          <div style={{ marginTop:24, textAlign:"center" }}>
+            <button onClick={() => navigate("/carrito")} style={{ background:"none", border:"none", cursor:"pointer", color:"var(--muted)", fontSize:14, fontWeight:600, textDecoration:"underline" }}>
+              Volver a carrito de compra
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+      {/* Fixed Bottom Button */}
+      <div style={{ position:"fixed", bottom:0, left:0, right:0, background:"var(--bg)", borderTop:"1px solid var(--border)", padding:16, zIndex:30 }}>
+        <div style={{ maxWidth:520, margin:"0 auto" }}>
+          <button onClick={handlePay} style={{ width:"100%", background:"#d8315b", color:"#fff", fontWeight:900, padding:"18px 0", borderRadius:99, border:"none", cursor:"pointer", fontSize:18, boxShadow:"0 4px 16px rgba(216,49,91,0.4)" }}>
+            Pagar
+          </button>
+        </div>
+      </div>
+
+      {showModal && <TransferModal onClose={() => setShowModal(false)} />}
     </div>
   );
 }
@@ -1148,6 +1303,7 @@ function App() {
     return <ProductDetailPage slug={slugPart} cat={cat} />;
   }
   if (path === "/carrito") return <CartPage />;
+  if (path === "/checkout") return <CheckoutPage />;
   if (path.startsWith("/categoria/")) {
     const slug = path.replace("/categoria/", "");
     return <CategoryPage slug={slug} />;
