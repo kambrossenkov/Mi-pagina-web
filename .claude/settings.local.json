@@ -6,7 +6,16 @@
       "Read(//c/Users/boris/Desktop/**)",
       "Read(//c/Users/boris/**)",
       "Bash(npm install:*)",
-      "Bash(npm run:*)"
+      "Bash(npm run:*)",
+      "Bash(pip install:*)",
+      "Bash(npm --version)",
+      "Bash(npm init:*)",
+      "Bash(node -e \"require\\('puppeteer'\\); console.log\\('puppeteer ok'\\)\")",
+      "Bash(node -e \"require\\('xlsx'\\); console.log\\('xlsx ok'\\)\")",
+      "Bash(node test_scraper.js)",
+      "Bash(node inspeccionar_coto.js)",
+      "Bash(node:*)",
+      "WebFetch(domain:tienda.open25.com.ar)"
     ]
   }
 }
