@@ -1072,6 +1072,9 @@ const cartBestSellers = [
 function CartPage() {
   const { navigate } = useRouter();
   const { items, totalPrice, updateQuantity, removeFromCart, addToCart } = useCart();
+  const carouselRef = React.useRef(null);
+
+  const scrollCarousel = dir => carouselRef.current && carouselRef.current.scrollBy({ left: dir === "left" ? -300 : 300, behavior:"smooth" });
 
   return (
     <div style={{ minHeight:"100vh", background:"var(--bg)", display:"flex", flexDirection:"column" }}>
@@ -1114,19 +1117,16 @@ function CartPage() {
 
               {/* Suggestions */}
               <div style={{ paddingTop:24 }}>
-                <h3 style={{ fontSize:17, fontWeight:800, marginBottom:4 }}>Más productos</h3>
-                <p style={{ fontSize:13, color:"var(--muted)", marginBottom:16 }}>Los más vendidos para agregar a tu pedido</p>
-                <div className="scrollbar-hide" style={{ display:"flex", gap:12, overflowX:"auto", paddingBottom:8 }}>
-                  {cartBestSellers.filter(bs => !items.some(i => i.name === bs.name)).map((p, i) => (
-                    <div key={i} style={{ minWidth:150, flexShrink:0 }}>
-                      <div style={{ background:"var(--secondary)", borderRadius:14, display:"flex", alignItems:"center", justifyContent:"center", padding:12, height:144, position:"relative" }}>
-                        <img src={p.image} alt={p.name} style={{ height:112, width:"auto", objectFit:"contain" }} />
-                        <button onClick={() => addToCart({ name: p.name, image: p.image, price: p.price, category: p.category }, 1)}
-                          style={{ position:"absolute", bottom:8, right:8, height:32, width:32, background:"var(--bg)", border:"1px solid var(--border)", borderRadius:99, display:"flex", alignItems:"center", justifyContent:"center", cursor:"pointer", fontSize:18 }}>+</button>
-                      </div>
-                      <p style={{ fontSize:15, fontWeight:800, marginTop:8 }}>{p.price}</p>
-                      <p className="line-clamp-2" style={{ fontSize:11, marginTop:2 }}>{p.name}</p>
-                    </div>
+                <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:16 }}>
+                  <h2 style={{ fontSize:20, fontWeight:800 }}>Más productos por menos de $1500</h2>
+                  <div style={{ display:"flex", gap:8 }}>
+                    <button onClick={() => scrollCarousel("left")} style={{ height:32, width:32, borderRadius:99, border:"1px solid var(--border)", background:"none", cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"center", fontSize:16 }}>‹</button>
+                    <button onClick={() => scrollCarousel("right")} style={{ height:32, width:32, borderRadius:99, border:"1px solid var(--border)", background:"none", cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"center", fontSize:16 }}>›</button>
+                  </div>
+                </div>
+                <div ref={carouselRef} className="scrollbar-hide" style={{ display:"flex", gap:16, overflowX:"auto", paddingBottom:8 }}>
+                  {cheapProducts.filter(bs => !items.some(i => i.name === bs.name)).map((p, i) => (
+                    <ProductCard key={i} {...p} />
                   ))}
                 </div>
               </div>
