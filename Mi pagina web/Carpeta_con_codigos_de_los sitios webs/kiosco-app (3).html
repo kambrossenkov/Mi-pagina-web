@@ -517,9 +517,42 @@ function Link({ to, children, style, className }) {
 // ─── Header ──────────────────────────────────────────────────────────────────
 
 function PeyaHeader() {
+  const { navigate } = useRouter();
   const [showPanel, setShowPanel] = useState(false);
   const [address, setAddress] = useState("Reconquista 1093");
   const [inputAddr, setInputAddr] = useState("");
+
+  // Search State
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+  const [showDropdown, setShowDropdown] = useState(false);
+
+  const handleSearch = (e) => {
+    const q = e.target.value;
+    setSearchQuery(q);
+    if (q.trim().length > 0) {
+      const qLower = q.toLowerCase();
+      let results = [];
+      Object.entries(categoryProducts).forEach(([cat, prods]) => {
+        prods.forEach(p => {
+          if (p.name.toLowerCase().includes(qLower) || cat.toLowerCase().includes(qLower)) {
+            results.push({ ...p, category: cat });
+          }
+        });
+      });
+      setSearchResults(results.slice(0, 8)); // Limitar a 8 sugerencias
+      setShowDropdown(true);
+    } else {
+      setShowDropdown(false);
+      setSearchResults([]);
+    }
+  };
+
+  const handleResultClick = (product) => {
+    setSearchQuery("");
+    setShowDropdown(false);
+    navigate("/producto/" + encodeURIComponent(product.name) + "?cat=" + encodeURIComponent(product.category));
+  };
 
   const save = () => {
     if (inputAddr.trim()) setAddress(inputAddr.trim());
@@ -548,10 +581,42 @@ function PeyaHeader() {
           {/* Search */}
           <div style={{ flex:1, maxWidth:480 }}>
             <div style={{ position:"relative" }}>
-              <input type="text" placeholder="Buscar locales" style={{ width:"100%", height:40, paddingLeft:16, paddingRight:48, borderRadius:99, border:"1px solid var(--border)", background:"var(--secondary)", fontSize:14, outline:"none", color:"var(--fg)" }} />
+              <input 
+                type="text" 
+                placeholder="Buscar productos..." 
+                value={searchQuery}
+                onChange={handleSearch}
+                onFocus={() => { if(searchQuery.trim().length > 0) setShowDropdown(true); }}
+                onBlur={() => setTimeout(() => setShowDropdown(false), 200)}
+                style={{ width:"100%", height:40, paddingLeft:16, paddingRight:48, borderRadius:99, border:"1px solid var(--border)", background:"var(--secondary)", fontSize:14, outline:"none", color:"var(--fg)" }} 
+              />
               <button style={{ position:"absolute", right:4, top:4, height:32, width:32, borderRadius:99, background:"var(--primary)", border:"none", cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"center" }}>
                 <span style={{ color:"#fff", fontSize:14 }}>🔍</span>
               </button>
+
+              {/* Dropdown predictivo de Búsqueda */}
+              {showDropdown && searchQuery.trim().length > 0 && (
+                <ul className="scrollbar-hide" style={{ position:"absolute", top:48, left:0, right:0, background:"var(--bg)", border:"1px solid var(--border)", borderRadius:16, boxShadow:"0 8px 32px rgba(0,0,0,0.12)", zIndex:100, maxHeight:320, overflowY:"auto", listStyle:"none", margin:0, padding:8 }}>
+                  {searchResults.length > 0 ? (
+                    searchResults.map((prod, idx) => (
+                      <li key={idx} onClick={() => handleResultClick(prod)} style={{ display:"flex", alignItems:"center", gap:12, padding:"8px 12px", cursor:"pointer", borderRadius:8, transition:"background 0.2s" }} onMouseEnter={e => e.currentTarget.style.background = "var(--secondary)"} onMouseLeave={e => e.currentTarget.style.background = "transparent"}>
+                        {prod.image ? (
+                          <img src={prod.image} alt={prod.name} style={{ width:36, height:36, objectFit:"contain", borderRadius:6, background:"#fff" }} />
+                        ) : (
+                          <div style={{ width:36, height:36, display:"flex", alignItems:"center", justifyContent:"center", background:"var(--secondary)", borderRadius:6, fontSize:20 }}>📦</div>
+                        )}
+                        <div style={{ display:"flex", flexDirection:"column", flex:1, overflow:"hidden" }}>
+                          <span style={{ fontSize:13, fontWeight:700, color:"var(--fg)", whiteSpace:"nowrap", textOverflow:"ellipsis", overflow:"hidden" }}>{prod.name}</span>
+                          <span style={{ fontSize:11, color:"var(--muted)", textTransform:"uppercase", letterSpacing:0.5 }}>{prod.category}</span>
+                        </div>
+                        <span style={{ fontSize:14, fontWeight:800, color:"var(--fg)", whiteSpace:"nowrap", marginLeft:12 }}>{prod.price}</span>
+                      </li>
+                    ))
+                  ) : (
+                    <li style={{ padding:"16px", textAlign:"center", color:"var(--muted)", fontSize:13 }}>No se encontraron productos con esa búsqueda.</li>
+                  )}
+                </ul>
+              )}
             </div>
           </div>
 
