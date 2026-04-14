@@ -86,7 +86,7 @@ const IMG_PALITOS_COMBO = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAANwAAAD
 
 const categories = [
   { name: "Alfajores",         icon: "🍫", color: "#ffe5ef", text: "#e0004e" },
-  { name: "Analgésicos",       icon: "💊", color: "#e5ffe8", text: "#27ae74" },
+  { name: "Analgesicos",       icon: "💊", color: "#e5ffe8", text: "#27ae74" },
   { name: "Bebidas",           icon: "🥤", color: "#ffe5e5", text: "#ef4444" },
   { name: "Caramelos",         icon: "🍬", color: "#fff3e5", text: "#ff6b00" },
   { name: "Chicles",           icon: "🌀", color: "#e5ffe8", text: "#27ae74" },
@@ -99,9 +99,15 @@ const categories = [
   { name: "Gomitas",           icon: "🐻", color: "#ffe5e5", text: "#ef4444" },
   { name: "Helados",           icon: "🍦", color: "#fff3e5", text: "#ff6b00" },
   { name: "Mix de Gomitas",    icon: "🌈", color: "#e5ffe8", text: "#27ae74" },
-  { name: "Otros",             icon: "📦", color: "#f5f5f5", text: "#737373" },
   { name: "Postres",           icon: "🎂", color: "#ffe5ef", text: "#e0004e" },
   { name: "Salados",           icon: "🍿", color: "#fffde5", text: "#333" },
+  { name: "Cereales",         icon: "🌾", color: "#fffde5", text: "#b8860b" },
+  { name: "Encendedores",     icon: "🔥", color: "#fff3e5", text: "#ff6b00" },
+  { name: "Higiene",          icon: "🧼", color: "#e5ffe8", text: "#27ae74" },
+  { name: "Infusiones",       icon: "☕", color: "#fff3e5", text: "#ff6b00" },
+  { name: "Pilas",            icon: "🔋", color: "#e5ffe8", text: "#27ae74" },
+  { name: "Tabaco",           icon: "🍃", color: "#f5f5f5", text: "#737373" },
+  { name: "Tabaqueria",       icon: "🌿", color: "#f5f5f5", text: "#737373" },
 ];
 
 const featuredProducts = [
@@ -152,7 +158,7 @@ const categoryProducts = {
     { name: "GUAYMALLEN FRUTA SIMPLE", image: "https://jumboargentina.vteximg.com.br/arquivos/ids/787908/Alfajor-Guaymallen-Fruta-Simple-X38g-1-972199.jpg?v=638247837700630000", price: "$ 450,00", agotado: false },
     { name: "GUAYMALLEN TRIPLE CHOCOLATE", image: "https://jumboargentina.vteximg.com.br/arquivos/ids/865566/Oblea-Triple-Chocolate-Hershey-s-102-Gr-1-1037440.jpg?v=638814675400400000", price: "$ 800,00", agotado: false }
   ],
-  "Analgésicos": [
+  "Analgesicos": [
     { name: "TE VIC", image: "https://jumboargentina.vteximg.com.br/arquivos/ids/884094/T-Vintage-Victorian-Verde-Lata-X-80-Grs-New-English-Tea-1-1048421.jpg?v=638939037736300000", price: "$ 1.500,00", agotado: false },
     { name: "UVASAL", image: "", price: "$ 1.000,00", agotado: false }
   ],
@@ -214,7 +220,8 @@ const categoryProducts = {
     { name: "SPRITE ZERO 600ML", image: "https://jumboargentina.vteximg.com.br/arquivos/ids/791803/Gaseosa-Sprite-Lima-Lim-n-2-25lts-Gaseosa-Sprite-Lima-lim-n-2-25-Lt-1-248213.jpg?v=638291793679300000", price: "$ 2.200,00", agotado: false },
     { name: "VILLA DEL SUR S/G 1.65L", image: "https://images.openfoodfacts.org/images/products/779/031/500/0149/front_es.3.400.jpg", price: "$ 2.000,00", agotado: false },
     { name: "VILLAVICENCIO S/G 1.5L", image: "https://http2.mlstatic.com/D_NQ_NP_820541-MLA83207875629_032025-O.webp", price: "$ 2.000,00", agotado: false },
-    { name: "VILLAVICENCIO SPORT 750ML", image: "https://images.openfoodfacts.org/images/products/779/031/505/8201/front_es.13.400.jpg", price: "$ 2.000,00", agotado: false }
+    { name: "VILLAVICENCIO SPORT 750ML", image: "https://images.openfoodfacts.org/images/products/779/031/505/8201/front_es.13.400.jpg", price: "$ 2.000,00", agotado: false },
+    { name: "CERVEZA LATA", image: "https://jumboargentina.vteximg.com.br/arquivos/ids/890540/Cerveza-Stella-Artois-Noire-473cc-6un-1-851373.jpg?v=638987206203770000", price: "$ 3.000,00", agotado: false }
   ],
   "Caramelos": [
     { name: "BOLSITA ARCOR ANILLOS", image: "https://jumboargentina.vteximg.com.br/arquivos/ids/342929/Gomitas-Arcor-Anillos-60g-1-53731.jpg?v=636439476706970000", price: "$ 2.000,00", agotado: false },
@@ -402,59 +409,6 @@ const categoryProducts = {
   ],
   "Mix de Gomitas": [
   ],
-  "Otros": [
-    { name: "BANDEJA METALICA BLUNT REY", image: "", price: "$ 6.000,00", agotado: false },
-    { name: "BARRITA INTEGRA PROTEICA ARANDANOS", image: "https://jumboargentina.vteximg.com.br/arquivos/ids/904426/Barra-Proteica-Pasta-De-Mani-Arandanos-43-Gr-Integra-1-1056687.jpg?v=639112809799570000", price: "$ 2.500,00", agotado: false },
-    { name: "BIC GRANDE", image: "https://jumboargentina.vteximg.com.br/arquivos/ids/310962/Abrochadora-Grande-Bichos-10412-s-e-un-1-1-203461.jpg?v=636390791975170000", price: "$ 2.000,00", agotado: false },
-    { name: "BIC MINI", image: "https://jumboargentina.vteximg.com.br/arquivos/ids/357557/Cinta-Correctora-Bic-Seca-Mini-Mouse-Blister-1-90629.jpg?v=636439779560570000", price: "$ 1.500,00", agotado: false },
-    { name: "BOLSA CHICA BLUNT REY", image: "", price: "$ 1.500,00", agotado: false },
-    { name: "CELULOSA FUMANCHU", image: "", price: "$ 1.500,00", agotado: false },
-    { name: "CELULOSA SABORIZADA BLUNT REY", image: "", price: "$ 2.000,00", agotado: false },
-    { name: "CELULOSA XL BLUNT REY", image: "", price: "$ 2.000,00", agotado: false },
-    { name: "CENICERO BLUNT REY METALICO", image: "", price: "$ 4.000,00", agotado: false },
-    { name: "CENICERO VIDRIO BLUNT REY CALAVERA", image: "", price: "$ 8.000,00", agotado: false },
-    { name: "CERVEZA LATA", image: "https://jumboargentina.vteximg.com.br/arquivos/ids/890540/Cerveza-Stella-Artois-Noire-473cc-6un-1-851373.jpg?v=638987206203770000", price: "$ 3.000,00", agotado: false },
-    { name: "CLIPPER GRANDE", image: "", price: "$ 2.500,00", agotado: false },
-    { name: "ENERGIZER AA", image: "https://jumboargentina.vteximg.com.br/arquivos/ids/697611/Pilas-Alcalinas-Energizer-Aa-2-U-1-34704.jpg?v=637862385743400000", price: "$ 1.600,00", agotado: false },
-    { name: "ENERGIZER AAA", image: "https://jumboargentina.vteximg.com.br/arquivos/ids/697614/Pilas-Alcalinas-Energizer-Aaa-4-U-1-35604.jpg?v=637862385752170000", price: "$ 1.600,00", agotado: false },
-    { name: "FILTRO DE VIDRIO BLUNT REY", image: "", price: "$ 1.500,00", agotado: false },
-    { name: "FILTRO LIBELLA REGULAR X200", image: "", price: "$ 2.800,00", agotado: false },
-    { name: "FILTRO OCB EXTRA-SLIM X150", image: "", price: "$ 2.800,00", agotado: false },
-    { name: "FILTRO OCB MENTOL X150", image: "", price: "$ 2.800,00", agotado: false },
-    { name: "FILTRO OCB ORGANICO X120", image: "", price: "$ 2.800,00", agotado: false },
-    { name: "FILTRO OCB REGULAR X100", image: "", price: "$ 2.800,00", agotado: false },
-    { name: "FILTRO OCB SLIM X150", image: "https://images.openfoodfacts.org/images/products/305/706/805/6781/front_es.27.400.jpg", price: "$ 2.800,00", agotado: false },
-    { name: "LATITA BANDEJA METAL BLUNT REY", image: "", price: "$ 10.000,00", agotado: false },
-    { name: "MATE COCIDO TARAGUI", image: "https://jumboargentina.vteximg.com.br/arquivos/ids/625956/Mate-Cocido-Taragui-S-e-F-diamantado-5x50x3gr-1-859376.jpg?v=637533674731570000", price: "$ 1.000,00", agotado: false },
-    { name: "MINI CLIPPER", image: "https://acdn-us.mitiendanube.com/stores/006/038/294/products/bulto-43-ff487723bf4a9f8dbe17689313354053-1024-1024.webp", price: "$ 1.500,00", agotado: false },
-    { name: "OCB GRIS", image: "https://acdn-us.mitiendanube.com/stores/006/038/294/products/bulto-2026-01-26t113438-123-34d141aae14a1809b517694382354954-1024-1024.webp", price: "$ 1.500,00", agotado: false },
-    { name: "OCB ORGANICO", image: "", price: "$ 1.500,00", agotado: false },
-    { name: "PAPEL BLUNT LION", image: "", price: "$ 3.000,00", agotado: false },
-    { name: "PICADOR 3D GRINDER", image: "", price: "$ 6.000,00", agotado: false },
-    { name: "PICADOR PLASTICO CLASICO", image: "https://jumboargentina.vteximg.com.br/arquivos/ids/413386/Reloj-Plastico-Clasico-1-239406.jpg?v=636442081155770000", price: "$ 4.000,00", agotado: false },
-    { name: "PICADOR PLASTICO GRANDE", image: "https://jumboargentina.vteximg.com.br/arquivos/ids/815796/Herm-tico-San-Remo-Pl-stico-Grande-1-70426.jpg?v=638464814684130000", price: "$ 7.000,00", agotado: false },
-    { name: "PICADOR SMOKING METALICO 4 PARTES", image: "", price: "$ 17.000,00", agotado: false },
-    { name: "PIPA DE VIDRIO", image: "https://jumboargentina.vteximg.com.br/arquivos/ids/783063/Gaseosa-Schweppes-T-nica-1-5-L-1-245090.jpg?v=638206690785330000", price: "$ 15.000,00", agotado: false },
-    { name: "PORTA TUCA", image: "", price: "$ 1.500,00", agotado: false },
-    { name: "PRESERVATIVO PRIME", image: "https://jumboargentina.vteximg.com.br/arquivos/ids/672711/Preservativo-Prime-Retardante-Gel-Nat-X6-1-879907.jpg?v=637707945951230000", price: "$ 4.000,00", agotado: false },
-    { name: "TABACO CERRITO NEGRO 40G", image: "https://jumboargentina.vteximg.com.br/arquivos/ids/548323/Silla-De-Caño-Negro-Y-Rattan-Tabaco-1-599505.jpg?v=637043733330770000", price: "$ 6.000,00", agotado: false },
-    { name: "TABACO CERRITO SILVER 40G", image: "", price: "$ 6.000,00", agotado: false },
-    { name: "TABACO CERRITO VIRGINIA 40G", image: "", price: "$ 6.000,00", agotado: false },
-    { name: "TABACO CUATRO LEGUAS MOCCACINO 50G", image: "", price: "$ 6.000,00", agotado: false },
-    { name: "TABACO CUATRO LEGUAS ORIGINAL 50G", image: "", price: "$ 6.000,00", agotado: false },
-    { name: "TABACO FLANDRIA GOLD 30G", image: "", price: "$ 9.500,00", agotado: false },
-    { name: "TABACO FLANDRIA GREEN 30G", image: "", price: "$ 9.500,00", agotado: false },
-    { name: "TABACO FLANDRIA NEGRO 30G", image: "https://jumboargentina.vteximg.com.br/arquivos/ids/548323/Silla-De-Caño-Negro-Y-Rattan-Tabaco-1-599505.jpg?v=637043733330770000", price: "$ 9.500,00", agotado: false },
-    { name: "TABACO FLANDRIA SAUVAGE 30G", image: "", price: "$ 9.500,00", agotado: false },
-    { name: "TABACO FLANDRIA VIRGINIA 30G", image: "", price: "$ 9.500,00", agotado: false },
-    { name: "TABACO LAS HOJAS 50G", image: "https://jumboargentina.vteximg.com.br/arquivos/ids/440804/Cuaderno-Rayado-Rivadavia-ABC-con-Espiral-100-Hojas-Cuaderno-Rayado-Espiral-Rivadavia-Abc-100-Hojas-1-1098.jpg?v=636526258572570000", price: "$ 6.000,00", agotado: false },
-    { name: "TABACO LUCKIES ORIGINAL 30G", image: "", price: "$ 7.800,00", agotado: false },
-    { name: "TABACO SAYRI CLARO 30G", image: "https://jumboargentina.vteximg.com.br/arquivos/ids/388058/Tintura-Koleston-Tabaco-Cl-773-Color-Tabaco-Claro-Articulo-773-1-162816.jpg?v=636441452284470000", price: "$ 7.800,00", agotado: false },
-    { name: "TABACO VAN HAASEN VERDE 30G", image: "", price: "$ 7.800,00", agotado: false },
-    { name: "TURRON ARCOR ROCKLET", image: "https://images.openfoodfacts.org/images/products/000/007/799/3540/front_en.3.400.jpg", price: "$ 400,00", agotado: false },
-    { name: "TURRON MANI ARCOR", image: "https://jumboargentina.vteximg.com.br/arquivos/ids/583130/Turron-De-Mani-Arcor-25-Gr-1-46858.jpg?v=637234676827830000", price: "$ 400,00", agotado: false },
-    { name: "VAPOR INFINITY 3500PUFFS", image: "", price: "$ 30.000,00", agotado: false }
-  ],
   "Postres": [
     { name: "DAHI DESCREMADO ANANA 190G", image: "https://jumboargentina.vteximg.com.br/arquivos/ids/901995/Yogur-Descremado-Colchon-Anana-X-190-Grs-Dah-1-1055824.jpg?v=639089590272000000", price: "$ 3.300,00", agotado: false },
     { name: "DAHI DESCREMADO DURAZNO 190G", image: "https://jumboargentina.vteximg.com.br/arquivos/ids/894393/Yogur-Dah-Descremado-Colch-n-Durazno-190g-1-995019.jpg?v=639023602559200000", price: "$ 3.300,00", agotado: false },
@@ -482,6 +436,70 @@ const categoryProducts = {
     { name: "GRANIX SESAMO 175G", image: "https://jumboargentina.vteximg.com.br/arquivos/ids/197161/Galletitas-Granix-Frutigran-X240gr-Galletitas-Frutigran-Con-Sesamo-Amaranto-Y-Girasol-240-Gr-1-33532.jpg?v=636383588901700000", price: "$ 1.300,00", agotado: false },
     { name: "GRANIX SIN SAL 140G", image: "https://jumboargentina.vteximg.com.br/arquivos/ids/866605/Enjuague-Bucal-Total-Enc-as-Saludables-250-Ml-Colgate-1-869749.jpg?v=638823154199430000", price: "$ 1.300,00", agotado: false },
     { name: "SNACK MOLINOS ALA CEBOLLA Y CREMA 80G", image: "https://jumboargentina.vteximg.com.br/arquivos/ids/601172/Papas-Chips-Crema-Y-Cebolla-140gr-C-co-1-843061.jpg?v=637351320448400000", price: "$ 2.500,00", agotado: false }
+  ],
+  "Cereales": [
+    { name: "BARRITA INTEGRA PROTEICA ARANDANOS", image: "https://jumboargentina.vteximg.com.br/arquivos/ids/904426/Barra-Proteica-Pasta-De-Mani-Arandanos-43-Gr-Integra-1-1056687.jpg?v=639112809799570000", price: "$ 2.500,00", agotado: false },
+    { name: "TURRON ARCOR ROCKLET", image: "https://images.openfoodfacts.org/images/products/000/007/799/3540/front_en.3.400.jpg", price: "$ 400,00", agotado: false },
+    { name: "TURRON MANI ARCOR", image: "https://jumboargentina.vteximg.com.br/arquivos/ids/583130/Turron-De-Mani-Arcor-25-Gr-1-46858.jpg?v=637234676827830000", price: "$ 400,00", agotado: false }
+  ],
+  "Encendedores": [
+    { name: "BIC GRANDE", image: "https://jumboargentina.vteximg.com.br/arquivos/ids/310962/Abrochadora-Grande-Bichos-10412-s-e-un-1-1-203461.jpg?v=636390791975170000", price: "$ 2.000,00", agotado: false },
+    { name: "BIC MINI", image: "https://jumboargentina.vteximg.com.br/arquivos/ids/357557/Cinta-Correctora-Bic-Seca-Mini-Mouse-Blister-1-90629.jpg?v=636439779560570000", price: "$ 1.500,00", agotado: false },
+    { name: "CLIPPER GRANDE", image: "", price: "$ 2.500,00", agotado: false },
+    { name: "MINI CLIPPER", image: "https://acdn-us.mitiendanube.com/stores/006/038/294/products/bulto-43-ff487723bf4a9f8dbe17689313354053-1024-1024.webp", price: "$ 1.500,00", agotado: false }
+  ],
+  "Higiene": [
+    { name: "PRESERVATIVO PRIME", image: "https://jumboargentina.vteximg.com.br/arquivos/ids/672711/Preservativo-Prime-Retardante-Gel-Nat-X6-1-879907.jpg?v=637707945951230000", price: "$ 4.000,00", agotado: false }
+  ],
+  "Infusiones": [
+    { name: "MATE COCIDO TARAGUI", image: "https://jumboargentina.vteximg.com.br/arquivos/ids/625956/Mate-Cocido-Taragui-S-e-F-diamantado-5x50x3gr-1-859376.jpg?v=637533674731570000", price: "$ 1.000,00", agotado: false }
+  ],
+  "Pilas": [
+    { name: "ENERGIZER AA", image: "https://jumboargentina.vteximg.com.br/arquivos/ids/697611/Pilas-Alcalinas-Energizer-Aa-2-U-1-34704.jpg?v=637862385743400000", price: "$ 1.600,00", agotado: false },
+    { name: "ENERGIZER AAA", image: "https://jumboargentina.vteximg.com.br/arquivos/ids/697614/Pilas-Alcalinas-Energizer-Aaa-4-U-1-35604.jpg?v=637862385752170000", price: "$ 1.600,00", agotado: false }
+  ],
+  "Tabaco": [
+    { name: "TABACO CERRITO NEGRO 40G", image: "https://jumboargentina.vteximg.com.br/arquivos/ids/548323/Silla-De-Caño-Negro-Y-Rattan-Tabaco-1-599505.jpg?v=637043733330770000", price: "$ 6.000,00", agotado: false },
+    { name: "TABACO CERRITO SILVER 40G", image: "", price: "$ 6.000,00", agotado: false },
+    { name: "TABACO CERRITO VIRGINIA 40G", image: "", price: "$ 6.000,00", agotado: false },
+    { name: "TABACO CUATRO LEGUAS MOCCACINO 50G", image: "", price: "$ 6.000,00", agotado: false },
+    { name: "TABACO CUATRO LEGUAS ORIGINAL 50G", image: "", price: "$ 6.000,00", agotado: false },
+    { name: "TABACO FLANDRIA GOLD 30G", image: "", price: "$ 9.500,00", agotado: false },
+    { name: "TABACO FLANDRIA GREEN 30G", image: "", price: "$ 9.500,00", agotado: false },
+    { name: "TABACO FLANDRIA NEGRO 30G", image: "https://jumboargentina.vteximg.com.br/arquivos/ids/548323/Silla-De-Caño-Negro-Y-Rattan-Tabaco-1-599505.jpg?v=637043733330770000", price: "$ 9.500,00", agotado: false },
+    { name: "TABACO FLANDRIA SAUVAGE 30G", image: "", price: "$ 9.500,00", agotado: false },
+    { name: "TABACO FLANDRIA VIRGINIA 30G", image: "", price: "$ 9.500,00", agotado: false },
+    { name: "TABACO LAS HOJAS 50G", image: "https://jumboargentina.vteximg.com.br/arquivos/ids/440804/Cuaderno-Rayado-Rivadavia-ABC-con-Espiral-100-Hojas-Cuaderno-Rayado-Espiral-Rivadavia-Abc-100-Hojas-1-1098.jpg?v=636526258572570000", price: "$ 6.000,00", agotado: false },
+    { name: "TABACO LUCKIES ORIGINAL 30G", image: "", price: "$ 7.800,00", agotado: false },
+    { name: "TABACO SAYRI CLARO 30G", image: "https://jumboargentina.vteximg.com.br/arquivos/ids/388058/Tintura-Koleston-Tabaco-Cl-773-Color-Tabaco-Claro-Articulo-773-1-162816.jpg?v=636441452284470000", price: "$ 7.800,00", agotado: false },
+    { name: "TABACO VAN HAASEN VERDE 30G", image: "", price: "$ 7.800,00", agotado: false }
+  ],
+  "Tabaqueria": [
+    { name: "BANDEJA METALICA BLUNT REY", image: "", price: "$ 6.000,00", agotado: false },
+    { name: "BOLSA CHICA BLUNT REY", image: "", price: "$ 1.500,00", agotado: false },
+    { name: "CELULOSA FUMANCHU", image: "", price: "$ 1.500,00", agotado: false },
+    { name: "CELULOSA SABORIZADA BLUNT REY", image: "", price: "$ 2.000,00", agotado: false },
+    { name: "CELULOSA XL BLUNT REY", image: "", price: "$ 2.000,00", agotado: false },
+    { name: "CENICERO BLUNT REY METALICO", image: "", price: "$ 4.000,00", agotado: false },
+    { name: "CENICERO VIDRIO BLUNT REY CALAVERA", image: "", price: "$ 8.000,00", agotado: false },
+    { name: "FILTRO DE VIDRIO BLUNT REY", image: "", price: "$ 1.500,00", agotado: false },
+    { name: "FILTRO LIBELLA REGULAR X200", image: "", price: "$ 2.800,00", agotado: false },
+    { name: "FILTRO OCB EXTRA-SLIM X150", image: "", price: "$ 2.800,00", agotado: false },
+    { name: "FILTRO OCB MENTOL X150", image: "", price: "$ 2.800,00", agotado: false },
+    { name: "FILTRO OCB ORGANICO X120", image: "", price: "$ 2.800,00", agotado: false },
+    { name: "FILTRO OCB REGULAR X100", image: "", price: "$ 2.800,00", agotado: false },
+    { name: "FILTRO OCB SLIM X150", image: "https://images.openfoodfacts.org/images/products/305/706/805/6781/front_es.27.400.jpg", price: "$ 2.800,00", agotado: false },
+    { name: "LATITA BANDEJA METAL BLUNT REY", image: "", price: "$ 10.000,00", agotado: false },
+    { name: "OCB GRIS", image: "https://acdn-us.mitiendanube.com/stores/006/038/294/products/bulto-2026-01-26t113438-123-34d141aae14a1809b517694382354954-1024-1024.webp", price: "$ 1.500,00", agotado: false },
+    { name: "OCB ORGANICO", image: "", price: "$ 1.500,00", agotado: false },
+    { name: "PAPEL BLUNT LION", image: "", price: "$ 3.000,00", agotado: false },
+    { name: "PICADOR 3D GRINDER", image: "", price: "$ 6.000,00", agotado: false },
+    { name: "PICADOR PLASTICO CLASICO", image: "https://jumboargentina.vteximg.com.br/arquivos/ids/413386/Reloj-Plastico-Clasico-1-239406.jpg?v=636442081155770000", price: "$ 4.000,00", agotado: false },
+    { name: "PICADOR PLASTICO GRANDE", image: "https://jumboargentina.vteximg.com.br/arquivos/ids/815796/Herm-tico-San-Remo-Pl-stico-Grande-1-70426.jpg?v=638464814684130000", price: "$ 7.000,00", agotado: false },
+    { name: "PICADOR SMOKING METALICO 4 PARTES", image: "", price: "$ 17.000,00", agotado: false },
+    { name: "PIPA DE VIDRIO", image: "https://jumboargentina.vteximg.com.br/arquivos/ids/783063/Gaseosa-Schweppes-T-nica-1-5-L-1-245090.jpg?v=638206690785330000", price: "$ 15.000,00", agotado: false },
+    { name: "PORTA TUCA", image: "", price: "$ 1.500,00", agotado: false },
+    { name: "VAPOR INFINITY 3500PUFFS", image: "", price: "$ 30.000,00", agotado: false }
   ]
 };
 

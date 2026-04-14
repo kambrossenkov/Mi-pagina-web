@@ -17,7 +17,10 @@
       "Bash(node:*)",
       "WebFetch(domain:tienda.open25.com.ar)",
       "Bash(echo \"EXIT: $?\")",
-      "Bash(start:*)"
+      "Bash(start:*)",
+      "Bash(python3 -c ' *)",
+      "Bash(/c/Python314/python *)",
+      "Bash(PYTHONIOENCODING=utf-8 /c/Python314/python *)"
     ]
   }
 }
