@@ -15,7 +15,9 @@
       "Bash(node test_scraper.js)",
       "Bash(node inspeccionar_coto.js)",
       "Bash(node:*)",
-      "WebFetch(domain:tienda.open25.com.ar)"
+      "WebFetch(domain:tienda.open25.com.ar)",
+      "Bash(echo \"EXIT: $?\")",
+      "Bash(start:*)"
     ]
   }
 }
