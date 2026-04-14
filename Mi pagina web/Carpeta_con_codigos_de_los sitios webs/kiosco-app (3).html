@@ -899,7 +899,23 @@ function parsePrice(price) {
 }
 
 function CartProvider({ children }) {
-  const [items, setItems] = useState([]);
+  const [items, setItems] = useState(() => {
+    try {
+      const saved = localStorage.getItem("kiosco_cart");
+      return saved ? JSON.parse(saved) : [];
+    } catch {
+      return [];
+    }
+  });
+
+  React.useEffect(() => {
+    localStorage.setItem("kiosco_cart", JSON.stringify(items));
+  }, [items]);
+
+  const clearCart = () => {
+    setItems([]);
+    localStorage.removeItem("kiosco_cart");
+  };
 
   const addToCart = (item, quantity) => {
     setItems(prev => {
@@ -919,7 +935,7 @@ function CartProvider({ children }) {
   const totalItems = items.reduce((sum, i) => sum + i.quantity, 0);
   const totalPrice = items.reduce((sum, i) => sum + parsePrice(i.price) * i.quantity, 0);
 
-  return React.createElement(CartContext.Provider, { value: { items, addToCart, removeFromCart, updateQuantity, totalItems, totalPrice } }, children);
+  return React.createElement(CartContext.Provider, { value: { items, addToCart, removeFromCart, updateQuantity, clearCart, totalItems, totalPrice } }, children);
 }
 
 function useCart() {
@@ -1142,6 +1158,8 @@ function CartPage() {
 function TransferModal({ onClose }) {
   const [copiedAlias, setCopiedAlias] = useState(false);
   const [copiedCbu, setCopiedCbu] = useState(false);
+  const { items, totalPrice, clearCart } = useCart();
+  const { navigate } = useRouter();
 
   const handleCopy = (text, type) => {
     navigator.clipboard.writeText(text).then(() => {
@@ -1153,6 +1171,18 @@ function TransferModal({ onClose }) {
         setTimeout(() => setCopiedCbu(false), 2000);
       }
     });
+  };
+
+  const handleTransferDone = () => {
+    let msg = "Hola, ya te transferí el dinero. Te adjunto el comprobante. Mi pedido es el siguiente:\n\n";
+    items.forEach(item => {
+      msg += `- ${item.quantity}x ${item.name} (${item.price})\n`;
+    });
+    msg += `\nTotal: $ ${totalPrice.toLocaleString("es-AR", { minimumFractionDigits: 0 })}`;
+    const url = `https://wa.me/0000000000?text=${encodeURIComponent(msg)}`;
+    window.open(url, "_blank");
+    clearCart();
+    navigate("/");
   };
 
   return (
@@ -1186,7 +1216,7 @@ function TransferModal({ onClose }) {
           </button>
         </div>
 
-        <button onClick={() => window.open("https://wa.me/0000000000", "_blank")} style={{ width:"100%", background:"#25D366", color:"#fff", fontWeight:800, padding:"16px 0", borderRadius:99, border:"none", cursor:"pointer", fontSize:16, marginTop:8 }}>
+        <button onClick={handleTransferDone} style={{ width:"100%", background:"#25D366", color:"#fff", fontWeight:800, padding:"16px 0", borderRadius:99, border:"none", cursor:"pointer", fontSize:16, marginTop:8 }}>
           Ya transferí - Enviar comprobante
         </button>
       </div>
@@ -1198,7 +1228,7 @@ function TransferModal({ onClose }) {
 
 function CheckoutPage() {
   const { navigate } = useRouter();
-  const { items, totalPrice } = useCart();
+  const { items, totalPrice, clearCart } = useCart();
   const [paymentMethod, setPaymentMethod] = useState("transfer"); // "transfer" | "cash"
   const [showModal, setShowModal] = useState(false);
 
@@ -1211,6 +1241,8 @@ function CheckoutPage() {
       msg += `\nTotal: $ ${totalPrice.toLocaleString("es-AR", { minimumFractionDigits: 0 })}`;
       const url = `https://wa.me/0000000000?text=${encodeURIComponent(msg)}`;
       window.open(url, "_blank");
+      clearCart();
+      navigate("/");
     } else if (paymentMethod === "transfer") {
       setShowModal(true);
     }
