@@ -518,7 +518,7 @@ function Link({ to, children, style, className }) {
 
 function PeyaHeader() {
   const [showPanel, setShowPanel] = useState(false);
-  const [address, setAddress] = useState("Salcedo 3924");
+  const [address, setAddress] = useState("Reconquista 1093");
   const [inputAddr, setInputAddr] = useState("");
 
   const save = () => {
@@ -533,14 +533,16 @@ function PeyaHeader() {
         <div className="container" style={{ display:"flex", alignItems:"center", justifyContent:"space-between", height:64, gap:16 }}>
           {/* Logo + address */}
           <div style={{ display:"flex", alignItems:"center", gap:24, flexShrink:0 }}>
-            <img src={IMG_LOGO} alt="Kiosco" style={{ height:40, width:"auto", borderRadius:8 }} />
-            <button onClick={() => setShowPanel(true)} style={{ display:"flex", alignItems:"center", gap:6, fontSize:14, background:"none", border:"none", cursor:"pointer" }}>
-              <span style={{ color:"var(--primary)", fontSize:16 }}>📍</span>
-              <div style={{ textAlign:"left" }}>
-                <div style={{ fontSize:11, color:"var(--muted)", lineHeight:1 }}>Enviar a</div>
-                <div style={{ fontWeight:700, color:"var(--fg)", display:"flex", alignItems:"center", gap:3 }}>{address} <span style={{ fontSize:12 }}>▾</span></div>
+            <a href="#/" style={{ display:"flex", textDecoration:"none" }}>
+              <img src={IMG_LOGO} alt="Kiosco" style={{ height:40, width:"auto", borderRadius:8 }} />
+            </a>
+            <a href="https://maps.app.goo.gl/DLZMEmgetsNQG79s8" target="_blank" rel="noopener noreferrer" style={{ display:"flex", alignItems:"center", gap:8, background:"none", border:"none", textAlign:"left", textDecoration:"none" }}>
+              <span style={{ color:"var(--primary)", fontSize:20 }}>📍</span>
+              <div style={{ display:"flex", flexDirection:"column", gap:2 }}>
+                <span style={{ fontSize:18, fontWeight:800, color:"#000000", lineHeight:1.1 }}>Casa Lupi</span>
+                <span style={{ fontSize:13, fontWeight:400, color:"#333333", lineHeight:1 }}>{address}</span>
               </div>
-            </button>
+            </a>
           </div>
 
           {/* Search */}
@@ -586,7 +588,7 @@ function PeyaHeader() {
             </button>
             <div style={{ borderTop:"1px solid var(--border)", paddingTop:16 }}>
               <div style={{ fontSize:11, color:"var(--muted)", textTransform:"uppercase", letterSpacing:1, marginBottom:12 }}>Direcciones guardadas</div>
-              {["Salcedo 3924", "Av. Corrientes 1234", "Cabildo 500"].map(dir => (
+              {["Reconquista 1093", "Av. Corrientes 1234", "Cabildo 500"].map(dir => (
                 <button key={dir} onClick={() => { setAddress(dir); setShowPanel(false); }} style={{ display:"flex", alignItems:"center", gap:12, width:"100%", padding:12, borderRadius:10, background:"none", border:"none", cursor:"pointer", fontSize:14, textAlign:"left" }}>
                   <span style={{ color:"var(--primary)" }}>📍</span> {dir}
                 </button>
