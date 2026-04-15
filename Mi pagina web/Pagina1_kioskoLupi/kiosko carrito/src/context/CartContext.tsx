@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, ReactNode } from "react";
+import { createContext, useContext, useState, useEffect, ReactNode } from "react";
 
 export interface CartItem {
   name: string;
@@ -13,6 +13,7 @@ interface CartContextType {
   addToCart: (item: Omit<CartItem, "quantity">, quantity: number) => void;
   removeFromCart: (name: string) => void;
   updateQuantity: (name: string, quantity: number) => void;
+  clearCart: () => void;
   totalItems: number;
   totalPrice: number;
 }
@@ -24,7 +25,18 @@ const parsePrice = (price: string): number => {
 };
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
-  const [items, setItems] = useState<CartItem[]>([]);
+  const [items, setItems] = useState<CartItem[]>(() => {
+    try {
+      const saved = localStorage.getItem("kiosco_cart");
+      return saved ? JSON.parse(saved) : [];
+    } catch {
+      return [];
+    }
+  });
+
+  useEffect(() => {
+    localStorage.setItem("kiosco_cart", JSON.stringify(items));
+  }, [items]);
 
   const addToCart = (item: Omit<CartItem, "quantity">, quantity: number) => {
     setItems((prev) => {
@@ -52,11 +64,16 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     );
   };
 
+  const clearCart = () => {
+    setItems([]);
+    localStorage.removeItem("kiosco_cart");
+  };
+
   const totalItems = items.reduce((sum, i) => sum + i.quantity, 0);
   const totalPrice = items.reduce((sum, i) => sum + parsePrice(i.price) * i.quantity, 0);
 
   return (
-    <CartContext.Provider value={{ items, addToCart, removeFromCart, updateQuantity, totalItems, totalPrice }}>
+    <CartContext.Provider value={{ items, addToCart, removeFromCart, updateQuantity, clearCart, totalItems, totalPrice }}>
       {children}
     </CartContext.Provider>
   );

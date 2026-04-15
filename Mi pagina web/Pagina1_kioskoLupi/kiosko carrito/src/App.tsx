@@ -12,6 +12,7 @@ import NotFound from "./pages/NotFound.tsx";
 import CategoryPage from "./pages/CategoryPage.tsx";
 import ProductDetailPage from "./pages/ProductDetailPage.tsx";
 import CartPage from "./pages/CartPage.tsx";
+import CheckoutPage from "./pages/CheckoutPage.tsx";
 
 const queryClient = new QueryClient();
 
@@ -35,6 +36,7 @@ const App = () => {
               <Route path="/categoria/:slug" element={<CategoryPage />} />
               <Route path="/producto/:slug" element={<ProductDetailPage />} />
               <Route path="/carrito" element={<CartPage />} />
+              <Route path="/checkout" element={<CheckoutPage />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
