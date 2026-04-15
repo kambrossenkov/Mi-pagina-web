@@ -6,9 +6,9 @@ interface TransferModalProps {
   onClose: () => void;
 }
 
-const ALIAS = "MI.ALIAS.KIOSCO";
-const CBU = "0000000000000000000000";
-const WA_NUMBER = "0000000000";
+const ALIAS = "Casalupi.mp";
+const CBU = "1162412321";
+const WA_NUMBER = "5491162412321";
 
 const TransferModal = ({ onClose }: TransferModalProps) => {
   const [copiedAlias, setCopiedAlias] = useState(false);
@@ -51,6 +51,9 @@ const TransferModal = ({ onClose }: TransferModalProps) => {
         </button>
 
         <h2 className="text-xl font-extrabold text-center mt-2">Datos para transferir</h2>
+        <p className="text-sm font-semibold text-center text-foreground mt-1">
+          A nombre de: Enzo Leonel Lupi (Mercado Pago)
+        </p>
         <p className="text-sm text-muted-foreground text-center">
           Copiá los datos y hacé la transferencia desde tu cuenta bancaria o billetera virtual.
         </p>
@@ -72,7 +75,7 @@ const TransferModal = ({ onClose }: TransferModalProps) => {
         {/* CBU */}
         <div className="bg-secondary rounded-2xl p-4 flex justify-between items-center">
           <div>
-            <span className="text-xs text-muted-foreground uppercase font-bold tracking-wide">CVU / CBU</span>
+            <span className="text-xs text-muted-foreground uppercase font-bold tracking-wide">Número de Teléfono</span>
             <p className="text-base font-extrabold text-foreground mt-1">{CBU}</p>
           </div>
           <button

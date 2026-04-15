@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Search, ChevronDown, ChevronRight, MapPin, ChevronLeft, LocateFixed } from "lucide-react";
 import logo from "@/assets/kiosco-logo.png";
-import profileImg from "@/assets/casa-lupi-cartel.png";
+import profileImg from "../../imagen de loteria.jpg";
 
 const PeyaHeader = () => {
   const [showAddressPanel, setShowAddressPanel] = useState(false);

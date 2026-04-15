@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useCart } from "@/context/CartContext";
 import TransferModal from "@/components/TransferModal";
 
-const WA_NUMBER = "0000000000";
+const WA_NUMBER = "5491162412321";
 
 const CheckoutPage = () => {
   const navigate = useNavigate();
@@ -13,7 +13,7 @@ const CheckoutPage = () => {
 
   const handlePay = () => {
     if (paymentMethod === "cash") {
-      let msg = "Voy a venir a pagar estos productos, por favor tenerlos preparados.\n\n";
+      let msg = "Voy a venir a pagar estos productos, por favor tenerlos preparados:\n\n";
       items.forEach((item) => {
         msg += `- ${item.quantity}x ${item.name} (${item.price})\n`;
       });

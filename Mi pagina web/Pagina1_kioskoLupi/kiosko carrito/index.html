@@ -1367,7 +1367,7 @@ function TransferModal({ onClose }) {
       msg += `- ${item.quantity}x ${item.name} (${item.price})\n`;
     });
     msg += `\nTotal: $ ${totalPrice.toLocaleString("es-AR", { minimumFractionDigits: 0 })}`;
-    const url = `https://wa.me/0000000000?text=${encodeURIComponent(msg)}`;
+    const url = `https://wa.me/5491162412321?text=${encodeURIComponent(msg)}`;
     window.open(url, "_blank");
     clearCart();
     navigate("/");
@@ -1380,15 +1380,16 @@ function TransferModal({ onClose }) {
         <button onClick={onClose} style={{ position:"absolute", top:16, right:16, background:"var(--secondary)", border:"none", borderRadius:99, height:32, width:32, cursor:"pointer", fontSize:16, display:"flex", alignItems:"center", justifyContent:"center" }}>✕</button>
         
         <h2 style={{ fontSize:22, fontWeight:800, textAlign:"center", marginTop:8 }}>Datos para transferir</h2>
+        <p style={{ fontSize:14, fontWeight:600, textAlign:"center", color:"var(--fg)", marginTop:2, marginBottom:4 }}>A nombre de: Enzo Leonel Lupi (Mercado Pago)</p>
         <p style={{ fontSize:14, color:"var(--muted)", textAlign:"center", marginBottom:8 }}>Copiá los datos y hacé la transferencia desde tu cuenta bancaria o billetera virtual.</p>
 
         {/* Alias Block */}
         <div style={{ background:"var(--secondary)", borderRadius:16, padding:16, display:"flex", justifyContent:"space-between", alignItems:"center" }}>
           <div>
             <span style={{ fontSize:12, color:"var(--muted)", textTransform:"uppercase", fontWeight:700 }}>Alias</span>
-            <div style={{ fontSize:16, fontWeight:800, color:"var(--fg)", marginTop:2 }}>MI.ALIAS.KIOSCO</div>
+            <div style={{ fontSize:16, fontWeight:800, color:"var(--fg)", marginTop:2 }}>Casalupi.mp</div>
           </div>
-          <button onClick={() => handleCopy("MI.ALIAS.KIOSCO", "alias")} style={{ background:"var(--bg)", border:"1px solid var(--border)", borderRadius:8, padding:"6px 12px", fontSize:13, fontWeight:600, cursor:"pointer", color:"var(--fg)", minWidth:80 }}>
+          <button onClick={() => handleCopy("Casalupi.mp", "alias")} style={{ background:"var(--bg)", border:"1px solid var(--border)", borderRadius:8, padding:"6px 12px", fontSize:13, fontWeight:600, cursor:"pointer", color:"var(--fg)", minWidth:80 }}>
             {copiedAlias ? "¡Copiado!" : "Copiar"}
           </button>
         </div>
@@ -1396,10 +1397,10 @@ function TransferModal({ onClose }) {
         {/* CBU Block */}
         <div style={{ background:"var(--secondary)", borderRadius:16, padding:16, display:"flex", justifyContent:"space-between", alignItems:"center" }}>
           <div>
-            <span style={{ fontSize:12, color:"var(--muted)", textTransform:"uppercase", fontWeight:700 }}>CVU / CBU</span>
-            <div style={{ fontSize:16, fontWeight:800, color:"var(--fg)", marginTop:2 }}>0000000000000000000000</div>
+            <span style={{ fontSize:12, color:"var(--muted)", textTransform:"uppercase", fontWeight:700 }}>Número de Teléfono</span>
+            <div style={{ fontSize:16, fontWeight:800, color:"var(--fg)", marginTop:2 }}>1162412321</div>
           </div>
-          <button onClick={() => handleCopy("0000000000000000000000", "cbu")} style={{ background:"var(--bg)", border:"1px solid var(--border)", borderRadius:8, padding:"6px 12px", fontSize:13, fontWeight:600, cursor:"pointer", color:"var(--fg)", minWidth:80 }}>
+          <button onClick={() => handleCopy("1162412321", "cbu")} style={{ background:"var(--bg)", border:"1px solid var(--border)", borderRadius:8, padding:"6px 12px", fontSize:13, fontWeight:600, cursor:"pointer", color:"var(--fg)", minWidth:80 }}>
             {copiedCbu ? "¡Copiado!" : "Copiar"}
           </button>
         </div>
@@ -1427,7 +1428,7 @@ function CheckoutPage() {
         msg += `- ${item.quantity}x ${item.name} (${item.price})\n`;
       });
       msg += `\nTotal: $ ${totalPrice.toLocaleString("es-AR", { minimumFractionDigits: 0 })}`;
-      const url = `https://wa.me/0000000000?text=${encodeURIComponent(msg)}`;
+      const url = `https://wa.me/5491162412321?text=${encodeURIComponent(msg)}`;
       window.open(url, "_blank");
       clearCart();
       navigate("/");
