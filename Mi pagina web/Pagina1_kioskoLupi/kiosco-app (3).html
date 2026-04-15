@@ -125,6 +125,16 @@ const combos = [
   { title: "2x1", price: "$ 2.300", productName: "Alfajor Rasta", gradient: "linear-gradient(135deg,#065f46,#064e3b)", badge: "🔥 PROMO", image: IMG_RASTA_COMBO },
   { title: "3x2", price: "$ 2.100", productName: "Alfajor Jorgito", gradient: "linear-gradient(135deg,#92400e,#78350f)", badge: "⭐ OFERTA", image: IMG_JORGITO_COMBO },
   { title: "Bolsitas 100g", price: "$ 1.000", productName: "Palitos de la Selva", gradient: "linear-gradient(135deg,#9d174d,#7c3aed)", badge: "🍬 COMBOS", image: IMG_PALITOS_COMBO },
+  { title: "2x $ 3.800", price: "$ 3.800", productName: "Coca Cola 600ml", gradient: "linear-gradient(135deg,#dc2626,#7f1d1d)", badge: "🥤 PROMO", image: "https://http2.mlstatic.com/D_NQ_NP_860365-MLA99361893904_112025-O.webp" },
+  { title: "2x $ 3.000", price: "$ 3.000", productName: "Rasta + Gula", gradient: "linear-gradient(135deg,#065f46,#1e3a8a)", badge: "🍫 COMBOS", image: "https://wsrv.nl/?url=https://kioskoboxoeste.com.ar/wp-content/uploads/2025/08/20250911_194607_0000-300x300.png&w=300&output=webp", image2: "https://images.openfoodfacts.org/images/products/779/818/289/2331/front_es.3.400.jpg" },
+  { title: "2x $ 3.200", price: "$ 3.200", productName: "Pepsi 500ml", gradient: "linear-gradient(135deg,#1e40af,#1e3a8a)", badge: "🥤 OFERTA", image: "https://images.openfoodfacts.org/images/products/779/181/388/8406/front_es.3.400.jpg" },
+  { title: "2x $ 3.600", price: "$ 3.600", productName: "Gomitas 90g", gradient: "linear-gradient(135deg,#d97706,#92400e)", badge: "🍬 COMBOS", image: "https://jumboargentina.vteximg.com.br/arquivos/ids/883211/Gomitas-Mogul-Jelly-Beans-Arcor-100-Gr-Gomitas-Mogul-Jelly-Beans-X-100-Grs-Arcor-17-1047696.jpg?v=638931261740570000" },
+  { title: "2x $ 3.000", price: "$ 3.000", productName: "Gomitas 60g", gradient: "linear-gradient(135deg,#db2777,#9d174d)", badge: "🍬 COMBOS", image: "https://jumboargentina.vteximg.com.br/arquivos/ids/342929/Gomitas-Arcor-Anillos-60g-1-53731.jpg?v=636439476706970000" },
+  { title: "2x $ 2.500", price: "$ 2.500", productName: "Gomitas Extreme", gradient: "linear-gradient(135deg,#7c3aed,#4c1d95)", badge: "⚡ COMBOS", image: "https://jumboargentina.vteximg.com.br/arquivos/ids/892334/Caramelos-Masticables-Confitados-Extreme-70gr-Mogul-1-1051427.jpg?v=639002868124030000" },
+  { title: "2x $ 2.000", price: "$ 2.000", productName: "Marroc", gradient: "linear-gradient(135deg,#78350f,#451a03)", badge: "🍫 COMBOS", image: "https://wsrv.nl/?url=https://kioskoboxoeste.com.ar/wp-content/uploads/2025/08/20260302_185300_0000-300x300.png&w=300&output=webp" },
+  { title: "2x $ 2.000", price: "$ 2.000", productName: "Mentiras", gradient: "linear-gradient(135deg,#0f766e,#134e4a)", badge: "🍬 COMBOS", image: "https://jumboargentina.vteximg.com.br/arquivos/ids/872690/Caramelos-Butter-Toffees-Chocolate-80-Grs-Arcor-1-1039151.jpg?v=638865597905230000" },
+  { title: "4x $ 1.500", price: "$ 1.500", productName: "Guaymallen", gradient: "linear-gradient(135deg,#b45309,#78350f)", badge: "🍫 COMBOS", image: "https://jumboargentina.vteximg.com.br/arquivos/ids/787908/Alfajor-Guaymallen-Fruta-Simple-X38g-1-972199.jpg?v=638247837700630000" },
+  { title: "2x $ 2.500", price: "$ 2.500", productName: "Pilas", gradient: "linear-gradient(135deg,#15803d,#14532d)", badge: "🔋 COMBOS", image: "https://jumboargentina.vteximg.com.br/arquivos/ids/697611/Pilas-Alcalinas-Energizer-Aa-2-U-1-34704.jpg?v=637862385743400000" },
 ];
 
 const categoryProducts = {
@@ -753,16 +763,17 @@ function PromoBanners() {
               onMouseEnter={e => {
                 e.currentTarget.style.transform="translateY(-4px)";
                 e.currentTarget.style.boxShadow="0 12px 32px rgba(0,0,0,0.3)";
-                e.currentTarget.querySelector("img").style.transform="scale(1.12)";
+                e.currentTarget.querySelectorAll("img").forEach(img => img.style.transform="scale(1.12)");
               }}
               onMouseLeave={e => {
                 e.currentTarget.style.transform="translateY(0)";
                 e.currentTarget.style.boxShadow="none";
-                e.currentTarget.querySelector("img").style.transform="scale(1)";
+                e.currentTarget.querySelectorAll("img").forEach(img => img.style.transform="scale(1)");
               }}>
               <span style={{ position:"absolute", top:12, left:12, zIndex:2, background:"var(--primary)", color:"#fff", fontSize:11, fontWeight:800, padding:"4px 10px", borderRadius:99, boxShadow:"0 2px 8px rgba(0,0,0,0.2)" }}>{c.badge}</span>
-              <div style={{ position:"absolute", right:8, top:"50%", transform:"translateY(-50%)", zIndex:1 }}>
-                <img src={c.image} alt={c.productName} style={{ height:160, width:160, objectFit:"contain", filter:"drop-shadow(0 4px 16px rgba(0,0,0,0.35))", transition:"transform 0.3s" }} />
+              <div style={{ position:"absolute", right:8, top:"50%", transform:"translateY(-50%)", zIndex:1, display:"flex", flexDirection:"column", gap:4, alignItems:"center" }}>
+                <img src={c.image} alt={c.productName} style={{ height: c.image2 ? 76 : 160, width: c.image2 ? 76 : 160, objectFit:"contain", filter:"drop-shadow(0 4px 16px rgba(0,0,0,0.35))", transition:"transform 0.3s" }} />
+                {c.image2 && <img src={c.image2} alt={c.productName} style={{ height:76, width:76, objectFit:"contain", filter:"drop-shadow(0 4px 16px rgba(0,0,0,0.35))", transition:"transform 0.3s" }} />}
               </div>
               <div style={{ position:"relative", zIndex:2, padding:20, display:"flex", flexDirection:"column", justifyContent:"flex-end", height:"100%" }}>
                 <span style={{ color:"rgba(255,255,255,0.75)", fontSize:11, fontWeight:600, textTransform:"uppercase", letterSpacing:1 }}>{c.productName}</span>
