@@ -1,12 +1,15 @@
 import { ShoppingCart } from "lucide-react";
 import { useCart } from "@/context/CartContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const CartFloatingButton = () => {
   const { totalItems, totalPrice } = useCart();
   const navigate = useNavigate();
+  const location = useLocation();
 
-  if (totalItems === 0) return null;
+  // No mostrar en carrito ni en checkout
+  const hiddenRoutes = ["/carrito", "/checkout"];
+  if (totalItems === 0 || hiddenRoutes.includes(location.pathname)) return null;
 
   return (
     <button
