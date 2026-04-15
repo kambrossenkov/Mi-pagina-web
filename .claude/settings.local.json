@@ -24,7 +24,8 @@
       "Bash(mkdir -p _backups)",
       "Bash(mv \"kiosco-app \\(3\\)_backup_20260413_234531.html\" _backups/)",
       "Bash(mv \"kiosco-app \\(3\\)_pre_imagenes.html\" _backups/)",
-      "Bash(rm actualizar_imagenes_kiosco.js buscar_imagenes_api.js buscar_imagenes_coto.js inspeccionar_coto.js inyectar_imagenes.js test_scraper.js coto_snapshot.html imagenes_encontradas.json imagenes_progress.json sin_imagen.txt sin_imagen_final.txt README_IMAGENES.md stock_kiosco.xlsx stock_kiosco_categorias.xlsx)"
+      "Bash(rm actualizar_imagenes_kiosco.js buscar_imagenes_api.js buscar_imagenes_coto.js inspeccionar_coto.js inyectar_imagenes.js test_scraper.js coto_snapshot.html imagenes_encontradas.json imagenes_progress.json sin_imagen.txt sin_imagen_final.txt README_IMAGENES.md stock_kiosco.xlsx stock_kiosco_categorias.xlsx)",
+      "Bash(npx tsc *)"
     ]
   }
 }
