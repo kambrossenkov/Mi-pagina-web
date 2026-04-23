@@ -30,7 +30,8 @@
       "Bash(r)",
       "Bash(\\\\\"/_vercel/insights/script.js)",
       "Bash(powershell -Command ' *)",
-      "Bash(powershell *)"
+      "Bash(powershell *)",
+      "WebFetch(domain:kiosko-casa-lupi.vercel.app)"
     ]
   }
 }
