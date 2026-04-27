@@ -39,7 +39,10 @@
       "Bash(curl -s -L --max-time 15 -H \"User-Agent: Mozilla/5.0 \\(Windows NT 10.0; Win64; x64\\) AppleWebKit/537.36 \\(KHTML, like Gecko\\) Chrome/120.0.0.0 Safari/537.36\" \"https://api.mercadolibre.com/products/MLA52719487\")",
       "Bash(curl -s -L --max-time 15 -H \"User-Agent: Mozilla/5.0 \\(Windows NT 10.0; Win64; x64\\) AppleWebKit/537.36\" \"https://api.mercadolibre.com/items/MLA1104341451\")",
       "Bash(curl -s -L --max-time 15 -H \"User-Agent: Mozilla/5.0\" \"https://www.mercadolibre.com.ar/alfajor-gula-alfajor-premium-chocolate-con-dulce-de-leche72g-pack-x-18/p/MLA52719487\")",
-      "Bash(curl -s -L --max-time 20 -H \"User-Agent: Mozilla/5.0 \\(Windows NT 10.0; Win64; x64\\) AppleWebKit/537.36 \\(KHTML, like Gecko\\) Chrome/120.0.0.0 Safari/537.36\" -H \"Accept: text/html,application/xhtml+xml\" -H \"Accept-Language: es-AR,es;q=0.9\" \"https://www.mercadolibre.com.ar/alfajor-gula-alfajor-premium-chocolate-con-dulce-de-leche72g-pack-x-18/p/MLA52719487\")"
+      "Bash(curl -s -L --max-time 20 -H \"User-Agent: Mozilla/5.0 \\(Windows NT 10.0; Win64; x64\\) AppleWebKit/537.36 \\(KHTML, like Gecko\\) Chrome/120.0.0.0 Safari/537.36\" -H \"Accept: text/html,application/xhtml+xml\" -H \"Accept-Language: es-AR,es;q=0.9\" \"https://www.mercadolibre.com.ar/alfajor-gula-alfajor-premium-chocolate-con-dulce-de-leche72g-pack-x-18/p/MLA52719487\")",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)"
     ]
   }
 }
