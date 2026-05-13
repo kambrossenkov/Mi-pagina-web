@@ -54,10 +54,10 @@ const translations = {
 const articlesList = {
   en: [
     {
-      id: 1, title: "<span class=\"text-accent text-xl font-bold mb-2\">Calistenia</span>",
-      excerpt: "<p class=\"text-muted-foreground leading-relaxed text-sm md:text-base\">Una disciplina que me enseñó a desarrollar mi mente y mi físico, lo cual me ayuda a superarme en muchas características de la vida de una persona y el bienestar de uno mismo.</p>",
-      category: "HOBBIES", date: "Próximamente",
-      imageUrl: "Fotos/foto_portada_calistenia.png",
+      id: 3, title: "My CV",
+      excerpt: "Access my CV in Spanish or English, as you prefer.",
+      category: "MY PROFILE", date: "03-may-2026",
+      imageUrl: null,
     },
     {
       id: 2, title: "Finalización de mi cursada en la carrera",
@@ -66,10 +66,10 @@ const articlesList = {
       imageUrl: "Fotos/foto_de_recibida.jpg",
     },
     {
-      id: 3, title: "Evolución del Diseño",
-      excerpt: "Un recorrido visual por la historia y transformación del diseño gráfico y digital, desde los símbolos antiguos hasta la era de la Inteligencia Artificial.",
-      category: "INVENTOS", date: "01-abr-2025",
-      imageUrl: "Fotos/MEME.jpg",
+      id: 1, title: "<span class=\"text-accent text-xl font-bold mb-2\">Calistenia</span>",
+      excerpt: "<p class=\"text-muted-foreground leading-relaxed text-sm md:text-base\">Una disciplina que me enseñó a desarrollar mi mente y mi físico, lo cual me ayuda a superarme en muchas características de la vida de una persona y el bienestar de uno mismo.</p>",
+      category: "HOBBIES", date: "04-abr-2018",
+      imageUrl: "Fotos/foto_portada_calistenia.png",
     },
     {
       id: 4, title: "Sustainable Travel Guide",
@@ -92,10 +92,10 @@ const articlesList = {
   ],
   es: [
     {
-      id: 1, title: "<span class=\"text-accent text-xl font-bold mb-2\">Calistenia</span>",
-      excerpt: "<p class=\"text-muted-foreground leading-relaxed text-sm md:text-base\">Una disciplina que me enseñó a desarrollar mi mente y mi físico, lo cual me ayuda a superarme en muchas características de la vida de una persona y el bienestar de uno mismo.</p>",
-      category: "HOBBIES", date: "Próximamente",
-      imageUrl: "Fotos/foto_portada_calistenia.png",
+      id: 3, title: "Mi CV",
+      excerpt: "Ingresá a mi CV en castellano o en inglés, según prefieras.",
+      category: "MI PERFIL", date: "03-may-2026",
+      imageUrl: null,
     },
     {
       id: 2, title: "Finalizacion de mi cursada en la carrera",
@@ -104,10 +104,10 @@ const articlesList = {
       imageUrl: "Fotos/foto_de_recibida.jpg",
     },
     {
-      id: 3, title: "Evolución del Diseño",
-      excerpt: "Un recorrido visual por la historia y transformación del diseño gráfico y digital, desde los símbolos antiguos hasta la era de la Inteligencia Artificial.",
-      category: "INVENTOS", date: "01-abr-2025",
-      imageUrl: "Fotos/MEME.jpg",
+      id: 1, title: "<span class=\"text-accent text-xl font-bold mb-2\">Calistenia</span>",
+      excerpt: "<p class=\"text-muted-foreground leading-relaxed text-sm md:text-base\">Una disciplina que me enseñó a desarrollar mi mente y mi físico, lo cual me ayuda a superarme en muchas características de la vida de una persona y el bienestar de uno mismo.</p>",
+      category: "HOBBIES", date: "04-abr-2018",
+      imageUrl: "Fotos/foto_portada_calistenia.png",
     },
     {
       id: 4, title: "Guía de Viaje Sustentable",
@@ -180,14 +180,14 @@ function renderArticles() {
     const staggerNumber = Math.min(index + 1, 3);
     const delay = staggerNumber * 100 + 100; // Base delay + stagger
     
-    const isCalistenia = index === 0;
+    const isCV = index === 0;
     const isTrayectoria = index === 1;
-    const isMeme = index === 2;
-    
+    const isCalistenia = index === 2;
+
     let wrapperTag = 'article';
     let wrapperHref = '';
     let objectFitClass = 'object-cover';
-    
+
     if (isCalistenia) {
       wrapperTag = 'a';
       wrapperHref = 'href="pasatiempos.html"';
@@ -196,21 +196,24 @@ function renderArticles() {
       wrapperTag = 'a';
       wrapperHref = 'href="curiosidades.html"';
       objectFitClass = 'object-contain bg-black';
-    } else if (isMeme) {
-      wrapperTag = 'a';
-      wrapperHref = 'href="invento-meme.html"';
+    } else if (isCV) {
+      wrapperTag = 'div';
+      wrapperHref = 'data-open-cv-modal="true" role="button" tabindex="0"';
     }
 
     const dateLabel = `<span class="text-xs font-bold uppercase tracking-wider text-accent">${article.category}</span><span class="text-xs text-muted-foreground ml-2">• ${article.date}</span>`;
     const excerptHtml = isCalistenia ? article.excerpt : `<p class="text-muted-foreground line-clamp-3 text-sm leading-relaxed">${article.excerpt}</p>`;
+    const imageSection = isCV
+      ? `<div style="width:100%;height:100%;background:linear-gradient(135deg,#0a1628 0%,#0f2340 100%);display:flex;align-items:center;justify-content:center;"><svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></div>`
+      : `<img src="${article.imageUrl}" alt="${article.title}" class="w-full h-full ${objectFitClass} group-hover:scale-105 transition-transform duration-500" />`;
 
     const articleHTML = `
       <${wrapperTag} ${wrapperHref}
-        class="block bg-card rounded-2xl overflow-hidden border border-border shadow-sm hover:shadow-md transition-all duration-300 animate-slide-up group" 
+        class="block bg-card rounded-2xl overflow-hidden border border-border shadow-sm hover:shadow-md transition-all duration-300 animate-slide-up group${isCV ? ' cursor-pointer' : ''}"
         style="animation-delay: ${delay}ms;"
       >
         <div class="h-48 overflow-hidden relative">
-          <img src="${article.imageUrl}" alt="${article.title}" class="w-full h-full ${objectFitClass} group-hover:scale-105 transition-transform duration-500" />
+          ${imageSection}
         </div>
         <div class="p-6 flex flex-col justify-between h-[calc(100%-12rem)]">
           <div>
@@ -230,6 +233,17 @@ function renderArticles() {
     
     container.innerHTML += articleHTML;
   });
+}
+
+// CV Modal
+function openCVModal() {
+  document.getElementById('cv-modal').classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeCVModal() {
+  document.getElementById('cv-modal').classList.add('hidden');
+  document.body.style.overflow = '';
 }
 
 // Event Listeners
@@ -252,4 +266,20 @@ document.addEventListener('DOMContentLoaded', () => {
       mobileMenu.classList.toggle('flex');
     });
   }
+
+  // CV card click/keyboard handler (delegated on container to survive re-renders)
+  const articlesContainer = document.getElementById('articles-container');
+  if (articlesContainer) {
+    articlesContainer.addEventListener('click', e => {
+      if (e.target.closest('[data-open-cv-modal]')) openCVModal();
+    });
+    articlesContainer.addEventListener('keydown', e => {
+      if (e.key === 'Enter' && e.target.closest('[data-open-cv-modal]')) openCVModal();
+    });
+  }
+
+  // CV modal close handlers
+  document.getElementById('cv-modal-close')?.addEventListener('click', closeCVModal);
+  document.getElementById('cv-modal-overlay')?.addEventListener('click', closeCVModal);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeCVModal(); });
 });
