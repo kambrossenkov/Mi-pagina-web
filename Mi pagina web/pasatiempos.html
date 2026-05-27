@@ -7,6 +7,7 @@
   <title>Pasatiempos | Perspective</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="styles.css">
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@700&f[]=clash-display@600&display=swap" rel="stylesheet">
   <style>
   .generating-card {
     width: 100%;
@@ -96,10 +97,12 @@
     margin-top: 4px;
   }
 
-  /* ── Footer — pixel-perfect igual a inventos.html ── */
+  /* ── Footer — transparent (fondo continuo con la pagina) ── */
   footer {
-    background-color: #1c1c1c !important;
-    border-top: 1px solid #333333 !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+    color: #ffffff !important;
   }
 
   footer h3 {
@@ -120,13 +123,71 @@
   }
 
   footer p {
-    color: #a3a3a3 !important;          /* muted-foreground */
+    color: rgba(255, 255, 255, 0.85) !important;
     font-size: 1.125rem !important;     /* text-lg */
     font-weight: 500 !important;
   }
 
   footer img.h-16 {
     height: 4rem !important;
+  }
+
+  /* ── Hero title ── */
+  .hero-title {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .titulo-fijo {
+    display: block;
+    font-family: 'Satoshi', sans-serif;
+    font-size: 92px;
+    font-weight: 700;
+    line-height: 0.92;
+    letter-spacing: -4px;
+    color: #F5F5F5;
+  }
+
+  .titulo-animado {
+    display: block;
+    font-family: 'Clash Display', sans-serif;
+    font-size: 92px;
+    font-weight: 600;
+    letter-spacing: -4px;
+    line-height: 0.92;
+    min-height: calc(92px * 0.92);
+    color: #2563EB;
+    animation: entradaPalabra 0.6s ease forwards;
+  }
+
+  @keyframes entradaPalabra {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+      filter: blur(8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+      filter: blur(0px);
+    }
+  }
+
+  @keyframes salidaPalabra {
+    from {
+      opacity: 1;
+      transform: translateY(0);
+      filter: blur(0px);
+    }
+    to {
+      opacity: 0;
+      transform: translateY(-20px);
+      filter: blur(8px);
+    }
+  }
+
+  .titulo-animado.saliendo {
+    animation: salidaPalabra 0.4s ease forwards;
   }
   </style>
   <script>
@@ -201,15 +262,10 @@
   <div class="relative z-20 w-full max-w-7xl mx-auto px-4 lg:px-8 h-screen flex flex-col lg:flex-row items-center justify-center lg:justify-between gap-12 lg:gap-8 pt-20 lg:pt-0">
     
     <div class="w-full lg:w-1/2 flex flex-col items-center lg:items-start text-center lg:text-left">
-      <h1 class="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-white mb-6 flex flex-col items-center lg:items-start w-full">
-        <span>Pasatiempos que me</span>
-        <div class="relative h-[1.3em] w-full overflow-hidden flex items-center justify-center lg:justify-start">
-          <span id="animated-word" class="absolute text-accent whitespace-nowrap transition-transform duration-700 ease-in-out transform translate-y-full opacity-0"></span>
-        </div>
-      </h1>
-      <p class="text-lg md:text-xl text-gray-400 max-w-xl mt-4">
-        Explorando intereses que complementan mi desarrollo profesional y personal.
-      </p>
+      <div class="hero-title">
+        <span class="titulo-fijo">Pasatiempos que me</span>
+        <span class="titulo-animado" id="palabraAnimada">apasionan</span>
+      </div>
     </div>
 
     <div class="w-full lg:w-1/2 flex items-center justify-center">
@@ -251,42 +307,6 @@
   <!-- Canvas Beams Physics Engine -->
   <script>
   document.addEventListener('DOMContentLoaded', () => {
-      // 1. Text Animation Logic
-      const words = ["apasionan", "dan energía"];
-      let currentWordIndex = 0;
-      const animatedWordElement = document.getElementById('animated-word');
-  
-      function animateText() {
-          // Animate Out
-          animatedWordElement.style.transform = 'translateY(-100%)';
-          animatedWordElement.style.opacity = '0';
-  
-          setTimeout(() => {
-              // Update Word
-              currentWordIndex = (currentWordIndex + 1) % words.length;
-              animatedWordElement.textContent = words[currentWordIndex];
-              
-              // Prepare for Animate In (start from bottom)
-              animatedWordElement.style.transition = 'none';
-              animatedWordElement.style.transform = 'translateY(100%)';
-              
-              // Force reflow
-              void animatedWordElement.offsetWidth;
-              
-              // Animate In
-              animatedWordElement.style.transition = 'transform 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.7s ease-in-out';
-              animatedWordElement.style.transform = 'translateY(0)';
-              animatedWordElement.style.opacity = '1';
-          }, 700); // Wait for animate out to finish
-      }
-  
-      // Initial setup
-      animatedWordElement.textContent = words[0];
-      animatedWordElement.style.transform = 'translateY(0)';
-      animatedWordElement.style.opacity = '1';
-  
-      setInterval(animateText, 3000);
-  
       // 2. Canvas Background Logic (Bluish Beams & Noise)
       const canvas = document.getElementById('beams-canvas');
       const noiseCanvas = document.getElementById('noise-canvas');
@@ -408,15 +428,14 @@
   
       // 3. Image Accordion Logic
       const accordionData = [
-          { id: 1, title: 'Calistenia', imageUrl: 'Fotos/foto-portada-calistenia_oicial.png', link: 'calistenia.html', newTab: true }, // User's custom image
-          { id: 2, title: 'Asados', imageUrl: 'Fotos/asado_portada.jpg', link: 'asados.html' },
-          { id: 3, title: 'Músicas', imageUrl: 'Fotos/portada_musicas.jpg', link: 'musicas.html' },
           { id: 4, title: 'Próximamente', generating: true },
-          { id: 5, title: 'Próximamente', generating: true }
+          { id: 3, title: 'Músicas', imageUrl: 'Fotos/portada_musicas.jpg', link: 'musicas.html' },
+          { id: 2, title: 'Asados', imageUrl: 'Fotos/asado_portada.jpg', link: 'asados.html' },
+          { id: 1, title: 'Calistenia', imageUrl: 'Fotos/foto-portada-calistenia_oicial.png', link: 'calistenia.html', newTab: true },
       ];
   
       const accordionContainer = document.getElementById('accordion-container');
-      let activeIndex = 4; // Start with the last one open
+      let activeIndex = 3; // Start with the last one open (Calistenia)
   
       function renderAccordion() {
           if (!accordionContainer) return;
@@ -524,5 +543,24 @@
   <!-- Vercel Analytics -->
   <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
   <script defer src="/_vercel/insights/script.js"></script>
+
+  <!-- Rotacion de palabras -->
+  <script>
+  const palabras = ["apasionan", "dan energía", "me definen", "me mueven"];
+  let indice = 0;
+  const el = document.getElementById('palabraAnimada');
+
+  setInterval(() => {
+    el.classList.add('saliendo');
+    setTimeout(() => {
+      indice = (indice + 1) % palabras.length;
+      el.textContent = palabras[indice];
+      el.classList.remove('saliendo');
+      el.style.animation = 'none';
+      el.offsetHeight; // fuerza reflow
+      el.style.animation = '';
+    }, 400);
+  }, 3000);
+  </script>
 </body>
 </html>

@@ -45,7 +45,8 @@
       "Bash(git push *)",
       "Bash(git status *)",
       "Bash(Select-String -Pattern \"firma\")",
-      "Bash(git config *)"
+      "Bash(git config *)",
+      "Bash(Remove-Item *)"
     ]
   }
 }
