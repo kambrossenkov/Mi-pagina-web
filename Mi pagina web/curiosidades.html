@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
@@ -39,10 +39,10 @@
 </head>
 <body class="min-h-screen bg-background text-text animate-fade-in transition-colors duration-300 flex flex-col">
   <div id="shader-bg" class="fixed inset-0 w-full h-full z-0 pointer-events-none"></div>
-  
+
   <!-- Wrapper para deslizar contenido sobre el canvas fijo -->
   <div class="relative z-10 w-full min-h-screen flex flex-col">
-    
+
     <!-- Header Component -->
     <header class="sticky top-0 z-50 w-full bg-black/50 backdrop-blur-md border-b border-white/10 py-4 md:py-6 transition-colors duration-300">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
@@ -80,339 +80,178 @@
   </header>
 
     <main class="w-full min-h-screen pt-24 pb-24 z-10 relative">
-      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 class="text-4xl md:text-5xl font-bold text-center text-white mb-20 font-serif tracking-tight drop-shadow-md">Mi Trayectoria</h2>
-        
+
         <div id="timeline-container" class="relative w-full pb-10">
           <!-- Línea Base -->
           <div class="absolute left-[30px] md:left-1/2 md:-translate-x-1/2 top-0 bottom-0 w-[2px] bg-neutral-800 rounded-full"></div>
-          
+
           <!-- Línea de Progreso Animada -->
           <div id="timeline-progress" class="absolute left-[30px] md:left-1/2 md:-translate-x-1/2 top-0 w-[2px] bg-gradient-to-b from-blue-500 to-purple-500 rounded-full transition-all duration-150 ease-out" style="height: 0%;"></div>
-          
+
           <!-- Contenedor de Ítems -->
           <div class="relative z-10 flex flex-col gap-12 md:gap-24 pt-8">
-            
-            <!-- Bloque 1 (2001) -->
-            <div class="group relative flex flex-col md:flex-row items-center justify-between">
+
+            <!-- Bloque 1 — IMPAR: tarjeta izquierda, imagen derecha -->
+            <div class="timeline-block group relative flex flex-col md:flex-row items-center justify-between gap-6">
               <div class="absolute left-[30px] top-6 md:top-1/2 md:left-1/2 transform -translate-x-1/2 md:-translate-y-1/2 w-4 h-4 rounded-full bg-background border-2 border-purple-500 z-20 shadow-[0_0_15px_rgba(168,85,247,0.7)] group-hover:scale-125 transition-transform duration-300"></div>
               <div class="w-full pl-[70px] md:pl-0 md:w-5/12 md:pr-12 md:text-right flex justify-start md:justify-end">
                 <div class="bg-card/30 backdrop-blur-xl border border-white/10 p-6 md:p-8 rounded-2xl shadow-2xl hover:bg-card/50 hover:border-purple-500/50 transition-all duration-300 w-full text-left md:text-right">
-                  <span class="text-purple-400 font-bold text-sm tracking-wider uppercase mb-2 block">2001</span>
-                  <h3 class="text-xl md:text-2xl font-bold text-white mb-3">Nacimiento y raíces</h3>
-                  <p class="text-gray-200 leading-relaxed text-sm md:text-base mb-4">El comienzo de una historia atravesada por la migración, la cultura y la adaptación.</p>
+                  <span class="text-purple-400 font-bold text-sm tracking-wider uppercase mb-2 block">2001–2008</span>
+                  <h3 class="text-xl md:text-2xl font-bold text-white mb-3">Origen e identidad</h3>
+                  <p class="text-gray-200 leading-relaxed text-sm md:text-base mb-4">Nacer entre dos culturas: crecí en Buenos Aires dentro de una familia inmigrante rusa, formando desde el inicio una identidad entre dos mundos.</p>
                   <ul class="text-gray-400 text-sm md:text-base space-y-2 list-none">
-                    <li>• Nací el 1 de marzo de 2001 en Flores, Ciudad de Buenos Aires.</li>
-                    <li>• Soy hijo de padres inmigrantes rusos que llegaron a Argentina en 1995.</li>
-                    <li>• Formo parte de la primera generación nacida en Argentina dentro de mi familia.</li>
+                    <li>• Nací el 1 de marzo de 2001 en Flores, CABA.</li>
+                    <li>• Familia de origen ruso llegada a Argentina en 1995.</li>
+                    <li>• Infancia en sistema educativo público argentino.</li>
+                    <li>• Crecimiento con fuerte influencia cultural y lingüística rusa en el hogar.</li>
                   </ul>
                 </div>
               </div>
-              <div class="hidden md:block w-5/12"></div>
+              <div class="hidden md:flex md:w-5/12 md:pl-12 justify-start">
+                <div class="w-full rounded-2xl overflow-hidden shadow-2xl border border-white/10" style="aspect-ratio:4/3;">
+                  <img src="https://images.unsplash.com/photo-1589909202802-8f4aadce1849?w=900&q=80" alt="Origen e identidad" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+                </div>
+              </div>
             </div>
 
-            <!-- Bloque 2 (2001-2012) -->
-            <div class="group relative flex flex-col md:flex-row items-center justify-between">
-              <div class="hidden md:block w-5/12"></div>
+            <!-- Bloque 2 — PAR: imagen izquierda, tarjeta derecha -->
+            <div class="timeline-block group relative flex flex-col md:flex-row items-center justify-between gap-6">
+              <div class="hidden md:flex md:w-5/12 md:pr-12 justify-end">
+                <div class="w-full rounded-2xl overflow-hidden shadow-2xl border border-white/10" style="aspect-ratio:4/3;">
+                  <img src="https://images.unsplash.com/photo-1513407030348-c983a97b98d8?w=900&q=80" alt="Lengua, cultura y formación temprana" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+                </div>
+              </div>
               <div class="absolute left-[30px] top-6 md:top-1/2 md:left-1/2 transform -translate-x-1/2 md:-translate-y-1/2 w-4 h-4 rounded-full bg-background border-2 border-blue-500 z-20 shadow-[0_0_15px_rgba(59,130,246,0.7)] group-hover:scale-125 transition-transform duration-300"></div>
               <div class="w-full pl-[70px] md:pl-0 md:w-5/12 md:pl-12 flex justify-start">
                 <div class="bg-card/30 backdrop-blur-xl border border-white/10 p-6 md:p-8 rounded-2xl shadow-2xl hover:bg-card/50 hover:border-blue-500/50 transition-all duration-300 w-full text-left">
-                  <span class="text-blue-400 font-bold text-sm tracking-wider uppercase mb-2 block">2001–2012</span>
-                  <h3 class="text-xl md:text-2xl font-bold text-white mb-3">Infancia entre dos culturas</h3>
-                  <p class="text-gray-200 leading-relaxed text-sm md:text-base mb-4">Crecí en Argentina dentro de un entorno familiar marcado por la lengua y la cultura rusa.</p>
+                  <span class="text-blue-400 font-bold text-sm tracking-wider uppercase mb-2 block">2008–2012</span>
+                  <h3 class="text-xl md:text-2xl font-bold text-white mb-3">Lengua, cultura y formación temprana</h3>
+                  <p class="text-gray-200 leading-relaxed text-sm md:text-base mb-4">Raíces y apertura cultural: desde chico incorporé una formación paralela en idioma y cultura rusa que amplió mi visión del mundo.</p>
                   <ul class="text-gray-400 text-sm md:text-base space-y-2 list-none">
-                    <li>• Hice el jardín y la escolaridad inicial en Argentina, dentro del sistema educativo público.</li>
-                    <li>• En mi casa crecí hablando ruso y español, conviviendo desde chico con una identidad bicultural.</li>
-                    <li>• Esa combinación entre raíces familiares y vida cotidiana en Argentina marcó mi forma de ver el mundo.</li>
+                    <li>• Estudio en Casa de Rusia (lengua, cultura, matemática).</li>
+                    <li>• Desarrollo fluido del idioma ruso desde la infancia.</li>
+                    <li>• Participación en concurso internacional del gobierno ruso.</li>
+                    <li>• Viaje a Moscú como experiencia intercultural formativa.</li>
                   </ul>
                 </div>
               </div>
             </div>
 
-            <!-- Bloque 3 (2009-2012) -->
-            <div class="group relative flex flex-col md:flex-row items-center justify-between">
+            <!-- Bloque 3 — IMPAR: tarjeta izquierda, imagen derecha -->
+            <div class="timeline-block group relative flex flex-col md:flex-row items-center justify-between gap-6">
               <div class="absolute left-[30px] top-6 md:top-1/2 md:left-1/2 transform -translate-x-1/2 md:-translate-y-1/2 w-4 h-4 rounded-full bg-background border-2 border-teal-500 z-20 shadow-[0_0_15px_rgba(20,184,166,0.7)] group-hover:scale-125 transition-transform duration-300"></div>
               <div class="w-full pl-[70px] md:pl-0 md:w-5/12 md:pr-12 md:text-right flex justify-start md:justify-end">
                 <div class="bg-card/30 backdrop-blur-xl border border-white/10 p-6 md:p-8 rounded-2xl shadow-2xl hover:bg-card/50 hover:border-teal-500/50 transition-all duration-300 w-full text-left md:text-right">
-                  <span class="text-teal-400 font-bold text-sm tracking-wider uppercase mb-2 block">2009–2012</span>
-                  <h3 class="text-xl md:text-2xl font-bold text-white mb-3">Lengua, cultura y vínculo con mis raíces</h3>
-                  <p class="text-gray-200 leading-relaxed text-sm md:text-base mb-4">Durante esos años profundicé mi conexión con la cultura rusa a través de una formación paralela.</p>
+                  <span class="text-teal-400 font-bold text-sm tracking-wider uppercase mb-2 block">2012–2015</span>
+                  <h3 class="text-xl md:text-2xl font-bold text-white mb-3">Disciplina y primer objetivo de alto rendimiento</h3>
+                  <p class="text-gray-200 leading-relaxed text-sm md:text-base mb-4">La danza clásica se transformó en un objetivo de alto rendimiento que exigió disciplina, preparación y constancia.</p>
                   <ul class="text-gray-400 text-sm md:text-base space-y-2 list-none">
-                    <li>• A los 8 años comencé a estudiar en Casa de Rusia, en Buenos Aires.</li>
-                    <li>• Allí me formé en lengua rusa, matemática, geografía y cultura.</li>
-                    <li>• Participé en un concurso impulsado por el gobierno ruso y gané un viaje a Moscú, donde viví una experiencia intercultural con estudiantes de distintos países.</li>
+                    <li>• Inicio en danza clásica como actividad extracurricular.</li>
+                    <li>• Transición a preparación intensiva para ingreso al Teatro Colón.</li>
+                    <li>• Estudio complementario de francés y música.</li>
+                    <li>• Ingreso al Instituto del Teatro Colón con beca tras examen exigente.</li>
                   </ul>
                 </div>
               </div>
-              <div class="hidden md:block w-5/12"></div>
+              <div class="hidden md:flex md:w-5/12 md:pl-12 justify-start">
+                <div class="w-full rounded-2xl overflow-hidden shadow-2xl border border-white/10" style="aspect-ratio:4/3;">
+                  <img src="https://images.unsplash.com/photo-1518834107812-67b0b7c58434?w=900&q=80" alt="Disciplina y primer objetivo" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+                </div>
+              </div>
             </div>
 
-            <!-- Bloque 4 (2012-2014) -->
-            <div class="group relative flex flex-col md:flex-row items-center justify-between">
-              <div class="hidden md:block w-5/12"></div>
+            <!-- Bloque 4 — PAR: imagen izquierda, tarjeta derecha -->
+            <div class="timeline-block group relative flex flex-col md:flex-row items-center justify-between gap-6">
+              <div class="hidden md:flex md:w-5/12 md:pr-12 justify-end">
+                <div class="w-full rounded-2xl overflow-hidden shadow-2xl border border-white/10" style="aspect-ratio:4/3;">
+                  <img src="https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=900&q=80" alt="Alto rendimiento y rutina extrema" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+                </div>
+              </div>
               <div class="absolute left-[30px] top-6 md:top-1/2 md:left-1/2 transform -translate-x-1/2 md:-translate-y-1/2 w-4 h-4 rounded-full bg-background border-2 border-orange-500 z-20 shadow-[0_0_15px_rgba(249,115,22,0.7)] group-hover:scale-125 transition-transform duration-300"></div>
               <div class="w-full pl-[70px] md:pl-0 md:w-5/12 md:pl-12 flex justify-start">
                 <div class="bg-card/30 backdrop-blur-xl border border-white/10 p-6 md:p-8 rounded-2xl shadow-2xl hover:bg-card/50 hover:border-orange-500/50 transition-all duration-300 w-full text-left">
-                  <span class="text-orange-400 font-bold text-sm tracking-wider uppercase mb-2 block">2012–2014</span>
-                  <h3 class="text-xl md:text-2xl font-bold text-white mb-3">Cuando el hobby se volvió disciplina</h3>
-                  <p class="text-gray-200 leading-relaxed text-sm md:text-base mb-4">Lo que empezó como una actividad extracurricular se transformó en una preparación exigente.</p>
+                  <span class="text-orange-400 font-bold text-sm tracking-wider uppercase mb-2 block">2015–2017</span>
+                  <h3 class="text-xl md:text-2xl font-bold text-white mb-3">Alto rendimiento y rutina extrema</h3>
+                  <p class="text-gray-200 leading-relaxed text-sm md:text-base mb-4">Disciplina diaria como forma de vida: una etapa de exigencia máxima donde combiné formación artística y educación formal en paralelo.</p>
                   <ul class="text-gray-400 text-sm md:text-base space-y-2 list-none">
-                    <li>• Durante la primaria, en la Escuela República de El Salvador, empecé danza clásica.</li>
-                    <li>• Lo que comenzó como hobby pasó rápidamente a convertirse en una meta concreta: prepararme para rendir el examen del Teatro Colón.</li>
-                    <li>• Para eso estudié no solo danza, sino también francés y música, ya que el ingreso exigía formación complementaria.</li>
+                    <li>• Entrenamiento diario de 5:30 a 12:00 en el Teatro Colón.</li>
+                    <li>• Secundaria en turno tarde + ensayos nocturnos ocasionales.</li>
+                    <li>• Formación en danza clásica, contemporáneo, folklore y partener.</li>
+                    <li>• Continuidad en idiomas y desarrollo técnico-musical.</li>
                   </ul>
                 </div>
               </div>
             </div>
 
-            <!-- Bloque 5 (2014-2015) -->
-            <div class="group relative flex flex-col md:flex-row items-center justify-between">
+            <!-- Bloque 5 — IMPAR: tarjeta izquierda, imagen derecha -->
+            <div class="timeline-block group relative flex flex-col md:flex-row items-center justify-between gap-6">
               <div class="absolute left-[30px] top-6 md:top-1/2 md:left-1/2 transform -translate-x-1/2 md:-translate-y-1/2 w-4 h-4 rounded-full bg-background border-2 border-rose-500 z-20 shadow-[0_0_15px_rgba(244,63,94,0.7)] group-hover:scale-125 transition-transform duration-300"></div>
               <div class="w-full pl-[70px] md:pl-0 md:w-5/12 md:pr-12 md:text-right flex justify-start md:justify-end">
                 <div class="bg-card/30 backdrop-blur-xl border border-white/10 p-6 md:p-8 rounded-2xl shadow-2xl hover:bg-card/50 hover:border-rose-500/50 transition-all duration-300 w-full text-left md:text-right">
-                  <span class="text-rose-400 font-bold text-sm tracking-wider uppercase mb-2 block">2014–2015</span>
-                  <h3 class="text-xl md:text-2xl font-bold text-white mb-3">El desafío del Teatro Colón</h3>
-                  <p class="text-gray-200 leading-relaxed text-sm md:text-base mb-4">Una etapa marcada por la preparación intensiva, la presión y la decisión de no bajar los brazos.</p>
+                  <span class="text-rose-400 font-bold text-sm tracking-wider uppercase mb-2 block">2017–2018</span>
+                  <h3 class="text-xl md:text-2xl font-bold text-white mb-3">Transición, cambios y redefinición</h3>
+                  <p class="text-gray-200 leading-relaxed text-sm md:text-base mb-4">Redirigir el camino: una etapa de cambios estructurales en la que empecé a redefinir mi rumbo personal y académico.</p>
                   <ul class="text-gray-400 text-sm md:text-base space-y-2 list-none">
-                    <li>• Me preparé con docentes de danza y también con profesores vinculados al entorno del Colón.</li>
-                    <li>• Aun atravesando un cuadro fuerte de fiebre justo antes del examen, decidí presentarme igual.</li>
-                    <li>• Finalmente ingresé con una beca, iniciando una etapa de formación artística de alta exigencia.</li>
+                    <li>• Cambio entre distintos colegios públicos en busca de mayor desafío.</li>
+                    <li>• Decisión de dejar el Teatro Colón.</li>
+                    <li>• Ingreso a escuela con orientación en Artes y Medios.</li>
+                    <li>• Cierre de la etapa secundaria en diciembre de 2018.</li>
                   </ul>
                 </div>
               </div>
-              <div class="hidden md:block w-5/12"></div>
+              <div class="hidden md:flex md:w-5/12 md:pl-12 justify-start">
+                <div class="w-full rounded-2xl overflow-hidden shadow-2xl border border-white/10" style="aspect-ratio:4/3;">
+                  <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=900&q=80" alt="Transición y redefinición" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+                </div>
+              </div>
             </div>
 
-            <!-- Bloque 6 (2015-2017) -->
-            <div class="group relative flex flex-col md:flex-row items-center justify-between">
-              <div class="hidden md:block w-5/12"></div>
+            <!-- Bloque 6 — PAR: imagen izquierda, tarjeta derecha -->
+            <div class="timeline-block group relative flex flex-col md:flex-row items-center justify-between gap-6">
+              <div class="hidden md:flex md:w-5/12 md:pr-12 justify-end">
+                <div class="w-full rounded-2xl overflow-hidden shadow-2xl border border-white/10" style="aspect-ratio:4/3;">
+                  <img src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=900&q=80" alt="Decisión universitaria y oportunidad" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+                </div>
+              </div>
               <div class="absolute left-[30px] top-6 md:top-1/2 md:left-1/2 transform -translate-x-1/2 md:-translate-y-1/2 w-4 h-4 rounded-full bg-background border-2 border-indigo-500 z-20 shadow-[0_0_15px_rgba(99,102,241,0.7)] group-hover:scale-125 transition-transform duration-300"></div>
               <div class="w-full pl-[70px] md:pl-0 md:w-5/12 md:pl-12 flex justify-start">
                 <div class="bg-card/30 backdrop-blur-xl border border-white/10 p-6 md:p-8 rounded-2xl shadow-2xl hover:bg-card/50 hover:border-indigo-500/50 transition-all duration-300 w-full text-left">
-                  <span class="text-indigo-400 font-bold text-sm tracking-wider uppercase mb-2 block">2015–2017</span>
-                  <h3 class="text-xl md:text-2xl font-bold text-white mb-3">Disciplina de alto rendimiento</h3>
-                  <p class="text-gray-200 leading-relaxed text-sm md:text-base mb-4">El ingreso al Teatro Colón transformó mi rutina y me entrenó en constancia, exigencia y compromiso.</p>
+                  <span class="text-indigo-400 font-bold text-sm tracking-wider uppercase mb-2 block">2018–2020</span>
+                  <h3 class="text-xl md:text-2xl font-bold text-white mb-3">Decisión universitaria y oportunidad</h3>
+                  <p class="text-gray-200 leading-relaxed text-sm md:text-base mb-4">El salto al ITBA: un proceso consciente de búsqueda académica que culminó en una oportunidad clave de formación.</p>
                   <ul class="text-gray-400 text-sm md:text-base space-y-2 list-none">
-                    <li>• Me levantaba a las 5:30 de la mañana para entrenar en el Colón desde las 7:00 hasta el mediodía.</li>
-                    <li>• Luego cursaba la secundaria por la tarde y, en algunos períodos, volvía por la noche para ensayos o funciones.</li>
-                    <li>• Además de danza clásica, estudié folklore argentino, contemporáneo, partener, francés y música.</li>
+                    <li>• Exploración profunda de universidades y carreras.</li>
+                    <li>• Interés creciente por negocios, análisis y comportamiento del consumidor.</li>
+                    <li>• Selección del ITBA como institución objetivo.</li>
+                    <li>• Obtención de beca completa tras proceso de evaluación.</li>
+                    <li>• Ingreso a la carrera en contexto de pandemia.</li>
                   </ul>
                 </div>
               </div>
             </div>
 
-            <!-- Bloque 7 (2017-2018) -->
-            <div class="group relative flex flex-col md:flex-row items-center justify-between">
+            <!-- Bloque 7 — IMPAR: tarjeta izquierda, imagen derecha -->
+            <div class="timeline-block group relative flex flex-col md:flex-row items-center justify-between gap-6">
               <div class="absolute left-[30px] top-6 md:top-1/2 md:left-1/2 transform -translate-x-1/2 md:-translate-y-1/2 w-4 h-4 rounded-full bg-background border-2 border-purple-500 z-20 shadow-[0_0_15px_rgba(168,85,247,0.7)] group-hover:scale-125 transition-transform duration-300"></div>
               <div class="w-full pl-[70px] md:pl-0 md:w-5/12 md:pr-12 md:text-right flex justify-start md:justify-end">
                 <div class="bg-card/30 backdrop-blur-xl border border-white/10 p-6 md:p-8 rounded-2xl shadow-2xl hover:bg-card/50 hover:border-purple-500/50 transition-all duration-300 w-full text-left md:text-right">
-                  <span class="text-purple-400 font-bold text-sm tracking-wider uppercase mb-2 block">2017–2018</span>
-                  <h3 class="text-xl md:text-2xl font-bold text-white mb-3">Redefinir el camino</h3>
-                  <p class="text-gray-200 leading-relaxed text-sm md:text-base mb-4">La secundaria fue también una etapa de cambios, decisiones propias y búsqueda de un entorno más alineado con mi proceso.</p>
+                  <span class="text-purple-400 font-bold text-sm tracking-wider uppercase mb-2 block">2020–Hoy</span>
+                  <h3 class="text-xl md:text-2xl font-bold text-white mb-3">Formación, experiencia y perfil profesional actual</h3>
+                  <p class="text-gray-200 leading-relaxed text-sm md:text-base mb-4">De la formación al mundo real: consolidación de mi perfil híbrido entre negocio, análisis, tecnología y ejecución en entornos reales.</p>
                   <ul class="text-gray-400 text-sm md:text-base space-y-2 list-none">
-                    <li>• Mi recorrido secundario pasó por distintas instituciones públicas, en busca de un entorno más exigente y afín a mi etapa.</li>
-                    <li>• Tras una decisión personal, dejé el Teatro Colón y abrí una nueva etapa en mi formación.</li>
-                    <li>• Finalmente me integré al Osvaldo Pugliese, de jornada completa y orientación en Artes y Medios.</li>
+                    <li>• Adaptación al entorno universitario del ITBA con alta exigencia académica.</li>
+                    <li>• Participación en proyectos internacionales de investigación de mercado.</li>
+                    <li>• Experiencia en startup (Motivia Health) durante etapa final de carrera.</li>
+                    <li>• Ingreso a Tekne Data Labs con foco en análisis, marketing y contenido.</li>
+                    <li>• Desarrollo de habilidades en ventas, IA y construcción de marca personal.</li>
                   </ul>
                 </div>
               </div>
-              <div class="hidden md:block w-5/12"></div>
-            </div>
-
-            <!-- Bloque 8 (2017-2018) -->
-            <div class="group relative flex flex-col md:flex-row items-center justify-between">
-              <div class="hidden md:block w-5/12"></div>
-              <div class="absolute left-[30px] top-6 md:top-1/2 md:left-1/2 transform -translate-x-1/2 md:-translate-y-1/2 w-4 h-4 rounded-full bg-background border-2 border-blue-500 z-20 shadow-[0_0_15px_rgba(59,130,246,0.7)] group-hover:scale-125 transition-transform duration-300"></div>
-              <div class="w-full pl-[70px] md:pl-0 md:w-5/12 md:pl-12 flex justify-start">
-                <div class="bg-card/30 backdrop-blur-xl border border-white/10 p-6 md:p-8 rounded-2xl shadow-2xl hover:bg-card/50 hover:border-blue-500/50 transition-all duration-300 w-full text-left">
-                  <span class="text-blue-400 font-bold text-sm tracking-wider uppercase mb-2 block">2017–2018</span>
-                  <h3 class="text-xl md:text-2xl font-bold text-white mb-3">Nuevas lenguas, nuevas exigencias</h3>
-                  <p class="text-gray-200 leading-relaxed text-sm md:text-base mb-4">El cambio de colegio implicó adaptarme rápido y rendir equivalencias complejas en idiomas.</p>
-                  <ul class="text-gray-400 text-sm md:text-base space-y-2 list-none">
-                    <li>• Al ingresar al nuevo colegio tuve que rendir equivalencias intensivas de inglés e italiano.</li>
-                    <li>• Venía de una formación centrada en francés, por lo que debí reconstruir mi base en inglés e incorporar una nueva lengua.</li>
-                    <li>• Fue una etapa exigente que reforzó mi capacidad de adaptación, estudio autónomo y disciplina.</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <!-- Bloque 9 (2018) -->
-            <div class="group relative flex flex-col md:flex-row items-center justify-between">
-              <div class="absolute left-[30px] top-6 md:top-1/2 md:left-1/2 transform -translate-x-1/2 md:-translate-y-1/2 w-4 h-4 rounded-full bg-background border-2 border-teal-500 z-20 shadow-[0_0_15px_rgba(20,184,166,0.7)] group-hover:scale-125 transition-transform duration-300"></div>
-              <div class="w-full pl-[70px] md:pl-0 md:w-5/12 md:pr-12 md:text-right flex justify-start md:justify-end">
-                <div class="bg-card/30 backdrop-blur-xl border border-white/10 p-6 md:p-8 rounded-2xl shadow-2xl hover:bg-card/50 hover:border-teal-500/50 transition-all duration-300 w-full text-left md:text-right">
-                  <span class="text-teal-400 font-bold text-sm tracking-wider uppercase mb-2 block">2018</span>
-                  <h3 class="text-xl md:text-2xl font-bold text-white mb-3">Cierre de una etapa</h3>
-                  <p class="text-gray-200 leading-relaxed text-sm md:text-base mb-4">El final del secundario marcó el cierre de un ciclo intenso y la apertura de nuevas preguntas sobre mi futuro.</p>
-                  <ul class="text-gray-400 text-sm md:text-base space-y-2 list-none">
-                    <li>• Me gradué en diciembre de 2018 en el Osvaldo Pugliese, con orientación en Artes y Medios.</li>
-                    <li>• Para ese momento ya sabía que quería un camino más vinculado al análisis, los negocios y la toma de decisiones.</li>
-                    <li>• Empezaba una nueva etapa: definir qué estudiar y hacia dónde proyectarme.</li>
-                  </ul>
-                </div>
-              </div>
-              <div class="hidden md:block w-5/12"></div>
-            </div>
-
-            <!-- Bloque 10 (2018-2019) -->
-            <div class="group relative flex flex-col md:flex-row items-center justify-between">
-              <div class="hidden md:block w-5/12"></div>
-              <div class="absolute left-[30px] top-6 md:top-1/2 md:left-1/2 transform -translate-x-1/2 md:-translate-y-1/2 w-4 h-4 rounded-full bg-background border-2 border-orange-500 z-20 shadow-[0_0_15px_rgba(249,115,22,0.7)] group-hover:scale-125 transition-transform duration-300"></div>
-              <div class="w-full pl-[70px] md:pl-0 md:w-5/12 md:pl-12 flex justify-start">
-                <div class="bg-card/30 backdrop-blur-xl border border-white/10 p-6 md:p-8 rounded-2xl shadow-2xl hover:bg-card/50 hover:border-orange-500/50 transition-all duration-300 w-full text-left">
-                  <span class="text-orange-400 font-bold text-sm tracking-wider uppercase mb-2 block">2018–2019</span>
-                  <h3 class="text-xl md:text-2xl font-bold text-white mb-3">La búsqueda de un camino universitario</h3>
-                  <p class="text-gray-200 leading-relaxed text-sm md:text-base mb-4">Antes de entrar a la universidad hice una búsqueda muy consciente de qué quería estudiar y dónde hacerlo.</p>
-                  <ul class="text-gray-400 text-sm md:text-base space-y-2 list-none">
-                    <li>• Empecé a interesarme cada vez más por el comportamiento del consumidor, los negocios y la lógica detrás de las decisiones.</li>
-                    <li>• Investigué múltiples universidades y armé carpetas comparando planes de estudio, enfoques y posibilidades reales de acceso.</li>
-                    <li>• Identifiqué al ITBA como el lugar que mejor combinaba exigencia académica, pensamiento técnico y visión de negocio.</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <!-- Bloque 11 (2019) -->
-            <div class="group relative flex flex-col md:flex-row items-center justify-between">
-              <div class="absolute left-[30px] top-6 md:top-1/2 md:left-1/2 transform -translate-x-1/2 md:-translate-y-1/2 w-4 h-4 rounded-full bg-background border-2 border-rose-500 z-20 shadow-[0_0_15px_rgba(244,63,94,0.7)] group-hover:scale-125 transition-transform duration-300"></div>
-              <div class="w-full pl-[70px] md:pl-0 md:w-5/12 md:pr-12 md:text-right flex justify-start md:justify-end">
-                <div class="bg-card/30 backdrop-blur-xl border border-white/10 p-6 md:p-8 rounded-2xl shadow-2xl hover:bg-card/50 hover:border-rose-500/50 transition-all duration-300 w-full text-left md:text-right">
-                  <span class="text-rose-400 font-bold text-sm tracking-wider uppercase mb-2 block">2019</span>
-                  <h3 class="text-xl md:text-2xl font-bold text-white mb-3">La oportunidad que cambió mi escala</h3>
-                  <p class="text-gray-200 leading-relaxed text-sm md:text-base mb-4">Conseguir la beca del ITBA fue uno de los hitos más importantes de mi recorrido.</p>
-                  <ul class="text-gray-400 text-sm md:text-base space-y-2 list-none">
-                    <li>• Sabía que no tenía acceso económico directo al ITBA, así que inicié el proceso para solicitar una beca de ayuda económica.</li>
-                    <li>• Preparé toda la documentación necesaria y atravesé la evaluación correspondiente.</li>
-                    <li>• Finalmente, el ITBA me otorgó una beca completa, abriéndome una oportunidad única para construir mi formación universitaria.</li>
-                  </ul>
-                </div>
-              </div>
-              <div class="hidden md:block w-5/12"></div>
-            </div>
-
-            <!-- Bloque 12 (2020) -->
-            <div class="group relative flex flex-col md:flex-row items-center justify-between">
-              <div class="hidden md:block w-5/12"></div>
-              <div class="absolute left-[30px] top-6 md:top-1/2 md:left-1/2 transform -translate-x-1/2 md:-translate-y-1/2 w-4 h-4 rounded-full bg-background border-2 border-indigo-500 z-20 shadow-[0_0_15px_rgba(99,102,241,0.7)] group-hover:scale-125 transition-transform duration-300"></div>
-              <div class="w-full pl-[70px] md:pl-0 md:w-5/12 md:pl-12 flex justify-start">
-                <div class="bg-card/30 backdrop-blur-xl border border-white/10 p-6 md:p-8 rounded-2xl shadow-2xl hover:bg-card/50 hover:border-indigo-500/50 transition-all duration-300 w-full text-left">
-                  <span class="text-indigo-400 font-bold text-sm tracking-wider uppercase mb-2 block">2020</span>
-                  <h3 class="text-xl md:text-2xl font-bold text-white mb-3">Ingresar en plena pandemia</h3>
-                  <p class="text-gray-200 leading-relaxed text-sm md:text-base mb-4">El comienzo universitario llegó en un contexto extraordinario y exigió adaptarme otra vez desde cero.</p>
-                  <ul class="text-gray-400 text-sm md:text-base space-y-2 list-none">
-                    <li>• Comencé el ingreso al ITBA en plena pandemia, cursando de forma virtual.</li>
-                    <li>• El nivel académico, especialmente en matemática, representó un desafío fuerte para mí por mi recorrido previo.</li>
-                    <li>• Aunque no aprobé en el primer intento, redoblé el esfuerzo, me volví a preparar y logré ingresar.</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <!-- Bloque 13 (2021-2024) -->
-            <div class="group relative flex flex-col md:flex-row items-center justify-between">
-              <div class="absolute left-[30px] top-6 md:top-1/2 md:left-1/2 transform -translate-x-1/2 md:-translate-y-1/2 w-4 h-4 rounded-full bg-background border-2 border-purple-500 z-20 shadow-[0_0_15px_rgba(168,85,247,0.7)] group-hover:scale-125 transition-transform duration-300"></div>
-              <div class="w-full pl-[70px] md:pl-0 md:w-5/12 md:pr-12 md:text-right flex justify-start md:justify-end">
-                <div class="bg-card/30 backdrop-blur-xl border border-white/10 p-6 md:p-8 rounded-2xl shadow-2xl hover:bg-card/50 hover:border-purple-500/50 transition-all duration-300 w-full text-left md:text-right">
-                  <span class="text-purple-400 font-bold text-sm tracking-wider uppercase mb-2 block">2021–2024</span>
-                  <h3 class="text-xl md:text-2xl font-bold text-white mb-3">Formación universitaria y expansión de mirada</h3>
-                  <p class="text-gray-200 leading-relaxed text-sm md:text-base mb-4">La etapa en ITBA consolidó una base exigente de estudio, disciplina, vínculos y apertura internacional.</p>
-                  <ul class="text-gray-400 text-sm md:text-base space-y-2 list-none">
-                    <li>• Ya dentro de la carrera, sostuve el ritmo académico necesario para mantener la beca y avanzar en tiempo y forma.</li>
-                    <li>• Superé materias exigentes, especialmente del área cuantitativa, desarrollando constancia, método y tolerancia a la frustración.</li>
-                    <li>• Participé en Buddies, una organización de intercambio con estudiantes internacionales, fortaleciendo mi vínculo con contextos multiculturales.</li>
-                  </ul>
-                </div>
-              </div>
-              <div class="hidden md:block w-5/12"></div>
-            </div>
-
-            <!-- Bloque 14 (2024) -->
-            <div class="group relative flex flex-col md:flex-row items-center justify-between">
-              <div class="hidden md:block w-5/12"></div>
-              <div class="absolute left-[30px] top-6 md:top-1/2 md:left-1/2 transform -translate-x-1/2 md:-translate-y-1/2 w-4 h-4 rounded-full bg-background border-2 border-blue-500 z-20 shadow-[0_0_15px_rgba(59,130,246,0.7)] group-hover:scale-125 transition-transform duration-300"></div>
-              <div class="w-full pl-[70px] md:pl-0 md:w-5/12 md:pl-12 flex justify-start">
-                <div class="bg-card/30 backdrop-blur-xl border border-white/10 p-6 md:p-8 rounded-2xl shadow-2xl hover:bg-card/50 hover:border-blue-500/50 transition-all duration-300 w-full text-left">
-                  <span class="text-blue-400 font-bold text-sm tracking-wider uppercase mb-2 block">2024</span>
-                  <h3 class="text-xl md:text-2xl font-bold text-white mb-3">Del aula a la práctica</h3>
-                  <p class="text-gray-200 leading-relaxed text-sm md:text-base mb-4">En el tramo final de la carrera empecé a llevar lo aprendido al terreno profesional y aplicado.</p>
-                  <ul class="text-gray-400 text-sm md:text-base space-y-2 list-none">
-                    <li>• En el último tramo de la carrera comencé a buscar mis primeras experiencias profesionales.</li>
-                    <li>• Me sumé a Motivia Health, una startup donde combiné trabajo y estudio en simultáneo.</li>
-                    <li>• También participé en un proyecto de investigación de mercado impulsado en colaboración con el MIT, relevando comercios y analizando el impacto de la inflación.</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <!-- Bloque 15 (2024-inicio de 2025) -->
-            <div class="group relative flex flex-col md:flex-row items-center justify-between">
-              <div class="absolute left-[30px] top-6 md:top-1/2 md:left-1/2 transform -translate-x-1/2 md:-translate-y-1/2 w-4 h-4 rounded-full bg-background border-2 border-teal-500 z-20 shadow-[0_0_15px_rgba(20,184,166,0.7)] group-hover:scale-125 transition-transform duration-300"></div>
-              <div class="w-full pl-[70px] md:pl-0 md:w-5/12 md:pr-12 md:text-right flex justify-start md:justify-end">
-                <div class="bg-card/30 backdrop-blur-xl border border-white/10 p-6 md:p-8 rounded-2xl shadow-2xl hover:bg-card/50 hover:border-teal-500/50 transition-all duration-300 w-full text-left md:text-right">
-                  <span class="text-teal-400 font-bold text-sm tracking-wider uppercase mb-2 block">2024–inicio de 2025</span>
-                  <h3 class="text-xl md:text-2xl font-bold text-white mb-3">Cierre, pausa y reordenamiento</h3>
-                  <p class="text-gray-200 leading-relaxed text-sm md:text-base mb-4">Terminar la carrera también implicó cerrar una etapa muy exigente y darme un primer espacio real de descanso.</p>
-                  <ul class="text-gray-400 text-sm md:text-base space-y-2 list-none">
-                    <li>• Tras años de sostener estudio intenso sin vacaciones reales, terminé la carrera atravesando también asuntos personales importantes.</li>
-                    <li>• Cerré mis últimos compromisos académicos y profesionales priorizando terminar la etapa de la mejor manera posible.</li>
-                    <li>• Me tomé un breve período de descanso antes de entrar de lleno en una nueva fase laboral.</li>
-                  </ul>
-                </div>
-              </div>
-              <div class="hidden md:block w-5/12"></div>
-            </div>
-
-            <!-- Bloque 16 (2025) -->
-            <div class="group relative flex flex-col md:flex-row items-center justify-between">
-              <div class="hidden md:block w-5/12"></div>
-              <div class="absolute left-[30px] top-6 md:top-1/2 md:left-1/2 transform -translate-x-1/2 md:-translate-y-1/2 w-4 h-4 rounded-full bg-background border-2 border-orange-500 z-20 shadow-[0_0_15px_rgba(249,115,22,0.7)] group-hover:scale-125 transition-transform duration-300"></div>
-              <div class="w-full pl-[70px] md:pl-0 md:w-5/12 md:pl-12 flex justify-start">
-                <div class="bg-card/30 backdrop-blur-xl border border-white/10 p-6 md:p-8 rounded-2xl shadow-2xl hover:bg-card/50 hover:border-orange-500/50 transition-all duration-300 w-full text-left">
-                  <span class="text-orange-400 font-bold text-sm tracking-wider uppercase mb-2 block">2025</span>
-                  <h3 class="text-xl md:text-2xl font-bold text-white mb-3">Ingreso a Tekne Data Labs</h3>
-                  <p class="text-gray-200 leading-relaxed text-sm md:text-base mb-4">Mi entrada a Tekne marcó una etapa de crecimiento acelerado y ampliación real de responsabilidades.</p>
-                  <ul class="text-gray-400 text-sm md:text-base space-y-2 list-none">
-                    <li>• Ingresé en marzo de 2025 a Tekne Data Labs.</li>
-                    <li>• Aunque formalmente el rol se presentaba como Content Manager, desde el inicio trabajé en análisis de mercado, research, marketing analytics y construcción de líneas de contenido con criterio estratégico.</li>
-                    <li>• Esta experiencia me permitió moverme en la intersección entre negocio, comunicación, análisis y ejecución.</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <!-- Bloque 17 (2025) -->
-            <div class="group relative flex flex-col md:flex-row items-center justify-between">
-              <div class="absolute left-[30px] top-6 md:top-1/2 md:left-1/2 transform -translate-x-1/2 md:-translate-y-1/2 w-4 h-4 rounded-full bg-background border-2 border-rose-500 z-20 shadow-[0_0_15px_rgba(244,63,94,0.7)] group-hover:scale-125 transition-transform duration-300"></div>
-              <div class="w-full pl-[70px] md:pl-0 md:w-5/12 md:pr-12 md:text-right flex justify-start md:justify-end">
-                <div class="bg-card/30 backdrop-blur-xl border border-white/10 p-6 md:p-8 rounded-2xl shadow-2xl hover:bg-card/50 hover:border-rose-500/50 transition-all duration-300 w-full text-left md:text-right">
-                  <span class="text-rose-400 font-bold text-sm tracking-wider uppercase mb-2 block">2025</span>
-                  <h3 class="text-xl md:text-2xl font-bold text-white mb-3">Autonomía, trabajo y nueva etapa personal</h3>
-                  <p class="text-gray-200 leading-relaxed text-sm md:text-base mb-4">Ese mismo año, el crecimiento profesional estuvo acompañado por un cambio importante en mi vida personal.</p>
-                  <ul class="text-gray-400 text-sm md:text-base space-y-2 list-none">
-                    <li>• En julio de 2025 me mudé y comencé una nueva etapa de mayor autonomía personal.</li>
-                    <li>• Mientras seguía trabajando, profundicé mis habilidades laborales y amplié mi participación en tareas vinculadas a ventas y acompañamiento comercial.</li>
-                    <li>• Empecé a consolidar un perfil más híbrido, con capacidad para conectar análisis, negocio, contenido y relación con clientes.</li>
-                  </ul>
-                </div>
-              </div>
-              <div class="hidden md:block w-5/12"></div>
-            </div>
-
-            <!-- Bloque 18 (2025-Hoy) -->
-            <div class="group relative flex flex-col md:flex-row items-center justify-between">
-              <div class="hidden md:block w-5/12"></div>
-              <div class="absolute left-[30px] top-6 md:top-1/2 md:left-1/2 transform -translate-x-1/2 md:-translate-y-1/2 w-4 h-4 rounded-full bg-background border-2 border-indigo-500 z-20 shadow-[0_0_15px_rgba(99,102,241,0.7)] group-hover:scale-125 transition-transform duration-300"></div>
-              <div class="w-full pl-[70px] md:pl-0 md:w-5/12 md:pl-12 flex justify-start">
-                <div class="bg-card/30 backdrop-blur-xl border border-white/10 p-6 md:p-8 rounded-2xl shadow-2xl hover:bg-card/50 hover:border-indigo-500/50 transition-all duration-300 w-full text-left">
-                  <span class="text-indigo-400 font-bold text-sm tracking-wider uppercase mb-2 block">2025–Hoy</span>
-                  <h3 class="text-xl md:text-2xl font-bold text-white mb-3">Perfil híbrido y construcción de proyección</h3>
-                  <p class="text-gray-200 leading-relaxed text-sm md:text-base mb-4">Hoy estoy consolidando una identidad profesional versátil, combinando negocio, tecnología, comunicación y aprendizaje continuo.</p>
-                  <ul class="text-gray-400 text-sm md:text-base space-y-2 list-none">
-                    <li>• Fortalecí habilidades en análisis, marketing, ventas, research y herramientas de inteligencia artificial.</li>
-                    <li>• Empecé a desarrollar una presencia profesional más sólida, incluyendo esta web como parte de una construcción de marca personal.</li>
-                    <li>• Actualmente sigo perfeccionando mi inglés y ampliando mis capacidades para proyectarme en entornos cada vez más exigentes e internacionales.</li>
-                  </ul>
+              <div class="hidden md:flex md:w-5/12 md:pl-12 justify-start">
+                <div class="w-full rounded-2xl overflow-hidden shadow-2xl border border-white/10" style="aspect-ratio:4/3;">
+                  <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=900&q=80" alt="Perfil profesional actual" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
                 </div>
               </div>
             </div>
@@ -460,18 +299,18 @@
     const container = document.getElementById('shader-bg');
     const scene = new THREE.Scene();
     const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
-    
+
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(window.devicePixelRatio);
     container.appendChild(renderer.domElement);
-    
+
     const vertexShader = `
-      void main() { 
-        gl_Position = vec4(position, 1.0); 
+      void main() {
+        gl_Position = vec4(position, 1.0);
       }
     `;
-    
+
     const fragmentShader = `
       uniform float iTime;
       uniform vec2 iResolution;
@@ -509,47 +348,47 @@
 
           // Deep space base color with a tiny dark blue tint
           vec3 color = vec3(0.01, 0.02, 0.05);
-          
+
           if(hash(p * 100.0) > 0.99) {
               color += vec3(1.0) * (0.5 + 0.5 * sin(iTime * 1.5 + hash(p)*100.0));
           }
 
           vec3 auroraColors = vec3(0.0);
-          
+
           for(int i = 0; i < 35; i++) {
               float fi = float(i);
-              
+
               vec2 q = p + vec2(iTime * 0.04, fi * 0.02);
-              
+
               float structuralNoise = fbm(q * 3.0 + iTime * 0.08);
-              
+
               float tailNoise = smoothstep(0.2, 0.8, structuralNoise) * exp(-fi * 0.1);
-              
+
               // Warm cosmic nebula: coppers, oranges, golds, deep blues
               float t1 = fi * 0.2 + iTime * 0.4;
               float t2 = fi * 0.3 + iTime * 0.5;
               float t3 = fi * 0.4 + iTime * 0.3;
-              
+
               vec3 bandColor = vec3(
                   0.8 + 0.2 * sin(t1),
                   0.4 + 0.3 * cos(t2),
                   0.2 + 0.5 * sin(t3)
               );
-              
+
               auroraColors += bandColor * tailNoise * 0.035;
           }
-          
+
           color += auroraColors;
-          
+
           gl_FragColor = vec4(color, 1.0);
       }
     `;
-    
+
     const uniforms = {
       iTime: { value: 0.0 },
       iResolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) }
     };
-    
+
     const material = new THREE.ShaderMaterial({
       vertexShader,
       fragmentShader,
@@ -557,19 +396,19 @@
       depthWrite: false,
       depthTest: false
     });
-    
+
     const geometry = new THREE.PlaneGeometry(2, 2);
     const mesh = new THREE.Mesh(geometry, material);
     scene.add(mesh);
-    
+
     function animate() {
       requestAnimationFrame(animate);
       uniforms.iTime.value += 0.016;
       renderer.render(scene, camera);
     }
-    
+
     animate();
-    
+
     window.addEventListener('resize', () => {
       renderer.setSize(window.innerWidth, window.innerHeight);
       uniforms.iResolution.value.set(window.innerWidth, window.innerHeight);
@@ -581,25 +420,25 @@
     document.addEventListener('DOMContentLoaded', () => {
       const timelineContainer = document.getElementById('timeline-container');
       const timelineProgress = document.getElementById('timeline-progress');
-      
-      if(timelineContainer && timelineProgress) {
+
+      if (timelineContainer && timelineProgress) {
         window.addEventListener('scroll', () => {
           const rect = timelineContainer.getBoundingClientRect();
           // El progreso empieza cuando el contenedor aparece en el centro exacto de la pantalla
           const startTrigger = window.innerHeight * 0.5;
           const scrolled = startTrigger - rect.top;
-          
+
           // La altura total animable es la altura del contenedor menos el relleno final para no salirse
-          const totalHeight = rect.height; 
-          
+          const totalHeight = rect.height;
+
           let percentage = (scrolled / totalHeight) * 100;
-          
+
           // Clamping para que la línea no crezca ni antes del 0 ni más allá del 100%
           percentage = Math.max(0, Math.min(100, Math.floor(percentage)));
-          
+
           timelineProgress.style.height = percentage + '%';
         });
-        
+
         // Trigger inicial para setear cálculos al cargar página
         window.dispatchEvent(new Event('scroll'));
       }
@@ -609,5 +448,55 @@
   <!-- Vercel Analytics -->
   <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
   <script defer src="/_vercel/insights/script.js"></script>
+
+  <!-- Auto-scroll timeline cada 40 segundos -->
+  <script>
+    (function () {
+      const INTERVALO_MS = 40000; // 40 segundos
+      let indiceActual = 0;
+      let timer = null;
+      let pausado = false;
+
+      function obtenerBloques() {
+        return Array.from(document.querySelectorAll('.timeline-block'));
+      }
+
+      function irAlSiguiente() {
+        const bloques = obtenerBloques();
+        if (!bloques.length) return;
+
+        indiceActual = (indiceActual + 1) % bloques.length;
+        bloques[indiceActual].scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+
+      function iniciarTimer() {
+        if (timer) clearInterval(timer);
+        timer = setInterval(() => {
+          if (!pausado) irAlSiguiente();
+        }, INTERVALO_MS);
+      }
+
+      // Pausar cuando el usuario interactúa manualmente con el scroll
+      let scrollTimeout = null;
+      window.addEventListener('wheel', () => {
+        pausado = true;
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+          pausado = false;
+        }, 5000); // Reanuda 5 segundos después de que el usuario deja de scrollear
+      }, { passive: true });
+
+      window.addEventListener('touchmove', () => {
+        pausado = true;
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+          pausado = false;
+        }, 5000);
+      }, { passive: true });
+
+      // Iniciar
+      document.addEventListener('DOMContentLoaded', iniciarTimer);
+    })();
+  </script>
 </body>
 </html>
