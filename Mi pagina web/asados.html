@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/jpeg" href="Fotos/firma AK.jfif">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Cormorant+Garamond:ital,wght@1,400&family=Inter:wght@400&display=swap" rel="stylesheet">
   <title>Asados | Perspective</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
@@ -21,7 +22,7 @@
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    background: #000;
+    background: transparent;
   }
 
   #sg-wrap {
@@ -113,6 +114,73 @@
   }
   </style>
   <link rel="stylesheet" href="styles.css">
+  <style>
+  /* ── Imagen de fondo de página ── */
+  body {
+    background-image: url('Fotos/parrilla-background de asados.avif');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-color: #000;   /* fallback mientras carga */
+  }
+
+  /* Overlay oscuro semi-transparente */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(
+      90deg,
+      rgba(0,0,0,0.82) 0%,
+      rgba(0,0,0,0.55) 38%,
+      rgba(0,0,0,0.28) 65%,
+      rgba(0,0,0,0.15) 100%
+    );
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  /* Todo el contenido por encima del overlay */
+  body > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Header ─ override de Tailwind bg-black/90 */
+  body > header {
+    background: rgba(0, 0, 0, 0.75) !important;
+    backdrop-filter: blur(4px) !important;
+    -webkit-backdrop-filter: blur(4px) !important;
+  }
+
+  /* Mobile nav dropdown ─ semi-opaco */
+  #mobile-menu {
+    background: rgba(0, 0, 0, 0.85) !important;
+  }
+
+  /* Footer ─ override de Tailwind bg-black */
+  body > footer {
+    background: rgba(0, 0, 0, 0.80) !important;
+  }
+
+  /* Hero: texto blanco con sombra para legibilidad */
+  main h2,
+  main h3 {
+    color: #ffffff !important;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+  }
+  main p {
+    color: #ffffff !important;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+  }
+
+  /* Secciones con fondo sólido opaco ─ semi-transparente */
+  main .bg-black,
+  main [class*="bg-black"] {
+    background: rgba(0, 0, 0, 0.65) !important;
+  }
+  </style>
   <script>
     tailwind.config = {
       theme: {
@@ -167,11 +235,43 @@
   <main class="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
 
     <!-- Hero Section -->
-    <div class="mb-16">
-      <h2 class="text-5xl md:text-7xl font-bold tracking-tight text-white mb-6 font-serif">Asados</h2>
-      <p class="text-lg md:text-xl text-gray-400 max-w-2xl leading-relaxed">
-        El asado es mucho más que una forma de cocinar: es un ritual, una excusa para reunirse, y uno de mis mayores placeres. Acá voy a ir contando mis experiencias, técnicas y momentos alrededor del fuego.
-      </p>
+    <div style="
+      margin-left: 7%;
+      margin-top: 18vh;
+      max-width: 620px;
+      margin-bottom: 4rem;
+    ">
+      <h2 style="
+        font-family: 'Playfair Display', serif;
+        font-size: 88px;
+        font-weight: 700;
+        letter-spacing: -2px;
+        line-height: 0.95;
+        color: #F5F1E8;
+        text-shadow: 0px 3px 12px rgba(0,0,0,0.45);
+        margin: 0;
+      ">Asados</h2>
+
+      <p style="
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 28px;
+        font-style: italic;
+        font-weight: 400;
+        letter-spacing: 1px;
+        color: rgba(245,241,232,0.82);
+        margin-top: 12px;
+        margin-bottom: 28px;
+      ">El ritual argentino del fuego</p>
+
+      <p style="
+        font-family: 'Inter', sans-serif;
+        font-size: 23px;
+        font-weight: 400;
+        line-height: 1.7;
+        color: rgba(255,255,255,0.88);
+        max-width: 580px;
+        margin: 0;
+      ">El asado es mucho más que una forma de cocinar: es un ritual, una excusa para reunirse, y uno de mis mayores placeres.</p>
     </div>
 
     <!-- Galería scroll-driven -->

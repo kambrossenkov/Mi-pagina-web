@@ -408,7 +408,7 @@
   
       // 3. Image Accordion Logic
       const accordionData = [
-          { id: 1, title: 'Calistenia', imageUrl: 'Fotos/foto_portada_calistenia.png' }, // User's custom image
+          { id: 1, title: 'Calistenia', imageUrl: 'Fotos/foto-portada-calistenia_oicial.png', link: 'calistenia.html', newTab: true }, // User's custom image
           { id: 2, title: 'Asados', imageUrl: 'Fotos/asado_portada.jpg', link: 'asados.html' },
           { id: 3, title: 'Músicas', imageUrl: 'Fotos/portada_musicas.jpg', link: 'musicas.html' },
           { id: 4, title: 'Próximamente', generating: true },
@@ -426,9 +426,17 @@
               const isActive = index === activeIndex;
               
               // Create item container
-              const itemDiv = document.createElement('div');
+              // Calistenia (newTab: true) se envuelve en <a> para semántica correcta y ctrl+click
+              const useAnchor = !item.generating && item.link && item.newTab;
+              const itemDiv = document.createElement(useAnchor ? 'a' : 'div');
               const cursorClass = item.generating ? 'cursor-default' : 'cursor-pointer';
               itemDiv.className = `relative h-full rounded-2xl overflow-hidden ${cursorClass} transition-all duration-700 ease-in-out shrink-0 border border-white/10 ${isActive ? 'w-[200px] md:w-[300px] lg:w-[350px]' : 'w-[40px] md:w-[50px] lg:w-[60px]'}`;
+              if (useAnchor) {
+                  itemDiv.href   = item.link;
+                  itemDiv.target = '_blank';
+                  itemDiv.rel    = 'noopener noreferrer';
+                  itemDiv.style.textDecoration = 'none';
+              }
 
               if (item.generating) {
                   // Generating animation card
@@ -496,8 +504,8 @@
                   }
               });
 
-              // Add click to navigate if item has a link
-              if (item.link) {
+              // Click handler solo para items sin <a> nativo (asados, musicas)
+              if (item.link && !useAnchor) {
                   itemDiv.addEventListener('click', () => {
                       window.location.href = item.link;
                   });
