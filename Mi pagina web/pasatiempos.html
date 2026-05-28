@@ -189,6 +189,21 @@
   .titulo-animado.saliendo {
     animation: salidaPalabra 0.4s ease forwards;
   }
+
+  /* ── Mobile: espaciado ── */
+  @media (max-width: 768px) {
+    #hero-inner {
+      padding-top: 220px;
+      padding-bottom: 120px;
+    }
+
+    #hero-inner .titulo-fijo,
+    #hero-inner .titulo-animado {
+      font-size: 42px;
+      letter-spacing: -1px;
+      line-height: 1.0;
+    }
+  }
   </style>
   <script>
     tailwind.config = {
@@ -259,7 +274,7 @@
     <canvas id="noise-canvas" class="absolute inset-0 z-0 pointer-events-none opacity-50"></canvas>
     <canvas id="beams-canvas" class="absolute inset-0 z-10 pointer-events-none"></canvas>
 
-  <div class="relative z-20 w-full max-w-7xl mx-auto px-4 lg:px-8 h-screen flex flex-col lg:flex-row items-center justify-center lg:justify-between gap-12 lg:gap-8 pt-20 lg:pt-0">
+  <div id="hero-inner" class="relative z-20 w-full max-w-7xl mx-auto px-4 lg:px-8 h-screen flex flex-col lg:flex-row items-center justify-center lg:justify-between gap-12 lg:gap-8 pt-20 lg:pt-0">
     
     <div class="w-full lg:w-1/2 flex flex-col items-center lg:items-start text-center lg:text-left">
       <div class="hero-title">
