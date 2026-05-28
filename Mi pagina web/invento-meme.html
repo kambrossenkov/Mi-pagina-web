@@ -32,13 +32,20 @@
     .pano-slider-stage {
       position: relative;
       width: 100vw;
-      height: calc(var(--pano-card-h) + 80px);
+      height: 480px;
       overflow: hidden;
       perspective: 1400px;
       perspective-origin: 50% 50%;
       display: flex;
       align-items: center;
       justify-content: center;
+      flex-shrink: 0;
+      margin-top: 40px;
+      margin-bottom: 40px;
+    }
+
+    @media (max-width: 768px) {
+      .pano-slider-stage { height: 320px; }
     }
 
     .pano-slider-track {
@@ -68,7 +75,7 @@
     .pano-card img {
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      object-fit: contain;
       display: block;
       pointer-events: none;
     }
@@ -189,14 +196,13 @@
         <a href="inventos.html" data-i18n="nav-inventions" class="hover:text-accent transition-colors">Inventos</a>
       </nav>
       <div class="flex items-center gap-4 md:gap-6">
-        <button id="lang-toggle" class="text-text hover:text-accent transition-colors text-sm font-bold uppercase w-8 flex-shrink-0">
-          ES
-        </button>
+        <button class="lang-btn text-text hover:text-accent transition-colors text-sm uppercase flex-shrink-0" data-lang="es" style="font-weight:700">ES</button>
+        <button class="lang-btn text-text hover:text-accent transition-colors text-sm uppercase flex-shrink-0" data-lang="en" style="font-weight:400;opacity:0.35">EN</button>
         <a href="contacto.html" target="_blank" data-i18n="nav-contact" class="hidden md:block px-6 py-2 rounded-full bg-primary text-primary-foreground font-medium hover:opacity-90 transition-all text-center whitespace-nowrap">
           Contactarme
         </a>
         <!-- Hamburger Menu Button -->
-        <button id="mobile-menu-btn" class="md:hidden text-text hover:text-accent transition-colors focus:outline-none ml-2">
+        <button id="mobile-menu-btn" onclick="var m=document.getElementById('mobile-menu');m.classList.toggle('hidden');m.classList.toggle('flex');" class="md:hidden text-text hover:text-accent transition-colors focus:outline-none ml-2">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
         </button>
       </div>
@@ -213,6 +219,14 @@
 
   <main class="relative z-10 w-full flex flex-col items-center justify-start">
 
+    <!-- Título y subtítulo -->
+    <section class="relative z-10 w-full max-w-7xl mx-auto px-6 pt-16 pb-0 flex flex-col items-center">
+      <h1 class="text-5xl md:text-6xl font-extrabold text-white mb-6 text-center"
+          data-es="La Evolución del Diseño" data-en="The Evolution of Design">La Evolución del Diseño</h1>
+      <p class="text-sm md:text-base text-blue-200 tracking-wider uppercase font-medium text-center opacity-80"
+         data-es="Una mirada visual a la transformación de la estética digital." data-en="A visual look at the transformation of digital aesthetics.">Una mirada visual a la transformación de la estética digital.</p>
+    </section>
+
     <!-- ================= PANORAMA CURVED SLIDER ================= -->
     <section id="pano-slider-section">
       <div class="pano-slider-stage" id="pano-stage">
@@ -226,16 +240,13 @@
     </section>
     <!-- ================= FIN PANORAMA CURVED SLIDER ================= -->
 
-    <section class="relative z-10 w-full max-w-7xl mx-auto px-6 mt-16 mb-24 flex flex-col items-center">
-        <h1 class="text-5xl md:text-6xl font-extrabold text-white mb-6 text-center">La Evolución del Diseño</h1>
-
-        <p class="text-sm md:text-base text-blue-200 tracking-wider uppercase font-medium mb-12 text-center opacity-80">Una mirada visual a la transformación de la estética digital.</p>
-
-        <div class="w-full max-w-3xl text-lg text-gray-200 space-y-8 leading-relaxed font-light">
-            <p>Este proyecto, <span class="text-white font-medium">La Evolución del Diseño</span>, surgió como una exploración personal sobre cómo los memes, como vehículos culturales, han adoptado y transformado los lenguajes visuales. Desde los primeros días de los gráficos de 8 bits y los símbolos simples hasta la era de la alta fidelidad y la Inteligencia Artificial...</p>
-
-            <p>Explora la galería superior para navegar por hitos visuales. Cada slide representa una etapa diferente, mezclando nostalgia con técnicas avanzadas de diseño. *[Texto placeholder: Aquí puedes añadir tu propia descripción detallada del contenido que se cliqueó]*.</p>
-        </div>
+    <section class="relative z-10 w-full max-w-7xl mx-auto px-6 mb-24 flex flex-col items-center">
+      <div class="w-full max-w-3xl text-lg text-gray-200 leading-relaxed font-light">
+        <p data-es="Este proyecto, La Evolución del Diseño, surgió como una exploración personal cuando estaba experimentando con la generación de imágenes usando IA, específicamente cuando se le solicitaba a GPT imágenes estilo Ghibli."
+           data-en="This project, The Evolution of Design, emerged as a personal exploration while I was experimenting with AI image generation, specifically when prompting GPT for Ghibli-style images.">
+          Este proyecto, La Evolución del Diseño, surgió como una exploración personal cuando estaba experimentando con la generación de imágenes usando IA, específicamente cuando se le solicitaba a GPT imágenes estilo Ghibli.
+        </p>
+      </div>
     </section>
   </main>
 
@@ -268,7 +279,20 @@
     </div>
   </footer>
 
+  <script>
+    window.__idiomaPatch = function(lang) {
+      document.querySelectorAll('[data-es]').forEach(function(el) {
+        var val = lang === 'en' ? el.getAttribute('data-en') : el.getAttribute('data-es');
+        if (val !== null) el.textContent = val;
+      });
+    };
+    document.addEventListener('DOMContentLoaded', function() {
+      var lang = localStorage.getItem('idioma') || 'es';
+      if (typeof aplicarIdioma === 'function') aplicarIdioma(lang);
+    });
+  </script>
   <script src="script.js"></script>
+  <script src="idioma.js"></script>
 
   <!-- ================= PANORAMA CURVED SLIDER JS ================= -->
   <script>
