@@ -131,7 +131,8 @@
           <a href="inventos.html" data-i18n="nav-inventions" class="hover:text-accent transition-colors">Inventos</a>
         </nav>
         <div class="flex items-center gap-4 md:gap-6">
-          <button id="lang-toggle" class="text-text hover:text-accent transition-colors text-sm font-bold uppercase w-8 flex-shrink-0">ES</button>
+          <button class="lang-btn text-text hover:text-accent transition-colors text-sm uppercase flex-shrink-0" data-lang="es" style="font-weight:700">ES</button>
+          <button class="lang-btn text-text hover:text-accent transition-colors text-sm uppercase flex-shrink-0" data-lang="en" style="font-weight:400;opacity:0.35">EN</button>
           <a href="contacto.html" target="_blank" data-i18n="nav-contact" class="hidden md:block px-6 py-2 rounded-full bg-primary text-primary-foreground font-medium hover:opacity-90 transition-all text-center whitespace-nowrap">Contactarme</a>
           <button id="mobile-menu-btn" class="md:hidden text-text hover:text-accent transition-colors focus:outline-none ml-2">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
@@ -149,7 +150,7 @@
 
     <main class="w-full min-h-screen pt-24 pb-24 z-10 relative">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 class="titulo-trayectoria text-center mb-16 drop-shadow-md">Mi Trayectoria</h2>
+        <h2 class="titulo-trayectoria text-center mb-16 drop-shadow-md" data-i18n="cur-main-title">Mi Trayectoria</h2>
 
         <div id="timeline-container" class="relative w-full pb-10">
           <!-- Línea Base -->
@@ -472,6 +473,7 @@
 
   <!-- Include App Logic -->
   <script src="script.js"></script>
+  <script src="idioma.js"></script>
 
   <!-- WebGL James Webb Nebula Shader -->
   <script>
@@ -607,7 +609,7 @@
                 style="font-family:'Space Grotesk',sans-serif; font-size:12px; color:rgba(255,255,255,0.4); letter-spacing:1px;">1 / 7</span>
           <button id="modal-siguiente"
                   style="display:flex; align-items:center; gap:6px; padding:10px 18px; border-radius:50px; background:rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.2); color:white; font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:500; cursor:pointer; backdrop-filter:blur(6px);">
-            Siguiente <span style="font-size:16px;">→</span>
+            <span data-i18n="cur-modal-next">Siguiente</span> <span style="font-size:16px;">→</span>
           </button>
         </div>
       </div>

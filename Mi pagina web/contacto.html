@@ -47,11 +47,11 @@
       <!-- Video Play Button Centered -->
       <div class="z-10 bg-white/10 p-6 sm:p-8 rounded-2xl backdrop-blur-md cursor-pointer hover:bg-white/20 transition-all hover:scale-105 border border-white/20 flex flex-col items-center gap-3">
         <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="white" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-        <span class="text-white font-medium text-sm tracking-wider uppercase">Reproducir</span>
+        <span class="text-white font-medium text-sm tracking-wider uppercase" data-i18n="con-play">Reproducir</span>
       </div>
       
       <!-- Video Label Bottom -->
-      <div class="absolute bottom-6 left-6 right-6 text-white/50 text-sm font-medium tracking-wide">
+      <div class="absolute bottom-6 left-6 right-6 text-white/50 text-sm font-medium tracking-wide" data-i18n="con-video-label">
         Espacio para un video
       </div>
     </div>
@@ -63,19 +63,18 @@
       <div class="flex items-center justify-between mb-12 border-b border-border/50 pb-6">
         <a href="index.html" class="flex items-center gap-2 text-muted-foreground hover:text-text font-medium transition-colors text-sm uppercase tracking-wide">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
-          Volver al Inicio
+          <span data-i18n="con-back">Volver al Inicio</span>
         </a>
         <div class="flex items-center gap-5">
-          <button id="lang-toggle" class="text-text hover:text-accent transition-colors text-sm font-bold uppercase w-8">
-            ES
-          </button>
+          <button class="lang-btn text-text hover:text-accent transition-colors text-sm uppercase" data-lang="es" style="font-weight:700">ES</button>
+          <button class="lang-btn text-text hover:text-accent transition-colors text-sm uppercase" data-lang="en" style="font-weight:400;opacity:0.35">EN</button>
         </div>
       </div>
 
       <!-- Header -->
       <div class="mb-10">
-        <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight text-text mb-4">Trabajemos juntos</h1>
-        <p class="text-xl text-primary font-medium tracking-wide">Empezá la conversación</p>
+        <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight text-text mb-4" data-i18n="con-h1">Trabajemos juntos</h1>
+        <p class="text-xl text-primary font-medium tracking-wide" data-i18n="con-subtitle">Empezá la conversación</p>
       </div>
 
       <!-- Form -->
@@ -85,11 +84,11 @@
         
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div class="space-y-2">
-            <label for="nombre" class="block text-sm font-medium text-text">Nombre <span class="text-red-500">*</span></label>
+            <label for="nombre" class="block text-sm font-medium text-text"><span data-i18n="con-label-nombre">Nombre</span> <span class="text-red-500">*</span></label>
             <input type="text" id="nombre" name="Nombre" required class="w-full px-4 py-3 rounded-lg border border-input bg-card focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all text-text shadow-sm" />
           </div>
           <div class="space-y-2">
-            <label for="apellido" class="block text-sm font-medium text-text">Apellido <span class="text-red-500">*</span></label>
+            <label for="apellido" class="block text-sm font-medium text-text"><span data-i18n="con-label-apellido">Apellido</span> <span class="text-red-500">*</span></label>
             <input type="text" id="apellido" name="Apellido" required class="w-full px-4 py-3 rounded-lg border border-input bg-card focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all text-text shadow-sm" />
           </div>
         </div>
@@ -100,25 +99,25 @@
             <input type="email" id="email" name="Email" required class="w-full px-4 py-3 rounded-lg border border-input bg-card focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all text-text shadow-sm" />
           </div>
           <div class="space-y-2">
-            <label for="telefono" class="block text-sm font-medium text-text">Teléfono / WhatsApp (opcional)</label>
+            <label for="telefono" class="block text-sm font-medium text-text" data-i18n="con-label-telefono">Teléfono / WhatsApp (opcional)</label>
             <input type="tel" id="telefono" name="Telefono_WhatsApp" class="w-full px-4 py-3 rounded-lg border border-input bg-card focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all text-text shadow-sm" />
           </div>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div class="space-y-2">
-            <label for="empresa_institucion_proyecto" class="block text-sm font-medium text-text">Empresa / Institución / Proyecto</label>
+            <label for="empresa_institucion_proyecto" class="block text-sm font-medium text-text" data-i18n="con-label-empresa">Empresa / Institución / Proyecto</label>
             <input type="text" id="empresa_institucion_proyecto" name="Empresa_Institucion" class="w-full px-4 py-3 rounded-lg border border-input bg-card focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all text-text shadow-sm" />
           </div>
           <div class="space-y-2">
-            <label for="cargo_rol" class="block text-sm font-medium text-text">Cargo / Rol</label>
+            <label for="cargo_rol" class="block text-sm font-medium text-text" data-i18n="con-label-cargo">Cargo / Rol</label>
             <input type="text" id="cargo_rol" name="Cargo_Rol" class="w-full px-4 py-3 rounded-lg border border-input bg-card focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all text-text shadow-sm" />
           </div>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div class="space-y-2">
-            <label for="tipo_contacto" class="block text-sm font-medium text-text">Tipo de contacto</label>
+            <label for="tipo_contacto" class="block text-sm font-medium text-text" data-i18n="con-label-tipo">Tipo de contacto</label>
             <div class="relative">
               <select id="tipo_contacto" name="Tipo_de_contacto" class="w-full px-4 py-3 rounded-lg border border-input bg-card focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all text-text appearance-none shadow-sm cursor-pointer pr-10">
                 <option value="" disabled selected>Seleccionar...</option>
@@ -135,7 +134,7 @@
             </div>
           </div>
           <div class="space-y-2">
-            <label for="motivo_contacto" class="block text-sm font-medium text-text">¿Por qué querés contactarme? <span class="text-red-500">*</span></label>
+            <label for="motivo_contacto" class="block text-sm font-medium text-text"><span data-i18n="con-label-motivo">¿Por qué querés contactarme?</span> <span class="text-red-500">*</span></label>
             <div class="relative">
               <select id="motivo_contacto" name="Motivo_contacto" required class="w-full px-4 py-3 rounded-lg border border-input bg-card focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all text-text appearance-none shadow-sm cursor-pointer pr-10">
                 <option value="" disabled selected>Seleccionar...</option>
@@ -154,28 +153,28 @@
         </div>
 
         <div class="space-y-2">
-          <label for="asunto" class="block text-sm font-medium text-text">Asunto / Tema <span class="text-red-500">*</span></label>
+          <label for="asunto" class="block text-sm font-medium text-text"><span data-i18n="con-label-asunto">Asunto / Tema</span> <span class="text-red-500">*</span></label>
           <input type="text" id="asunto" name="Asunto" required class="w-full px-4 py-3 rounded-lg border border-input bg-card focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all text-text shadow-sm" />
         </div>
 
         <div class="space-y-2">
-          <label for="mensaje" class="block text-sm font-medium text-text">Contame brevemente qué necesitás <span class="text-red-500">*</span></label>
-          <textarea id="mensaje" name="Mensaje_Necesidad" required rows="4" placeholder="Ej.: búsqueda para un rol, propuesta de proyecto, colaboración académica, consultoría o alianza." class="w-full px-4 py-3 rounded-lg border border-input bg-card focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all text-text resize-y shadow-sm"></textarea>
+          <label for="mensaje" class="block text-sm font-medium text-text"><span data-i18n="con-label-mensaje">Contame brevemente qué necesitás</span> <span class="text-red-500">*</span></label>
+          <textarea id="mensaje" name="Mensaje_Necesidad" required rows="4" data-i18n-placeholder="con-msg-placeholder" placeholder="Ej.: búsqueda para un rol, propuesta de proyecto, colaboración académica, consultoría o alianza." class="w-full px-4 py-3 rounded-lg border border-input bg-card focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all text-text resize-y shadow-sm"></textarea>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div class="space-y-2">
-            <label for="linkedin_web_empresa" class="block text-sm font-medium text-text">LinkedIn / Web / Empresa</label>
+            <label for="linkedin_web_empresa" class="block text-sm font-medium text-text" data-i18n="con-label-linkedin">LinkedIn / Web / Empresa</label>
             <input type="text" id="linkedin_web_empresa" name="LinkedIn_Web" class="w-full px-4 py-3 rounded-lg border border-input bg-card focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all text-text shadow-sm" />
           </div>
           <div class="space-y-2">
-            <label for="origen" class="block text-sm font-medium text-text">¿Cómo llegaste a mi página?</label>
+            <label for="origen" class="block text-sm font-medium text-text" data-i18n="con-label-origen">¿Cómo llegaste a mi página?</label>
             <input type="text" id="origen" name="Como_llegaste" class="w-full px-4 py-3 rounded-lg border border-input bg-card focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all text-text shadow-sm" />
           </div>
         </div>
 
         <div class="space-y-2">
-          <label for="disponibilidad" class="block text-sm font-medium text-text">Disponibilidad estimada para hablar</label>
+          <label for="disponibilidad" class="block text-sm font-medium text-text" data-i18n="con-label-disp">Disponibilidad estimada para hablar</label>
           <div class="relative">
             <select id="disponibilidad" name="Disponibilidad" class="w-full px-4 py-3 rounded-lg border border-input bg-card focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all text-text appearance-none shadow-sm cursor-pointer pr-10">
               <option value="" disabled selected>Seleccionar...</option>
@@ -195,13 +194,13 @@
               <input type="checkbox" id="consentimiento" name="Acepta_ser_contactado" required class="w-5 h-5 rounded border border-input text-accent focus:ring-accent transition-all bg-background cursor-pointer" />
             </div>
             <span class="text-sm font-medium text-text leading-relaxed mt-0.5">
-              Acepto ser contactado en relación con esta consulta <span class="text-red-500">*</span>
+              <span data-i18n="con-label-consent">Acepto ser contactado en relación con esta consulta</span> <span class="text-red-500">*</span>
             </span>
           </label>
         </div>
 
         <div class="pt-8 mb-16 lg:mb-0">
-          <button type="submit" class="w-full px-8 py-4 rounded-xl bg-primary text-primary-foreground font-bold text-lg hover:opacity-90 shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all">
+          <button type="submit" data-i18n="con-btn-submit" class="w-full px-8 py-4 rounded-xl bg-primary text-primary-foreground font-bold text-lg hover:opacity-90 shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all">
             Enviar consulta
           </button>
         </div>
@@ -211,6 +210,7 @@
   </div>
 
   <script src="script.js"></script>
+  <script src="idioma.js"></script>
 
   <!-- Vercel Analytics -->
   <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>

@@ -247,9 +247,8 @@
         <a href="inventos.html" data-i18n="nav-inventions" class="hover:text-accent transition-colors">Inventos</a>
       </nav>
       <div class="flex items-center gap-4 md:gap-6">
-        <button id="lang-toggle" class="text-text hover:text-accent transition-colors text-sm font-bold uppercase w-8 flex-shrink-0">
-          ES
-        </button>
+        <button class="lang-btn text-text hover:text-accent transition-colors text-sm uppercase flex-shrink-0" data-lang="es" style="font-weight:700">ES</button>
+        <button class="lang-btn text-text hover:text-accent transition-colors text-sm uppercase flex-shrink-0" data-lang="en" style="font-weight:400;opacity:0.35">EN</button>
         <a href="contacto.html" target="_blank" data-i18n="nav-contact" class="hidden md:block px-6 py-2 rounded-full bg-primary text-primary-foreground font-medium hover:opacity-90 transition-all text-center whitespace-nowrap">
           Contactarme
         </a>
@@ -278,7 +277,7 @@
     
     <div class="w-full lg:w-1/2 flex flex-col items-center lg:items-start text-center lg:text-left">
       <div class="hero-title">
-        <span class="titulo-fijo">Pasatiempos que me</span>
+        <span class="titulo-fijo" id="tituloFijo">Pasatiempos que me</span>
         <span class="titulo-animado" id="palabraAnimada">apasionan</span>
       </div>
     </div>
@@ -561,21 +560,39 @@
 
   <!-- Rotacion de palabras -->
   <script>
-  const palabras = ["apasionan", "dan energía", "me definen", "me mueven"];
-  let indice = 0;
-  const el = document.getElementById('palabraAnimada');
+  var PALABRAS_ES = ["apasionan", "dan energía", "me definen", "me mueven"];
+  var PALABRAS_EN = ["fascinate me", "energize me", "define me", "move me"];
+  var TITULO_ES   = "Pasatiempos que me";
+  var TITULO_EN   = "Hobbies that";
 
-  setInterval(() => {
+  var palabras = PALABRAS_ES;
+  var indice   = 0;
+  var el       = document.getElementById('palabraAnimada');
+  var tFijo    = document.getElementById('tituloFijo');
+
+  function girarPalabra() {
     el.classList.add('saliendo');
-    setTimeout(() => {
+    setTimeout(function() {
       indice = (indice + 1) % palabras.length;
       el.textContent = palabras[indice];
       el.classList.remove('saliendo');
       el.style.animation = 'none';
-      el.offsetHeight; // fuerza reflow
+      el.offsetHeight;
       el.style.animation = '';
     }, 400);
-  }, 3000);
+  }
+
+  setInterval(girarPalabra, 3000);
+
+  /* patch idioma para las palabras rotantes */
+  window.__idiomaPatch = function(lang) {
+    palabras = lang === 'en' ? PALABRAS_EN : PALABRAS_ES;
+    indice   = 0;
+    if (tFijo) tFijo.textContent = lang === 'en' ? TITULO_EN : TITULO_ES;
+    el.textContent = palabras[0];
+  };
   </script>
+
+  <script src="idioma.js"></script>
 </body>
 </html>

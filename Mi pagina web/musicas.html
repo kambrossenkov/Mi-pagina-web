@@ -339,9 +339,8 @@
         <a href="inventos.html" data-i18n="nav-inventions" class="hover:text-blue-400 transition-colors">Inventos</a>
       </nav>
       <div class="flex items-center gap-4 md:gap-6">
-        <button id="lang-toggle" class="text-white hover:text-blue-400 transition-colors text-sm font-bold uppercase w-8 flex-shrink-0">
-          ES
-        </button>
+        <button class="lang-btn text-white hover:text-blue-400 transition-colors text-sm uppercase flex-shrink-0" data-lang="es" style="font-weight:700">ES</button>
+        <button class="lang-btn text-white hover:text-blue-400 transition-colors text-sm uppercase flex-shrink-0" data-lang="en" style="font-weight:400;opacity:0.35">EN</button>
         <a href="contacto.html" target="_blank" data-i18n="nav-contact" class="hidden md:block px-6 py-2 rounded-full bg-blue-600 text-white font-medium hover:bg-blue-700 transition-all text-center whitespace-nowrap shadow-[0_0_15px_rgba(37,99,235,0.4)]">
           Contactarme
         </a>
@@ -370,8 +369,8 @@
       <div id="hero-s1-grid"></div>
 
       <div id="hero-s1-text">
-        <h1>Acá está mi galería<br>de músicas 🎵</h1>
-        <p>Me gusta siempre ordenarla —<br>scrolleá para ver las que más destaco</p>
+        <h1 data-i18n-html="mus-hero-title">Acá está mi galería<br>de músicas 🎵</h1>
+        <p data-i18n-html="mus-hero-sub">Me gusta siempre ordenarla —<br>scrolleá para ver las que más destaco</p>
       </div>
 
       <div id="hero-scroll-hint">
@@ -401,8 +400,8 @@
           <div class="glare-card-wrap" data-glare>
             <div class="glare-card-inner">
               <div class="glare-layer glare-layer-base glare-bottom-left">
-                <p class="glare-text-title">Para entrenar</p>
-                <p class="glare-text-body">Un set que uso recurrentemente a la hora de entrenar, ya sea calistenia o cualquier otro deporte. Me permite motivarme, concentrarme y estar completamente conectado con el entrenamiento.</p>
+                <p class="glare-text-title" data-i18n="mus-c1-title">Para entrenar</p>
+                <p class="glare-text-body" data-i18n="mus-c1-desc">Un set que uso recurrentemente a la hora de entrenar, ya sea calistenia o cualquier otro deporte. Me permite motivarme, concentrarme y estar completamente conectado con el entrenamiento.</p>
               </div>
               <div class="glare-layer glare-layer-highlight"></div>
               <div class="glare-layer glare-layer-foil"></div>
@@ -422,8 +421,8 @@
           <div class="glare-card-wrap" data-glare>
             <div class="glare-card-inner">
               <div class="glare-layer glare-layer-base glare-bottom-left">
-                <p class="glare-text-title">Rap ruso</p>
-                <p class="glare-text-body">Una selección de canciones, todas en ruso, que fui juntando para mantenerme conectado con la cultura de mis orígenes. Trato de tenerla siempre actualizada con lo que se escucha allá hoy.</p>
+                <p class="glare-text-title" data-i18n="mus-c2-title">Rap ruso</p>
+                <p class="glare-text-body" data-i18n="mus-c2-desc">Una selección de canciones, todas en ruso, que fui juntando para mantenerme conectado con la cultura de mis orígenes. Trato de tenerla siempre actualizada con lo que se escucha allá hoy.</p>
               </div>
               <div class="glare-layer glare-layer-highlight"></div>
               <div class="glare-layer glare-layer-foil"></div>
@@ -443,8 +442,8 @@
           <div class="glare-card-wrap" data-glare>
             <div class="glare-card-inner">
               <div class="glare-layer glare-layer-base glare-bottom-left">
-                <p class="glare-text-title">Electro</p>
-                <p class="glare-text-body">Un género que me acercó mi hermano mayor y que, con el tiempo y distintos grupos de personas que fui conociendo, me atrapó por completo. Le dediqué mucho tiempo a la escucha y me abrió varias puertas en la vida.</p>
+                <p class="glare-text-title" data-i18n="mus-c3-title">Electro</p>
+                <p class="glare-text-body" data-i18n="mus-c3-desc">Un género que me acercó mi hermano mayor y que, con el tiempo y distintos grupos de personas que fui conociendo, me atrapó por completo. Le dediqué mucho tiempo a la escucha y me abrió varias puertas en la vida.</p>
               </div>
               <div class="glare-layer glare-layer-highlight"></div>
               <div class="glare-layer glare-layer-foil"></div>
@@ -464,8 +463,8 @@
           <div class="glare-card-wrap" data-glare>
             <div class="glare-card-inner">
               <div class="glare-layer glare-layer-base glare-bottom-left">
-                <p class="glare-text-title">Rock Nacional</p>
-                <p class="glare-text-body">Un conjunto de canciones que fui reuniendo gracias a compañeros del interior y personas con muy buen gusto musical. Todo lo mejor del rock argentino en un solo lugar.</p>
+                <p class="glare-text-title" data-i18n="mus-c4-title">Rock Nacional</p>
+                <p class="glare-text-body" data-i18n="mus-c4-desc">Un conjunto de canciones que fui reuniendo gracias a compañeros del interior y personas con muy buen gusto musical. Todo lo mejor del rock argentino en un solo lugar.</p>
               </div>
               <div class="glare-layer glare-layer-highlight"></div>
               <div class="glare-layer glare-layer-foil"></div>
@@ -485,8 +484,8 @@
           <div class="glare-card-wrap" data-glare>
             <div class="glare-card-inner">
               <div class="glare-layer glare-layer-base glare-bottom-left">
-                <p class="glare-text-title">Reggaetón</p>
-                <p class="glare-text-body">Jamás lo supe escribir bien, y acá lo confieso. Un género que al principio me gustó mucho. Sigo escuchando algunas canciones que son enormemente famosas, pero con el tiempo me fui apartando de él.</p>
+                <p class="glare-text-title" data-i18n="mus-c5-title">Reggaetón</p>
+                <p class="glare-text-body" data-i18n="mus-c5-desc">Jamás lo supe escribir bien, y acá lo confieso. Un género que al principio me gustó mucho. Sigo escuchando algunas canciones que son enormemente famosas, pero con el tiempo me fui apartando de él.</p>
               </div>
               <div class="glare-layer glare-layer-highlight"></div>
               <div class="glare-layer glare-layer-foil"></div>
@@ -528,6 +527,7 @@
   </footer>
 
   <script src="script.js" onerror="console.info('Scripts running')"></script>
+  <script src="idioma.js"></script>
 
   <!-- Glare Cards -->
   <script>
