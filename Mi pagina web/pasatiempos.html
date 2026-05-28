@@ -204,6 +204,20 @@
       line-height: 1.0;
     }
   }
+
+  /* ── Hamburger: z-index y pointer-events ── */
+  #mobile-menu-btn {
+    position: relative;
+    z-index: 9999 !important;
+    pointer-events: all !important;
+    cursor: pointer;
+  }
+  #mobile-menu {
+    z-index: 9998;
+  }
+  /* ── Overflow fix (override styles.css) ── */
+  html { overflow-x: clip; }
+  body { overflow-x: hidden; max-width: 100%; }
   </style>
   <script>
     tailwind.config = {
@@ -253,7 +267,7 @@
           Contactarme
         </a>
         <!-- Hamburger Menu Button -->
-        <button id="mobile-menu-btn" class="md:hidden text-text hover:text-accent transition-colors focus:outline-none ml-2">
+        <button id="mobile-menu-btn" onclick="var m=document.getElementById('mobile-menu');m.classList.toggle('hidden');m.classList.toggle('flex');" class="md:hidden text-text hover:text-accent transition-colors focus:outline-none ml-2">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
         </button>
       </div>

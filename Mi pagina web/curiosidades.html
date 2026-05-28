@@ -110,6 +110,20 @@
         padding-left: 50px;
       }
     }
+
+    /* ── Hamburger: z-index y pointer-events ── */
+    #mobile-menu-btn {
+      position: relative;
+      z-index: 9999 !important;
+      pointer-events: all !important;
+      cursor: pointer;
+    }
+    #mobile-menu {
+      z-index: 9998;
+    }
+    /* ── Overflow fix (override styles.css) ── */
+    html { overflow-x: clip; }
+    body { overflow-x: hidden; max-width: 100%; }
   </style>
 </head>
 <body class="min-h-screen bg-background text-text animate-fade-in transition-colors duration-300 flex flex-col">
@@ -134,7 +148,7 @@
           <button class="lang-btn text-text hover:text-accent transition-colors text-sm uppercase flex-shrink-0" data-lang="es" style="font-weight:700">ES</button>
           <button class="lang-btn text-text hover:text-accent transition-colors text-sm uppercase flex-shrink-0" data-lang="en" style="font-weight:400;opacity:0.35">EN</button>
           <a href="contacto.html" target="_blank" data-i18n="nav-contact" class="hidden md:block px-6 py-2 rounded-full bg-primary text-primary-foreground font-medium hover:opacity-90 transition-all text-center whitespace-nowrap">Contactarme</a>
-          <button id="mobile-menu-btn" class="md:hidden text-text hover:text-accent transition-colors focus:outline-none ml-2">
+          <button id="mobile-menu-btn" onclick="var m=document.getElementById('mobile-menu');m.classList.toggle('hidden');m.classList.toggle('flex');" class="md:hidden text-text hover:text-accent transition-colors focus:outline-none ml-2">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
           </button>
         </div>
@@ -171,7 +185,7 @@
                   <img src="https://images.unsplash.com/photo-1589909202802-8f4aadce1849?w=900&q=80" alt="Origen e identidad" class="w-full h-full object-cover" loading="lazy" />
                   <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-4">
                     <span style="color:#a78bfa; font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:600; letter-spacing:2px; text-transform:uppercase; margin-bottom:4px; display:block;">2001–2008</span>
-                    <h3 style="font-family:'General Sans',sans-serif; font-size:18px; font-weight:600; color:white; line-height:1.2; margin:0;">Origen e identidad</h3>
+                    <h3 style="font-family:'General Sans',sans-serif; font-size:18px; font-weight:600; color:white; line-height:1.2; margin:0;" data-es="Origen e identidad" data-en="Origin and Identity">Origen e identidad</h3>
                   </div>
                   <div style="position:absolute; top:12px; right:12px; width:30px; height:30px; border-radius:50%; background:rgba(255,255,255,0.2); backdrop-filter:blur(4px); display:flex; align-items:center; justify-content:center; color:white; font-size:13px;">↗</div>
                 </div>
@@ -181,13 +195,13 @@
               <div class="hidden md:flex md:w-5/12 md:pr-12 md:text-right justify-start md:justify-end">
                 <div class="card-trayectoria p-6 md:p-8 rounded-2xl shadow-2xl hover:border-purple-500/50 transition-all duration-300 w-full text-left md:text-right">
                   <span class="fecha-tarjeta text-purple-400 mb-3 block">2001–2008</span>
-                  <h3 class="titulo-tarjeta mb-4">Origen e identidad</h3>
-                  <p class="descripcion-tarjeta mb-5">Nacer entre dos culturas: crecí en Buenos Aires dentro de una familia inmigrante rusa, formando desde el inicio una identidad entre dos mundos.</p>
+                  <h3 class="titulo-tarjeta mb-4" data-es="Origen e identidad" data-en="Origin and Identity">Origen e identidad</h3>
+                  <p class="descripcion-tarjeta mb-5" data-es="Nacer entre dos culturas: crecí en Buenos Aires dentro de una familia inmigrante rusa, formando desde el inicio una identidad entre dos mundos." data-en="Growing up between two cultures: I grew up in Buenos Aires within a Russian immigrant family, forming a dual identity from the very beginning.">Nacer entre dos culturas: crecí en Buenos Aires dentro de una familia inmigrante rusa, formando desde el inicio una identidad entre dos mundos.</p>
                   <ul class="bullets-tarjeta space-y-2">
-                    <li>Nací el 1 de marzo de 2001 en Flores, CABA.</li>
-                    <li>Familia de origen ruso llegada a Argentina en 1995.</li>
-                    <li>Infancia en sistema educativo público argentino.</li>
-                    <li>Crecimiento con fuerte influencia cultural y lingüística rusa en el hogar.</li>
+                    <li data-es="Nací el 1 de marzo de 2001 en Flores, CABA." data-en="I was born on March 1, 2001 in Flores, Buenos Aires.">Nací el 1 de marzo de 2001 en Flores, CABA.</li>
+                    <li data-es="Familia de origen ruso llegada a Argentina en 1995." data-en="My family arrived in Argentina from Russia in 1995.">Familia de origen ruso llegada a Argentina en 1995.</li>
+                    <li data-es="Infancia en sistema educativo público argentino." data-en="Childhood in the Argentine public education system.">Infancia en sistema educativo público argentino.</li>
+                    <li data-es="Crecimiento con fuerte influencia cultural y lingüística rusa en el hogar." data-en="Grew up with strong Russian cultural and linguistic influence at home.">Crecimiento con fuerte influencia cultural y lingüística rusa en el hogar.</li>
                   </ul>
                 </div>
               </div>
@@ -210,7 +224,7 @@
                   <img src="https://images.unsplash.com/photo-1513407030348-c983a97b98d8?w=900&q=80" alt="Lengua, cultura y formación temprana" class="w-full h-full object-cover" loading="lazy" />
                   <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-4">
                     <span style="color:#60a5fa; font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:600; letter-spacing:2px; text-transform:uppercase; margin-bottom:4px; display:block;">2008–2012</span>
-                    <h3 style="font-family:'General Sans',sans-serif; font-size:18px; font-weight:600; color:white; line-height:1.2; margin:0;">Lengua, cultura y formación temprana</h3>
+                    <h3 style="font-family:'General Sans',sans-serif; font-size:18px; font-weight:600; color:white; line-height:1.2; margin:0;" data-es="Lengua, cultura y formación temprana" data-en="Language, Culture and Early Education">Lengua, cultura y formación temprana</h3>
                   </div>
                   <div style="position:absolute; top:12px; right:12px; width:30px; height:30px; border-radius:50%; background:rgba(255,255,255,0.2); backdrop-filter:blur(4px); display:flex; align-items:center; justify-content:center; color:white; font-size:13px;">↗</div>
                 </div>
@@ -227,13 +241,13 @@
               <div class="hidden md:flex md:w-5/12 md:pl-12 justify-start">
                 <div class="card-trayectoria p-6 md:p-8 rounded-2xl shadow-2xl hover:border-blue-500/50 transition-all duration-300 w-full text-left">
                   <span class="fecha-tarjeta text-blue-400 mb-3 block">2008–2012</span>
-                  <h3 class="titulo-tarjeta mb-4">Lengua, cultura y formación temprana</h3>
-                  <p class="descripcion-tarjeta mb-5">Raíces y apertura cultural: desde chico incorporé una formación paralela en idioma y cultura rusa que amplió mi visión del mundo.</p>
+                  <h3 class="titulo-tarjeta mb-4" data-es="Lengua, cultura y formación temprana" data-en="Language, Culture and Early Education">Lengua, cultura y formación temprana</h3>
+                  <p class="descripcion-tarjeta mb-5" data-es="Raíces y apertura cultural: desde chico incorporé una formación paralela en idioma y cultura rusa que amplió mi visión del mundo." data-en="Roots and cultural openness: from a young age I pursued parallel studies in Russian language and culture that broadened my worldview.">Raíces y apertura cultural: desde chico incorporé una formación paralela en idioma y cultura rusa que amplió mi visión del mundo.</p>
                   <ul class="bullets-tarjeta space-y-2">
-                    <li>Estudio en Casa de Rusia (lengua, cultura, matemática).</li>
-                    <li>Desarrollo fluido del idioma ruso desde la infancia.</li>
-                    <li>Participación en concurso internacional del gobierno ruso.</li>
-                    <li>Viaje a Moscú como experiencia intercultural formativa.</li>
+                    <li data-es="Estudio en Casa de Rusia (lengua, cultura, matemática)." data-en="Studies at the House of Russia (language, culture, mathematics).">Estudio en Casa de Rusia (lengua, cultura, matemática).</li>
+                    <li data-es="Desarrollo fluido del idioma ruso desde la infancia." data-en="Fluent development of the Russian language from childhood.">Desarrollo fluido del idioma ruso desde la infancia.</li>
+                    <li data-es="Participación en concurso internacional del gobierno ruso." data-en="Participated in an international competition organized by the Russian government.">Participación en concurso internacional del gobierno ruso.</li>
+                    <li data-es="Viaje a Moscú como experiencia intercultural formativa." data-en="Trip to Moscow as a formative intercultural experience.">Viaje a Moscú como experiencia intercultural formativa.</li>
                   </ul>
                 </div>
               </div>
@@ -249,7 +263,7 @@
                   <img src="https://images.unsplash.com/photo-1518834107812-67b0b7c58434?w=900&q=80" alt="Disciplina y primer objetivo de alto rendimiento" class="w-full h-full object-cover" loading="lazy" />
                   <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-4">
                     <span style="color:#2dd4bf; font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:600; letter-spacing:2px; text-transform:uppercase; margin-bottom:4px; display:block;">2012–2015</span>
-                    <h3 style="font-family:'General Sans',sans-serif; font-size:18px; font-weight:600; color:white; line-height:1.2; margin:0;">Disciplina y primer objetivo de alto rendimiento</h3>
+                    <h3 style="font-family:'General Sans',sans-serif; font-size:18px; font-weight:600; color:white; line-height:1.2; margin:0;" data-es="Disciplina y primer objetivo de alto rendimiento" data-en="Discipline and First High-Performance Goal">Disciplina y primer objetivo de alto rendimiento</h3>
                   </div>
                   <div style="position:absolute; top:12px; right:12px; width:30px; height:30px; border-radius:50%; background:rgba(255,255,255,0.2); backdrop-filter:blur(4px); display:flex; align-items:center; justify-content:center; color:white; font-size:13px;">↗</div>
                 </div>
@@ -259,13 +273,13 @@
               <div class="hidden md:flex md:w-5/12 md:pr-12 md:text-right justify-start md:justify-end">
                 <div class="card-trayectoria p-6 md:p-8 rounded-2xl shadow-2xl hover:border-teal-500/50 transition-all duration-300 w-full text-left md:text-right">
                   <span class="fecha-tarjeta text-teal-400 mb-3 block">2012–2015</span>
-                  <h3 class="titulo-tarjeta mb-4">Disciplina y primer objetivo de alto rendimiento</h3>
-                  <p class="descripcion-tarjeta mb-5">La danza clásica se transformó en un objetivo de alto rendimiento que exigió disciplina, preparación y constancia.</p>
+                  <h3 class="titulo-tarjeta mb-4" data-es="Disciplina y primer objetivo de alto rendimiento" data-en="Discipline and First High-Performance Goal">Disciplina y primer objetivo de alto rendimiento</h3>
+                  <p class="descripcion-tarjeta mb-5" data-es="La danza clásica se transformó en un objetivo de alto rendimiento que exigió disciplina, preparación y constancia." data-en="Classical dance became a high-performance pursuit that demanded discipline, preparation and consistency.">La danza clásica se transformó en un objetivo de alto rendimiento que exigió disciplina, preparación y constancia.</p>
                   <ul class="bullets-tarjeta space-y-2">
-                    <li>Inicio en danza clásica como actividad extracurricular.</li>
-                    <li>Transición a preparación intensiva para ingreso al Teatro Colón.</li>
-                    <li>Estudio complementario de francés y música.</li>
-                    <li>Ingreso al Instituto del Teatro Colón con beca tras examen exigente.</li>
+                    <li data-es="Inicio en danza clásica como actividad extracurricular." data-en="Started classical dance as an extracurricular activity.">Inicio en danza clásica como actividad extracurricular.</li>
+                    <li data-es="Transición a preparación intensiva para ingreso al Teatro Colón." data-en="Transitioned to intensive preparation for entry into the Teatro Colón.">Transición a preparación intensiva para ingreso al Teatro Colón.</li>
+                    <li data-es="Estudio complementario de francés y música." data-en="Supplementary studies in French and music.">Estudio complementario de francés y música.</li>
+                    <li data-es="Ingreso al Instituto del Teatro Colón con beca tras examen exigente." data-en="Admitted to the Teatro Colón Institute with a full scholarship after a rigorous exam.">Ingreso al Instituto del Teatro Colón con beca tras examen exigente.</li>
                   </ul>
                 </div>
               </div>
@@ -288,7 +302,7 @@
                   <img src="https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=900&q=80" alt="Alto rendimiento y rutina extrema" class="w-full h-full object-cover" loading="lazy" />
                   <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-4">
                     <span style="color:#fb923c; font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:600; letter-spacing:2px; text-transform:uppercase; margin-bottom:4px; display:block;">2015–2017</span>
-                    <h3 style="font-family:'General Sans',sans-serif; font-size:18px; font-weight:600; color:white; line-height:1.2; margin:0;">Alto rendimiento y rutina extrema</h3>
+                    <h3 style="font-family:'General Sans',sans-serif; font-size:18px; font-weight:600; color:white; line-height:1.2; margin:0;" data-es="Alto rendimiento y rutina extrema" data-en="High Performance and Extreme Routine">Alto rendimiento y rutina extrema</h3>
                   </div>
                   <div style="position:absolute; top:12px; right:12px; width:30px; height:30px; border-radius:50%; background:rgba(255,255,255,0.2); backdrop-filter:blur(4px); display:flex; align-items:center; justify-content:center; color:white; font-size:13px;">↗</div>
                 </div>
@@ -305,13 +319,13 @@
               <div class="hidden md:flex md:w-5/12 md:pl-12 justify-start">
                 <div class="card-trayectoria p-6 md:p-8 rounded-2xl shadow-2xl hover:border-orange-500/50 transition-all duration-300 w-full text-left">
                   <span class="fecha-tarjeta text-orange-400 mb-3 block">2015–2017</span>
-                  <h3 class="titulo-tarjeta mb-4">Alto rendimiento y rutina extrema</h3>
-                  <p class="descripcion-tarjeta mb-5">Disciplina diaria como forma de vida: una etapa de exigencia máxima donde combiné formación artística y educación formal en paralelo.</p>
+                  <h3 class="titulo-tarjeta mb-4" data-es="Alto rendimiento y rutina extrema" data-en="High Performance and Extreme Routine">Alto rendimiento y rutina extrema</h3>
+                  <p class="descripcion-tarjeta mb-5" data-es="Disciplina diaria como forma de vida: una etapa de exigencia máxima donde combiné formación artística y educación formal en paralelo." data-en="Daily discipline as a way of life: a period of peak demands where I combined artistic training and formal education simultaneously.">Disciplina diaria como forma de vida: una etapa de exigencia máxima donde combiné formación artística y educación formal en paralelo.</p>
                   <ul class="bullets-tarjeta space-y-2">
-                    <li>Entrenamiento diario de 5:30 a 12:00 en el Teatro Colón.</li>
-                    <li>Secundaria en turno tarde + ensayos nocturnos ocasionales.</li>
-                    <li>Formación en danza clásica, contemporáneo, folklore y partener.</li>
-                    <li>Continuidad en idiomas y desarrollo técnico-musical.</li>
+                    <li data-es="Entrenamiento diario de 5:30 a 12:00 en el Teatro Colón." data-en="Daily training from 5:30 to 12:00 at the Teatro Colón.">Entrenamiento diario de 5:30 a 12:00 en el Teatro Colón.</li>
+                    <li data-es="Secundaria en turno tarde + ensayos nocturnos ocasionales." data-en="High school in the afternoon shift plus occasional evening rehearsals.">Secundaria en turno tarde + ensayos nocturnos ocasionales.</li>
+                    <li data-es="Formación en danza clásica, contemporáneo, folklore y partener." data-en="Training in classical, contemporary, folklore and partnering dance.">Formación en danza clásica, contemporáneo, folklore y partener.</li>
+                    <li data-es="Continuidad en idiomas y desarrollo técnico-musical." data-en="Continued language studies and technical-musical development.">Continuidad en idiomas y desarrollo técnico-musical.</li>
                   </ul>
                 </div>
               </div>
@@ -327,7 +341,7 @@
                   <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=900&q=80" alt="Transición, cambios y redefinición" class="w-full h-full object-cover" loading="lazy" />
                   <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-4">
                     <span style="color:#fb7185; font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:600; letter-spacing:2px; text-transform:uppercase; margin-bottom:4px; display:block;">2017–2018</span>
-                    <h3 style="font-family:'General Sans',sans-serif; font-size:18px; font-weight:600; color:white; line-height:1.2; margin:0;">Transición, cambios y redefinición</h3>
+                    <h3 style="font-family:'General Sans',sans-serif; font-size:18px; font-weight:600; color:white; line-height:1.2; margin:0;" data-es="Transición, cambios y redefinición" data-en="Transition, Changes and Redefinition">Transición, cambios y redefinición</h3>
                   </div>
                   <div style="position:absolute; top:12px; right:12px; width:30px; height:30px; border-radius:50%; background:rgba(255,255,255,0.2); backdrop-filter:blur(4px); display:flex; align-items:center; justify-content:center; color:white; font-size:13px;">↗</div>
                 </div>
@@ -337,13 +351,13 @@
               <div class="hidden md:flex md:w-5/12 md:pr-12 md:text-right justify-start md:justify-end">
                 <div class="card-trayectoria p-6 md:p-8 rounded-2xl shadow-2xl hover:border-rose-500/50 transition-all duration-300 w-full text-left md:text-right">
                   <span class="fecha-tarjeta text-rose-400 mb-3 block">2017–2018</span>
-                  <h3 class="titulo-tarjeta mb-4">Transición, cambios y redefinición</h3>
-                  <p class="descripcion-tarjeta mb-5">Redirigir el camino: una etapa de cambios estructurales en la que empecé a redefinir mi rumbo personal y académico.</p>
+                  <h3 class="titulo-tarjeta mb-4" data-es="Transición, cambios y redefinición" data-en="Transition, Changes and Redefinition">Transición, cambios y redefinición</h3>
+                  <p class="descripcion-tarjeta mb-5" data-es="Redirigir el camino: una etapa de cambios estructurales en la que empecé a redefinir mi rumbo personal y académico." data-en="Redirecting the path: a period of structural changes in which I began redefining my personal and academic direction.">Redirigir el camino: una etapa de cambios estructurales en la que empecé a redefinir mi rumbo personal y académico.</p>
                   <ul class="bullets-tarjeta space-y-2">
-                    <li>Cambio entre distintos colegios públicos en busca de mayor desafío.</li>
-                    <li>Decisión de dejar el Teatro Colón.</li>
-                    <li>Ingreso a escuela con orientación en Artes y Medios.</li>
-                    <li>Cierre de la etapa secundaria en diciembre de 2018.</li>
+                    <li data-es="Cambio entre distintos colegios públicos en busca de mayor desafío." data-en="Transferred between public schools in search of greater challenge.">Cambio entre distintos colegios públicos en busca de mayor desafío.</li>
+                    <li data-es="Decisión de dejar el Teatro Colón." data-en="Decision to leave the Teatro Colón.">Decisión de dejar el Teatro Colón.</li>
+                    <li data-es="Ingreso a escuela con orientación en Artes y Medios." data-en="Enrolled in a school with an Arts and Media focus.">Ingreso a escuela con orientación en Artes y Medios.</li>
+                    <li data-es="Cierre de la etapa secundaria en diciembre de 2018." data-en="Completed high school in December 2018.">Cierre de la etapa secundaria en diciembre de 2018.</li>
                   </ul>
                 </div>
               </div>
@@ -366,7 +380,7 @@
                   <img src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=900&q=80" alt="Decisión universitaria y oportunidad" class="w-full h-full object-cover" loading="lazy" />
                   <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-4">
                     <span style="color:#818cf8; font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:600; letter-spacing:2px; text-transform:uppercase; margin-bottom:4px; display:block;">2018–2020</span>
-                    <h3 style="font-family:'General Sans',sans-serif; font-size:18px; font-weight:600; color:white; line-height:1.2; margin:0;">Decisión universitaria y oportunidad</h3>
+                    <h3 style="font-family:'General Sans',sans-serif; font-size:18px; font-weight:600; color:white; line-height:1.2; margin:0;" data-es="Decisión universitaria y oportunidad" data-en="University Decision and Opportunity">Decisión universitaria y oportunidad</h3>
                   </div>
                   <div style="position:absolute; top:12px; right:12px; width:30px; height:30px; border-radius:50%; background:rgba(255,255,255,0.2); backdrop-filter:blur(4px); display:flex; align-items:center; justify-content:center; color:white; font-size:13px;">↗</div>
                 </div>
@@ -383,14 +397,14 @@
               <div class="hidden md:flex md:w-5/12 md:pl-12 justify-start">
                 <div class="card-trayectoria p-6 md:p-8 rounded-2xl shadow-2xl hover:border-indigo-500/50 transition-all duration-300 w-full text-left">
                   <span class="fecha-tarjeta text-indigo-400 mb-3 block">2018–2020</span>
-                  <h3 class="titulo-tarjeta mb-4">Decisión universitaria y oportunidad</h3>
-                  <p class="descripcion-tarjeta mb-5">El salto al ITBA: un proceso consciente de búsqueda académica que culminó en una oportunidad clave de formación.</p>
+                  <h3 class="titulo-tarjeta mb-4" data-es="Decisión universitaria y oportunidad" data-en="University Decision and Opportunity">Decisión universitaria y oportunidad</h3>
+                  <p class="descripcion-tarjeta mb-5" data-es="El salto al ITBA: un proceso consciente de búsqueda académica que culminó en una oportunidad clave de formación." data-en="The leap to ITBA: a deliberate process of academic exploration that culminated in a key educational opportunity.">El salto al ITBA: un proceso consciente de búsqueda académica que culminó en una oportunidad clave de formación.</p>
                   <ul class="bullets-tarjeta space-y-2">
-                    <li>Exploración profunda de universidades y carreras.</li>
-                    <li>Interés creciente por negocios, análisis y comportamiento del consumidor.</li>
-                    <li>Selección del ITBA como institución objetivo.</li>
-                    <li>Obtención de beca completa tras proceso de evaluación.</li>
-                    <li>Ingreso a la carrera en contexto de pandemia.</li>
+                    <li data-es="Exploración profunda de universidades y carreras." data-en="In-depth research into universities and degree programs.">Exploración profunda de universidades y carreras.</li>
+                    <li data-es="Interés creciente por negocios, análisis y comportamiento del consumidor." data-en="Growing interest in business, analytics and consumer behavior.">Interés creciente por negocios, análisis y comportamiento del consumidor.</li>
+                    <li data-es="Selección del ITBA como institución objetivo." data-en="Selected ITBA as the target institution.">Selección del ITBA como institución objetivo.</li>
+                    <li data-es="Obtención de beca completa tras proceso de evaluación." data-en="Obtained a full scholarship through the evaluation process.">Obtención de beca completa tras proceso de evaluación.</li>
+                    <li data-es="Ingreso a la carrera en contexto de pandemia." data-en="Enrolled in the degree program amid the pandemic.">Ingreso a la carrera en contexto de pandemia.</li>
                   </ul>
                 </div>
               </div>
@@ -406,7 +420,7 @@
                   <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=900&q=80" alt="Formación, experiencia y perfil profesional actual" class="w-full h-full object-cover" loading="lazy" />
                   <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-4">
                     <span style="color:#a78bfa; font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:600; letter-spacing:2px; text-transform:uppercase; margin-bottom:4px; display:block;">2020–Hoy</span>
-                    <h3 style="font-family:'General Sans',sans-serif; font-size:18px; font-weight:600; color:white; line-height:1.2; margin:0;">Formación, experiencia y perfil profesional actual</h3>
+                    <h3 style="font-family:'General Sans',sans-serif; font-size:18px; font-weight:600; color:white; line-height:1.2; margin:0;" data-es="Formación, experiencia y perfil profesional actual" data-en="Education, Experience and Current Professional Profile">Formación, experiencia y perfil profesional actual</h3>
                   </div>
                   <div style="position:absolute; top:12px; right:12px; width:30px; height:30px; border-radius:50%; background:rgba(255,255,255,0.2); backdrop-filter:blur(4px); display:flex; align-items:center; justify-content:center; color:white; font-size:13px;">↗</div>
                 </div>
@@ -416,14 +430,14 @@
               <div class="hidden md:flex md:w-5/12 md:pr-12 md:text-right justify-start md:justify-end">
                 <div class="card-trayectoria p-6 md:p-8 rounded-2xl shadow-2xl hover:border-purple-500/50 transition-all duration-300 w-full text-left md:text-right">
                   <span class="fecha-tarjeta text-purple-400 mb-3 block">2020–Hoy</span>
-                  <h3 class="titulo-tarjeta mb-4">Formación, experiencia y perfil profesional actual</h3>
-                  <p class="descripcion-tarjeta mb-5">De la formación al mundo real: consolidación de mi perfil híbrido entre negocio, análisis, tecnología y ejecución en entornos reales.</p>
+                  <h3 class="titulo-tarjeta mb-4" data-es="Formación, experiencia y perfil profesional actual" data-en="Education, Experience and Current Professional Profile">Formación, experiencia y perfil profesional actual</h3>
+                  <p class="descripcion-tarjeta mb-5" data-es="De la formación al mundo real: consolidación de mi perfil híbrido entre negocio, análisis, tecnología y ejecución en entornos reales." data-en="From education to the real world: consolidating a hybrid profile spanning business, analytics, technology and real-world execution.">De la formación al mundo real: consolidación de mi perfil híbrido entre negocio, análisis, tecnología y ejecución en entornos reales.</p>
                   <ul class="bullets-tarjeta space-y-2">
-                    <li>Adaptación al entorno universitario del ITBA con alta exigencia académica.</li>
-                    <li>Participación en proyectos internacionales de investigación de mercado.</li>
-                    <li>Experiencia en startup (Motivia Health) durante etapa final de carrera.</li>
-                    <li>Ingreso a Tekne Data Labs con foco en análisis, marketing y contenido.</li>
-                    <li>Desarrollo de habilidades en ventas, IA y construcción de marca personal.</li>
+                    <li data-es="Adaptación al entorno universitario del ITBA con alta exigencia académica." data-en="Adapted to ITBA's high-demand academic environment.">Adaptación al entorno universitario del ITBA con alta exigencia académica.</li>
+                    <li data-es="Participación en proyectos internacionales de investigación de mercado." data-en="Participated in international market research projects.">Participación en proyectos internacionales de investigación de mercado.</li>
+                    <li data-es="Experiencia en startup (Motivia Health) durante etapa final de carrera." data-en="Experience at a startup (Motivia Health) during the final stage of the degree.">Experiencia en startup (Motivia Health) durante etapa final de carrera.</li>
+                    <li data-es="Ingreso a Tekne Data Labs con foco en análisis, marketing y contenido." data-en="Joined Tekne Data Labs with a focus on analytics, marketing and content.">Ingreso a Tekne Data Labs con foco en análisis, marketing y contenido.</li>
+                    <li data-es="Desarrollo de habilidades en ventas, IA y construcción de marca personal." data-en="Built skills in sales, AI and personal brand building.">Desarrollo de habilidades en ventas, IA y construcción de marca personal.</li>
                   </ul>
                 </div>
               </div>
@@ -541,6 +555,117 @@
   <!-- Vercel Analytics -->
   <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
   <script defer src="/_vercel/insights/script.js"></script>
+
+  <!-- Sistema bilingüe: data-es / data-en + HITOS_MODAL -->
+  <script>
+  (function () {
+    var _hitosES = null;
+    var HITOS_EN = [
+      {
+        titulo: 'Origin and Identity',
+        descripcion: 'Growing up between two cultures: I grew up in Buenos Aires within a Russian immigrant family, forming a dual identity from the very beginning.',
+        bullets: [
+          'I was born on March 1, 2001 in Flores, Buenos Aires.',
+          'My family arrived in Argentina from Russia in 1995.',
+          'Childhood in the Argentine public education system.',
+          'Grew up with strong Russian cultural and linguistic influence at home.'
+        ]
+      },
+      {
+        titulo: 'Language, Culture and Early Education',
+        descripcion: 'Roots and cultural openness: from a young age I pursued parallel studies in Russian language and culture that broadened my worldview.',
+        bullets: [
+          'Studies at the House of Russia (language, culture, mathematics).',
+          'Fluent development of the Russian language from childhood.',
+          'Participated in an international competition organized by the Russian government.',
+          'Trip to Moscow as a formative intercultural experience.'
+        ]
+      },
+      {
+        titulo: 'Discipline and First High-Performance Goal',
+        descripcion: 'Classical dance became a high-performance pursuit that demanded discipline, preparation and consistency.',
+        bullets: [
+          'Started classical dance as an extracurricular activity.',
+          'Transitioned to intensive preparation for entry into the Teatro Colón.',
+          'Supplementary studies in French and music.',
+          'Admitted to the Teatro Colón Institute with a full scholarship after a rigorous exam.'
+        ]
+      },
+      {
+        titulo: 'High Performance and Extreme Routine',
+        descripcion: 'Daily discipline as a way of life: a period of peak demands where I combined artistic training and formal education simultaneously.',
+        bullets: [
+          'Daily training from 5:30 to 12:00 at the Teatro Colón.',
+          'High school in the afternoon shift plus occasional evening rehearsals.',
+          'Training in classical, contemporary, folklore and partnering dance.',
+          'Continued language studies and technical-musical development.'
+        ]
+      },
+      {
+        titulo: 'Transition, Changes and Redefinition',
+        descripcion: 'Redirecting the path: a period of structural changes in which I began redefining my personal and academic direction.',
+        bullets: [
+          'Transferred between public schools in search of greater challenge.',
+          'Decision to leave the Teatro Colón.',
+          'Enrolled in a school with an Arts and Media focus.',
+          'Completed high school in December 2018.'
+        ]
+      },
+      {
+        titulo: 'University Decision and Opportunity',
+        descripcion: 'The leap to ITBA: a deliberate process of academic exploration that culminated in a key educational opportunity.',
+        bullets: [
+          'In-depth research into universities and degree programs.',
+          'Growing interest in business, analytics and consumer behavior.',
+          'Selected ITBA as the target institution.',
+          'Obtained a full scholarship through the evaluation process.',
+          'Enrolled in the degree program amid the pandemic.'
+        ]
+      },
+      {
+        titulo: 'Education, Experience and Current Professional Profile',
+        descripcion: 'From education to the real world: consolidating a hybrid profile spanning business, analytics, technology and real-world execution.',
+        bullets: [
+          "Adapted to ITBA's high-demand academic environment.",
+          'Participated in international market research projects.',
+          'Experience at a startup (Motivia Health) during the final stage of the degree.',
+          'Joined Tekne Data Labs with a focus on analytics, marketing and content.',
+          'Built skills in sales, AI and personal brand building.'
+        ]
+      }
+    ];
+
+    window.__idiomaPatch = function (lang) {
+      /* 1. Actualizar elementos con data-es / data-en */
+      document.querySelectorAll('[data-es]').forEach(function (el) {
+        var val = lang === 'en' ? el.getAttribute('data-en') : el.getAttribute('data-es');
+        if (val !== null) el.textContent = val;
+      });
+
+      /* 2. Actualizar HITOS_MODAL */
+      if (typeof HITOS_MODAL === 'undefined') return;
+      if (!_hitosES) {
+        _hitosES = HITOS_MODAL.map(function (h) {
+          return { titulo: h.titulo, descripcion: h.descripcion, bullets: h.bullets.slice() };
+        });
+      }
+      var src = lang === 'en' ? HITOS_EN : _hitosES;
+      src.forEach(function (h, i) {
+        if (HITOS_MODAL[i]) {
+          HITOS_MODAL[i].titulo      = h.titulo;
+          HITOS_MODAL[i].descripcion = h.descripcion;
+          HITOS_MODAL[i].bullets     = h.bullets;
+        }
+      });
+
+      /* 3. Re-renderizar modal si está abierto */
+      var overlay = document.getElementById('trayectoria-modal-overlay');
+      if (overlay && overlay.style.display !== 'none') {
+        if (typeof window._renderHitoGlobal === 'function') window._renderHitoGlobal();
+      }
+    };
+  })();
+  </script>
 
   <!-- Auto-scroll desktop cada 40 segundos -->
   <script>
@@ -747,7 +872,11 @@
         document.body.style.overflow = 'hidden';
         renderHito();
         iniciarAutoAvance();
+        var lang = localStorage.getItem('idioma') || 'es';
+        if (typeof window.aplicarIdioma === 'function') window.aplicarIdioma(lang);
       }
+
+      window._renderHitoGlobal = function () { renderHito(); };
 
       function cerrarModal() {
         overlay.style.display = 'none';

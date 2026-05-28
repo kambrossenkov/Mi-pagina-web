@@ -242,16 +242,16 @@
                 <line x1="16" y1="17" x2="8" y2="17"/>
                 <polyline points="10 9 9 9 8 9"/>
               </svg>
-              <span style="font-size:11px;font-weight:700;letter-spacing:2px;color:#93c5fd;">CV</span>
+              <span data-es="CV" data-en="CV" style="font-size:11px;font-weight:700;letter-spacing:2px;color:#93c5fd;">CV</span>
             </div>
           </div>
           <div class="p-6 flex flex-col justify-between h-[calc(100%-12rem)]">
             <div>
               <div class="flex items-center gap-2 mb-3">
-                <span class="text-xs font-bold uppercase tracking-wider text-accent">MI PERFIL</span><span class="text-xs text-muted-foreground ml-2">• 03-may-2026</span>
+                <span class="text-xs font-bold uppercase tracking-wider text-accent" data-es="MI PERFIL" data-en="MY PROFILE">MI PERFIL</span><span class="text-xs text-muted-foreground ml-2">• 03-may-2026</span>
               </div>
-              <h3 class="text-xl font-bold mb-2 tracking-tight group-hover:text-accent text-text transition-colors">Mi CV</h3>
-              <p class="text-muted-foreground line-clamp-3 text-sm leading-relaxed">Ingresá a mi CV en castellano o en inglés, según prefieras.</p>
+              <h3 class="text-xl font-bold mb-2 tracking-tight group-hover:text-accent text-text transition-colors" data-es="Mi CV" data-en="My CV">Mi CV</h3>
+              <p class="text-muted-foreground line-clamp-3 text-sm leading-relaxed" data-es="Ingresá a mi CV en castellano o en inglés, según prefieras." data-en="Access my CV in Spanish or English, whichever you prefer.">Ingresá a mi CV en castellano o en inglés, según prefieras.</p>
             </div>
           </div>
         </div>
@@ -269,8 +269,8 @@
               <div class="flex items-center gap-2 mb-3">
                 <span class="text-xs font-bold uppercase tracking-wider text-accent"></span><span class="text-xs text-muted-foreground ml-2">• 12-dic-2024</span>
               </div>
-              <h3 class="text-xl font-bold mb-2 tracking-tight group-hover:text-accent text-text transition-colors">Finalización de mi cursada en la carrera</h3>
-              <p class="text-muted-foreground line-clamp-3 text-sm leading-relaxed">Luego de un recorrido de 4 años y medio en la carrera de Lic. en gestión de negocios pude finalizarla en tiempo y en forma por la beca obtenida</p>
+              <h3 class="text-xl font-bold mb-2 tracking-tight group-hover:text-accent text-text transition-colors" data-es="Finalización de mi cursada en la carrera" data-en="Completion of my University Degree">Finalización de mi cursada en la carrera</h3>
+              <p class="text-muted-foreground line-clamp-3 text-sm leading-relaxed" data-es="Luego de un recorrido de 4 años y medio en la carrera de Lic. en gestión de negocios pude finalizarla en tiempo y en forma por la beca obtenida" data-en="After 4 and a half years in the Business Management degree, I was able to complete it on time thanks to the scholarship I received.">Luego de un recorrido de 4 años y medio en la carrera de Lic. en gestión de negocios pude finalizarla en tiempo y en forma por la beca obtenida</p>
             </div>
           </div>
         </a>
@@ -286,10 +286,10 @@
           <div class="p-6 flex flex-col justify-between h-[calc(100%-12rem)]">
             <div>
               <div class="flex items-center gap-2 mb-3">
-                <span class="text-xs font-bold uppercase tracking-wider text-accent">INVENTOS</span><span class="text-xs text-muted-foreground ml-2">• 20-mar-2025</span>
+                <span class="text-xs font-bold uppercase tracking-wider text-accent" data-es="INVENTOS" data-en="PROJECTS">INVENTOS</span><span class="text-xs text-muted-foreground ml-2">• 20-mar-2025</span>
               </div>
-              <h3 class="text-xl font-bold mb-2 tracking-tight group-hover:text-accent text-text transition-colors">Kiosco Casa Lupi</h3>
-              <p class="text-muted-foreground line-clamp-3 text-sm leading-relaxed">Kiosco de unos conocidos muy cercanos míos que les brindé una ayuda tecnológica y administrativa para mejorar su marca familiar.</p>
+              <h3 class="text-xl font-bold mb-2 tracking-tight group-hover:text-accent text-text transition-colors" data-es="Kiosco Casa Lupi" data-en="Kiosco Casa Lupi">Kiosco Casa Lupi</h3>
+              <p class="text-muted-foreground line-clamp-3 text-sm leading-relaxed" data-es="Kiosco de unos conocidos muy cercanos míos que les brindé una ayuda tecnológica y administrativa para mejorar su marca familiar." data-en="A kiosk belonging to close acquaintances of mine, for whom I provided technological and administrative support to strengthen their family brand.">Kiosco de unos conocidos muy cercanos míos que les brindé una ayuda tecnológica y administrativa para mejorar su marca familiar.</p>
             </div>
           </div>
         </a>
@@ -414,6 +414,14 @@
 
   <!-- Include App Logic -->
   <script src="script.js"></script>
+  <script>
+  window.__idiomaPatch = function (lang) {
+    document.querySelectorAll('[data-es]').forEach(function (el) {
+      var val = lang === 'en' ? el.getAttribute('data-en') : el.getAttribute('data-es');
+      if (val !== null) el.textContent = val;
+    });
+  };
+  </script>
   <script src="idioma.js"></script>
 
   <!-- Patch: reemplazar Calistenia por Kiosco Casa Lupi sin tocar script.js -->
