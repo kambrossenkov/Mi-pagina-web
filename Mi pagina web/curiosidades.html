@@ -7,27 +7,24 @@
   <title>Curiosidades | Perspective Blog</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <!-- Fuentes tipográficas premium -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Space+Grotesk:wght@500;600&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://api.fontshare.com/v2/css?f[]=general-sans@600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <script>
     tailwind.config = {
       theme: {
         extend: {
-          fontFamily: {
-            serif: ['Georgia', 'serif'],
-          },
+          fontFamily: { serif: ['Georgia', 'serif'] },
           colors: {
             background: 'var(--background)',
             card: 'var(--card)',
             text: 'var(--text)',
-            muted: {
-              DEFAULT: 'var(--muted)',
-              foreground: 'var(--muted-fg)'
-            },
+            muted: { DEFAULT: 'var(--muted)', foreground: 'var(--muted-fg)' },
             accent: '#3b82f6',
-            primary: {
-              DEFAULT: 'var(--primary)',
-              foreground: 'var(--primary-fg)'
-            },
+            primary: { DEFAULT: 'var(--primary)', foreground: 'var(--primary-fg)' },
             border: 'var(--border)',
             input: 'var(--input)',
             ring: 'var(--ring)'
@@ -36,79 +33,165 @@
       }
     }
   </script>
+  <style>
+    /* ── Título principal ── */
+    .titulo-trayectoria {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(52px, 7vw, 84px);
+      font-weight: 600;
+      letter-spacing: -1px;
+      line-height: 1;
+      color: #F5F1E8;
+      text-shadow: 0 4px 20px rgba(0,0,0,0.35);
+    }
+    /* ── Fechas / períodos ── */
+    .fecha-tarjeta {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    /* ── Títulos de tarjetas ── */
+    .titulo-tarjeta {
+      font-family: 'General Sans', sans-serif;
+      font-size: clamp(22px, 2.5vw, 30px);
+      font-weight: 600;
+      letter-spacing: -1px;
+      line-height: 1.15;
+      color: #F5F5F5;
+    }
+    /* ── Párrafo descriptivo ── */
+    .descripcion-tarjeta {
+      font-family: 'Inter', sans-serif;
+      font-size: clamp(14px, 1.3vw, 16px);
+      line-height: 1.85;
+      font-weight: 400;
+      letter-spacing: -0.2px;
+      color: rgba(255,255,255,0.78);
+    }
+    /* ── Bullets elegantes ── */
+    .bullets-tarjeta {
+      font-family: 'Inter', sans-serif;
+      font-size: clamp(13px, 1.2vw, 15px);
+      line-height: 1.75;
+      font-weight: 400;
+      letter-spacing: -0.1px;
+      color: rgba(255,255,255,0.55);
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .bullets-tarjeta li::before {
+      content: '— ';
+      color: rgba(255,255,255,0.3);
+    }
+    /* ── Cards: cristal oscuro ── */
+    .card-trayectoria {
+      background: rgba(15, 15, 20, 0.42) !important;
+      backdrop-filter: blur(12px) !important;
+      -webkit-backdrop-filter: blur(12px) !important;
+      border: 1px solid rgba(255,255,255,0.08) !important;
+    }
+
+    /* ── Mobile: grilla de imágenes, ocultar tarjetas de texto ── */
+    @media (max-width: 767px) {
+      .timeline-block .card-trayectoria {
+        display: none !important;
+      }
+      .timeline-block > div:not(.mobile-card-trigger) {
+        display: none !important;
+      }
+      .mobile-card-trigger {
+        display: block !important;
+      }
+      .timeline-block {
+        flex-direction: column !important;
+        padding-left: 50px;
+      }
+    }
+  </style>
 </head>
 <body class="min-h-screen bg-background text-text animate-fade-in transition-colors duration-300 flex flex-col">
   <div id="shader-bg" class="fixed inset-0 w-full h-full z-0 pointer-events-none"></div>
 
-  <!-- Wrapper para deslizar contenido sobre el canvas fijo -->
   <div class="relative z-10 w-full min-h-screen flex flex-col">
 
-    <!-- Header Component -->
+    <!-- Header -->
     <header class="sticky top-0 z-50 w-full bg-black/50 backdrop-blur-md border-b border-white/10 py-4 md:py-6 transition-colors duration-300">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
-      <div class="flex items-center gap-3">
-        <div class="w-8 h-8 md:w-10 md:h-10 border-2 border-text flex items-center justify-center text-text font-bold text-lg md:text-xl transition-colors duration-300">K</div>
-        <h1 class="text-xl md:text-2xl font-bold tracking-tight text-text font-serif transition-colors duration-300 hidden sm:block">Ambrossenkov</h1>
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 md:w-10 md:h-10 border-2 border-text flex items-center justify-center text-text font-bold text-lg md:text-xl transition-colors duration-300">K</div>
+          <h1 class="text-xl md:text-2xl font-bold tracking-tight text-text font-serif transition-colors duration-300 hidden sm:block">Ambrossenkov</h1>
+        </div>
+        <nav class="hidden md:flex gap-8 items-center text-sm font-medium text-text/90">
+          <a href="pasatiempos.html" data-i18n="nav-hobbies" class="hover:text-accent transition-colors">Pasatiempos</a>
+          <a href="curiosidades.html" data-i18n="nav-trajectory" class="hover:text-accent transition-colors">Mi trayectoria</a>
+          <a href="index.html" data-i18n="nav-home" class="hover:text-accent transition-colors">Inicio</a>
+          <a href="inventos.html" data-i18n="nav-inventions" class="hover:text-accent transition-colors">Inventos</a>
+        </nav>
+        <div class="flex items-center gap-4 md:gap-6">
+          <button id="lang-toggle" class="text-text hover:text-accent transition-colors text-sm font-bold uppercase w-8 flex-shrink-0">ES</button>
+          <a href="contacto.html" target="_blank" data-i18n="nav-contact" class="hidden md:block px-6 py-2 rounded-full bg-primary text-primary-foreground font-medium hover:opacity-90 transition-all text-center whitespace-nowrap">Contactarme</a>
+          <button id="mobile-menu-btn" class="md:hidden text-text hover:text-accent transition-colors focus:outline-none ml-2">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+          </button>
+        </div>
       </div>
-      <nav class="hidden md:flex gap-8 items-center text-sm font-medium text-text/90">
-        <a href="pasatiempos.html" data-i18n="nav-hobbies" class="hover:text-accent transition-colors">Pasatiempos</a>
-        <a href="curiosidades.html" data-i18n="nav-trajectory" class="hover:text-accent transition-colors">Mi trayectoria</a>
-        <a href="index.html" data-i18n="nav-home" class="hover:text-accent transition-colors">Inicio</a>
-        <a href="inventos.html" data-i18n="nav-inventions" class="hover:text-accent transition-colors">Inventos</a>
+      <nav id="mobile-menu" class="hidden flex-col gap-4 px-4 pt-4 pb-6 bg-black border-b border-white/10 md:hidden w-full shadow-lg">
+        <a href="pasatiempos.html" data-i18n="nav-hobbies" class="block text-base font-medium text-text/90 hover:text-accent">Pasatiempos</a>
+        <a href="curiosidades.html" data-i18n="nav-trajectory" class="block text-base font-medium text-text/90 hover:text-accent">Mi trayectoria</a>
+        <a href="index.html" data-i18n="nav-home" class="block text-base font-medium text-text/90 hover:text-accent">Inicio</a>
+        <a href="inventos.html" data-i18n="nav-inventions" class="block text-base font-medium text-text/90 hover:text-accent">Inventos</a>
+        <a href="contacto.html" target="_blank" data-i18n="nav-contact" class="block text-base font-medium text-primary hover:text-accent mt-2">Contactarme</a>
       </nav>
-      <div class="flex items-center gap-4 md:gap-6">
-        <button id="lang-toggle" class="text-text hover:text-accent transition-colors text-sm font-bold uppercase w-8 flex-shrink-0">
-          ES
-        </button>
-        <a href="contacto.html" target="_blank" data-i18n="nav-contact" class="hidden md:block px-6 py-2 rounded-full bg-primary text-primary-foreground font-medium hover:opacity-90 transition-all text-center whitespace-nowrap">
-          Contactarme
-        </a>
-        <!-- Hamburger Menu Button -->
-        <button id="mobile-menu-btn" class="md:hidden text-text hover:text-accent transition-colors focus:outline-none ml-2">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
-        </button>
-      </div>
-    </div>
-    <!-- Mobile Navigation -->
-    <nav id="mobile-menu" class="hidden flex-col gap-4 px-4 pt-4 pb-6 bg-black border-b border-white/10 md:hidden w-full shadow-lg">
-      <a href="pasatiempos.html" data-i18n="nav-hobbies" class="block text-base font-medium text-text/90 hover:text-accent">Pasatiempos</a>
-      <a href="curiosidades.html" data-i18n="nav-trajectory" class="block text-base font-medium text-text/90 hover:text-accent">Mi trayectoria</a>
-      <a href="index.html" data-i18n="nav-home" class="block text-base font-medium text-text/90 hover:text-accent">Inicio</a>
-      <a href="inventos.html" data-i18n="nav-inventions" class="block text-base font-medium text-text/90 hover:text-accent">Inventos</a>
-      <a href="contacto.html" target="_blank" data-i18n="nav-contact" class="block text-base font-medium text-primary hover:text-accent mt-2">Contactarme</a>
-    </nav>
-  </header>
+    </header>
 
     <main class="w-full min-h-screen pt-24 pb-24 z-10 relative">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 class="text-4xl md:text-5xl font-bold text-center text-white mb-20 font-serif tracking-tight drop-shadow-md">Mi Trayectoria</h2>
+        <h2 class="titulo-trayectoria text-center mb-16 drop-shadow-md">Mi Trayectoria</h2>
 
         <div id="timeline-container" class="relative w-full pb-10">
           <!-- Línea Base -->
           <div class="absolute left-[30px] md:left-1/2 md:-translate-x-1/2 top-0 bottom-0 w-[2px] bg-neutral-800 rounded-full"></div>
-
           <!-- Línea de Progreso Animada -->
           <div id="timeline-progress" class="absolute left-[30px] md:left-1/2 md:-translate-x-1/2 top-0 w-[2px] bg-gradient-to-b from-blue-500 to-purple-500 rounded-full transition-all duration-150 ease-out" style="height: 0%;"></div>
 
           <!-- Contenedor de Ítems -->
           <div class="relative z-10 flex flex-col gap-12 md:gap-24 pt-8">
 
-            <!-- Bloque 1 — IMPAR: tarjeta izquierda, imagen derecha -->
+            <!-- ═══ BLOQUE 1 — IMPAR (tarjeta izq, imagen der) ═══ -->
             <div class="timeline-block group relative flex flex-col md:flex-row items-center justify-between gap-6">
               <div class="absolute left-[30px] top-6 md:top-1/2 md:left-1/2 transform -translate-x-1/2 md:-translate-y-1/2 w-4 h-4 rounded-full bg-background border-2 border-purple-500 z-20 shadow-[0_0_15px_rgba(168,85,247,0.7)] group-hover:scale-125 transition-transform duration-300"></div>
-              <div class="w-full pl-[70px] md:pl-0 md:w-5/12 md:pr-12 md:text-right flex justify-start md:justify-end">
-                <div class="bg-card/30 backdrop-blur-xl border border-white/10 p-6 md:p-8 rounded-2xl shadow-2xl hover:bg-card/50 hover:border-purple-500/50 transition-all duration-300 w-full text-left md:text-right">
-                  <span class="text-purple-400 font-bold text-sm tracking-wider uppercase mb-2 block">2001–2008</span>
-                  <h3 class="text-xl md:text-2xl font-bold text-white mb-3">Origen e identidad</h3>
-                  <p class="text-gray-200 leading-relaxed text-sm md:text-base mb-4">Nacer entre dos culturas: crecí en Buenos Aires dentro de una familia inmigrante rusa, formando desde el inicio una identidad entre dos mundos.</p>
-                  <ul class="text-gray-400 text-sm md:text-base space-y-2 list-none">
-                    <li>• Nací el 1 de marzo de 2001 en Flores, CABA.</li>
-                    <li>• Familia de origen ruso llegada a Argentina en 1995.</li>
-                    <li>• Infancia en sistema educativo público argentino.</li>
-                    <li>• Crecimiento con fuerte influencia cultural y lingüística rusa en el hogar.</li>
+
+              <!-- Mobile trigger -->
+              <div class="mobile-card-trigger md:hidden w-full mb-4 cursor-pointer" data-hito="0">
+                <div class="w-full rounded-2xl overflow-hidden shadow-2xl border border-white/10 relative" style="aspect-ratio:16/9;">
+                  <img src="https://images.unsplash.com/photo-1589909202802-8f4aadce1849?w=900&q=80" alt="Origen e identidad" class="w-full h-full object-cover" loading="lazy" />
+                  <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-4">
+                    <span style="color:#a78bfa; font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:600; letter-spacing:2px; text-transform:uppercase; margin-bottom:4px; display:block;">2001–2008</span>
+                    <h3 style="font-family:'General Sans',sans-serif; font-size:18px; font-weight:600; color:white; line-height:1.2; margin:0;">Origen e identidad</h3>
+                  </div>
+                  <div style="position:absolute; top:12px; right:12px; width:30px; height:30px; border-radius:50%; background:rgba(255,255,255,0.2); backdrop-filter:blur(4px); display:flex; align-items:center; justify-content:center; color:white; font-size:13px;">↗</div>
+                </div>
+              </div>
+
+              <!-- Tarjeta texto: solo desktop -->
+              <div class="hidden md:flex md:w-5/12 md:pr-12 md:text-right justify-start md:justify-end">
+                <div class="card-trayectoria p-6 md:p-8 rounded-2xl shadow-2xl hover:border-purple-500/50 transition-all duration-300 w-full text-left md:text-right">
+                  <span class="fecha-tarjeta text-purple-400 mb-3 block">2001–2008</span>
+                  <h3 class="titulo-tarjeta mb-4">Origen e identidad</h3>
+                  <p class="descripcion-tarjeta mb-5">Nacer entre dos culturas: crecí en Buenos Aires dentro de una familia inmigrante rusa, formando desde el inicio una identidad entre dos mundos.</p>
+                  <ul class="bullets-tarjeta space-y-2">
+                    <li>Nací el 1 de marzo de 2001 en Flores, CABA.</li>
+                    <li>Familia de origen ruso llegada a Argentina en 1995.</li>
+                    <li>Infancia en sistema educativo público argentino.</li>
+                    <li>Crecimiento con fuerte influencia cultural y lingüística rusa en el hogar.</li>
                   </ul>
                 </div>
               </div>
+
+              <!-- Imagen desktop -->
               <div class="hidden md:flex md:w-5/12 md:pl-12 justify-start">
                 <div class="w-full rounded-2xl overflow-hidden shadow-2xl border border-white/10" style="aspect-ratio:4/3;">
                   <img src="https://images.unsplash.com/photo-1589909202802-8f4aadce1849?w=900&q=80" alt="Origen e identidad" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
@@ -116,45 +199,77 @@
               </div>
             </div>
 
-            <!-- Bloque 2 — PAR: imagen izquierda, tarjeta derecha -->
+            <!-- ═══ BLOQUE 2 — PAR (imagen izq, tarjeta der) ═══ -->
             <div class="timeline-block group relative flex flex-col md:flex-row items-center justify-between gap-6">
+              <div class="absolute left-[30px] top-6 md:top-1/2 md:left-1/2 transform -translate-x-1/2 md:-translate-y-1/2 w-4 h-4 rounded-full bg-background border-2 border-blue-500 z-20 shadow-[0_0_15px_rgba(59,130,246,0.7)] group-hover:scale-125 transition-transform duration-300"></div>
+
+              <!-- Mobile trigger -->
+              <div class="mobile-card-trigger md:hidden w-full mb-4 cursor-pointer" data-hito="1">
+                <div class="w-full rounded-2xl overflow-hidden shadow-2xl border border-white/10 relative" style="aspect-ratio:16/9;">
+                  <img src="https://images.unsplash.com/photo-1513407030348-c983a97b98d8?w=900&q=80" alt="Lengua, cultura y formación temprana" class="w-full h-full object-cover" loading="lazy" />
+                  <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-4">
+                    <span style="color:#60a5fa; font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:600; letter-spacing:2px; text-transform:uppercase; margin-bottom:4px; display:block;">2008–2012</span>
+                    <h3 style="font-family:'General Sans',sans-serif; font-size:18px; font-weight:600; color:white; line-height:1.2; margin:0;">Lengua, cultura y formación temprana</h3>
+                  </div>
+                  <div style="position:absolute; top:12px; right:12px; width:30px; height:30px; border-radius:50%; background:rgba(255,255,255,0.2); backdrop-filter:blur(4px); display:flex; align-items:center; justify-content:center; color:white; font-size:13px;">↗</div>
+                </div>
+              </div>
+
+              <!-- Imagen desktop -->
               <div class="hidden md:flex md:w-5/12 md:pr-12 justify-end">
                 <div class="w-full rounded-2xl overflow-hidden shadow-2xl border border-white/10" style="aspect-ratio:4/3;">
                   <img src="https://images.unsplash.com/photo-1513407030348-c983a97b98d8?w=900&q=80" alt="Lengua, cultura y formación temprana" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
                 </div>
               </div>
-              <div class="absolute left-[30px] top-6 md:top-1/2 md:left-1/2 transform -translate-x-1/2 md:-translate-y-1/2 w-4 h-4 rounded-full bg-background border-2 border-blue-500 z-20 shadow-[0_0_15px_rgba(59,130,246,0.7)] group-hover:scale-125 transition-transform duration-300"></div>
-              <div class="w-full pl-[70px] md:pl-0 md:w-5/12 md:pl-12 flex justify-start">
-                <div class="bg-card/30 backdrop-blur-xl border border-white/10 p-6 md:p-8 rounded-2xl shadow-2xl hover:bg-card/50 hover:border-blue-500/50 transition-all duration-300 w-full text-left">
-                  <span class="text-blue-400 font-bold text-sm tracking-wider uppercase mb-2 block">2008–2012</span>
-                  <h3 class="text-xl md:text-2xl font-bold text-white mb-3">Lengua, cultura y formación temprana</h3>
-                  <p class="text-gray-200 leading-relaxed text-sm md:text-base mb-4">Raíces y apertura cultural: desde chico incorporé una formación paralela en idioma y cultura rusa que amplió mi visión del mundo.</p>
-                  <ul class="text-gray-400 text-sm md:text-base space-y-2 list-none">
-                    <li>• Estudio en Casa de Rusia (lengua, cultura, matemática).</li>
-                    <li>• Desarrollo fluido del idioma ruso desde la infancia.</li>
-                    <li>• Participación en concurso internacional del gobierno ruso.</li>
-                    <li>• Viaje a Moscú como experiencia intercultural formativa.</li>
+
+              <!-- Tarjeta texto: solo desktop -->
+              <div class="hidden md:flex md:w-5/12 md:pl-12 justify-start">
+                <div class="card-trayectoria p-6 md:p-8 rounded-2xl shadow-2xl hover:border-blue-500/50 transition-all duration-300 w-full text-left">
+                  <span class="fecha-tarjeta text-blue-400 mb-3 block">2008–2012</span>
+                  <h3 class="titulo-tarjeta mb-4">Lengua, cultura y formación temprana</h3>
+                  <p class="descripcion-tarjeta mb-5">Raíces y apertura cultural: desde chico incorporé una formación paralela en idioma y cultura rusa que amplió mi visión del mundo.</p>
+                  <ul class="bullets-tarjeta space-y-2">
+                    <li>Estudio en Casa de Rusia (lengua, cultura, matemática).</li>
+                    <li>Desarrollo fluido del idioma ruso desde la infancia.</li>
+                    <li>Participación en concurso internacional del gobierno ruso.</li>
+                    <li>Viaje a Moscú como experiencia intercultural formativa.</li>
                   </ul>
                 </div>
               </div>
             </div>
 
-            <!-- Bloque 3 — IMPAR: tarjeta izquierda, imagen derecha -->
+            <!-- ═══ BLOQUE 3 — IMPAR (tarjeta izq, imagen der) ═══ -->
             <div class="timeline-block group relative flex flex-col md:flex-row items-center justify-between gap-6">
               <div class="absolute left-[30px] top-6 md:top-1/2 md:left-1/2 transform -translate-x-1/2 md:-translate-y-1/2 w-4 h-4 rounded-full bg-background border-2 border-teal-500 z-20 shadow-[0_0_15px_rgba(20,184,166,0.7)] group-hover:scale-125 transition-transform duration-300"></div>
-              <div class="w-full pl-[70px] md:pl-0 md:w-5/12 md:pr-12 md:text-right flex justify-start md:justify-end">
-                <div class="bg-card/30 backdrop-blur-xl border border-white/10 p-6 md:p-8 rounded-2xl shadow-2xl hover:bg-card/50 hover:border-teal-500/50 transition-all duration-300 w-full text-left md:text-right">
-                  <span class="text-teal-400 font-bold text-sm tracking-wider uppercase mb-2 block">2012–2015</span>
-                  <h3 class="text-xl md:text-2xl font-bold text-white mb-3">Disciplina y primer objetivo de alto rendimiento</h3>
-                  <p class="text-gray-200 leading-relaxed text-sm md:text-base mb-4">La danza clásica se transformó en un objetivo de alto rendimiento que exigió disciplina, preparación y constancia.</p>
-                  <ul class="text-gray-400 text-sm md:text-base space-y-2 list-none">
-                    <li>• Inicio en danza clásica como actividad extracurricular.</li>
-                    <li>• Transición a preparación intensiva para ingreso al Teatro Colón.</li>
-                    <li>• Estudio complementario de francés y música.</li>
-                    <li>• Ingreso al Instituto del Teatro Colón con beca tras examen exigente.</li>
+
+              <!-- Mobile trigger -->
+              <div class="mobile-card-trigger md:hidden w-full mb-4 cursor-pointer" data-hito="2">
+                <div class="w-full rounded-2xl overflow-hidden shadow-2xl border border-white/10 relative" style="aspect-ratio:16/9;">
+                  <img src="https://images.unsplash.com/photo-1518834107812-67b0b7c58434?w=900&q=80" alt="Disciplina y primer objetivo de alto rendimiento" class="w-full h-full object-cover" loading="lazy" />
+                  <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-4">
+                    <span style="color:#2dd4bf; font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:600; letter-spacing:2px; text-transform:uppercase; margin-bottom:4px; display:block;">2012–2015</span>
+                    <h3 style="font-family:'General Sans',sans-serif; font-size:18px; font-weight:600; color:white; line-height:1.2; margin:0;">Disciplina y primer objetivo de alto rendimiento</h3>
+                  </div>
+                  <div style="position:absolute; top:12px; right:12px; width:30px; height:30px; border-radius:50%; background:rgba(255,255,255,0.2); backdrop-filter:blur(4px); display:flex; align-items:center; justify-content:center; color:white; font-size:13px;">↗</div>
+                </div>
+              </div>
+
+              <!-- Tarjeta texto: solo desktop -->
+              <div class="hidden md:flex md:w-5/12 md:pr-12 md:text-right justify-start md:justify-end">
+                <div class="card-trayectoria p-6 md:p-8 rounded-2xl shadow-2xl hover:border-teal-500/50 transition-all duration-300 w-full text-left md:text-right">
+                  <span class="fecha-tarjeta text-teal-400 mb-3 block">2012–2015</span>
+                  <h3 class="titulo-tarjeta mb-4">Disciplina y primer objetivo de alto rendimiento</h3>
+                  <p class="descripcion-tarjeta mb-5">La danza clásica se transformó en un objetivo de alto rendimiento que exigió disciplina, preparación y constancia.</p>
+                  <ul class="bullets-tarjeta space-y-2">
+                    <li>Inicio en danza clásica como actividad extracurricular.</li>
+                    <li>Transición a preparación intensiva para ingreso al Teatro Colón.</li>
+                    <li>Estudio complementario de francés y música.</li>
+                    <li>Ingreso al Instituto del Teatro Colón con beca tras examen exigente.</li>
                   </ul>
                 </div>
               </div>
+
+              <!-- Imagen desktop -->
               <div class="hidden md:flex md:w-5/12 md:pl-12 justify-start">
                 <div class="w-full rounded-2xl overflow-hidden shadow-2xl border border-white/10" style="aspect-ratio:4/3;">
                   <img src="https://images.unsplash.com/photo-1518834107812-67b0b7c58434?w=900&q=80" alt="Disciplina y primer objetivo" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
@@ -162,45 +277,77 @@
               </div>
             </div>
 
-            <!-- Bloque 4 — PAR: imagen izquierda, tarjeta derecha -->
+            <!-- ═══ BLOQUE 4 — PAR (imagen izq, tarjeta der) ═══ -->
             <div class="timeline-block group relative flex flex-col md:flex-row items-center justify-between gap-6">
+              <div class="absolute left-[30px] top-6 md:top-1/2 md:left-1/2 transform -translate-x-1/2 md:-translate-y-1/2 w-4 h-4 rounded-full bg-background border-2 border-orange-500 z-20 shadow-[0_0_15px_rgba(249,115,22,0.7)] group-hover:scale-125 transition-transform duration-300"></div>
+
+              <!-- Mobile trigger -->
+              <div class="mobile-card-trigger md:hidden w-full mb-4 cursor-pointer" data-hito="3">
+                <div class="w-full rounded-2xl overflow-hidden shadow-2xl border border-white/10 relative" style="aspect-ratio:16/9;">
+                  <img src="https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=900&q=80" alt="Alto rendimiento y rutina extrema" class="w-full h-full object-cover" loading="lazy" />
+                  <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-4">
+                    <span style="color:#fb923c; font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:600; letter-spacing:2px; text-transform:uppercase; margin-bottom:4px; display:block;">2015–2017</span>
+                    <h3 style="font-family:'General Sans',sans-serif; font-size:18px; font-weight:600; color:white; line-height:1.2; margin:0;">Alto rendimiento y rutina extrema</h3>
+                  </div>
+                  <div style="position:absolute; top:12px; right:12px; width:30px; height:30px; border-radius:50%; background:rgba(255,255,255,0.2); backdrop-filter:blur(4px); display:flex; align-items:center; justify-content:center; color:white; font-size:13px;">↗</div>
+                </div>
+              </div>
+
+              <!-- Imagen desktop -->
               <div class="hidden md:flex md:w-5/12 md:pr-12 justify-end">
                 <div class="w-full rounded-2xl overflow-hidden shadow-2xl border border-white/10" style="aspect-ratio:4/3;">
                   <img src="https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=900&q=80" alt="Alto rendimiento y rutina extrema" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
                 </div>
               </div>
-              <div class="absolute left-[30px] top-6 md:top-1/2 md:left-1/2 transform -translate-x-1/2 md:-translate-y-1/2 w-4 h-4 rounded-full bg-background border-2 border-orange-500 z-20 shadow-[0_0_15px_rgba(249,115,22,0.7)] group-hover:scale-125 transition-transform duration-300"></div>
-              <div class="w-full pl-[70px] md:pl-0 md:w-5/12 md:pl-12 flex justify-start">
-                <div class="bg-card/30 backdrop-blur-xl border border-white/10 p-6 md:p-8 rounded-2xl shadow-2xl hover:bg-card/50 hover:border-orange-500/50 transition-all duration-300 w-full text-left">
-                  <span class="text-orange-400 font-bold text-sm tracking-wider uppercase mb-2 block">2015–2017</span>
-                  <h3 class="text-xl md:text-2xl font-bold text-white mb-3">Alto rendimiento y rutina extrema</h3>
-                  <p class="text-gray-200 leading-relaxed text-sm md:text-base mb-4">Disciplina diaria como forma de vida: una etapa de exigencia máxima donde combiné formación artística y educación formal en paralelo.</p>
-                  <ul class="text-gray-400 text-sm md:text-base space-y-2 list-none">
-                    <li>• Entrenamiento diario de 5:30 a 12:00 en el Teatro Colón.</li>
-                    <li>• Secundaria en turno tarde + ensayos nocturnos ocasionales.</li>
-                    <li>• Formación en danza clásica, contemporáneo, folklore y partener.</li>
-                    <li>• Continuidad en idiomas y desarrollo técnico-musical.</li>
+
+              <!-- Tarjeta texto: solo desktop -->
+              <div class="hidden md:flex md:w-5/12 md:pl-12 justify-start">
+                <div class="card-trayectoria p-6 md:p-8 rounded-2xl shadow-2xl hover:border-orange-500/50 transition-all duration-300 w-full text-left">
+                  <span class="fecha-tarjeta text-orange-400 mb-3 block">2015–2017</span>
+                  <h3 class="titulo-tarjeta mb-4">Alto rendimiento y rutina extrema</h3>
+                  <p class="descripcion-tarjeta mb-5">Disciplina diaria como forma de vida: una etapa de exigencia máxima donde combiné formación artística y educación formal en paralelo.</p>
+                  <ul class="bullets-tarjeta space-y-2">
+                    <li>Entrenamiento diario de 5:30 a 12:00 en el Teatro Colón.</li>
+                    <li>Secundaria en turno tarde + ensayos nocturnos ocasionales.</li>
+                    <li>Formación en danza clásica, contemporáneo, folklore y partener.</li>
+                    <li>Continuidad en idiomas y desarrollo técnico-musical.</li>
                   </ul>
                 </div>
               </div>
             </div>
 
-            <!-- Bloque 5 — IMPAR: tarjeta izquierda, imagen derecha -->
+            <!-- ═══ BLOQUE 5 — IMPAR (tarjeta izq, imagen der) ═══ -->
             <div class="timeline-block group relative flex flex-col md:flex-row items-center justify-between gap-6">
               <div class="absolute left-[30px] top-6 md:top-1/2 md:left-1/2 transform -translate-x-1/2 md:-translate-y-1/2 w-4 h-4 rounded-full bg-background border-2 border-rose-500 z-20 shadow-[0_0_15px_rgba(244,63,94,0.7)] group-hover:scale-125 transition-transform duration-300"></div>
-              <div class="w-full pl-[70px] md:pl-0 md:w-5/12 md:pr-12 md:text-right flex justify-start md:justify-end">
-                <div class="bg-card/30 backdrop-blur-xl border border-white/10 p-6 md:p-8 rounded-2xl shadow-2xl hover:bg-card/50 hover:border-rose-500/50 transition-all duration-300 w-full text-left md:text-right">
-                  <span class="text-rose-400 font-bold text-sm tracking-wider uppercase mb-2 block">2017–2018</span>
-                  <h3 class="text-xl md:text-2xl font-bold text-white mb-3">Transición, cambios y redefinición</h3>
-                  <p class="text-gray-200 leading-relaxed text-sm md:text-base mb-4">Redirigir el camino: una etapa de cambios estructurales en la que empecé a redefinir mi rumbo personal y académico.</p>
-                  <ul class="text-gray-400 text-sm md:text-base space-y-2 list-none">
-                    <li>• Cambio entre distintos colegios públicos en busca de mayor desafío.</li>
-                    <li>• Decisión de dejar el Teatro Colón.</li>
-                    <li>• Ingreso a escuela con orientación en Artes y Medios.</li>
-                    <li>• Cierre de la etapa secundaria en diciembre de 2018.</li>
+
+              <!-- Mobile trigger -->
+              <div class="mobile-card-trigger md:hidden w-full mb-4 cursor-pointer" data-hito="4">
+                <div class="w-full rounded-2xl overflow-hidden shadow-2xl border border-white/10 relative" style="aspect-ratio:16/9;">
+                  <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=900&q=80" alt="Transición, cambios y redefinición" class="w-full h-full object-cover" loading="lazy" />
+                  <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-4">
+                    <span style="color:#fb7185; font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:600; letter-spacing:2px; text-transform:uppercase; margin-bottom:4px; display:block;">2017–2018</span>
+                    <h3 style="font-family:'General Sans',sans-serif; font-size:18px; font-weight:600; color:white; line-height:1.2; margin:0;">Transición, cambios y redefinición</h3>
+                  </div>
+                  <div style="position:absolute; top:12px; right:12px; width:30px; height:30px; border-radius:50%; background:rgba(255,255,255,0.2); backdrop-filter:blur(4px); display:flex; align-items:center; justify-content:center; color:white; font-size:13px;">↗</div>
+                </div>
+              </div>
+
+              <!-- Tarjeta texto: solo desktop -->
+              <div class="hidden md:flex md:w-5/12 md:pr-12 md:text-right justify-start md:justify-end">
+                <div class="card-trayectoria p-6 md:p-8 rounded-2xl shadow-2xl hover:border-rose-500/50 transition-all duration-300 w-full text-left md:text-right">
+                  <span class="fecha-tarjeta text-rose-400 mb-3 block">2017–2018</span>
+                  <h3 class="titulo-tarjeta mb-4">Transición, cambios y redefinición</h3>
+                  <p class="descripcion-tarjeta mb-5">Redirigir el camino: una etapa de cambios estructurales en la que empecé a redefinir mi rumbo personal y académico.</p>
+                  <ul class="bullets-tarjeta space-y-2">
+                    <li>Cambio entre distintos colegios públicos en busca de mayor desafío.</li>
+                    <li>Decisión de dejar el Teatro Colón.</li>
+                    <li>Ingreso a escuela con orientación en Artes y Medios.</li>
+                    <li>Cierre de la etapa secundaria en diciembre de 2018.</li>
                   </ul>
                 </div>
               </div>
+
+              <!-- Imagen desktop -->
               <div class="hidden md:flex md:w-5/12 md:pl-12 justify-start">
                 <div class="w-full rounded-2xl overflow-hidden shadow-2xl border border-white/10" style="aspect-ratio:4/3;">
                   <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=900&q=80" alt="Transición y redefinición" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
@@ -208,47 +355,79 @@
               </div>
             </div>
 
-            <!-- Bloque 6 — PAR: imagen izquierda, tarjeta derecha -->
+            <!-- ═══ BLOQUE 6 — PAR (imagen izq, tarjeta der) ═══ -->
             <div class="timeline-block group relative flex flex-col md:flex-row items-center justify-between gap-6">
+              <div class="absolute left-[30px] top-6 md:top-1/2 md:left-1/2 transform -translate-x-1/2 md:-translate-y-1/2 w-4 h-4 rounded-full bg-background border-2 border-indigo-500 z-20 shadow-[0_0_15px_rgba(99,102,241,0.7)] group-hover:scale-125 transition-transform duration-300"></div>
+
+              <!-- Mobile trigger -->
+              <div class="mobile-card-trigger md:hidden w-full mb-4 cursor-pointer" data-hito="5">
+                <div class="w-full rounded-2xl overflow-hidden shadow-2xl border border-white/10 relative" style="aspect-ratio:16/9;">
+                  <img src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=900&q=80" alt="Decisión universitaria y oportunidad" class="w-full h-full object-cover" loading="lazy" />
+                  <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-4">
+                    <span style="color:#818cf8; font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:600; letter-spacing:2px; text-transform:uppercase; margin-bottom:4px; display:block;">2018–2020</span>
+                    <h3 style="font-family:'General Sans',sans-serif; font-size:18px; font-weight:600; color:white; line-height:1.2; margin:0;">Decisión universitaria y oportunidad</h3>
+                  </div>
+                  <div style="position:absolute; top:12px; right:12px; width:30px; height:30px; border-radius:50%; background:rgba(255,255,255,0.2); backdrop-filter:blur(4px); display:flex; align-items:center; justify-content:center; color:white; font-size:13px;">↗</div>
+                </div>
+              </div>
+
+              <!-- Imagen desktop -->
               <div class="hidden md:flex md:w-5/12 md:pr-12 justify-end">
                 <div class="w-full rounded-2xl overflow-hidden shadow-2xl border border-white/10" style="aspect-ratio:4/3;">
                   <img src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=900&q=80" alt="Decisión universitaria y oportunidad" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
                 </div>
               </div>
-              <div class="absolute left-[30px] top-6 md:top-1/2 md:left-1/2 transform -translate-x-1/2 md:-translate-y-1/2 w-4 h-4 rounded-full bg-background border-2 border-indigo-500 z-20 shadow-[0_0_15px_rgba(99,102,241,0.7)] group-hover:scale-125 transition-transform duration-300"></div>
-              <div class="w-full pl-[70px] md:pl-0 md:w-5/12 md:pl-12 flex justify-start">
-                <div class="bg-card/30 backdrop-blur-xl border border-white/10 p-6 md:p-8 rounded-2xl shadow-2xl hover:bg-card/50 hover:border-indigo-500/50 transition-all duration-300 w-full text-left">
-                  <span class="text-indigo-400 font-bold text-sm tracking-wider uppercase mb-2 block">2018–2020</span>
-                  <h3 class="text-xl md:text-2xl font-bold text-white mb-3">Decisión universitaria y oportunidad</h3>
-                  <p class="text-gray-200 leading-relaxed text-sm md:text-base mb-4">El salto al ITBA: un proceso consciente de búsqueda académica que culminó en una oportunidad clave de formación.</p>
-                  <ul class="text-gray-400 text-sm md:text-base space-y-2 list-none">
-                    <li>• Exploración profunda de universidades y carreras.</li>
-                    <li>• Interés creciente por negocios, análisis y comportamiento del consumidor.</li>
-                    <li>• Selección del ITBA como institución objetivo.</li>
-                    <li>• Obtención de beca completa tras proceso de evaluación.</li>
-                    <li>• Ingreso a la carrera en contexto de pandemia.</li>
+
+              <!-- Tarjeta texto: solo desktop -->
+              <div class="hidden md:flex md:w-5/12 md:pl-12 justify-start">
+                <div class="card-trayectoria p-6 md:p-8 rounded-2xl shadow-2xl hover:border-indigo-500/50 transition-all duration-300 w-full text-left">
+                  <span class="fecha-tarjeta text-indigo-400 mb-3 block">2018–2020</span>
+                  <h3 class="titulo-tarjeta mb-4">Decisión universitaria y oportunidad</h3>
+                  <p class="descripcion-tarjeta mb-5">El salto al ITBA: un proceso consciente de búsqueda académica que culminó en una oportunidad clave de formación.</p>
+                  <ul class="bullets-tarjeta space-y-2">
+                    <li>Exploración profunda de universidades y carreras.</li>
+                    <li>Interés creciente por negocios, análisis y comportamiento del consumidor.</li>
+                    <li>Selección del ITBA como institución objetivo.</li>
+                    <li>Obtención de beca completa tras proceso de evaluación.</li>
+                    <li>Ingreso a la carrera en contexto de pandemia.</li>
                   </ul>
                 </div>
               </div>
             </div>
 
-            <!-- Bloque 7 — IMPAR: tarjeta izquierda, imagen derecha -->
+            <!-- ═══ BLOQUE 7 — IMPAR (tarjeta izq, imagen der) ═══ -->
             <div class="timeline-block group relative flex flex-col md:flex-row items-center justify-between gap-6">
               <div class="absolute left-[30px] top-6 md:top-1/2 md:left-1/2 transform -translate-x-1/2 md:-translate-y-1/2 w-4 h-4 rounded-full bg-background border-2 border-purple-500 z-20 shadow-[0_0_15px_rgba(168,85,247,0.7)] group-hover:scale-125 transition-transform duration-300"></div>
-              <div class="w-full pl-[70px] md:pl-0 md:w-5/12 md:pr-12 md:text-right flex justify-start md:justify-end">
-                <div class="bg-card/30 backdrop-blur-xl border border-white/10 p-6 md:p-8 rounded-2xl shadow-2xl hover:bg-card/50 hover:border-purple-500/50 transition-all duration-300 w-full text-left md:text-right">
-                  <span class="text-purple-400 font-bold text-sm tracking-wider uppercase mb-2 block">2020–Hoy</span>
-                  <h3 class="text-xl md:text-2xl font-bold text-white mb-3">Formación, experiencia y perfil profesional actual</h3>
-                  <p class="text-gray-200 leading-relaxed text-sm md:text-base mb-4">De la formación al mundo real: consolidación de mi perfil híbrido entre negocio, análisis, tecnología y ejecución en entornos reales.</p>
-                  <ul class="text-gray-400 text-sm md:text-base space-y-2 list-none">
-                    <li>• Adaptación al entorno universitario del ITBA con alta exigencia académica.</li>
-                    <li>• Participación en proyectos internacionales de investigación de mercado.</li>
-                    <li>• Experiencia en startup (Motivia Health) durante etapa final de carrera.</li>
-                    <li>• Ingreso a Tekne Data Labs con foco en análisis, marketing y contenido.</li>
-                    <li>• Desarrollo de habilidades en ventas, IA y construcción de marca personal.</li>
+
+              <!-- Mobile trigger -->
+              <div class="mobile-card-trigger md:hidden w-full mb-4 cursor-pointer" data-hito="6">
+                <div class="w-full rounded-2xl overflow-hidden shadow-2xl border border-white/10 relative" style="aspect-ratio:16/9;">
+                  <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=900&q=80" alt="Formación, experiencia y perfil profesional actual" class="w-full h-full object-cover" loading="lazy" />
+                  <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-4">
+                    <span style="color:#a78bfa; font-family:'Space Grotesk',sans-serif; font-size:11px; font-weight:600; letter-spacing:2px; text-transform:uppercase; margin-bottom:4px; display:block;">2020–Hoy</span>
+                    <h3 style="font-family:'General Sans',sans-serif; font-size:18px; font-weight:600; color:white; line-height:1.2; margin:0;">Formación, experiencia y perfil profesional actual</h3>
+                  </div>
+                  <div style="position:absolute; top:12px; right:12px; width:30px; height:30px; border-radius:50%; background:rgba(255,255,255,0.2); backdrop-filter:blur(4px); display:flex; align-items:center; justify-content:center; color:white; font-size:13px;">↗</div>
+                </div>
+              </div>
+
+              <!-- Tarjeta texto: solo desktop -->
+              <div class="hidden md:flex md:w-5/12 md:pr-12 md:text-right justify-start md:justify-end">
+                <div class="card-trayectoria p-6 md:p-8 rounded-2xl shadow-2xl hover:border-purple-500/50 transition-all duration-300 w-full text-left md:text-right">
+                  <span class="fecha-tarjeta text-purple-400 mb-3 block">2020–Hoy</span>
+                  <h3 class="titulo-tarjeta mb-4">Formación, experiencia y perfil profesional actual</h3>
+                  <p class="descripcion-tarjeta mb-5">De la formación al mundo real: consolidación de mi perfil híbrido entre negocio, análisis, tecnología y ejecución en entornos reales.</p>
+                  <ul class="bullets-tarjeta space-y-2">
+                    <li>Adaptación al entorno universitario del ITBA con alta exigencia académica.</li>
+                    <li>Participación en proyectos internacionales de investigación de mercado.</li>
+                    <li>Experiencia en startup (Motivia Health) durante etapa final de carrera.</li>
+                    <li>Ingreso a Tekne Data Labs con foco en análisis, marketing y contenido.</li>
+                    <li>Desarrollo de habilidades en ventas, IA y construcción de marca personal.</li>
                   </ul>
                 </div>
               </div>
+
+              <!-- Imagen desktop -->
               <div class="hidden md:flex md:w-5/12 md:pl-12 justify-start">
                 <div class="w-full rounded-2xl overflow-hidden shadow-2xl border border-white/10" style="aspect-ratio:4/3;">
                   <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=900&q=80" alt="Perfil profesional actual" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
@@ -261,35 +440,35 @@
       </div>
     </main>
 
-  <!-- Footer Component -->
-  <footer class="border-t border-border mt-auto bg-card/50 transition-colors duration-300">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex flex-col items-center gap-10">
-      <div class="w-full text-center md:text-left">
-        <h3 data-i18n="ft-contact-title" class="text-2xl font-bold text-text">Contactame</h3>
+    <!-- Footer -->
+    <footer class="border-t border-border mt-auto bg-card/50 transition-colors duration-300">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex flex-col items-center gap-10">
+        <div class="w-full text-center md:text-left">
+          <h3 data-i18n="ft-contact-title" class="text-2xl font-bold text-text">Contactame</h3>
+        </div>
+        <div class="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16 w-full">
+          <a href="mailto:k.ambrossenkov@gmail.com" class="flex items-center gap-3 text-text hover:text-accent transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            <span class="font-medium text-lg">k.ambrossenkov@gmail.com</span>
+          </a>
+          <a href="https://www.instagram.com/konsta_ambrossenkov/?__d=1" target="_blank" class="flex items-center gap-3 text-text hover:text-accent transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+            <span class="sr-only">Instagram</span>
+          </a>
+          <a href="https://www.linkedin.com/in/konstantino-ambrossenkov/" target="_blank" class="flex items-center gap-3 text-text hover:text-accent transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
+            <span class="sr-only">LinkedIn</span>
+          </a>
+        </div>
+        <div class="mt-4">
+          <img src="Fotos/firma AK.jfif" alt="Firma AK" class="h-16 object-contain" onerror="this.outerHTML='<span class=\'text-2xl font-serif italic text-text opacity-70\'>Firma AK</span>'" />
+        </div>
+        <div class="pt-8 w-full border-t border-border/50 text-center text-muted-foreground transition-colors duration-300">
+          <p data-i18n="ft-help" class="font-medium text-lg">Estoy para ayudar</p>
+        </div>
       </div>
-      <div class="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16 w-full">
-        <a href="mailto:k.ambrossenkov@gmail.com" class="flex items-center gap-3 text-text hover:text-accent transition-colors">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-          <span class="font-medium text-lg">k.ambrossenkov@gmail.com</span>
-        </a>
-        <a href="https://www.instagram.com/konsta_ambrossenkov/?__d=1" target="_blank" class="flex items-center gap-3 text-text hover:text-accent transition-colors">
-          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
-          <span class="sr-only">Instagram</span>
-        </a>
-        <a href="https://www.linkedin.com/in/konstantino-ambrossenkov/" target="_blank" class="flex items-center gap-3 text-text hover:text-accent transition-colors">
-          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
-          <span class="sr-only">LinkedIn</span>
-        </a>
-      </div>
-      <div class="mt-4">
-        <img src="Fotos/firma AK.jfif" alt="Firma AK" class="h-16 object-contain" onerror="this.outerHTML='<span class=\'text-2xl font-serif italic text-text opacity-70\'>Firma AK</span>'" />
-      </div>
-      <div class="pt-8 w-full border-t border-border/50 text-center text-muted-foreground transition-colors duration-300">
-        <p data-i18n="ft-help" class="font-medium text-lg">Estoy para ayudar</p>
-      </div>
-    </div>
-  </footer>
-  </div> <!-- Fin del Wrapper -->
+    </footer>
+  </div><!-- Fin del Wrapper -->
 
   <!-- Include App Logic -->
   <script src="script.js"></script>
@@ -299,120 +478,44 @@
     const container = document.getElementById('shader-bg');
     const scene = new THREE.Scene();
     const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
-
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(window.devicePixelRatio);
     container.appendChild(renderer.domElement);
-
-    const vertexShader = `
-      void main() {
-        gl_Position = vec4(position, 1.0);
-      }
-    `;
-
+    const vertexShader = `void main() { gl_Position = vec4(position, 1.0); }`;
     const fragmentShader = `
       uniform float iTime;
       uniform vec2 iResolution;
-
-      float hash(vec2 p) {
-          p = fract(p * vec2(123.34, 456.21));
-          p += dot(p, p + 45.32);
-          return fract(p.x * p.y);
-      }
-
+      float hash(vec2 p) { p = fract(p * vec2(123.34, 456.21)); p += dot(p, p + 45.32); return fract(p.x * p.y); }
       float noise(vec2 p) {
-          vec2 i = floor(p);
-          vec2 f = fract(p);
-          f = f * f * (3.0 - 2.0 * f);
-          return mix(
-              mix(hash(i + vec2(0.0)), hash(i + vec2(1.0, 0.0)), f.x),
-              mix(hash(i + vec2(0.0, 1.0)), hash(i + vec2(1.0, 1.0)), f.x), f.y);
+        vec2 i = floor(p); vec2 f = fract(p); f = f * f * (3.0 - 2.0 * f);
+        return mix(mix(hash(i+vec2(0.0)),hash(i+vec2(1.0,0.0)),f.x),mix(hash(i+vec2(0.0,1.0)),hash(i+vec2(1.0,1.0)),f.x),f.y);
       }
-
-      float fbm(vec2 p) {
-          float f = 0.0;
-          float amp = 0.5;
-          for(int i = 0; i < 5; i++) {
-              f += amp * noise(p);
-              p *= 2.0;
-              amp *= 0.5;
-          }
-          return f;
-      }
-
+      float fbm(vec2 p) { float f=0.0,amp=0.5; for(int i=0;i<5;i++){f+=amp*noise(p);p*=2.0;amp*=0.5;} return f; }
       void main() {
-          vec2 uv = gl_FragCoord.xy / iResolution.xy;
-          vec2 p = uv * 2.0 - 1.0;
-          p.x *= iResolution.x / iResolution.y;
-
-          // Deep space base color with a tiny dark blue tint
-          vec3 color = vec3(0.01, 0.02, 0.05);
-
-          if(hash(p * 100.0) > 0.99) {
-              color += vec3(1.0) * (0.5 + 0.5 * sin(iTime * 1.5 + hash(p)*100.0));
-          }
-
-          vec3 auroraColors = vec3(0.0);
-
-          for(int i = 0; i < 35; i++) {
-              float fi = float(i);
-
-              vec2 q = p + vec2(iTime * 0.04, fi * 0.02);
-
-              float structuralNoise = fbm(q * 3.0 + iTime * 0.08);
-
-              float tailNoise = smoothstep(0.2, 0.8, structuralNoise) * exp(-fi * 0.1);
-
-              // Warm cosmic nebula: coppers, oranges, golds, deep blues
-              float t1 = fi * 0.2 + iTime * 0.4;
-              float t2 = fi * 0.3 + iTime * 0.5;
-              float t3 = fi * 0.4 + iTime * 0.3;
-
-              vec3 bandColor = vec3(
-                  0.8 + 0.2 * sin(t1),
-                  0.4 + 0.3 * cos(t2),
-                  0.2 + 0.5 * sin(t3)
-              );
-
-              auroraColors += bandColor * tailNoise * 0.035;
-          }
-
-          color += auroraColors;
-
-          gl_FragColor = vec4(color, 1.0);
+        vec2 uv = gl_FragCoord.xy / iResolution.xy;
+        vec2 p = uv * 2.0 - 1.0; p.x *= iResolution.x / iResolution.y;
+        vec3 color = vec3(0.01, 0.02, 0.05);
+        if(hash(p*100.0) > 0.99) color += vec3(1.0)*(0.5+0.5*sin(iTime*1.5+hash(p)*100.0));
+        vec3 auroraColors = vec3(0.0);
+        for(int i=0;i<35;i++){
+          float fi=float(i);
+          vec2 q=p+vec2(iTime*0.04,fi*0.02);
+          float sn=fbm(q*3.0+iTime*0.08);
+          float tn=smoothstep(0.2,0.8,sn)*exp(-fi*0.1);
+          float t1=fi*0.2+iTime*0.4,t2=fi*0.3+iTime*0.5,t3=fi*0.4+iTime*0.3;
+          auroraColors+=vec3(0.8+0.2*sin(t1),0.4+0.3*cos(t2),0.2+0.5*sin(t3))*tn*0.035;
+        }
+        color += auroraColors;
+        gl_FragColor = vec4(color, 1.0);
       }
     `;
-
-    const uniforms = {
-      iTime: { value: 0.0 },
-      iResolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) }
-    };
-
-    const material = new THREE.ShaderMaterial({
-      vertexShader,
-      fragmentShader,
-      uniforms,
-      depthWrite: false,
-      depthTest: false
-    });
-
-    const geometry = new THREE.PlaneGeometry(2, 2);
-    const mesh = new THREE.Mesh(geometry, material);
+    const uniforms = { iTime: { value: 0.0 }, iResolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) } };
+    const material = new THREE.ShaderMaterial({ vertexShader, fragmentShader, uniforms, depthWrite: false, depthTest: false });
+    const mesh = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), material);
     scene.add(mesh);
-
-    function animate() {
-      requestAnimationFrame(animate);
-      uniforms.iTime.value += 0.016;
-      renderer.render(scene, camera);
-    }
-
-    animate();
-
-    window.addEventListener('resize', () => {
-      renderer.setSize(window.innerWidth, window.innerHeight);
-      uniforms.iResolution.value.set(window.innerWidth, window.innerHeight);
-    });
+    (function animate() { requestAnimationFrame(animate); uniforms.iTime.value += 0.016; renderer.render(scene, camera); })();
+    window.addEventListener('resize', () => { renderer.setSize(window.innerWidth, window.innerHeight); uniforms.iResolution.value.set(window.innerWidth, window.innerHeight); });
   </script>
 
   <!-- Lógica de Progreso de la Línea de Tiempo -->
@@ -420,26 +523,14 @@
     document.addEventListener('DOMContentLoaded', () => {
       const timelineContainer = document.getElementById('timeline-container');
       const timelineProgress = document.getElementById('timeline-progress');
-
       if (timelineContainer && timelineProgress) {
         window.addEventListener('scroll', () => {
           const rect = timelineContainer.getBoundingClientRect();
-          // El progreso empieza cuando el contenedor aparece en el centro exacto de la pantalla
           const startTrigger = window.innerHeight * 0.5;
-          const scrolled = startTrigger - rect.top;
-
-          // La altura total animable es la altura del contenedor menos el relleno final para no salirse
-          const totalHeight = rect.height;
-
-          let percentage = (scrolled / totalHeight) * 100;
-
-          // Clamping para que la línea no crezca ni antes del 0 ni más allá del 100%
+          let percentage = ((startTrigger - rect.top) / rect.height) * 100;
           percentage = Math.max(0, Math.min(100, Math.floor(percentage)));
-
           timelineProgress.style.height = percentage + '%';
         });
-
-        // Trigger inicial para setear cálculos al cargar página
         window.dispatchEvent(new Event('scroll'));
       }
     });
@@ -449,53 +540,321 @@
   <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
   <script defer src="/_vercel/insights/script.js"></script>
 
-  <!-- Auto-scroll timeline cada 40 segundos -->
+  <!-- Auto-scroll desktop cada 40 segundos -->
   <script>
     (function () {
-      const INTERVALO_MS = 40000; // 40 segundos
-      let indiceActual = 0;
-      let timer = null;
-      let pausado = false;
-
-      function obtenerBloques() {
-        return Array.from(document.querySelectorAll('.timeline-block'));
-      }
-
+      const INTERVALO_MS = 40000;
+      let indiceActual = 0, timer = null, pausado = false;
+      function obtenerBloques() { return Array.from(document.querySelectorAll('.timeline-block')); }
       function irAlSiguiente() {
         const bloques = obtenerBloques();
         if (!bloques.length) return;
-
         indiceActual = (indiceActual + 1) % bloques.length;
         bloques[indiceActual].scrollIntoView({ behavior: 'smooth', block: 'center' });
       }
-
       function iniciarTimer() {
         if (timer) clearInterval(timer);
-        timer = setInterval(() => {
-          if (!pausado) irAlSiguiente();
-        }, INTERVALO_MS);
+        timer = setInterval(() => { if (!pausado) irAlSiguiente(); }, INTERVALO_MS);
+      }
+      let scrollTimeout = null;
+      window.addEventListener('wheel', () => { pausado = true; clearTimeout(scrollTimeout); scrollTimeout = setTimeout(() => { pausado = false; }, 5000); }, { passive: true });
+      window.addEventListener('touchmove', () => { pausado = true; clearTimeout(scrollTimeout); scrollTimeout = setTimeout(() => { pausado = false; }, 5000); }, { passive: true });
+      document.addEventListener('DOMContentLoaded', iniciarTimer);
+    })();
+  </script>
+
+  <!-- Modal Trayectoria Mobile -->
+  <div id="trayectoria-modal-overlay"
+       style="display:none; position:fixed; inset:0; z-index:9999; background:rgba(0,0,0,0.92); backdrop-filter:blur(8px); overflow:hidden;">
+    <div id="trayectoria-modal-box"
+         style="height:100%; display:flex; flex-direction:column; max-width:480px; margin:0 auto;">
+
+      <!-- Carrusel de imágenes -->
+      <div id="modal-img-container"
+           style="width:100%; position:relative; overflow:hidden; background:#0a0a0f;">
+        <!-- imágenes inyectadas con JS -->
+        <div id="modal-img-dots" style="position:absolute; bottom:10px; left:50%; transform:translateX(-50%); display:flex; gap:6px; z-index:5;"></div>
+        <button id="modal-img-prev" style="display:none; position:absolute; left:10px; top:50%; transform:translateY(-50%); z-index:5; width:32px; height:32px; border-radius:50%; background:rgba(0,0,0,0.5); border:none; color:white; cursor:pointer; font-size:16px; align-items:center; justify-content:center;">‹</button>
+        <button id="modal-img-next" style="display:none; position:absolute; right:10px; top:50%; transform:translateY(-50%); z-index:5; width:32px; height:32px; border-radius:50%; background:rgba(0,0,0,0.5); border:none; color:white; cursor:pointer; font-size:16px; align-items:center; justify-content:center;">›</button>
+      </div>
+
+      <!-- Contenido de texto -->
+      <div style="flex:1; overflow-y:auto; padding:24px 20px 16px; background: linear-gradient(to bottom, rgba(10,10,15,0.98), rgba(10,10,15,1));">
+        <span id="modal-periodo"
+              style="display:block; font-family:'Space Grotesk',sans-serif; font-size:12px; font-weight:600; letter-spacing:2px; text-transform:uppercase; margin-bottom:10px;"></span>
+        <h2 id="modal-titulo"
+            style="font-family:'General Sans',sans-serif; font-size:26px; font-weight:600; letter-spacing:-0.5px; line-height:1.2; color:#F5F5F5; margin-bottom:14px;"></h2>
+        <p id="modal-descripcion"
+           style="font-family:'Inter',sans-serif; font-size:15px; line-height:1.8; color:rgba(255,255,255,0.75); margin-bottom:16px;"></p>
+        <ul id="modal-bullets"
+            style="font-family:'Inter',sans-serif; font-size:14px; line-height:1.75; color:rgba(255,255,255,0.55); list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:8px;"></ul>
+      </div>
+
+      <!-- Barra de progreso (justo encima del footer) -->
+      <div style="flex-shrink:0; width:100%; height:3px; background:rgba(255,255,255,0.1);">
+        <div id="modal-progress-bar"
+             style="height:100%; width:0%; background:linear-gradient(to right,#a78bfa,#60a5fa); transition:none;"></div>
+      </div>
+
+      <!-- Barra inferior: cerrar (izq) + contador + siguiente (der) -->
+      <div style="flex-shrink:0; width:100%; height:68px; padding:0 24px; display:flex; justify-content:space-between; align-items:center; background:rgba(10,10,15,0.95); border-top:1px solid rgba(255,255,255,0.08); backdrop-filter:blur(10px);">
+        <button id="modal-cerrar"
+                style="width:40px; height:40px; border-radius:50%; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.15); color:white; font-size:16px; cursor:pointer; display:flex; align-items:center; justify-content:center;">
+          ✕
+        </button>
+        <div style="display:flex; align-items:center; gap:12px;">
+          <span id="modal-contador"
+                style="font-family:'Space Grotesk',sans-serif; font-size:12px; color:rgba(255,255,255,0.4); letter-spacing:1px;">1 / 7</span>
+          <button id="modal-siguiente"
+                  style="display:flex; align-items:center; gap:6px; padding:10px 18px; border-radius:50px; background:rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.2); color:white; font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:500; cursor:pointer; backdrop-filter:blur(6px);">
+            Siguiente <span style="font-size:16px;">→</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Data e interactividad del modal mobile -->
+  <script>
+    const HITOS_MODAL = [
+      {
+        periodo: "2001–2008",
+        colorFecha: "#a78bfa",
+        titulo: "Origen e identidad",
+        descripcion: "Nacer entre dos culturas: crecí en Buenos Aires dentro de una familia inmigrante rusa, formando desde el inicio una identidad entre dos mundos.",
+        bullets: [
+          "Nací el 1 de marzo de 2001 en Flores, CABA.",
+          "Familia de origen ruso llegada a Argentina en 1995.",
+          "Infancia en sistema educativo público argentino.",
+          "Crecimiento con fuerte influencia cultural y lingüística rusa en el hogar."
+        ],
+        imagenes: ["https://images.unsplash.com/photo-1589909202802-8f4aadce1849?w=900&q=80"]
+      },
+      {
+        periodo: "2008–2012",
+        colorFecha: "#60a5fa",
+        titulo: "Lengua, cultura y formación temprana",
+        descripcion: "Raíces y apertura cultural: desde chico incorporé una formación paralela en idioma y cultura rusa que amplió mi visión del mundo.",
+        bullets: [
+          "Estudio en Casa de Rusia (lengua, cultura, matemática).",
+          "Desarrollo fluido del idioma ruso desde la infancia.",
+          "Participación en concurso internacional del gobierno ruso.",
+          "Viaje a Moscú como experiencia intercultural formativa."
+        ],
+        imagenes: ["https://images.unsplash.com/photo-1513407030348-c983a97b98d8?w=900&q=80"]
+      },
+      {
+        periodo: "2012–2015",
+        colorFecha: "#2dd4bf",
+        titulo: "Disciplina y primer objetivo de alto rendimiento",
+        descripcion: "La danza clásica se transformó en un objetivo de alto rendimiento que exigió disciplina, preparación y constancia.",
+        bullets: [
+          "Inicio en danza clásica como actividad extracurricular.",
+          "Transición a preparación intensiva para ingreso al Teatro Colón.",
+          "Estudio complementario de francés y música.",
+          "Ingreso al Instituto del Teatro Colón con beca tras examen exigente."
+        ],
+        imagenes: ["https://images.unsplash.com/photo-1518834107812-67b0b7c58434?w=900&q=80"]
+      },
+      {
+        periodo: "2015–2017",
+        colorFecha: "#fb923c",
+        titulo: "Alto rendimiento y rutina extrema",
+        descripcion: "Disciplina diaria como forma de vida: una etapa de exigencia máxima donde combiné formación artística y educación formal en paralelo.",
+        bullets: [
+          "Entrenamiento diario de 5:30 a 12:00 en el Teatro Colón.",
+          "Secundaria en turno tarde + ensayos nocturnos ocasionales.",
+          "Formación en danza clásica, contemporáneo, folklore y partener.",
+          "Continuidad en idiomas y desarrollo técnico-musical."
+        ],
+        imagenes: ["https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=900&q=80"]
+      },
+      {
+        periodo: "2017–2018",
+        colorFecha: "#fb7185",
+        titulo: "Transición, cambios y redefinición",
+        descripcion: "Redirigir el camino: una etapa de cambios estructurales en la que empecé a redefinir mi rumbo personal y académico.",
+        bullets: [
+          "Cambio entre distintos colegios públicos en busca de mayor desafío.",
+          "Decisión de dejar el Teatro Colón.",
+          "Ingreso a escuela con orientación en Artes y Medios.",
+          "Cierre de la etapa secundaria en diciembre de 2018."
+        ],
+        imagenes: ["https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=900&q=80"]
+      },
+      {
+        periodo: "2018–2020",
+        colorFecha: "#818cf8",
+        titulo: "Decisión universitaria y oportunidad",
+        descripcion: "El salto al ITBA: un proceso consciente de búsqueda académica que culminó en una oportunidad clave de formación.",
+        bullets: [
+          "Exploración profunda de universidades y carreras.",
+          "Interés creciente por negocios, análisis y comportamiento del consumidor.",
+          "Selección del ITBA como institución objetivo.",
+          "Obtención de beca completa tras proceso de evaluación.",
+          "Ingreso a la carrera en contexto de pandemia."
+        ],
+        imagenes: ["https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=900&q=80"]
+      },
+      {
+        periodo: "2020–Hoy",
+        colorFecha: "#a78bfa",
+        titulo: "Formación, experiencia y perfil profesional actual",
+        descripcion: "De la formación al mundo real: consolidación de mi perfil híbrido entre negocio, análisis, tecnología y ejecución en entornos reales.",
+        bullets: [
+          "Adaptación al entorno universitario del ITBA con alta exigencia académica.",
+          "Participación en proyectos internacionales de investigación de mercado.",
+          "Experiencia en startup (Motivia Health) durante etapa final de carrera.",
+          "Ingreso a Tekne Data Labs con foco en análisis, marketing y contenido.",
+          "Desarrollo de habilidades en ventas, IA y construcción de marca personal."
+        ],
+        imagenes: ["https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=900&q=80"]
+      }
+    ];
+
+    (function () {
+      const MODAL_DURACION = 45000;
+      let hitoActivo = 0, imgActiva = 0, autoTimer = null;
+
+      const overlay      = document.getElementById('trayectoria-modal-overlay');
+      const imgContainer = document.getElementById('modal-img-container');
+      const periodoEl    = document.getElementById('modal-periodo');
+      const tituloEl     = document.getElementById('modal-titulo');
+      const descripcionEl= document.getElementById('modal-descripcion');
+      const bulletsEl    = document.getElementById('modal-bullets');
+      const contadorEl   = document.getElementById('modal-contador');
+      const progressBar  = document.getElementById('modal-progress-bar');
+      const btnCerrar    = document.getElementById('modal-cerrar');
+      const btnSiguiente = document.getElementById('modal-siguiente');
+      const btnImgPrev   = document.getElementById('modal-img-prev');
+      const btnImgNext   = document.getElementById('modal-img-next');
+      const imgDots      = document.getElementById('modal-img-dots');
+
+      // Asignar listeners a los triggers
+      document.querySelectorAll('.mobile-card-trigger').forEach((el, i) => {
+        el.dataset.hito = i;
+        el.addEventListener('click', () => abrirModal(i));
+      });
+
+      function abrirModal(index) {
+        if (window.innerWidth >= 768) return;
+        hitoActivo = index;
+        imgActiva = 0;
+        overlay.style.display = 'block';
+        document.body.style.overflow = 'hidden';
+        renderHito();
+        iniciarAutoAvance();
       }
 
-      // Pausar cuando el usuario interactúa manualmente con el scroll
-      let scrollTimeout = null;
-      window.addEventListener('wheel', () => {
-        pausado = true;
-        clearTimeout(scrollTimeout);
-        scrollTimeout = setTimeout(() => {
-          pausado = false;
-        }, 5000); // Reanuda 5 segundos después de que el usuario deja de scrollear
+      function cerrarModal() {
+        overlay.style.display = 'none';
+        document.body.style.overflow = '';
+        detenerAutoAvance();
+      }
+
+      function renderHito() {
+        const hito = HITOS_MODAL[hitoActivo];
+
+        periodoEl.textContent = hito.periodo;
+        periodoEl.style.color = hito.colorFecha;
+        tituloEl.textContent = hito.titulo;
+        descripcionEl.textContent = hito.descripcion;
+        bulletsEl.innerHTML = hito.bullets
+          .map(b => `<li style="display:flex;gap:8px;"><span style="color:rgba(255,255,255,0.25);flex-shrink:0;">—</span><span>${b}</span></li>`)
+          .join('');
+        contadorEl.textContent = `${hitoActivo + 1} / ${HITOS_MODAL.length}`;
+
+        imgActiva = 0;
+        renderImagenes(hito);
+        overlay.scrollTop = 0;
+      }
+
+      function renderImagenes(hito) {
+        Array.from(imgContainer.querySelectorAll('img')).forEach(el => el.remove());
+
+        const imgs = hito.imagenes;
+        const w = imgContainer.offsetWidth || window.innerWidth;
+        imgContainer.style.height = Math.round(w * 9 / 16) + 'px';
+
+        imgs.forEach((src, i) => {
+          const img = document.createElement('img');
+          img.src = src;
+          img.alt = hito.titulo;
+          img.style.cssText = `position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:${i===0?'1':'0'};transition:opacity 0.4s ease;z-index:${i===0?'2':'1'};`;
+          imgContainer.insertBefore(img, imgDots);
+        });
+
+        imgDots.innerHTML = '';
+        if (imgs.length > 1) {
+          imgs.forEach((_, i) => {
+            const dot = document.createElement('div');
+            dot.style.cssText = `width:6px;height:6px;border-radius:50%;background:${i===0?'white':'rgba(255,255,255,0.35)'};transition:background 0.3s;`;
+            imgDots.appendChild(dot);
+          });
+          btnImgPrev.style.display = 'flex';
+          btnImgNext.style.display = 'flex';
+        } else {
+          btnImgPrev.style.display = 'none';
+          btnImgNext.style.display = 'none';
+        }
+      }
+
+      function cambiarImagen(dir) {
+        const imgs = Array.from(imgContainer.querySelectorAll('img'));
+        if (imgs.length <= 1) return;
+        imgs[imgActiva].style.opacity = '0';
+        imgs[imgActiva].style.zIndex = '1';
+        imgActiva = (imgActiva + dir + imgs.length) % imgs.length;
+        imgs[imgActiva].style.opacity = '1';
+        imgs[imgActiva].style.zIndex = '2';
+        Array.from(imgDots.children).forEach((d, i) => {
+          d.style.background = i === imgActiva ? 'white' : 'rgba(255,255,255,0.35)';
+        });
+      }
+
+      function siguienteHito() {
+        hitoActivo = (hitoActivo + 1) % HITOS_MODAL.length;
+        renderHito();
+        detenerAutoAvance();
+        iniciarAutoAvance();
+      }
+
+      function iniciarAutoAvance() {
+        detenerAutoAvance();
+        progressBar.style.transition = 'none';
+        progressBar.style.width = '0%';
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            progressBar.style.transition = `width ${MODAL_DURACION}ms linear`;
+            progressBar.style.width = '100%';
+          });
+        });
+        autoTimer = setTimeout(siguienteHito, MODAL_DURACION);
+      }
+
+      function detenerAutoAvance() {
+        if (autoTimer) clearTimeout(autoTimer);
+        progressBar.style.transition = 'none';
+        progressBar.style.width = '0%';
+      }
+
+      btnCerrar.addEventListener('click', cerrarModal);
+      btnSiguiente.addEventListener('click', siguienteHito);
+      btnImgPrev.addEventListener('click', () => cambiarImagen(-1));
+      btnImgNext.addEventListener('click', () => cambiarImagen(1));
+
+      overlay.addEventListener('click', (e) => { if (e.target === overlay) cerrarModal(); });
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape') cerrarModal(); });
+
+      // Swipe horizontal en carrusel
+      let touchStartX = 0;
+      imgContainer.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; }, { passive: true });
+      imgContainer.addEventListener('touchend', (e) => {
+        const diff = touchStartX - e.changedTouches[0].clientX;
+        if (Math.abs(diff) > 40) cambiarImagen(diff > 0 ? 1 : -1);
       }, { passive: true });
 
-      window.addEventListener('touchmove', () => {
-        pausado = true;
-        clearTimeout(scrollTimeout);
-        scrollTimeout = setTimeout(() => {
-          pausado = false;
-        }, 5000);
-      }, { passive: true });
-
-      // Iniciar
-      document.addEventListener('DOMContentLoaded', iniciarTimer);
     })();
   </script>
 </body>
