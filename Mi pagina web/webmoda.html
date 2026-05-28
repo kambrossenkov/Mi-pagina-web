@@ -5,7 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
   <link rel="icon" type="image/jpeg" href="Fotos/firma AK.jfif">
   <title>La moda de las páginas webs</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400&family=Space+Grotesk:wght@500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://api.fontshare.com/v2/css?f[]=clash-display@600&f[]=satoshi@700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -38,12 +39,22 @@
     html, body {
       width: 100%;
       height: 100%;
-      overflow: hidden;
+      overflow-y: hidden;   /* mantener página orbital sin scroll vertical */
+      overflow-x: clip;     /* clip no crea scroll container — preserva sticky/events */
     }
 
     body {
       font-family: 'Inter', sans-serif;
       background-color: #000005;
+      max-width: 100%;
+    }
+
+    /* Hamburger */
+    #mobile-menu-btn {
+      position: relative;
+      z-index: 9999 !important;
+      pointer-events: all !important;
+      cursor: pointer;
     }
 
     /* ── Fondo partículas ── */
@@ -68,9 +79,8 @@
 
     /* ── Contenido principal ── */
     #content {
-      position: fixed;
-      inset: 0;
-      padding-top: 72px;
+      position: relative;
+      min-height: calc(100vh - 72px);
       z-index: 10;
       display: flex;
       flex-direction: column;
@@ -82,12 +92,14 @@
 
     /* ── Título ── */
     #title {
-      font-size: clamp(1.4rem, 3.5vw, 2.5rem);
-      font-weight: 300;
-      color: #ffffff;
+      font-family: 'Clash Display', sans-serif;
+      font-size: 54px;
+      font-weight: 600;
+      letter-spacing: -2px;
+      line-height: 1;
+      color: rgba(255,255,255,0.92);
+      text-shadow: 0 0 18px rgba(0,180,255,0.18);
       text-align: center;
-      letter-spacing: 0.01em;
-      text-shadow: 0 2px 16px rgba(0,0,0,0.7), 0 1px 4px rgba(0,0,0,0.5);
       user-select: none;
     }
 
@@ -114,11 +126,16 @@
     }
 
     /* ── Título responsive ── */
-    @media (max-width: 767px) {
-      #title { font-size: 1.4rem !important; padding: 0 16px; }
-    }
-    @media (max-width: 480px) {
-      #title { font-size: 1.1rem !important; }
+    @media (max-width: 768px) {
+      #title {
+        font-size: 28px !important;
+        letter-spacing: -0.5px !important;
+        word-spacing: 2px;
+        line-height: 1.3 !important;
+        white-space: normal !important;
+        text-align: center;
+        padding: 0 16px;
+      }
     }
 
     /* ── Nodos: área táctil mínima en mobile ── */
@@ -177,13 +194,14 @@
       height: 40px;
       border-radius: 50%;
       background: #000000;
-      color: #ffffff;
+      color: #FFFFFF;
       border: 2px solid rgba(255, 255, 255, 0.4);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 0.95rem;
-      font-weight: 400;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 28px;
+      font-weight: 700;
       transition: background 0.25s ease, color 0.25s ease,
                   border-color 0.25s ease, box-shadow 0.25s ease;
       user-select: none;
@@ -191,9 +209,11 @@
     }
 
     .node-label {
-      font-size: 0.68rem;
-      font-weight: 400;
-      color: #ffffff;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 16px;
+      font-weight: 500;
+      letter-spacing: -0.2px;
+      color: rgba(255,255,255,0.75);
       text-align: center;
       white-space: nowrap;
       text-shadow: 0 1px 6px rgba(0,0,0,0.9);
@@ -268,30 +288,37 @@
     }
 
     .info-card-title {
-      font-size: 0.95rem;
-      font-weight: 400;
-      color: #ffffff;
+      font-family: 'Satoshi', sans-serif;
+      font-size: 34px;
+      font-weight: 700;
+      letter-spacing: -1px;
+      line-height: 1.1;
+      color: #F5F5F5;
       margin-bottom: 8px;
     }
 
     .info-card-badge {
       display: inline-block;
-      font-size: 0.65rem;
-      font-weight: 400;
-      color: #ffffff;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #4DFFB2;
       border: 1px solid rgba(255, 255, 255, 0.6);
       background: #000000;
       border-radius: 4px;
       padding: 2px 7px;
-      letter-spacing: 0.06em;
       margin-bottom: 10px;
     }
 
     .info-card-desc {
-      font-size: 0.78rem;
-      font-weight: 300;
-      color: rgba(255, 255, 255, 0.65);
-      line-height: 1.5;
+      font-family: 'Inter', sans-serif;
+      font-size: 18px;
+      font-weight: 400;
+      line-height: 1.85;
+      letter-spacing: -0.15px;
+      color: rgba(255,255,255,0.74);
       margin-bottom: 12px;
     }
 
@@ -332,10 +359,30 @@
       color: #ffffff !important;
     }
 
-    /* Botón Contactarme */
+    /* Botón Contactarme — desktop */
     header a[href="contacto.html"] {
       background-color: #ffffff !important;
       color: #000000 !important;
+      border-radius: 999px !important;
+      padding: 10px 20px !important;
+      font-weight: 600 !important;
+      border: none !important;
+    }
+
+    /* Botón Contactarme — mobile menu: texto simple igual que los otros links */
+    #mobile-menu a[href="contacto.html"] {
+      background: transparent !important;
+      border: none !important;
+      outline: none !important;
+      box-shadow: none !important;
+      color: #ffffff !important;
+      font-size: 16px !important;
+      font-weight: 400 !important;
+      padding: 0 !important;
+      text-align: left !important;
+      width: auto !important;
+      display: block !important;
+      border-radius: 0 !important;
     }
 
     /* Mobile menu links */
@@ -352,7 +399,10 @@
       border: 1px solid rgba(0, 229, 255, 0.3);
       border-radius: 6px;
       color: #00e5ff;
-      font-size: 11px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 0.3px;
       cursor: pointer;
       text-decoration: none;
       transition: all 0.2s;
@@ -389,6 +439,29 @@
       border-color: rgba(255, 255, 255, 0.38);
       transform: translateY(-1px);
     }
+
+    /* ── Popup mobile: posicionamiento fijo y scroll interno ── */
+    @media (max-width: 768px) {
+      /* Forzar posición fija centrada y scroll interno en mobile */
+      #modal-card,
+      .info-card {
+        position: fixed !important;
+        top: 50% !important;
+        left: 50% !important;
+        transform: translate(-50%, -50%) !important;
+        width: 90vw !important;
+        max-height: 80vh !important;
+        overflow-y: auto !important;
+        -webkit-overflow-scrolling: touch;
+        overscroll-behavior: contain;
+        touch-action: pan-y;
+        z-index: 9999 !important;
+      }
+      /* El node-wrapper no bloquea el scroll del popup */
+      .node-wrapper {
+        overflow: visible !important;
+      }
+    }
   </style>
 </head>
 <body>
@@ -415,7 +488,7 @@
         <a href="contacto.html" target="_blank" data-i18n="nav-contact" class="hidden md:block px-6 py-2 rounded-full bg-primary text-primary-foreground font-medium hover:opacity-90 transition-all text-center whitespace-nowrap">
           Contactarme
         </a>
-        <button id="mobile-menu-btn" class="md:hidden text-text hover:text-accent transition-colors focus:outline-none ml-2">
+        <button id="mobile-menu-btn" onclick="var m=document.getElementById('mobile-menu');m.classList.toggle('hidden');m.classList.toggle('flex');" class="md:hidden text-text hover:text-accent transition-colors focus:outline-none ml-2">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
         </button>
       </div>
@@ -844,31 +917,39 @@
       autoRotate = false;
       activeIndex = index;
 
-      // Quitar active de todos
+      // Quitar active de todos + limpiar card/overlay previos
       nodeWrappers.forEach(w => {
         w.classList.remove('active');
         removeCard(w);
       });
+      const prevCard    = document.getElementById('modal-card');
+      const prevOverlay = document.getElementById('popup-overlay');
+      if (prevCard)    prevCard.remove();
+      if (prevOverlay) prevOverlay.remove();
 
       // Activar el seleccionado
       const wrapper = nodeWrappers[index];
       wrapper.classList.add('active');
 
+      // Botón de cierre ✕
+      const closeBtnHTML = `<button onclick="event.stopPropagation();deselect();" style="position:absolute;top:10px;right:12px;background:none;border:none;color:rgba(255,255,255,0.55);font-size:20px;cursor:pointer;line-height:1;padding:4px 8px;border-radius:4px;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">✕</button>`;
+
       // Crear tarjeta
       const card = document.createElement('div');
       card.className = 'info-card';
+      card.id = 'modal-card';
       if (index === 0) {
-        card.innerHTML = `
-          <div class="info-card-title">Sitio 1</div>
+        card.innerHTML = closeBtnHTML + `
+          <div class="info-card-title">Kiosko Lotería Casa Lupi</div>
           <div class="info-card-badge" style="color: #4ade80; border-color: #4ade80; background: rgba(74, 222, 128, 0.1);">🟢 DISPONIBLE</div>
-          <div class="info-card-desc">Kiosco Box Oeste — Tu kiosco online con alfajores, bebidas, chocolates, helados, salados y más. Precios actualizados y stock en tiempo real.</div>
+          <div class="info-card-desc">Kiosko-Lotería: Casa Lupi — Una sociedad de dos amigos que iniciaron este comercio en 2022. En marzo de 2026 desarrollé una solución tecnológica para ayudarlos a mostrar sus combos y promociones al público de forma sencilla y atractiva, permitiendo actualizaciones rápidas sin invertir en papelería ni afiches — todo accesible mediante un QR.</div>
           <div class="progress-track">
             <div class="progress-fill" style="width: 100%;"></div>
           </div>
           <a href="https://kiosko-casa-lupi.vercel.app/" target="_blank" rel="noopener noreferrer" class="card-open-btn" style="color: #4ade80; border-color: rgba(74, 222, 128, 0.3); background: rgba(74, 222, 128, 0.1);">Abrir →</a>
         `;
       } else {
-        card.innerHTML = `
+        card.innerHTML = closeBtnHTML + `
           <div class="info-card-title">Sitio ${index + 1}</div>
           <div class="info-card-badge">PRÓXIMAMENTE</div>
           <div class="info-card-desc">Este acceso directo estará disponible pronto.</div>
@@ -878,13 +959,32 @@
           <a href="sitio${index + 1}.html" class="card-open-btn">Abrir →</a>
         `;
       }
-      wrapper.appendChild(card);
 
-      // Posicionar responsive
-      positionCard(wrapper, card);
-
-      // Evitar que el click en la tarjeta/link dispare el deselect global
+      // Evitar que el click en la tarjeta dispare el deselect global
       card.addEventListener('click', (e) => e.stopPropagation());
+
+      /* ── Siempre: modal centrado en viewport, adjunto a body ────────────
+         El node-wrapper tiene transform aplicado por JS, lo que cancela
+         position:fixed en sus descendientes. Adjuntar a body evita ese problema
+         tanto en mobile como en desktop. */
+      card.style.position       = 'fixed';
+      card.style.top            = '50%';
+      card.style.left           = '50%';
+      card.style.transform      = 'translate(-50%, -50%)';
+      card.style.zIndex         = '9999';
+      card.style.width          = Math.min(560, window.innerWidth * 0.9) + 'px';
+      card.style.maxHeight      = '85vh';
+      card.style.overflowY      = 'auto';
+      card.style.overscrollBehavior = 'contain';
+      card.style.borderRadius   = '16px';
+      document.body.appendChild(card);
+
+      // Overlay oscuro con blur
+      const overlay = document.createElement('div');
+      overlay.id = 'popup-overlay';
+      overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.75);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);z-index:9998;';
+      overlay.addEventListener('click', (e) => { e.stopPropagation(); deselect(); });
+      document.body.appendChild(overlay);
 
       updateNodes();
     }
@@ -897,6 +997,11 @@
         w.classList.remove('active');
         removeCard(w);
       });
+      // Eliminar card y overlay
+      const modalCard = document.getElementById('modal-card');
+      const overlay   = document.getElementById('popup-overlay');
+      if (modalCard) modalCard.remove();
+      if (overlay)   overlay.remove();
     }
 
     function removeCard(wrapper) {
