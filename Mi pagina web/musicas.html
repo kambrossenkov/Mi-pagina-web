@@ -7,6 +7,8 @@
   <title>Músicas | Perspective</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400&family=Inter+Tight:wght@300&family=Space+Grotesk:wght@500&display=swap" rel="stylesheet">
+  <link href="https://api.fontshare.com/v2/css?f[]=clash-display@600&f[]=satoshi@700&display=swap" rel="stylesheet">
   <script>
     tailwind.config = {
       theme: {
@@ -75,19 +77,23 @@
       max-width: 900px;
     }
     #hero-s1-text h1 {
-      font-size: clamp(2rem, 5vw, 4.5rem);
-      font-weight: 700;
-      line-height: 1.2;
-      letter-spacing: -0.02em;
+      font-family: 'Clash Display', sans-serif;
+      font-size: 96px;
+      font-weight: 600;
+      line-height: 0.92;
+      letter-spacing: -3px;
+      color: #F5F5F5;
       margin: 0;
       text-shadow: 0 2px 30px rgba(0,0,0,0.6);
     }
     #hero-s1-text p {
-      margin-top: 1.2rem;
-      font-size: clamp(0.9rem, 1.8vw, 1.2rem);
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 24px;
       font-weight: 300;
-      color: rgba(255,255,255,0.75);
-      letter-spacing: 0.04em;
+      line-height: 1.7;
+      letter-spacing: -0.2px;
+      color: rgba(255,255,255,0.68);
+      margin-top: 1.2rem;
     }
 
     /* Scroll hint arrow */
@@ -309,17 +315,101 @@
       object-fit: cover;
     }
     .glare-text-title {
+      font-family: 'Satoshi', sans-serif;
+      font-size: 34px;
       font-weight: 700;
-      color: #fff;
-      font-size: 1.125rem;
+      line-height: 1;
+      letter-spacing: -1.5px;
+      color: #F8F8F8;
       margin: 0;
     }
     .glare-text-body {
+      font-family: 'Inter', sans-serif;
+      font-size: 18px;
       font-weight: 400;
-      color: #e5e5e5;
-      font-size: 0.95rem;
+      line-height: 1.85;
+      letter-spacing: -0.1px;
+      color: rgba(255,255,255,0.74);
       margin-top: 1rem;
-      line-height: 1.5;
+    }
+
+    /* UI secundaria */
+    #hero-scroll-hint {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+    }
+
+    /* Emoji 🎵 */
+    .hero-emoji {
+      opacity: 0.8;
+      filter: blur(0.2px);
+      display: inline-block;
+      transform: translateY(-2px);
+    }
+
+    /* ── Mobile: legibilidad de cards de descripción ── */
+    @media (max-width: 768px) {
+
+      /* Todas las cards: ancho completo */
+      .glare-card-wrap {
+        width: 100% !important;
+      }
+
+      /* CORRECCIÓN 1 — Cards de texto: altura libre, sin recorte */
+      .glare-card-wrap:has(.glare-bottom-left) {
+        min-height: unset !important;
+        height: auto !important;
+        overflow: visible !important;
+        aspect-ratio: unset !important;
+      }
+      .glare-card-wrap:has(.glare-bottom-left) .glare-card-inner {
+        overflow: visible !important;
+        max-height: none !important;
+        height: auto !important;
+      }
+      .glare-card-wrap:has(.glare-bottom-left) .glare-layer {
+        height: auto !important;
+      }
+
+      /* CORRECCIÓN 2 — Texto completo sin truncamiento */
+      .glare-bottom-left {
+        overflow: visible !important;
+        max-height: none !important;
+        -webkit-line-clamp: unset !important;
+        white-space: normal !important;
+        display: block !important;
+        height: auto !important;
+        /* CORRECCIÓN 4 — Padding interno */
+        padding: 24px 20px !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+      }
+
+      .glare-text-body {
+        overflow: visible !important;
+        max-height: none !important;
+        -webkit-line-clamp: unset !important;
+        white-space: normal !important;
+        display: block !important;
+        /* CORRECCIÓN 3 — Tamaño de fuente */
+        font-size: 16px !important;
+        line-height: 1.7 !important;
+      }
+
+      /* CORRECCIÓN 3 + tipografía mobile */
+      .glare-text-title {
+        font-size: 26px !important;
+      }
+
+      /* Hero título mobile */
+      #hero-s1-text h1 {
+        font-size: 56px !important;
+        letter-spacing: -2px !important;
+      }
     }
   </style>
 </head>
@@ -527,6 +617,15 @@
   </footer>
 
   <script src="script.js" onerror="console.info('Scripts running')"></script>
+  <script>
+  /* Wrap emoji 🎵 con clase hero-emoji después de que idioma.js inyecte innerHTML */
+  window.__idiomaPatch = function () {
+    var h1 = document.querySelector('#hero-s1-text h1');
+    if (h1 && !h1.querySelector('.hero-emoji')) {
+      h1.innerHTML = h1.innerHTML.replace('🎵', '<span class="hero-emoji">🎵</span>');
+    }
+  };
+  </script>
   <script src="idioma.js"></script>
 
   <!-- Glare Cards -->
