@@ -513,7 +513,7 @@
     });
   </script>
 
-  <!-- Email validation: XSS sanitization + header injection protection -->
+  <!-- Email validation + rate-limited serverless submission -->
   <script>
   (function () {
     var EMAIL_REGEX = /^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/;
@@ -531,10 +531,15 @@
 
     function showError(msg) {
       var el = document.getElementById('email-error');
-      if (el) { el.textContent = msg; el.style.display = 'block'; }
+      if (el) { el.textContent = msg; el.style.color = '#ef4444'; el.style.display = 'block'; }
     }
 
-    function clearError() {
+    function showSuccess(msg) {
+      var el = document.getElementById('email-error');
+      if (el) { el.textContent = msg; el.style.color = '#22c55e'; el.style.display = 'block'; }
+    }
+
+    function clearMessage() {
       var el = document.getElementById('email-error');
       if (el) { el.textContent = ''; el.style.display = 'none'; }
     }
@@ -544,14 +549,14 @@
       var input = document.getElementById('email-input');
       if (!form || !input) return;
 
-      input.addEventListener('input', clearError);
+      input.addEventListener('input', clearMessage);
 
       form.addEventListener('submit', function (e) {
+        e.preventDefault();
         var raw = input.value;
 
         // Layer 4: RFC 5321 length limit
         if (raw.length > 254) {
-          e.preventDefault();
           showError('Por favor ingresá un email válido.');
           return;
         }
@@ -559,7 +564,6 @@
         // Layer 3: Email header injection
         for (var i = 0; i < INJECTION_PATTERNS.length; i++) {
           if (INJECTION_PATTERNS[i].test(raw)) {
-            e.preventDefault();
             showError('Por favor ingresá un email válido.');
             return;
           }
@@ -567,13 +571,37 @@
 
         // Layer 1: Strict format validation
         if (!EMAIL_REGEX.test(raw)) {
-          e.preventDefault();
           showError('Por favor ingresá un email válido.');
           return;
         }
 
         // Layer 2: XSS sanitization before any DOM use
-        input.value = sanitizeInput(raw);
+        var sanitized = sanitizeInput(raw);
+
+        var btn = form.querySelector('button[type="submit"]');
+        if (btn) btn.disabled = true;
+
+        fetch('/api/contacto', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: sanitized })
+        })
+        .then(function (res) {
+          if (res.status === 200) {
+            showSuccess('¡Gracias! Te contactaré pronto.');
+            input.value = '';
+          } else if (res.status === 429) {
+            showError('Demasiados intentos. Esperá unos minutos.');
+          } else {
+            showError('Algo salió mal. Intentá de nuevo.');
+          }
+        })
+        .catch(function () {
+          showError('Algo salió mal. Intentá de nuevo.');
+        })
+        .finally(function () {
+          if (btn) btn.disabled = false;
+        });
       });
     });
   })();
