@@ -47,7 +47,11 @@
       "Bash(Select-String -Pattern \"firma\")",
       "Bash(git config *)",
       "Bash(Remove-Item *)",
-      "Bash(git commit -m 'sistema bilingue ES/EN via idioma.js en todas las paginas \\(excepto inventos.html\\) *)"
+      "Bash(git commit -m 'sistema bilingue ES/EN via idioma.js en todas las paginas \\(excepto inventos.html\\) *)",
+      "Bash(git commit *)",
+      "Bash(Get-ChildItem -Path \"C:\\\\Users\\\\kambr\\\\Desktop\\\\Mi-pagina-web\\\\Mi pagina web\" -Force)",
+      "Bash(Select-Object Name, Attributes)",
+      "Bash(Sort-Object Name)"
     ]
   }
 }
