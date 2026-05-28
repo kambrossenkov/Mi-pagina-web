@@ -11,6 +11,8 @@
   #sg-stage {
     position: relative;
     height: 900vh;
+    margin-bottom: 0;
+    padding-bottom: 0;
   }
 
   #sg-sticky {
@@ -123,6 +125,8 @@
     background-attachment: fixed;
     background-repeat: no-repeat;
     background-color: #000;   /* fallback mientras carga */
+    /* clip (no hidden) para no crear un nuevo scroll-container que rompa position:sticky */
+    overflow-x: clip !important;
   }
 
   /* Overlay oscuro semi-transparente */
@@ -152,6 +156,9 @@
     background: rgba(0, 0, 0, 0.75) !important;
     backdrop-filter: blur(4px) !important;
     -webkit-backdrop-filter: blur(4px) !important;
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 100 !important;
   }
 
   /* Mobile nav dropdown ─ semi-opaco */
@@ -231,12 +238,12 @@
   </header>
 
   <!-- Main Content -->
-  <main class="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+  <main class="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-0">
 
     <!-- Hero Section -->
     <div style="
       margin-left: 7%;
-      margin-top: 18vh;
+      margin-top: 0;
       max-width: 620px;
       margin-bottom: 4rem;
     ">
@@ -381,13 +388,21 @@
   }
 
   /* ── Preload ── */
+  function onImageSettled() {
+    loaded++;
+    if (loaded === TOTAL) {
+      allReady = true;
+      init();
+      /* Si el usuario ya scrolleó antes de que cargaran las imágenes,
+         forzar el cálculo de progreso actual */
+      requestAnimationFrame(() => window.dispatchEvent(new Event('scroll')));
+    }
+  }
+
   PHOTOS.forEach((src, i) => {
     const img = new Image();
-    img.onload = () => {
-      loaded++;
-      if (loaded === TOTAL) { allReady = true; init(); }
-    };
-    img.onerror = () => { loaded++; };
+    img.onload  = onImageSettled;
+    img.onerror = onImageSettled;  /* fix: también contar errores como "listos" */
     img.src = src;
     images[i] = img;
   });
@@ -457,6 +472,25 @@
   });
 
 })();
+  </script>
+
+  <!-- Fallback carrusel: IntersectionObserver -->
+  <script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var carrusel = document.querySelector('[class*="carrusel"], [class*="gallery"], [class*="slider"], [id*="carrusel"], #sg-stage');
+    if (carrusel) {
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+          }
+        });
+      }, { threshold: 0.3 });
+      observer.observe(carrusel);
+    }
+    /* Disparar scroll una vez para inicializar estado si imágenes ya cargaron */
+    window.dispatchEvent(new Event('scroll'));
+  });
   </script>
 
   <!-- Vercel Analytics -->
