@@ -351,6 +351,18 @@
       transform: translateY(-2px);
     }
 
+    /* Override global overflow-x (styles.css) */
+    html { overflow-x: clip; }
+    body { max-width: 100%; overflow-x: unset !important; }
+
+    /* Hamburger */
+    #mobile-menu-btn {
+      position: relative;
+      z-index: 9999 !important;
+      pointer-events: all !important;
+      cursor: pointer;
+    }
+
     /* ── Mobile: legibilidad de cards de descripción ── */
     @media (max-width: 768px) {
 
@@ -431,11 +443,11 @@
       <div class="flex items-center gap-4 md:gap-6">
         <button class="lang-btn text-white hover:text-blue-400 transition-colors text-sm uppercase flex-shrink-0" data-lang="es" style="font-weight:700">ES</button>
         <button class="lang-btn text-white hover:text-blue-400 transition-colors text-sm uppercase flex-shrink-0" data-lang="en" style="font-weight:400;opacity:0.35">EN</button>
-        <a href="contacto.html" target="_blank" data-i18n="nav-contact" class="hidden md:block px-6 py-2 rounded-full bg-blue-600 text-white font-medium hover:bg-blue-700 transition-all text-center whitespace-nowrap shadow-[0_0_15px_rgba(37,99,235,0.4)]">
+        <a href="contacto.html" target="_blank" data-i18n="nav-contact" class="hidden md:block px-6 py-2 rounded-full bg-white text-black font-medium hover:opacity-90 transition-all text-center whitespace-nowrap">
           Contactarme
         </a>
         <!-- Hamburger Menu Button -->
-        <button id="mobile-menu-btn" class="md:hidden text-white hover:text-blue-400 transition-colors focus:outline-none ml-2">
+        <button id="mobile-menu-btn" onclick="var m=document.getElementById('mobile-menu');m.classList.toggle('hidden');m.classList.toggle('flex');" class="md:hidden text-white hover:text-blue-400 transition-colors focus:outline-none ml-2">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
         </button>
       </div>

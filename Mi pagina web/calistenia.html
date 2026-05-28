@@ -16,6 +16,18 @@
   ═══════════════════════════════════════════════════════════ */
   *, *::before, *::after { box-sizing: border-box; }
 
+  /* Override global overflow-x (styles.css) */
+  html { overflow-x: clip; }
+  body { max-width: 100%; overflow-x: unset !important; }
+
+  /* Hamburger */
+  #mobile-menu-btn {
+    position: relative;
+    z-index: 9999 !important;
+    pointer-events: all !important;
+    cursor: pointer;
+  }
+
   html {
     background: #050a18;      /* fallback mientras carga la imagen */
   }
@@ -376,7 +388,7 @@
           Contactarme
         </a>
         <!-- Hamburger Menu Button -->
-        <button id="mobile-menu-btn" class="md:hidden text-text hover:text-accent transition-colors focus:outline-none ml-2">
+        <button id="mobile-menu-btn" onclick="var m=document.getElementById('mobile-menu');m.classList.toggle('hidden');m.classList.toggle('flex');" class="md:hidden text-text hover:text-accent transition-colors focus:outline-none ml-2">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
         </button>
       </div>
