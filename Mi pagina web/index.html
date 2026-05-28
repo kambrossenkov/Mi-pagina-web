@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
   <link rel="icon" type="image/jpeg" href="Fotos/firma AK.jfif">
   <title>Konstantino Ambrossenkov</title>
   <script src="https://cdn.tailwindcss.com"></script>
@@ -124,6 +124,23 @@
       font-family: 'Inter', sans-serif !important;
       font-weight: 500 !important;
     }
+
+    /* Hamburger: z-index y pointer-events explícitos */
+    #mobile-menu-btn {
+      position: relative;
+      z-index: 9999;
+      cursor: pointer;
+      pointer-events: all;
+    }
+
+    /* Override styles.css: overflow-x: clip en html no bloquea eventos touch */
+    html {
+      overflow-x: clip;
+    }
+    body {
+      overflow-x: hidden;
+      max-width: 100%;
+    }
   </style>
 </head>
 <body class="min-h-screen bg-background text-text animate-fade-in transition-colors duration-300">
@@ -152,10 +169,10 @@
   <!-- Header Component -->
   <header class="sticky top-0 z-50 py-4 md:py-6 border-b border-border/20 bg-background/90 backdrop-blur-sm transition-colors duration-300">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
-      <div class="flex items-center gap-3">
+      <a href="index.html" class="flex items-center gap-3">
         <div class="w-8 h-8 md:w-10 md:h-10 border-2 border-text flex items-center justify-center text-text font-bold text-lg md:text-xl transition-colors duration-300">K</div>
         <h1 class="text-xl md:text-2xl font-bold tracking-tight text-text font-serif transition-colors duration-300 hidden sm:block">Ambrossenkov</h1>
-      </div>
+      </a>
       <nav class="hidden md:flex gap-8 items-center text-sm font-medium text-text/90">
         <a href="pasatiempos.html" data-i18n="nav-hobbies" class="hover:text-accent transition-colors">Pasatiempos</a>
         <a href="curiosidades.html" data-i18n="nav-trajectory" class="hover:text-accent transition-colors">Mi trayectoria</a>
@@ -169,7 +186,7 @@
           Contactarme
         </a>
         <!-- Hamburger Menu Button -->
-        <button id="mobile-menu-btn" class="md:hidden text-text hover:text-accent transition-colors focus:outline-none ml-2">
+        <button id="mobile-menu-btn" onclick="var m=document.getElementById('mobile-menu');m.classList.toggle('hidden');m.classList.toggle('flex');" class="md:hidden text-text hover:text-accent transition-colors focus:outline-none ml-2">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
         </button>
       </div>
@@ -208,7 +225,75 @@
         <h2 data-i18n="articles-title" class="text-3xl md:text-4xl font-bold tracking-tight text-text transition-colors duration-300">Artículos Destacados</h2>
       </div>
       <div id="articles-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <!-- Articles rendered via script.js -->
+
+        <!-- Card 1: Mi CV -->
+        <div
+          onclick="if(typeof openCVModal==='function')openCVModal()"
+          data-open-cv-modal="true" role="button" tabindex="0"
+          class="block bg-card rounded-2xl overflow-hidden border border-border shadow-sm hover:shadow-md transition-all duration-300 animate-slide-up group cursor-pointer"
+          style="animation-delay: 200ms;"
+        >
+          <div class="h-48 overflow-hidden relative">
+            <div style="width:100%;height:100%;background:linear-gradient(135deg,#0a1628 0%,#0f2340 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                <polyline points="14 2 14 8 20 8"/>
+                <line x1="16" y1="13" x2="8" y2="13"/>
+                <line x1="16" y1="17" x2="8" y2="17"/>
+                <polyline points="10 9 9 9 8 9"/>
+              </svg>
+              <span style="font-size:11px;font-weight:700;letter-spacing:2px;color:#93c5fd;">CV</span>
+            </div>
+          </div>
+          <div class="p-6 flex flex-col justify-between h-[calc(100%-12rem)]">
+            <div>
+              <div class="flex items-center gap-2 mb-3">
+                <span class="text-xs font-bold uppercase tracking-wider text-accent">MI PERFIL</span><span class="text-xs text-muted-foreground ml-2">• 03-may-2026</span>
+              </div>
+              <h3 class="text-xl font-bold mb-2 tracking-tight group-hover:text-accent text-text transition-colors">Mi CV</h3>
+              <p class="text-muted-foreground line-clamp-3 text-sm leading-relaxed">Ingresá a mi CV en castellano o en inglés, según prefieras.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2: Finalización de carrera -->
+        <a href="curiosidades.html"
+          class="block bg-card rounded-2xl overflow-hidden border border-border shadow-sm hover:shadow-md transition-all duration-300 animate-slide-up group"
+          style="animation-delay: 300ms;"
+        >
+          <div class="h-48 overflow-hidden relative">
+            <img src="Fotos/foto_de_recibida.jpg" alt="Finalización de mi cursada en la carrera" class="w-full h-full object-contain bg-black group-hover:scale-105 transition-transform duration-500" />
+          </div>
+          <div class="p-6 flex flex-col justify-between h-[calc(100%-12rem)]">
+            <div>
+              <div class="flex items-center gap-2 mb-3">
+                <span class="text-xs font-bold uppercase tracking-wider text-accent"></span><span class="text-xs text-muted-foreground ml-2">• 12-dic-2024</span>
+              </div>
+              <h3 class="text-xl font-bold mb-2 tracking-tight group-hover:text-accent text-text transition-colors">Finalización de mi cursada en la carrera</h3>
+              <p class="text-muted-foreground line-clamp-3 text-sm leading-relaxed">Luego de un recorrido de 4 años y medio en la carrera de Lic. en gestión de negocios pude finalizarla en tiempo y en forma por la beca obtenida</p>
+            </div>
+          </div>
+        </a>
+
+        <!-- Card 3: Kiosco Casa Lupi -->
+        <a href="webmoda.html" target="_blank" rel="noopener noreferrer"
+          class="block bg-card rounded-2xl overflow-hidden border border-border shadow-sm hover:shadow-md transition-all duration-300 animate-slide-up group"
+          style="animation-delay: 400ms;"
+        >
+          <div class="h-48 overflow-hidden relative">
+            <img src="Fotos/qr de casa lupi.jpeg" alt="QR Casa Lupi" style="width:100%;height:100%;object-fit:contain;padding:16px;">
+          </div>
+          <div class="p-6 flex flex-col justify-between h-[calc(100%-12rem)]">
+            <div>
+              <div class="flex items-center gap-2 mb-3">
+                <span class="text-xs font-bold uppercase tracking-wider text-accent">INVENTOS</span><span class="text-xs text-muted-foreground ml-2">• 20-mar-2025</span>
+              </div>
+              <h3 class="text-xl font-bold mb-2 tracking-tight group-hover:text-accent text-text transition-colors">Kiosco Casa Lupi</h3>
+              <p class="text-muted-foreground line-clamp-3 text-sm leading-relaxed">Kiosco de unos conocidos muy cercanos míos que les brindé una ayuda tecnológica y administrativa para mejorar su marca familiar.</p>
+            </div>
+          </div>
+        </a>
+
       </div>
     </section>
 
@@ -301,9 +386,9 @@
 
   <!-- CV Modal -->
   <div id="cv-modal" class="fixed inset-0 z-[100] flex items-center justify-center hidden" role="dialog" aria-modal="true" aria-labelledby="cv-modal-title">
-    <div id="cv-modal-overlay" class="absolute inset-0 bg-black/70 backdrop-blur-sm"></div>
+    <div id="cv-modal-overlay" class="absolute inset-0 bg-black/70 backdrop-blur-sm" onclick="if(typeof closeCVModal==='function')closeCVModal()"></div>
     <div class="relative z-10 bg-card border border-border rounded-2xl p-8 max-w-lg w-full mx-4 shadow-2xl">
-      <button id="cv-modal-close" class="absolute top-4 right-4 text-muted-foreground hover:text-text transition-colors" aria-label="Cerrar">
+      <button id="cv-modal-close" onclick="if(typeof closeCVModal==='function')closeCVModal()" class="absolute top-4 right-4 text-muted-foreground hover:text-text transition-colors" aria-label="Cerrar">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
       <h2 id="cv-modal-title" class="text-2xl font-bold font-serif text-text mb-2">Mi Currículum Vitae</h2>
@@ -369,18 +454,11 @@
             card.rel = 'noopener noreferrer';
           }
 
-          // Corregir imagen: mismo placeholder SVG que Mi CV
+          // Imagen QR para Kiosco Casa Lupi
           var imgArea = card.querySelector('.h-48');
           if (imgArea) {
             imgArea.innerHTML =
-              '<div style="width:100%;height:100%;background:linear-gradient(135deg,#0a1628 0%,#0f2340 100%);display:flex;align-items:center;justify-content:center;">' +
-              '<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">' +
-              '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>' +
-              '<polyline points="14 2 14 8 20 8"/>' +
-              '<line x1="16" y1="13" x2="8" y2="13"/>' +
-              '<line x1="16" y1="17" x2="8" y2="17"/>' +
-              '<polyline points="10 9 9 9 8 9"/>' +
-              '</svg></div>';
+              '<img src="Fotos/qr de casa lupi.jpeg" alt="QR Casa Lupi" style="width:100%;height:100%;object-fit:contain;padding:16px;">';
           }
         };
       }
