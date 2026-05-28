@@ -181,9 +181,10 @@
         <a href="inventos.html" data-i18n="nav-inventions" class="hover:text-accent transition-colors">Inventos</a>
       </nav>
       <div class="flex items-center gap-4 md:gap-6">
-        <button id="lang-toggle" class="text-text hover:text-accent transition-colors text-sm font-bold uppercase w-8 flex-shrink-0">ES</button>
+        <button class="lang-btn text-text hover:text-accent transition-colors text-sm uppercase flex-shrink-0" data-lang="es" style="font-weight:700">ES</button>
+        <button class="lang-btn text-text hover:text-accent transition-colors text-sm uppercase flex-shrink-0" data-lang="en" style="font-weight:400;opacity:0.35">EN</button>
         <a href="contacto.html" target="_blank" data-i18n="nav-contact" class="hidden md:block px-6 py-2 rounded-full bg-primary text-primary-foreground font-medium hover:opacity-90 transition-all text-center whitespace-nowrap">Contactarme</a>
-        <button id="mobile-menu-btn" class="md:hidden text-text hover:text-accent transition-colors focus:outline-none ml-2">
+        <button id="mobile-menu-btn" onclick="var m=document.getElementById('mobile-menu');m.classList.toggle('hidden');m.classList.toggle('flex');" class="md:hidden text-text hover:text-accent transition-colors focus:outline-none ml-2">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
         </button>
       </div>
@@ -198,7 +199,7 @@
   </header>
 
   <div class="center-content">
-    <p class="site-number">Sitio · 3</p>
+    <p class="site-number" data-es="Sitio · 3" data-en="Site · 3">Sitio · 3</p>
 
     <div class="icon-wrapper">
       <div class="icon-ring"></div>
@@ -207,22 +208,34 @@
       <div class="icon-core">⚙️</div>
     </div>
 
-    <h1 class="site-title">En proceso</h1>
+    <h1 class="site-title" data-es="En proceso" data-en="In progress">En proceso</h1>
 
     <div class="status-badge">
-      <span class="dot"></span>
-      Próximamente
+      <span class="dot"></span><span data-es="Próximamente" data-en="Coming Soon">Próximamente</span>
     </div>
 
-    <p class="description">
+    <p class="description" data-es="Este proyecto está siendo desarrollado. Volvé pronto para ver las novedades." data-en="This project is being developed. Come back soon for updates.">
       Este proyecto está siendo desarrollado.<br>
       Volvé pronto para ver las novedades.
     </p>
   </div>
 
-  <a href="webmoda.html" class="btn-back">← Volver</a>
+  <a href="webmoda.html" class="btn-back" data-i18n="web-back">← Inventos</a>
 
+  <script>
+    window.__idiomaPatch = function(lang) {
+      document.querySelectorAll('[data-es]').forEach(function(el) {
+        var val = lang === 'en' ? el.getAttribute('data-en') : el.getAttribute('data-es');
+        if (val !== null) el.textContent = val;
+      });
+    };
+    document.addEventListener('DOMContentLoaded', function() {
+      var lang = localStorage.getItem('idioma') || 'es';
+      if (typeof aplicarIdioma === 'function') aplicarIdioma(lang);
+    });
+  </script>
   <script src="script.js"></script>
+  <script src="idioma.js"></script>
 
   <!-- Vercel Analytics -->
   <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>

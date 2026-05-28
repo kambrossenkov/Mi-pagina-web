@@ -941,22 +941,22 @@
       if (index === 0) {
         card.innerHTML = closeBtnHTML + `
           <div class="info-card-title">Kiosko Lotería Casa Lupi</div>
-          <div class="info-card-badge" style="color: #4ade80; border-color: #4ade80; background: rgba(74, 222, 128, 0.1);">🟢 DISPONIBLE</div>
-          <div class="info-card-desc">Kiosko-Lotería: Casa Lupi — Una sociedad de dos amigos que iniciaron este comercio en 2022. En marzo de 2026 desarrollé una solución tecnológica para ayudarlos a mostrar sus combos y promociones al público de forma sencilla y atractiva, permitiendo actualizaciones rápidas sin invertir en papelería ni afiches — todo accesible mediante un QR.</div>
+          <div class="info-card-badge" data-es="🟢 DISPONIBLE" data-en="🟢 AVAILABLE" style="color: #4ade80; border-color: #4ade80; background: rgba(74, 222, 128, 0.1);">🟢 DISPONIBLE</div>
+          <div class="info-card-desc" data-es="Kiosko-Lotería: Casa Lupi — Una sociedad de dos amigos que iniciaron este comercio en 2022. En marzo de 2026 desarrollé una solución tecnológica para ayudarlos a mostrar sus combos y promociones al público de forma sencilla y atractiva, permitiendo actualizaciones rápidas sin invertir en papelería ni afiches — todo accesible mediante un QR." data-en="Kiosko-Lottery: Casa Lupi — A partnership between two friends who started this business in 2022. In March 2026 I developed a tech solution to help them showcase their combos and promotions in a simple and attractive way, allowing quick updates without investing in printed materials — all accessible via QR.">Kiosko-Lotería: Casa Lupi — Una sociedad de dos amigos que iniciaron este comercio en 2022. En marzo de 2026 desarrollé una solución tecnológica para ayudarlos a mostrar sus combos y promociones al público de forma sencilla y atractiva, permitiendo actualizaciones rápidas sin invertir en papelería ni afiches — todo accesible mediante un QR.</div>
           <div class="progress-track">
             <div class="progress-fill" style="width: 100%;"></div>
           </div>
-          <a href="https://kiosko-casa-lupi.vercel.app/" target="_blank" rel="noopener noreferrer" class="card-open-btn" style="color: #4ade80; border-color: rgba(74, 222, 128, 0.3); background: rgba(74, 222, 128, 0.1);">Abrir →</a>
+          <a href="https://kiosko-casa-lupi.vercel.app/" target="_blank" rel="noopener noreferrer" class="card-open-btn" data-es="Abrir →" data-en="Open →" style="color: #4ade80; border-color: rgba(74, 222, 128, 0.3); background: rgba(74, 222, 128, 0.1);">Abrir →</a>
         `;
       } else {
         card.innerHTML = closeBtnHTML + `
-          <div class="info-card-title">Sitio ${index + 1}</div>
-          <div class="info-card-badge">PRÓXIMAMENTE</div>
-          <div class="info-card-desc">Este acceso directo estará disponible pronto.</div>
+          <div class="info-card-title" data-es="Sitio ${index + 1}" data-en="Site ${index + 1}">Sitio ${index + 1}</div>
+          <div class="info-card-badge" data-es="PRÓXIMAMENTE" data-en="COMING SOON">PRÓXIMAMENTE</div>
+          <div class="info-card-desc" data-es="Este acceso directo estará disponible pronto." data-en="This direct access will be available soon.">Este acceso directo estará disponible pronto.</div>
           <div class="progress-track">
             <div class="progress-fill"></div>
           </div>
-          <a href="sitio${index + 1}.html" class="card-open-btn">Abrir →</a>
+          <a href="sitio${index + 1}.html" class="card-open-btn" data-es="Abrir →" data-en="Open →">Abrir →</a>
         `;
       }
 
@@ -985,6 +985,9 @@
       overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.75);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);z-index:9998;';
       overlay.addEventListener('click', (e) => { e.stopPropagation(); deselect(); });
       document.body.appendChild(overlay);
+
+      const lang = localStorage.getItem('idioma') || 'es';
+      aplicarIdioma(lang);
 
       updateNodes();
     }
@@ -1029,6 +1032,14 @@
     animate();
   </script>
 
+  <script>
+    window.__idiomaPatch = function(lang) {
+      document.querySelectorAll('[data-es]').forEach(function(el) {
+        var val = lang === 'en' ? el.getAttribute('data-en') : el.getAttribute('data-es');
+        if (val !== null) el.textContent = val;
+      });
+    };
+  </script>
   <script src="script.js"></script>
   <script src="idioma.js"></script>
   <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
