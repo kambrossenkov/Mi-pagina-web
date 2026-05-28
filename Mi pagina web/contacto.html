@@ -199,10 +199,20 @@
           </label>
         </div>
 
+        <input
+          type="text"
+          name="honeypot"
+          id="honeypot_field"
+          autocomplete="off"
+          tabindex="-1"
+          style="position:absolute;left:-9999px;opacity:0;width:1px;height:1px;"
+        >
+
         <div class="pt-8 mb-16 lg:mb-0">
           <button type="submit" data-i18n="con-btn-submit" class="w-full px-8 py-4 rounded-xl bg-primary text-primary-foreground font-bold text-lg hover:opacity-90 shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all">
             Enviar consulta
           </button>
+          <div id="form_global_msg" style="display:none; margin-top:1rem; font-size:0.9rem; font-weight:500;"></div>
         </div>
 
       </form>
@@ -211,6 +221,143 @@
 
   <script src="script.js"></script>
   <script src="idioma.js"></script>
+
+  <!-- Contact form: spam / bot / XSS / flood protection -->
+  <script>
+  (function () {
+    'use strict';
+
+    var EMAIL_REGEX = /^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/;
+
+    function getContainer(fieldId) {
+      var el = document.getElementById(fieldId);
+      return el ? el.closest('.space-y-2') : null;
+    }
+
+    function showFieldError(fieldId, msg) {
+      clearFieldError(fieldId);
+      var container = getContainer(fieldId);
+      if (!container) return;
+      var p = document.createElement('p');
+      p.id = fieldId + '_err';
+      p.style.cssText = 'color:#ef4444;font-size:0.8rem;margin-top:0.25rem;';
+      p.textContent = msg;
+      container.appendChild(p);
+    }
+
+    function clearFieldError(fieldId) {
+      var old = document.getElementById(fieldId + '_err');
+      if (old) old.remove();
+    }
+
+    function showGlobal(msg, ok) {
+      var el = document.getElementById('form_global_msg');
+      if (!el) return;
+      el.textContent = msg;
+      el.style.color = ok ? '#22c55e' : '#ef4444';
+      el.style.display = 'block';
+    }
+
+    function clearGlobal() {
+      var el = document.getElementById('form_global_msg');
+      if (el) { el.textContent = ''; el.style.display = 'none'; }
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      var form = document.getElementById('contacto');
+      if (!form) return;
+
+      ['nombre', 'apellido', 'email', 'asunto', 'mensaje'].forEach(function (id) {
+        var el = document.getElementById(id);
+        if (el) el.addEventListener('input', function () { clearFieldError(id); clearGlobal(); });
+      });
+      var cb = document.getElementById('consentimiento');
+      if (cb) cb.addEventListener('change', function () { clearFieldError('consentimiento'); clearGlobal(); });
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        // 2b — Rate limit client-side
+        var lastSubmit = localStorage.getItem('contacto_last_submit');
+        if (lastSubmit && Date.now() - parseInt(lastSubmit, 10) < 15 * 60 * 1000) {
+          showGlobal('Ya enviaste una consulta recientemente. Esperá unos minutos.', false);
+          return;
+        }
+
+        // 2d — Validación client-side
+        ['nombre', 'apellido', 'email', 'asunto', 'mensaje', 'consentimiento'].forEach(clearFieldError);
+        clearGlobal();
+
+        var nombre   = document.getElementById('nombre').value.trim();
+        var apellido = document.getElementById('apellido').value.trim();
+        var email    = document.getElementById('email').value.trim();
+        var asunto   = document.getElementById('asunto').value.trim();
+        var mensaje  = document.getElementById('mensaje').value.trim();
+        var acepta   = document.getElementById('consentimiento').checked;
+
+        if (!nombre)                  { showFieldError('nombre',         'El nombre es obligatorio.');                    return; }
+        if (!apellido)                { showFieldError('apellido',       'El apellido es obligatorio.');                  return; }
+        if (!email)                   { showFieldError('email',          'El email es obligatorio.');                    return; }
+        if (!EMAIL_REGEX.test(email)) { showFieldError('email',          'El email no tiene un formato válido.');        return; }
+        if (!asunto)                  { showFieldError('asunto',         'El asunto es obligatorio.');                   return; }
+        if (!mensaje)                 { showFieldError('mensaje',        'El mensaje es obligatorio.');                  return; }
+        if (mensaje.length > 2000)    { showFieldError('mensaje',        'El mensaje no puede superar 2000 caracteres.'); return; }
+        if (!acepta)                  { showFieldError('consentimiento', 'Debés aceptar para continuar.');              return; }
+
+        // 2c — Construir body y enviar a la función serverless
+        var body = {
+          nombre:         nombre,
+          apellido:       apellido,
+          email:          email,
+          telefono:       (document.getElementById('telefono')                    || {}).value || '',
+          empresa:        (document.getElementById('empresa_institucion_proyecto') || {}).value || '',
+          cargo:          (document.getElementById('cargo_rol')                   || {}).value || '',
+          tipoContacto:   (document.getElementById('tipo_contacto')               || {}).value || '',
+          motivoContacto: (document.getElementById('motivo_contacto')             || {}).value || '',
+          asunto:         asunto,
+          mensaje:        mensaje,
+          linkedin:       (document.getElementById('linkedin_web_empresa')        || {}).value || '',
+          comoLlego:      (document.getElementById('origen')                      || {}).value || '',
+          disponibilidad: (document.getElementById('disponibilidad')              || {}).value || '',
+          acepta:         'true',
+          honeypot:       (document.getElementById('honeypot_field')              || {}).value || ''
+        };
+
+        var btn = form.querySelector('button[type="submit"]');
+        var originalText = btn ? btn.textContent.trim() : 'Enviar consulta';
+        if (btn) { btn.disabled = true; btn.textContent = 'Enviando...'; }
+
+        fetch('/api/enviar-contacto', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body)
+        })
+        .then(function (res) {
+          return res.json().then(function (data) { return { status: res.status, data: data }; });
+        })
+        .then(function (result) {
+          if (result.status === 200) {
+            showGlobal('¡Consulta enviada! Me contactaré pronto.', true);
+            form.reset();
+            localStorage.setItem('contacto_last_submit', Date.now().toString());
+          } else if (result.status === 429) {
+            showGlobal('Demasiados intentos. Esperá 15 minutos.', false);
+          } else if (result.status === 400) {
+            showGlobal(result.data.error || 'Datos inválidos.', false);
+          } else {
+            showGlobal('Algo salió mal. Intentá de nuevo.', false);
+          }
+        })
+        .catch(function () {
+          showGlobal('Algo salió mal. Intentá de nuevo.', false);
+        })
+        .finally(function () {
+          if (btn) { btn.disabled = false; btn.textContent = originalText; }
+        });
+      });
+    });
+  })();
+  </script>
 
   <!-- Vercel Analytics -->
   <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
