@@ -361,6 +361,42 @@
     </div>
   </div>
 
+</section>
+
+      <!-- Section 4: Text Left, Image Right -->
+      <section class="flex flex-col md:flex-row items-center gap-8 md:gap-16 group">
+        <!-- Text Column -->
+        <div class="w-full md:w-1/2 space-y-4 md:space-y-6 order-2 md:order-1 relative z-10">
+          <h2 class="text-3xl md:text-5xl font-extrabold text-text tracking-tight transition-colors"
+              data-es="Simulación del Océano" data-en="Ocean Simulation">
+            Simulación del Océano
+          </h2>
+          <p class="text-lg text-muted-foreground/90 leading-relaxed max-w-lg"
+             data-es="Vista en el medio del océano, disfrútalo."
+             data-en="A view from the middle of the ocean, enjoy it.">
+            Vista en el medio del océano, disfrútalo.
+          </p>
+          <div class="pt-2">
+            <a href="oceano.html" class="text-blue-400 hover:text-blue-300 relative z-10 font-bold transition-colors"
+               data-es="Explorar →" data-en="Explore →">Explorar →</a>
+          </div>
+        </div>
+        <!-- Image Column -->
+        <div class="w-full md:w-1/2 order-1 md:order-2">
+          <div
+            onclick="window.location.href='oceano.html'"
+            style="position:relative;width:100%;aspect-ratio:3/2;border-radius:0.75rem;overflow:hidden;background:#000;border:1px solid rgba(255,255,255,0.1);box-shadow:0 25px 50px -12px rgba(0,0,0,0.5);cursor:pointer;transition:box-shadow 0.5s ease,border-color 0.3s ease;background-image:linear-gradient(rgba(0,229,255,0.12) 1px,transparent 1px),linear-gradient(90deg,rgba(0,229,255,0.12) 1px,transparent 1px);background-size:32px 32px;display:flex;align-items:center;justify-content:center;"
+            onmouseover="this.style.boxShadow='0 0 30px rgba(0,229,255,0.35),0 25px 50px -12px rgba(0,0,0,0.5)';this.style.borderColor='rgba(0,229,255,0.5)';this.querySelector('.ocean-hover-text').style.opacity='1';this.querySelector('.ocean-main-text').style.opacity='0';"
+            onmouseout="this.style.boxShadow='0 25px 50px -12px rgba(0,0,0,0.5)';this.style.borderColor='rgba(255,255,255,0.1)';this.querySelector('.ocean-hover-text').style.opacity='0';this.querySelector('.ocean-main-text').style.opacity='1';"
+          >
+            <span class="ocean-main-text" style="color:#ffffff;font-size:1.25rem;font-weight:700;letter-spacing:0.05em;text-align:center;transition:opacity 0.3s ease;pointer-events:none;">🌊 SIMULACIÓN OCEÁNICA</span>
+            <span class="ocean-hover-text" data-es="Haz clic para explorar" data-en="Click to explore" style="position:absolute;color:#ffffff;font-size:1rem;font-weight:500;text-align:center;opacity:0;transition:opacity 0.3s ease;pointer-events:none;">Haz clic para explorar</span>
+          </div>
+        </div>
+      </section>
+
+
+    </div>
   <script>
   (function(){
     const data = [
@@ -462,42 +498,6 @@
     });
   })();
   </script>
-</section>
-
-      <!-- Section 4: Text Left, Image Right -->
-      <section class="flex flex-col md:flex-row items-center gap-8 md:gap-16 group">
-        <!-- Text Column -->
-        <div class="w-full md:w-1/2 space-y-4 md:space-y-6 order-2 md:order-1 relative z-10">
-          <h2 class="text-3xl md:text-5xl font-extrabold text-text tracking-tight transition-colors"
-              data-es="Simulación del Océano" data-en="Ocean Simulation">
-            Simulación del Océano
-          </h2>
-          <p class="text-lg text-muted-foreground/90 leading-relaxed max-w-lg"
-             data-es="Vista en el medio del océano, disfrútalo."
-             data-en="A view from the middle of the ocean, enjoy it.">
-            Vista en el medio del océano, disfrútalo.
-          </p>
-          <div class="pt-2">
-            <a href="oceano.html" class="text-blue-400 hover:text-blue-300 relative z-10 font-bold transition-colors"
-               data-es="Explorar →" data-en="Explore →">Explorar →</a>
-          </div>
-        </div>
-        <!-- Image Column -->
-        <div class="w-full md:w-1/2 order-1 md:order-2">
-          <div
-            onclick="window.location.href='oceano.html'"
-            style="position:relative;width:100%;aspect-ratio:3/2;border-radius:0.75rem;overflow:hidden;background:#000;border:1px solid rgba(255,255,255,0.1);box-shadow:0 25px 50px -12px rgba(0,0,0,0.5);cursor:pointer;transition:box-shadow 0.5s ease,border-color 0.3s ease;background-image:linear-gradient(rgba(0,229,255,0.12) 1px,transparent 1px),linear-gradient(90deg,rgba(0,229,255,0.12) 1px,transparent 1px);background-size:32px 32px;display:flex;align-items:center;justify-content:center;"
-            onmouseover="this.style.boxShadow='0 0 30px rgba(0,229,255,0.35),0 25px 50px -12px rgba(0,0,0,0.5)';this.style.borderColor='rgba(0,229,255,0.5)';this.querySelector('.ocean-hover-text').style.opacity='1';this.querySelector('.ocean-main-text').style.opacity='0';"
-            onmouseout="this.style.boxShadow='0 25px 50px -12px rgba(0,0,0,0.5)';this.style.borderColor='rgba(255,255,255,0.1)';this.querySelector('.ocean-hover-text').style.opacity='0';this.querySelector('.ocean-main-text').style.opacity='1';"
-          >
-            <span class="ocean-main-text" style="color:#ffffff;font-size:1.25rem;font-weight:700;letter-spacing:0.05em;text-align:center;transition:opacity 0.3s ease;pointer-events:none;">🌊 SIMULACIÓN OCEÁNICA</span>
-            <span class="ocean-hover-text" data-es="Haz clic para explorar" data-en="Click to explore" style="position:absolute;color:#ffffff;font-size:1rem;font-weight:500;text-align:center;opacity:0;transition:opacity 0.3s ease;pointer-events:none;">Haz clic para explorar</span>
-          </div>
-        </div>
-      </section>
-
-
-    </div>
   </main>
 
   <!-- Footer Component -->
