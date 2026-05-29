@@ -51,7 +51,10 @@
       "Bash(git commit *)",
       "Bash(Get-ChildItem -Path \"C:\\\\Users\\\\kambr\\\\Desktop\\\\Mi-pagina-web\\\\Mi pagina web\" -Force)",
       "Bash(Select-Object Name, Attributes)",
-      "Bash(Sort-Object Name)"
+      "Bash(Sort-Object Name)",
+      "Bash(git revert *)",
+      "Bash(git mv *)",
+      "Bash(git rm *)"
     ]
   }
 }
