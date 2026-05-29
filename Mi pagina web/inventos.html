@@ -265,34 +265,204 @@
         </div>
       </section>
 
-      <!-- Section 3: Image Left, Text Right -->
-      <section class="flex flex-col md:flex-row-reverse items-center gap-8 md:gap-16 group">
-        <!-- Text Column -->
-        <div class="w-full md:w-1/2 space-y-4 md:space-y-6 order-2 md:order-1 relative z-10">
-          <h2 class="text-3xl md:text-5xl font-extrabold text-white tracking-tight transition-colors">
-            The Gravitational Card-Cascade
-          </h2>
-          <p class="text-lg text-gray-200 leading-relaxed max-w-lg"
-             data-es="En marzo de 2025 estuve viendo a través de reels que se podían generar efectos visuales con ciertos objetos tomando dos fotos: una del estado inicial y otra del estado final, aplicándole un prompt a una IA. El efecto original estaba pensado para Kling o3, pero yo lo resolví utilizando Gemini."
-             data-en="In March 2025, I came across reels showing that visual effects could be generated with objects by taking two photos — one of the initial state and one of the final state — and applying a prompt to an AI. The original effect was designed for Kling o3, but I solved it using Gemini.">
-            En marzo de 2025 estuve viendo a través de reels que se podían generar efectos visuales con ciertos objetos tomando dos fotos: una del estado inicial y otra del estado final, aplicándole un prompt a una IA. El efecto original estaba pensado para Kling o3, pero yo lo resolví utilizando Gemini.
-          </p>
-          <div class="pt-2">
-            <a href="card-cascade-scroll.html" class="text-blue-400 hover:text-blue-300 relative z-10 font-bold transition-colors"
-               data-es="Explorar →" data-en="Explore →">Explorar →</a>
+      <!-- Section 3: Cuadrante 4 — Efectos de scroll down (carousel) -->
+<section style="width:100%;padding:0;position:relative;">
+  <style>
+    .q4{width:100%;padding:3rem 0 3.5rem;box-sizing:border-box;position:relative;}
+    .q4-header{display:flex;align-items:flex-start;margin-bottom:2.5rem;}
+    .q4-heading h2{font-size:26px;font-weight:700;color:#f0f0f0;margin:0;}
+    .q4-wrap{position:relative;}
+    .q4-arrow{position:absolute;top:50%;transform:translateY(-50%);width:42px;height:42px;border-radius:50%;border:2px solid #fff;background:rgba(0,0,0,0.5);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:10;transition:background 0.2s;}
+    .q4-arrow:hover{background:rgba(255,255,255,0.15);}
+    .q4-arrow.left{left:-21px;}
+    .q4-arrow.right{right:-21px;}
+    .q4-arrow:disabled{opacity:0.2;cursor:default;}
+    .q4-outer{overflow:hidden;width:100%;}
+    .q4-track{display:flex;gap:18px;transition:transform 0.42s cubic-bezier(0.25,0.46,0.45,0.94);}
+    .q4-card{flex:0 0 280px;height:360px;border-radius:18px;overflow:hidden;position:relative;cursor:pointer;border:1px solid rgba(255,255,255,0.1);background:#111;}
+    .q4-card img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.3s ease;}
+    .q4-card:hover img{transform:scale(1.04);}
+    .q4-card-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.85) 0%,transparent 50%);opacity:0;transition:opacity 0.3s ease;display:flex;align-items:flex-end;padding:20px;}
+    .q4-card:hover .q4-card-overlay{opacity:1;}
+    .q4-card-overlay h3{font-size:17px;font-weight:700;color:#fff;margin:0;line-height:1.2;}
+    .q4-placeholder-bg{width:100%;height:100%;background:#e8e8e8;display:flex;align-items:center;justify-content:center;}
+    .q4-placeholder-bg span{font-size:13px;color:#999;letter-spacing:1px;}
+    .q4-modal-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:9999;align-items:center;justify-content:center;}
+    .q4-modal-backdrop.open{display:flex;}
+    .q4-modal{background:#111;border-radius:20px;max-width:600px;width:90%;overflow:hidden;border:1px solid rgba(255,255,255,0.12);position:relative;}
+    .q4-modal img{width:100%;height:280px;object-fit:cover;display:block;}
+    .q4-modal-body{padding:24px;}
+    .q4-modal-body h3{font-size:22px;font-weight:700;color:#f0f0f0;margin:0 0 10px 0;}
+    .q4-modal-body p{font-size:14px;color:rgba(255,255,255,0.6);margin:0 0 20px 0;line-height:1.6;}
+    .q4-modal-btn{display:inline-block;padding:10px 24px;background:#fff;color:#000;border-radius:30px;font-size:14px;font-weight:600;text-decoration:none;transition:opacity 0.2s;}
+    .q4-modal-btn:hover{opacity:0.85;}
+    .q4-modal-close{position:absolute;top:14px;right:14px;width:32px;height:32px;border-radius:50%;border:1px solid rgba(255,255,255,0.3);background:rgba(0,0,0,0.5);color:#fff;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1;}
+  </style>
+
+  <div class="q4">
+    <div class="q4-header">
+      <div class="q4-heading">
+        <h2>Efectos de scroll down</h2>
+      </div>
+    </div>
+
+    <div class="q4-wrap">
+      <button class="q4-arrow left" id="q4prev" disabled aria-label="Anterior">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+
+      <div class="q4-outer">
+        <div class="q4-track" id="q4track">
+
+          <div class="q4-card" onclick="q4OpenModal(0)">
+            <img src="Fotos/foto_portada_de_cartas.jpg" alt="The Gravitational Card-Cascade">
+            <div class="q4-card-overlay"><h3>The Gravitational Card-Cascade</h3></div>
           </div>
+
+          <div class="q4-card" onclick="q4OpenModal(1)">
+            <div class="q4-placeholder-bg"><span>PRÓXIMAMENTE</span></div>
+            <div class="q4-card-overlay"><h3>Título 2</h3></div>
+          </div>
+
+          <div class="q4-card" onclick="q4OpenModal(2)">
+            <div class="q4-placeholder-bg"><span>PRÓXIMAMENTE</span></div>
+            <div class="q4-card-overlay"><h3>Título 3</h3></div>
+          </div>
+
+          <div class="q4-card" onclick="q4OpenModal(3)">
+            <div class="q4-placeholder-bg"><span>PRÓXIMAMENTE</span></div>
+            <div class="q4-card-overlay"><h3>Título 4</h3></div>
+          </div>
+
+          <div class="q4-card" onclick="q4OpenModal(4)">
+            <div class="q4-placeholder-bg"><span>PRÓXIMAMENTE</span></div>
+            <div class="q4-card-overlay"><h3>Título 5</h3></div>
+          </div>
+
         </div>
-        <!-- Image Column -->
-        <div class="w-full md:w-1/2 order-1 md:order-2 h-full flex">
-          <a href="card-cascade-scroll.html" class="block w-full h-full relative group rounded-2xl overflow-hidden border border-border/50">
-            <img 
-              src="Fotos/foto_portada_de_cartas.jpg" 
-              alt="The Gravitational Card-Cascade" 
-              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-            />
-          </a>
-        </div>
-      </section>
+      </div>
+
+      <button class="q4-arrow right" id="q4next" aria-label="Siguiente">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Modales -->
+  <div class="q4-modal-backdrop" id="q4modal">
+    <div class="q4-modal" id="q4modalinner">
+      <button class="q4-modal-close" onclick="q4CloseModal()">×</button>
+      <img id="q4modal-img" src="" alt="">
+      <div class="q4-modal-body">
+        <h3 id="q4modal-title"></h3>
+        <p id="q4modal-desc"></p>
+        <a id="q4modal-link" href="#" class="q4-modal-btn">Ver proyecto →</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  (function(){
+    const data = [
+      {
+        title: "The Gravitational Card-Cascade",
+        desc: "En marzo de 2025 estuve viendo a través de reels que se podían generar efectos visuales con ciertos objetos tomando dos fotos: una del estado inicial y otra del estado final, aplicándole un prompt a una IA. El efecto original estaba pensado para Kling o3, pero yo lo resolví utilizando Gemini.",
+        img: "Fotos/foto_portada_de_cartas.jpg",
+        url: "card-cascade-scroll.html"
+      },
+      { title: "Título 2", desc: "Descripción del proyecto 2. Próximamente.", img: "", url: "#" },
+      { title: "Título 3", desc: "Descripción del proyecto 3. Próximamente.", img: "", url: "#" },
+      { title: "Título 4", desc: "Descripción del proyecto 4. Próximamente.", img: "", url: "#" },
+      { title: "Título 5", desc: "Descripción del proyecto 5. Próximamente.", img: "", url: "#" }
+    ];
+
+    const tr = document.getElementById('q4track');
+    const pv = document.getElementById('q4prev');
+    const nx = document.getElementById('q4next');
+    const step = 298;
+    const total = data.length;
+    let cur = 0;
+    let isTransitioning = false;
+
+    function getCards(){ return tr.querySelectorAll('.q4-card'); }
+
+    function cloneEdges(){
+      const cards = Array.from(getCards());
+      const clonesEnd = cards.slice(0,2).map(c=>{ const cl=c.cloneNode(true); cl.setAttribute('data-clone','true'); return cl; });
+      const clonesStart = cards.slice(-2).map(c=>{ const cl=c.cloneNode(true); cl.setAttribute('data-clone','true'); return cl; });
+      clonesEnd.forEach(c=>tr.appendChild(c));
+      clonesStart.reverse().forEach(c=>tr.insertBefore(c,tr.firstChild));
+      cur = 2;
+      tr.style.transition = 'none';
+      tr.style.transform = 'translateX(-'+(cur*step)+'px)';
+    }
+
+    function upd(animate){
+      if(animate === false){
+        tr.style.transition = 'none';
+      } else {
+        tr.style.transition = 'transform 0.42s cubic-bezier(0.25,0.46,0.45,0.94)';
+      }
+      tr.style.transform = 'translateX(-'+(cur*step)+'px)';
+      pv.disabled = false;
+      nx.disabled = false;
+    }
+
+    cloneEdges();
+
+    const realTotal = tr.querySelectorAll('.q4-card').length;
+
+    nx.onclick = function(){
+      if(isTransitioning) return;
+      isTransitioning = true;
+      cur++;
+      upd(true);
+    };
+
+    pv.onclick = function(){
+      if(isTransitioning) return;
+      isTransitioning = true;
+      cur--;
+      upd(true);
+    };
+
+    tr.addEventListener('transitionend', function(){
+      isTransitioning = false;
+      const clonesBefore = 2;
+      const realEnd = clonesBefore + total - 1;
+      if(cur <= clonesBefore - 1){
+        cur = clonesBefore + total - (clonesBefore - cur);
+        upd(false);
+      } else if(cur >= realEnd + 1){
+        cur = clonesBefore + (cur - realEnd - 1);
+        upd(false);
+      }
+    });
+
+    window.q4OpenModal = function(i){
+      const idx = i % total;
+      const d = data[idx];
+      const imgEl = document.getElementById('q4modal-img');
+      imgEl.src = d.img || '';
+      imgEl.style.display = d.img ? 'block' : 'none';
+      document.getElementById('q4modal-title').textContent = d.title;
+      document.getElementById('q4modal-desc').textContent = d.desc;
+      const link = document.getElementById('q4modal-link');
+      link.href = d.url;
+      link.onclick = d.url === '#' ? (e)=>e.preventDefault() : null;
+      document.getElementById('q4modal').classList.add('open');
+    };
+
+    window.q4CloseModal = function(){
+      document.getElementById('q4modal').classList.remove('open');
+    };
+
+    document.getElementById('q4modal').addEventListener('click', function(e){
+      if(e.target === this) q4CloseModal();
+    });
+  })();
+  </script>
+</section>
 
       <!-- Section 4: Text Left, Image Right -->
       <section class="flex flex-col md:flex-row items-center gap-8 md:gap-16 group">
