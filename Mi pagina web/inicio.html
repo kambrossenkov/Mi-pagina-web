@@ -273,13 +273,19 @@
   .galeria-titulo {
     font-family: 'Clash Display', sans-serif;
     font-weight: 600;
-    font-size: clamp(2.5rem, 6vw, 92px);
-    line-height: 0.95;
+    font-size: clamp(2.5rem, 6vw, 80px);
+    line-height: 1.0;
     letter-spacing: -3px;
     color: #F5F7FA;
     margin-bottom: 64px;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
   }
+
+  .titulo-linea-1 { display: block; }
+  .titulo-linea-2 { display: block; }
 
   .galeria-accent {
     font-family: 'Clash Display', sans-serif;
@@ -293,6 +299,7 @@
     font-style: italic;
     color: #8FD3FF;
     text-shadow: 0 0 12px rgba(22, 155, 255, 0.35);
+    margin-left: 12px;
   }
 
   .galeria-stage {
@@ -401,9 +408,14 @@
       padding: 60px 0 60px;
     }
     .galeria-titulo {
-      font-size: 2rem;
-      padding: 0 20px;
+      font-size: clamp(2rem, 10vw, 48px);
+      letter-spacing: -2px;
+      gap: 2px;
+      padding: 0 16px;
       margin-bottom: 40px;
+    }
+    .galeria-nombre {
+      margin-left: 8px;
     }
     .galeria-stage {
       height: auto;
@@ -687,12 +699,17 @@
     <section class="galeria-section">
 
       <h3 class="galeria-titulo">
-        <span data-es="Bienvenido" data-en="Welcome">Bienvenido</span><span id="nombreUsuario" class="galeria-nombre"></span><span id="comaUsuario">,</span>
-        <span data-es="a mi" data-en="to my">a mi</span>
-        <span class="galeria-accent"
-              data-es="Blog Personal"
-              data-en="Personal Blog">
-          Blog Personal
+        <span class="titulo-linea-1">
+          <span data-es="Bienvenido" data-en="Welcome">Bienvenido</span>
+          <span id="nombreUsuario" class="galeria-nombre"></span>
+        </span>
+        <span class="titulo-linea-2">
+          <span data-es="a mi" data-en="to my">a mi</span>
+          <span class="galeria-accent"
+                data-es="Blog Personal"
+                data-en="Personal Blog">
+            Blog Personal
+          </span>
         </span>
       </h3>
 
@@ -1045,13 +1062,9 @@
         + nombre.trim().slice(1).toLowerCase();
       el.textContent = capitalizado;
       el.style.display = 'inline';
-      const coma = document.getElementById('comaUsuario');
-      if (coma) coma.style.display = 'inline';
     } else {
       el.textContent = '';
       el.style.display = 'none';
-      const coma = document.getElementById('comaUsuario');
-      if (coma) coma.style.display = 'none';
     }
   }
 
