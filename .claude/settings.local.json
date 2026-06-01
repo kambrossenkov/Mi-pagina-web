@@ -54,7 +54,8 @@
       "Bash(Sort-Object Name)",
       "Bash(git revert *)",
       "Bash(git mv *)",
-      "Bash(git rm *)"
+      "Bash(git rm *)",
+      "Bash(Copy-Item *)"
     ]
   }
 }
