@@ -201,7 +201,7 @@
         <label class="popup-label">
           <input id="inputInventosPage"
                  class="popup-input" type="text"
-                 placeholder="Tu respuesta..." />
+                 placeholder="Tu respuesta..." maxlength="100" />
           <span class="popup-error" id="errorInventosPage"></span>
         </label>
       </div>
@@ -822,6 +822,10 @@
     }
     if (!soloLetras) {
       error.textContent = lang === 'es' ? 'Solo se permiten letras.' : 'Letters only.';
+      input.classList.add('error'); return;
+    }
+    if (value.length > 100) {
+      error.textContent = lang === 'es' ? 'La respuesta no puede tener más de 100 caracteres.' : 'Answer cannot exceed 100 characters.';
       input.classList.add('error'); return;
     }
     if (value.length < 2) {

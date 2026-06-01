@@ -597,6 +597,7 @@
             type="text"
             placeholder="Your name"
             autocomplete="off"
+            maxlength="20"
           />
           <span class="popup-error" id="popupError"></span>
         </label>
@@ -785,6 +786,13 @@
       input.classList.add('error');
       return;
     }
+    if (value.length > 100) {
+      error.textContent = lang === 'es'
+        ? 'La respuesta no puede tener más de 100 caracteres.'
+        : 'Answer cannot exceed 100 characters.';
+      input.classList.add('error');
+      return;
+    }
     if (value.length < 2) {
       error.textContent = lang === 'es'
         ? 'La respuesta es muy corta.'
@@ -884,6 +892,12 @@
       errorNombre.textContent = lang === 'es'
         ? 'Solo se permiten letras.'
         : 'Letters only.';
+      nombreInput.classList.add('error');
+      hayError = true;
+    } else if (nombre.length > 20) {
+      errorNombre.textContent = lang === 'es'
+        ? 'El nombre no puede tener más de 20 caracteres.'
+        : 'Name cannot exceed 20 characters.';
       nombreInput.classList.add('error');
       hayError = true;
     } else {
@@ -989,6 +1003,12 @@
 
     if (!soloLetras) {
       error.textContent = 'Name must contain letters only, no numbers or symbols.';
+      input.classList.add('error');
+      return;
+    }
+
+    if (value.length > 20) {
+      error.textContent = 'Name cannot exceed 20 characters.';
       input.classList.add('error');
       return;
     }
@@ -1230,7 +1250,7 @@
       </div>
       <div class="popup-content">
         <label class="popup-label">
-          <input id="inputTrayectoria" class="popup-input" type="text" data-placeholder-es="Tu respuesta..." data-placeholder-en="Your answer..." placeholder="Tu respuesta..." />
+          <input id="inputTrayectoria" class="popup-input" type="text" data-placeholder-es="Tu respuesta..." data-placeholder-en="Your answer..." placeholder="Tu respuesta..." maxlength="100" />
           <span class="popup-error" id="errorTrayectoria"></span>
         </label>
       </div>
@@ -1254,7 +1274,7 @@
       </div>
       <div class="popup-content">
         <label class="popup-label">
-          <input id="inputInventos" class="popup-input" type="text" data-placeholder-es="Tu respuesta..." data-placeholder-en="Your answer..." placeholder="Tu respuesta..." />
+          <input id="inputInventos" class="popup-input" type="text" data-placeholder-es="Tu respuesta..." data-placeholder-en="Your answer..." placeholder="Tu respuesta..." maxlength="100" />
           <span class="popup-error" id="errorInventos"></span>
         </label>
       </div>
@@ -1278,7 +1298,7 @@
       </div>
       <div class="popup-content">
         <label class="popup-label">
-          <input id="inputHobbies" class="popup-input" type="text" data-placeholder-es="Tu respuesta..." data-placeholder-en="Your answer..." placeholder="Tu respuesta..." />
+          <input id="inputHobbies" class="popup-input" type="text" data-placeholder-es="Tu respuesta..." data-placeholder-en="Your answer..." placeholder="Tu respuesta..." maxlength="100" />
           <span class="popup-error" id="errorHobbies"></span>
         </label>
       </div>
@@ -1303,7 +1323,7 @@
       <div class="popup-content">
         <label class="popup-label">
           <span data-es="Nombre" data-en="Name">Nombre</span>
-          <input id="inputQuienSoyNombre" class="popup-input" type="text" data-placeholder-es="Tu nombre..." data-placeholder-en="Your name..." placeholder="Tu nombre..." />
+          <input id="inputQuienSoyNombre" class="popup-input" type="text" data-placeholder-es="Tu nombre..." data-placeholder-en="Your name..." placeholder="Tu nombre..." maxlength="20" />
           <span class="popup-error" id="errorQuienSoyNombre"></span>
         </label>
         <label class="popup-label" style="margin-top:12px">

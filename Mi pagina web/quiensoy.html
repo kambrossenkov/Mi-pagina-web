@@ -256,7 +256,7 @@
         <label class="popup-label">
           Name
           <input id="perfilNombre" class="popup-input"
-                 type="text" placeholder="Your name..." />
+                 type="text" placeholder="Your name..." maxlength="20" />
           <span class="popup-error" id="perfilErrorNombre"></span>
         </label>
         <label class="popup-label" style="margin-top:12px">
@@ -784,6 +784,10 @@
       hayError = true;
     } else if (!soloLetras) {
       errorNombre.textContent = 'Letters only, no numbers or symbols.';
+      nombreInput.classList.add('error');
+      hayError = true;
+    } else if (nombre.length > 20) {
+      errorNombre.textContent = 'Name cannot exceed 20 characters.';
       nombreInput.classList.add('error');
       hayError = true;
     } else if (nombre.length < 2) {
