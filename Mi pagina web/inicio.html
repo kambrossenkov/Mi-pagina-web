@@ -680,12 +680,12 @@
           </div>
 
           <div class="foto-card" data-order="3" data-x="330" data-y="45" data-dir="right"
-               data-titulo="Quién soy" data-sub="Acá dejo mi perfil profesional y una explicación breve de las cosas en las que fui trabajando."
+               data-titulo="Mi perfil" data-sub="Acá dejo mi perfil profesional y una explicación breve de las cosas en las que fui trabajando."
                onclick="abrirPopup('popupQuienSoy')">
-            <img src="./Fotos/Foto de portada de blog4.jpg" alt="Quién soy" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; pointer-events:none;">
+            <img src="./Fotos/Foto de portada de blog4.jpg" alt="Mi perfil" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; pointer-events:none;">
             <div class="foto-blur-layers"></div>
             <div class="foto-caption">
-              <p class="foto-titulo">Quién soy</p>
+              <p class="foto-titulo">Mi perfil</p>
               <span class="foto-sub">Acá dejo mi perfil profesional y una explicación breve de las cosas en las que fui trabajando.</span>
             </div>
           </div>
@@ -842,7 +842,35 @@
     const nombre = nombreInput.value.trim();
     const email  = emailInput.value.trim();
     const soloLetras = /^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ\s]+$/.test(nombre);
-    const emailValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+    function validarEmail(email) {
+      const formatoBase =
+        /^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/.test(email);
+      if (!formatoBase) return false;
+      const dominio = email.split('@')[1].toLowerCase();
+      const dominiosPermitidos = [
+        'gmail.com',
+        'hotmail.com','hotmail.es','hotmail.com.ar',
+        'outlook.com','outlook.es','outlook.com.ar',
+        'live.com','live.com.ar','msn.com',
+        'yahoo.com','yahoo.es','yahoo.com.ar','ymail.com',
+        'icloud.com','me.com','mac.com',
+        'protonmail.com','proton.me',
+        'zoho.com','mail.com','aol.com',
+        'gmx.com','gmx.net',
+        'fibertel.com.ar','speedy.com.ar',
+        'arnet.com.ar','ciudad.com.ar',
+        'itba.edu.ar','uba.ar','unc.edu.ar',
+        'udesa.edu.ar','austral.edu.ar',
+        'uade.edu.ar','utn.edu.ar',
+        'unlp.edu.ar','unsam.edu.ar',
+        'mit.edu','stanford.edu','harvard.edu',
+        'ox.ac.uk','cam.ac.uk'
+      ];
+      return dominiosPermitidos.includes(dominio);
+    }
+
+    const emailValido = validarEmail(email);
 
     let hayError = false;
 
@@ -871,8 +899,8 @@
       hayError = true;
     } else if (!emailValido) {
       errorEmail.textContent = lang === 'es'
-        ? 'El email no es válido.'
-        : 'Email is not valid.';
+        ? 'Usá un email de Gmail, Hotmail, Outlook, Yahoo u otro proveedor reconocido.'
+        : 'Use a Gmail, Hotmail, Outlook, Yahoo or other recognized provider email.';
       emailInput.classList.add('error');
       hayError = true;
     } else {
