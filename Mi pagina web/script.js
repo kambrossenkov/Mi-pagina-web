@@ -140,7 +140,7 @@ const htmlEl = document.documentElement;
 // Function to update the DOM based on the current language
 function updateLanguage() {
   // Update toggle button text
-  langToggleBtn.textContent = currentLang === 'en' ? 'ES' : 'EN';
+  if (langToggleBtn) langToggleBtn.textContent = currentLang === 'en' ? 'ES' : 'EN';
   
   // Translate static text nodes
   const elements = document.querySelectorAll('[data-i18n]');
@@ -247,10 +247,12 @@ function closeCVModal() {
 }
 
 // Event Listeners
-langToggleBtn.addEventListener('click', () => {
-  currentLang = currentLang === 'en' ? 'es' : 'en';
-  updateLanguage();
-});
+if (langToggleBtn) {
+  langToggleBtn.addEventListener('click', () => {
+    currentLang = currentLang === 'en' ? 'es' : 'en';
+    updateLanguage();
+  });
+}
 
 // Initialization on DOM load
 document.addEventListener('DOMContentLoaded', () => {
