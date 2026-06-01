@@ -271,18 +271,28 @@
   }
 
   .galeria-titulo {
-    font-size: clamp(2rem, 5vw, 4rem);
-    font-weight: 700;
-    color: #e8f0fe;
+    font-family: 'Clash Display', sans-serif;
+    font-weight: 600;
+    font-size: clamp(2.5rem, 6vw, 92px);
+    line-height: 0.95;
+    letter-spacing: -3px;
+    color: #F5F7FA;
     margin-bottom: 64px;
-    line-height: 1.1;
+    text-align: center;
   }
 
-  .galeria-accent { color: #4a90d9; }
+  .galeria-accent {
+    font-family: 'Clash Display', sans-serif;
+    font-weight: 600;
+    color: #169BFF;
+  }
 
   .galeria-nombre {
-    color: #ffffff;
+    font-family: 'Clash Display', sans-serif;
+    font-weight: 600;
     font-style: italic;
+    color: #8FD3FF;
+    text-shadow: 0 0 12px rgba(22, 155, 255, 0.35);
   }
 
   .galeria-stage {
@@ -343,23 +353,42 @@
 
   .foto-caption {
     position: absolute;
-    bottom: 0; left: 0;
-    padding: 14px 16px;
+    bottom: 0;
+    left: 0;
+    padding: 16px 20px;
     opacity: 0;
     transition: opacity 0.2s ease-out;
-    z-index: 3;
+    z-index: 10;
+    width: 100%;
+  }
+
+  .foto-categoria {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #169BFF;
+    display: block;
+    margin-bottom: 6px;
   }
 
   .foto-titulo {
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: #ffffff;
-    margin: 0 0 3px 0;
+    font-family: 'Satoshi', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -1px;
+    line-height: 1.1;
+    color: #FFFFFF;
+    margin: 0 0 6px 0;
   }
 
   .foto-sub {
-    font-size: 0.78rem;
-    color: #d4d4d4;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.82);
   }
 
   .foto-card:hover .foto-blur-layers,
@@ -425,78 +454,82 @@
     width: 100%;
     max-width: 400px;
     background: #0f1a2e;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255,255,255,0.1);
     border-radius: 32px;
-    padding: 28px;
+    padding: 32px;
     display: flex;
     flex-direction: column;
     gap: 20px;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-    animation: popupIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    animation: popupIn 0.35s cubic-bezier(0.34,1.56,0.64,1);
   }
 
   @keyframes popupIn {
-    from { opacity: 0; transform: translateY(24px) scale(0.95); }
-    to   { opacity: 1; transform: translateY(0) scale(1); }
+    from { opacity:0; transform:translateY(24px) scale(0.95); }
+    to   { opacity:1; transform:translateY(0) scale(1); }
   }
 
-  .popup-header {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-  }
+  .popup-header { display: flex; flex-direction: column; gap: 4px; }
 
   .popup-title {
-    font-size: 1rem;
-    font-weight: 600;
-    color: #f1f5f9;
+    font-family: 'Satoshi', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -1px;
+    line-height: 1.1;
+    color: #F5F7FA;
     margin: 0;
-    line-height: 1.5;
   }
 
   .popup-desc {
-    font-size: 0.875rem;
-    color: #64748b;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.7;
+    color: rgba(255,255,255,0.72);
     margin: 0;
-    line-height: 1.4;
   }
 
   .popup-label {
     display: flex;
     flex-direction: column;
-    gap: 6px;
-    font-size: 0.875rem;
+    gap: 8px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 12px;
     font-weight: 500;
-    color: #f1f5f9;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.6);
   }
 
   .popup-input {
-    height: 42px;
-    border-radius: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    background: rgba(255, 255, 255, 0.05);
-    padding: 0 14px;
-    font-size: 0.875rem;
-    color: #f1f5f9;
+    height: 48px;
+    border-radius: 14px;
+    border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.05);
+    padding: 0 16px;
+    font-family: 'Inter', sans-serif;
+    font-size: 17px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.92);
     outline: none;
     transition: border-color 0.2s;
-    font-family: inherit;
   }
 
   .popup-input::placeholder {
-    color: #475569;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    color: rgba(255,255,255,0.38);
   }
 
-  .popup-input:focus {
-    border-color: #4a90d9;
-  }
+  .popup-input:focus { border-color: #4a90d9; }
 
-  .popup-input.error {
-    border-color: #ef4444;
-  }
+  .popup-input.error { border-color: #ef4444; }
 
   .popup-error {
-    font-size: 0.78rem;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
     color: #ef4444;
     min-height: 16px;
     display: block;
@@ -511,16 +544,16 @@
 
   .popup-btn {
     width: 100%;
-    padding: 10px 16px;
+    padding: 14px 16px;
     border-radius: 100px;
-    background: #f1f5f9;
+    background: #F5F7FA;
     color: #0a0f1e;
     border: none;
-    font-size: 0.875rem;
+    font-family: 'Satoshi', sans-serif;
+    font-size: 17px;
     font-weight: 600;
     cursor: pointer;
     transition: background 0.2s, transform 0.15s;
-    font-family: inherit;
   }
 
   .popup-btn:hover {
@@ -528,8 +561,10 @@
     transform: translateY(-1px);
   }
 
-  .popup-btn:active {
-    transform: translateY(0);
+  .popup-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
   }
 
   .popup-pregunta {
@@ -548,22 +583,23 @@
 
   .popup-btn-skip {
     width: 100%;
-    padding: 8px 16px;
+    padding: 10px 16px;
     border-radius: 100px;
     background: transparent;
-    color: #64748b;
-    border: 1px solid rgba(255,255,255,0.1);
-    font-size: 0.8rem;
+    color: rgba(255,255,255,0.4);
+    border: 1px solid rgba(255,255,255,0.08);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 14px;
     font-weight: 500;
+    letter-spacing: 0.3px;
     cursor: pointer;
     transition: color 0.2s, border-color 0.2s;
-    font-family: inherit;
-    margin-top: 8px;
+    margin-top: 4px;
   }
 
   .popup-btn-skip:hover {
-    color: #94a3b8;
-    border-color: rgba(255,255,255,0.2);
+    color: rgba(255,255,255,0.65);
+    border-color: rgba(255,255,255,0.18);
   }
   </style>
 
@@ -583,6 +619,16 @@
       }
     }
   </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600&display=swap" rel="stylesheet">
+  <link href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
+  <style>
+  @font-face {
+    font-family: 'Clash Display';
+    src: url('https://api.fontshare.com/v2/css?f[]=clash-display@600&display=swap');
+  }
+  </style>
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,600,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600&display=swap" rel="stylesheet">
 </head>
 
 <body class="font-sans antialiased selection:bg-blue-600 selection:text-white">
@@ -641,7 +687,7 @@
     <section class="galeria-section">
 
       <h3 class="galeria-titulo">
-        <span data-es="Bienvenido" data-en="Welcome">Bienvenido</span><span id="nombreUsuario" class="galeria-nombre"></span>,
+        <span data-es="Bienvenido" data-en="Welcome">Bienvenido</span><span id="nombreUsuario" class="galeria-nombre"></span><span id="comaUsuario">,</span>
         <span data-es="a mi" data-en="to my">a mi</span>
         <span class="galeria-accent"
               data-es="Blog Personal"
@@ -655,10 +701,11 @@
 
           <div class="foto-card" data-order="0" data-x="-330" data-y="20" data-dir="left"
                data-titulo="Mi trayectoria" data-sub="Acá explico en siete slides mi vida entera desde que nací hasta hoy, con 25 años."
-               onclick="abrirPopup('popupTrayectoria')">
+               onclick="window.location.href='curiosidades.html'">
             <img src="./Fotos/Foto de portada de blog1.jpg" alt="Mi trayectoria" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; pointer-events:none;">
             <div class="foto-blur-layers"></div>
             <div class="foto-caption">
+              <span class="foto-categoria">HISTORIA</span>
               <p class="foto-titulo">Mi trayectoria</p>
               <span class="foto-sub">Acá explico en siete slides mi vida entera desde que nací hasta hoy, con 25 años.</span>
             </div>
@@ -666,10 +713,11 @@
 
           <div class="foto-card" data-order="1" data-x="-110" data-y="35" data-dir="left"
                data-titulo="Inventos" data-sub="Acá voy a dejar un registro de todas las cosas tecnológicas que fui desarrollando."
-               onclick="abrirPopup('popupInventos')">
+               onclick="window.location.href='inventos.html'">
             <img src="./Fotos/Foto de portada de blog2.jpg" alt="Inventos" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; pointer-events:none;">
             <div class="foto-blur-layers"></div>
             <div class="foto-caption">
+              <span class="foto-categoria">TECNOLOGÍA</span>
               <p class="foto-titulo">Inventos</p>
               <span class="foto-sub">Acá voy a dejar un registro de todas las cosas tecnológicas que fui desarrollando.</span>
             </div>
@@ -677,10 +725,11 @@
 
           <div class="foto-card" data-order="2" data-x="110" data-y="15" data-dir="right"
                data-titulo="Hobbies y pasatiempos" data-sub="Acá muestro los hobbies que más me gustan y que siempre estoy realizando."
-               onclick="abrirPopup('popupHobbies')">
+               onclick="window.location.href='pasatiempos.html'">
             <img src="./Fotos/Foto de portada de blog3.jpg" alt="Hobbies y pasatiempos" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; pointer-events:none;">
             <div class="foto-blur-layers"></div>
             <div class="foto-caption">
+              <span class="foto-categoria">DEPORTE</span>
               <p class="foto-titulo">Hobbies y pasatiempos</p>
               <span class="foto-sub">Acá muestro los hobbies que más me gustan y que siempre estoy realizando.</span>
             </div>
@@ -692,6 +741,7 @@
             <img src="./Fotos/Foto de portada de blog4.jpg" alt="Mi perfil" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; pointer-events:none;">
             <div class="foto-blur-layers"></div>
             <div class="foto-caption">
+              <span class="foto-categoria">PERFIL</span>
               <p class="foto-titulo">Mi perfil</p>
               <span class="foto-sub">Acá dejo mi perfil profesional y una explicación breve de las cosas en las que fui trabajando.</span>
             </div>
@@ -769,81 +819,6 @@
       overlay.style.opacity = '';
       if (destino) window.location.href = destino;
     }, 300);
-  }
-
-  async function submitPregunta(popupId, inputId, errorId, destino) {
-    const input = document.getElementById(inputId);
-    const error = document.getElementById(errorId);
-    const lang  = localStorage.getItem('idioma') || 'es';
-    const value = input.value.trim();
-    const soloLetras = /^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ\s]+$/.test(value);
-
-    if (!value) {
-      error.textContent = lang === 'es'
-        ? 'Por favor escribí tu respuesta.'
-        : 'Please write your answer.';
-      input.classList.add('error');
-      return;
-    }
-    if (!soloLetras) {
-      error.textContent = lang === 'es'
-        ? 'Solo se permiten letras, sin números ni símbolos.'
-        : 'Letters only, no numbers or symbols.';
-      input.classList.add('error');
-      return;
-    }
-    if (value.length > 100) {
-      error.textContent = lang === 'es'
-        ? 'La respuesta no puede tener más de 100 caracteres.'
-        : 'Answer cannot exceed 100 characters.';
-      input.classList.add('error');
-      return;
-    }
-    if (value.length < 2) {
-      error.textContent = lang === 'es'
-        ? 'La respuesta es muy corta.'
-        : 'Answer is too short.';
-      input.classList.add('error');
-      return;
-    }
-
-    input.classList.remove('error');
-    error.textContent = '';
-
-    const btn = document.querySelector('#' + popupId + ' .popup-btn');
-    if (btn) {
-      btn.disabled = true;
-      btn.textContent = lang === 'es' ? 'Enviando...' : 'Sending...';
-    }
-
-    const ENDPOINT = 'https://script.google.com/macros/s/AKfycbw9Sj9a45ojREEUICDwt9MsVJ-4NzqO3UgMXA1Vkw0RGjF30BK4SBSmE-oAZEoe-0dlKw/exec';
-
-    const tipoMap = {
-      'popupTrayectoria': 'trayectoria',
-      'popupInventos':    'inventos',
-      'popupHobbies':     'hobbies'
-    };
-
-    const nombreGuardado = localStorage.getItem('userName') || 'Anónimo';
-
-    try {
-      await fetch(ENDPOINT, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          tipo: tipoMap[popupId] || 'trayectoria',
-          nombre: nombreGuardado,
-          respuesta: value
-        })
-      });
-    } catch(err) {
-      // Continuar igual aunque falle
-    }
-
-    await new Promise(resolve => setTimeout(resolve, 800));
-
-    cerrarPopupPregunta(popupId, destino);
   }
 
   async function submitQuienSoy() {
@@ -961,17 +936,6 @@
   }
 
   document.addEventListener('DOMContentLoaded', function() {
-    [
-      ['inputTrayectoria', 'popupTrayectoria', 'errorTrayectoria', 'curiosidades.html'],
-      ['inputInventos',    'popupInventos',    'errorInventos',    'inventos.html'],
-      ['inputHobbies',     'popupHobbies',     'errorHobbies',     'pasatiempos.html'],
-    ].forEach(function(arr) {
-      var el = document.getElementById(arr[0]);
-      if (el) el.addEventListener('keydown', function(e) {
-        if (e.key === 'Enter') submitPregunta(arr[1], arr[0], arr[2], arr[3]);
-      });
-    });
-
     var elEmail = document.getElementById('inputQuienSoyEmail');
     if (elEmail) elEmail.addEventListener('keydown', function(e) {
       if (e.key === 'Enter') submitQuienSoy();
@@ -1036,6 +1000,7 @@
     }).catch(function() {});
 
     localStorage.setItem('userName', value);
+    actualizarNombreTitulo();
 
     var overlay = document.getElementById('popupOverlay');
     overlay.style.transition = 'opacity 0.3s ease';
@@ -1069,19 +1034,28 @@
   })();
 
   // Insertar nombre del usuario
-  (function() {
+  function actualizarNombreTitulo() {
     const nombre = localStorage.getItem('userName');
     const el = document.getElementById('nombreUsuario');
     if (!el) return;
-    if (nombre) {
-      el.textContent = ' ' + nombre.charAt(0).toUpperCase()
-        + nombre.slice(1).toLowerCase();
+
+    if (nombre && nombre.trim()) {
+      const capitalizado = nombre.trim()
+        .charAt(0).toUpperCase()
+        + nombre.trim().slice(1).toLowerCase();
+      el.textContent = capitalizado;
+      el.style.display = 'inline';
+      const coma = document.getElementById('comaUsuario');
+      if (coma) coma.style.display = 'inline';
     } else {
       el.textContent = '';
-      const coma = el.nextSibling;
-      if (coma) coma.textContent = '';
+      el.style.display = 'none';
+      const coma = document.getElementById('comaUsuario');
+      if (coma) coma.style.display = 'none';
     }
-  })();
+  }
+
+  actualizarNombreTitulo();
 
   // ---- GALERÍA + PROGRESSIVE BLUR ----
   (function() {
@@ -1238,13 +1212,25 @@
           activeCard = null;
 
           const orderMap = {
-            '0': 'popupTrayectoria',
-            '1': 'popupInventos',
-            '2': 'popupHobbies',
+            '0': null,
+            '1': null,
+            '2': null,
             '3': 'popupQuienSoy'
           };
-          const popupId = orderMap[card.dataset.order];
-          if (popupId) abrirPopup(popupId);
+          const destinoMap = {
+            '0': 'curiosidades.html',
+            '1': 'inventos.html',
+            '2': 'pasatiempos.html',
+            '3': null
+          };
+          const order = card.dataset.order;
+          const popupId = orderMap[order];
+          const destino = destinoMap[order];
+          if (popupId) {
+            abrirPopup(popupId);
+          } else if (destino) {
+            window.location.href = destino;
+          }
         }
       }, { passive: false });
     });
@@ -1262,83 +1248,11 @@
     }, { passive: true });
   })();
   </script>
-  <!-- POPUP 1: Mi trayectoria -->
-  <div class="popup-overlay popup-pregunta hidden" id="popupTrayectoria">
-    <div class="popup-card">
-      <div class="popup-header">
-        <h3 class="popup-title" data-es="Antes de continuar..." data-en="Before you continue...">Antes de continuar...</h3>
-        <p class="popup-desc" data-es="¿Cuál fue el hito que más te marcó en tu vida?" data-en="What was the milestone that marked you most in your life?">¿Cuál fue el hito que más te marcó en tu vida?</p>
-      </div>
-      <div class="popup-content">
-        <label class="popup-label">
-          <input id="inputTrayectoria" class="popup-input" type="text" data-placeholder-es="Tu respuesta..." data-placeholder-en="Your answer..." placeholder="Tu respuesta..." maxlength="100" />
-          <span class="popup-error" id="errorTrayectoria"></span>
-        </label>
-      </div>
-      <div class="popup-footer">
-        <button class="popup-btn" onclick="submitPregunta('popupTrayectoria','inputTrayectoria','errorTrayectoria','curiosidades.html')">
-          <span data-es="Continuar" data-en="Continue">Continuar</span>
-        </button>
-        <button class="popup-btn-skip" onclick="cerrarPopupPregunta('popupTrayectoria','curiosidades.html')">
-          <span data-es="Saltar" data-en="Skip">Saltar</span>
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- POPUP 2: Inventos -->
-  <div class="popup-overlay popup-pregunta hidden" id="popupInventos">
-    <div class="popup-card">
-      <div class="popup-header">
-        <h3 class="popup-title" data-es="Antes de continuar..." data-en="Before you continue...">Antes de continuar...</h3>
-        <p class="popup-desc" data-es="¿Qué es lo más curioso que inventarías o que te gustaría inventar?" data-en="What is the most curious thing you would invent or would like to invent?">¿Qué es lo más curioso que inventarías o que te gustaría inventar?</p>
-      </div>
-      <div class="popup-content">
-        <label class="popup-label">
-          <input id="inputInventos" class="popup-input" type="text" data-placeholder-es="Tu respuesta..." data-placeholder-en="Your answer..." placeholder="Tu respuesta..." maxlength="100" />
-          <span class="popup-error" id="errorInventos"></span>
-        </label>
-      </div>
-      <div class="popup-footer">
-        <button class="popup-btn" onclick="submitPregunta('popupInventos','inputInventos','errorInventos','inventos.html')">
-          <span data-es="Continuar" data-en="Continue">Continuar</span>
-        </button>
-        <button class="popup-btn-skip" onclick="cerrarPopupPregunta('popupInventos','inventos.html')">
-          <span data-es="Saltar" data-en="Skip">Saltar</span>
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- POPUP 3: Hobbies -->
-  <div class="popup-overlay popup-pregunta hidden" id="popupHobbies">
-    <div class="popup-card">
-      <div class="popup-header">
-        <h3 class="popup-title" data-es="Antes de continuar..." data-en="Before you continue...">Antes de continuar...</h3>
-        <p class="popup-desc" data-es="¿Cuál es tu hobby preferido? ¿Qué hacés o hiciste?" data-en="What is your favorite hobby? What do you do or have done?">¿Cuál es tu hobby preferido? ¿Qué hacés o hiciste?</p>
-      </div>
-      <div class="popup-content">
-        <label class="popup-label">
-          <input id="inputHobbies" class="popup-input" type="text" data-placeholder-es="Tu respuesta..." data-placeholder-en="Your answer..." placeholder="Tu respuesta..." maxlength="100" />
-          <span class="popup-error" id="errorHobbies"></span>
-        </label>
-      </div>
-      <div class="popup-footer">
-        <button class="popup-btn" onclick="submitPregunta('popupHobbies','inputHobbies','errorHobbies','pasatiempos.html')">
-          <span data-es="Continuar" data-en="Continue">Continuar</span>
-        </button>
-        <button class="popup-btn-skip" onclick="cerrarPopupPregunta('popupHobbies','pasatiempos.html')">
-          <span data-es="Saltar" data-en="Skip">Saltar</span>
-        </button>
-      </div>
-    </div>
-  </div>
-
   <!-- POPUP 4: Quién soy -->
   <div class="popup-overlay popup-pregunta hidden" id="popupQuienSoy">
     <div class="popup-card">
       <div class="popup-header">
-        <h3 class="popup-title" data-es="Antes de continuar..." data-en="Before you continue...">Antes de continuar...</h3>
+        <h3 class="popup-title" data-es="Una última pregunta" data-en="One quick thing">Una última pregunta</h3>
         <p class="popup-desc" data-es="Dejá tu nombre y email para continuar" data-en="Leave your name and email to continue">Dejá tu nombre y email para continuar</p>
       </div>
       <div class="popup-content">
