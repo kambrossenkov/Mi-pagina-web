@@ -280,6 +280,11 @@
 
   .galeria-accent { color: #4a90d9; }
 
+  .galeria-nombre {
+    color: #ffffff;
+    font-style: italic;
+  }
+
   .galeria-stage {
     position: relative;
     height: 460px;
@@ -636,7 +641,8 @@
     <section class="galeria-section">
 
       <h3 class="galeria-titulo">
-        Bienvenido a mi
+        <span data-es="Bienvenido" data-en="Welcome">Bienvenido</span><span id="nombreUsuario" class="galeria-nombre"></span>,
+        <span data-es="a mi" data-en="to my">a mi</span>
         <span class="galeria-accent"
               data-es="Blog Personal"
               data-en="Personal Blog">
@@ -1060,6 +1066,21 @@
     var btnEn = document.getElementById('btn-en');
     if (btnEs) btnEs.classList.toggle('active', lang === 'es');
     if (btnEn) btnEn.classList.toggle('active', lang === 'en');
+  })();
+
+  // Insertar nombre del usuario
+  (function() {
+    const nombre = localStorage.getItem('userName');
+    const el = document.getElementById('nombreUsuario');
+    if (!el) return;
+    if (nombre) {
+      el.textContent = ' ' + nombre.charAt(0).toUpperCase()
+        + nombre.slice(1).toLowerCase();
+    } else {
+      el.textContent = '';
+      const coma = el.nextSibling;
+      if (coma) coma.textContent = '';
+    }
   })();
 
   // ---- GALERÍA + PROGRESSIVE BLUR ----
