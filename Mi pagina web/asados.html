@@ -215,22 +215,22 @@
   <!-- Header Component -->
   <header class="sticky top-0 z-50 py-4 md:py-6 border-b border-white/10 bg-black/90 backdrop-blur-md transition-colors duration-300">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
-      <a href="index.html" class="flex items-center gap-3">
+      <a href="inicio.html" class="flex items-center gap-3">
         <div class="w-8 h-8 md:w-10 md:h-10 border-2 border-white flex items-center justify-center text-white font-bold text-lg md:text-xl">K</div>
         <h1 class="text-xl md:text-2xl font-bold tracking-tight text-white font-serif hidden sm:block">Ambrossenkov</h1>
       </a>
       <nav class="hidden md:flex gap-8 items-center text-sm font-medium text-white/90">
-        <a href="pasatiempos.html" data-i18n="nav-hobbies" class="hover:text-blue-400 transition-colors">Pasatiempos</a>
-        <a href="curiosidades.html" data-i18n="nav-trajectory" class="hover:text-blue-400 transition-colors">Mi trayectoria</a>
-        <a href="index.html" data-i18n="nav-home" class="hover:text-blue-400 transition-colors">Inicio</a>
-        <a href="inventos.html" data-i18n="nav-inventions" class="hover:text-blue-400 transition-colors">Inventos</a>
+        <a href="inicio.html" data-es="Inicio" data-en="Home" class="hover:text-blue-400 transition-colors">Inicio</a>
+        <a href="curiosidades.html" data-es="Mi trayectoria" data-en="My Journey" class="hover:text-blue-400 transition-colors">Mi trayectoria</a>
+        <a href="inventos.html" data-es="Inventos" data-en="Inventions" class="hover:text-blue-400 transition-colors">Inventos</a>
+        <a href="pasatiempos.html" data-es="Hobbies" data-en="Hobbies" class="hover:text-blue-400 transition-colors">Hobbies</a>
+        <a href="index.html" data-es="Quién soy" data-en="Who I am" class="hover:text-blue-400 transition-colors">Quién soy</a>
+        <a href="asados.html" data-es="Actualmente" data-en="Currently" class="hover:text-blue-400 transition-colors">Actualmente</a>
+        <a href="#contacto" data-es="Contáctame" data-en="Contact me" class="hover:text-blue-400 transition-colors">Contáctame</a>
       </nav>
       <div class="flex items-center gap-4 md:gap-6">
         <button class="lang-btn text-white hover:text-blue-400 transition-colors text-sm uppercase flex-shrink-0" data-lang="es" style="font-weight:700">ES</button>
         <button class="lang-btn text-white hover:text-blue-400 transition-colors text-sm uppercase flex-shrink-0" data-lang="en" style="font-weight:400;opacity:0.35">EN</button>
-        <a href="contacto.html" target="_blank" data-i18n="nav-contact" class="hidden md:block px-6 py-2 rounded-full bg-white text-black font-medium hover:opacity-90 transition-all text-center whitespace-nowrap">
-          Contactarme
-        </a>
         <!-- Hamburger Menu Button -->
         <button id="mobile-menu-btn" onclick="var m=document.getElementById('mobile-menu');m.classList.toggle('hidden');m.classList.toggle('flex');" class="md:hidden text-white hover:text-blue-400 transition-colors focus:outline-none ml-2">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
@@ -239,11 +239,13 @@
     </div>
     <!-- Mobile Navigation -->
     <nav id="mobile-menu" class="hidden flex-col gap-4 px-4 pt-4 pb-6 bg-black border-b border-white/10 md:hidden w-full shadow-lg">
-      <a href="pasatiempos.html" data-i18n="nav-hobbies" class="block text-base font-medium text-white/90 hover:text-blue-400">Pasatiempos</a>
-      <a href="curiosidades.html" data-i18n="nav-trajectory" class="block text-base font-medium text-white/90 hover:text-blue-400">Mi trayectoria</a>
-      <a href="index.html" data-i18n="nav-home" class="block text-base font-medium text-white/90 hover:text-blue-400">Inicio</a>
-      <a href="inventos.html" data-i18n="nav-inventions" class="block text-base font-medium text-white/90 hover:text-blue-400">Inventos</a>
-      <a href="contacto.html" target="_blank" data-i18n="nav-contact" class="block text-base font-medium text-blue-500 hover:text-blue-400 mt-2">Contactarme</a>
+      <a href="inicio.html" data-es="Inicio" data-en="Home" class="block text-base font-medium text-white/90 hover:text-blue-400">Inicio</a>
+      <a href="curiosidades.html" data-es="Mi trayectoria" data-en="My Journey" class="block text-base font-medium text-white/90 hover:text-blue-400">Mi trayectoria</a>
+      <a href="inventos.html" data-es="Inventos" data-en="Inventions" class="block text-base font-medium text-white/90 hover:text-blue-400">Inventos</a>
+      <a href="pasatiempos.html" data-es="Hobbies" data-en="Hobbies" class="block text-base font-medium text-white/90 hover:text-blue-400">Hobbies</a>
+      <a href="index.html" data-es="Quién soy" data-en="Who I am" class="block text-base font-medium text-white/90 hover:text-blue-400">Quién soy</a>
+      <a href="asados.html" data-es="Actualmente" data-en="Currently" class="block text-base font-medium text-white/90 hover:text-blue-400">Actualmente</a>
+      <a href="#contacto" data-es="Contáctame" data-en="Contact me" class="block text-base font-medium text-white/90 hover:text-blue-400">Contáctame</a>
     </nav>
   </header>
 
@@ -336,6 +338,14 @@
   </footer>
 
   <script src="script.js" onerror="console.info('Scripts running')"></script>
+  <script>
+  window.__idiomaPatch = function (lang) {
+    document.querySelectorAll('[data-es]').forEach(function (el) {
+      var val = lang === 'en' ? el.getAttribute('data-en') : el.getAttribute('data-es');
+      if (val !== null) el.textContent = val;
+    });
+  };
+  </script>
   <script src="idioma.js"></script>
 
   <script>

@@ -1,0 +1,1253 @@
+<!DOCTYPE html>
+<html lang="es" class="dark" style="color-scheme:dark;">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <link rel="icon" type="image/jpeg" href="Fotos/firma AK.jfif">
+  <title>Inicio | Perspective</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@700&f[]=general-sans@500&display=swap" rel="stylesheet">
+
+  <style>
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html, body {
+    overflow-x: hidden;
+    max-width: 100%;
+    overscroll-behavior-x: none;
+  }
+
+  html {
+    background: #050a18;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: #050a18;
+    color: #ffffff;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  body > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .fondo-global {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 100%;
+    padding: 0;
+    margin: 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  footer {
+    background-color: rgba(0, 0, 0, 0.80) !important;
+    border-top: 1px solid rgba(255, 255, 255, .15) !important;
+    position: relative;
+    z-index: 1;
+  }
+  footer h3 {
+    font-size: 1.5rem !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    color: #ffffff !important;
+    letter-spacing: 0.02em;
+  }
+  footer a,
+  footer span:not(.sr-only) {
+    color: #ffffff !important;
+  }
+  footer a:hover {
+    color: #60a5fa !important;
+  }
+  footer p {
+    color: #a3a3a3 !important;
+    font-size: 1.125rem !important;
+    font-weight: 500 !important;
+  }
+  footer img.h-16 {
+    height: 4rem !important;
+  }
+
+  .header-inicio {
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 1000;
+    padding: 16px 24px;
+    pointer-events: none;
+  }
+
+  .idioma-burbuja {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 100px;
+    padding: 4px 6px;
+    pointer-events: all;
+  }
+
+  .idioma-btn {
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    padding: 5px 12px;
+    border-radius: 100px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .idioma-btn.active {
+    background: rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+  }
+
+  .idioma-btn:hover:not(.active) {
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  .hero-inicio {
+    min-height: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    overflow: visible !important;
+    background: transparent;
+    box-sizing: border-box;
+  }
+
+  .hero-bg-inicio {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    overflow: hidden !important;
+    z-index: -1 !important;
+    pointer-events: none !important;
+  }
+
+  /* Formas flotantes base */
+  .fs {
+    position: absolute;
+    filter: blur(0px) !important;
+    opacity: 0.8 !important;
+    animation: floatShape 8s ease-in-out infinite;
+  }
+
+  /* Forma 1 — grande, esquina superior izquierda */
+  .fs-1 {
+    width: 130px; height: 130px;
+    background: radial-gradient(circle at 30% 30%, #1e3a6e, #050a18);
+    top: 12%; left: 7%;
+    border-radius: 30%;
+    animation-delay: 0s;
+  }
+
+  /* Forma 2 — mediana, esquina superior derecha */
+  .fs-2 {
+    width: 95px; height: 95px;
+    background: radial-gradient(circle at 40% 30%, #1a4080, #070e22);
+    top: 18%; right: 11%;
+    border-radius: 50%;
+    animation-delay: -2s;
+  }
+
+  /* Forma 3 — pequeña, izquierda medio */
+  .fs-3 {
+    width: 70px; height: 70px;
+    background: radial-gradient(circle at 35% 35%, #0f2d5c, #050a18);
+    top: 45%; left: 4%;
+    border-radius: 20%;
+    animation-delay: -4s;
+  }
+
+  /* Forma 4 — grande, derecha bajo */
+  .fs-4 {
+    width: 110px; height: 110px;
+    background: radial-gradient(circle at 30% 30%, #163260, #060c1e);
+    bottom: 22%; right: 7%;
+    border-radius: 40%;
+    animation-delay: -1s;
+  }
+
+  /* Forma 5 — pequeña, izquierda bajo */
+  .fs-5 {
+    width: 60px; height: 60px;
+    background: radial-gradient(circle at 40% 40%, #1b3d72, #091222);
+    bottom: 30%; left: 14%;
+    border-radius: 50%;
+    animation-delay: -3s;
+  }
+
+  /* Forma 6 — ovalada, derecha medio */
+  .fs-6 {
+    width: 85px; height: 45px;
+    background: radial-gradient(ellipse at 30% 30%, #112850, #050a18);
+    top: 38%; right: 17%;
+    border-radius: 30%;
+    animation-delay: -5s;
+  }
+
+  /* Forma 7 — mini, centro derecha bajo */
+  .fs-7 {
+    width: 50px; height: 50px;
+    background: radial-gradient(circle at 35% 35%, #2a5298, #0a1530);
+    bottom: 42%; right: 24%;
+    border-radius: 15%;
+    animation-delay: -6s;
+  }
+
+  /* Forma 8 — mediana irregular, izquierda bajo-medio */
+  .fs-8 {
+    width: 80px; height: 80px;
+    background: radial-gradient(circle at 30% 40%, #0e2450, #050a18);
+    top: 62%; left: 19%;
+    border-radius: 50% 20%;
+    animation-delay: -2.5s;
+  }
+
+  @keyframes floatShape {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50%       { transform: translateY(-20px) rotate(5deg); }
+  }
+
+  .hero-inicio-content {
+    position: relative;
+    z-index: 5;
+    color: white;
+    pointer-events: auto;
+  }
+
+  .galeria-section {
+    position: relative;
+    z-index: 1;
+    padding: 80px 48px 100px;
+    text-align: center;
+  }
+
+  .galeria-titulo {
+    font-size: clamp(2rem, 5vw, 4rem);
+    font-weight: 700;
+    color: #e8f0fe;
+    margin-bottom: 64px;
+    line-height: 1.1;
+  }
+
+  .galeria-accent { color: #4a90d9; }
+
+  .galeria-stage {
+    position: relative;
+    height: 460px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 48px;
+  }
+
+  .galeria-center {
+    position: relative;
+    width: 300px;
+    height: 300px;
+  }
+
+  .foto-card {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 300px;
+    height: 300px;
+    border-radius: 24px;
+    overflow: hidden;
+    cursor: grab;
+    user-select: none;
+    background: #1a2744;
+  }
+
+  .foto-card:active { cursor: grabbing; }
+
+  .foto-card img {
+    position: absolute;
+    inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    pointer-events: none;
+  }
+
+  .foto-blur-layers {
+    pointer-events: none;
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 100%; height: 75%;
+    opacity: 0;
+    transition: opacity 0.2s ease-out;
+    z-index: 2;
+  }
+
+  .foto-blur-layers .blur-layer {
+    pointer-events: none;
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+  }
+
+  .foto-caption {
+    position: absolute;
+    bottom: 0; left: 0;
+    padding: 14px 16px;
+    opacity: 0;
+    transition: opacity 0.2s ease-out;
+    z-index: 3;
+  }
+
+  .foto-titulo {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #ffffff;
+    margin: 0 0 3px 0;
+  }
+
+  .foto-sub {
+    font-size: 0.78rem;
+    color: #d4d4d4;
+  }
+
+  .foto-card:hover .foto-blur-layers,
+  .foto-card:hover .foto-caption {
+    opacity: 1;
+  }
+
+  @media (max-width: 768px) {
+    .galeria-stage {
+      height: auto !important;
+      overflow-x: auto;
+      overflow-y: visible;
+      justify-content: flex-start;
+      padding: 20px 24px 40px;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+
+    .galeria-stage::-webkit-scrollbar { display: none; }
+
+    .galeria-center {
+      position: static !important;
+      width: max-content !important;
+      height: auto !important;
+      display: flex !important;
+      flex-direction: row !important;
+      gap: 16px !important;
+      align-items: center !important;
+    }
+
+    .foto-card {
+      position: static !important;
+      transform: none !important;
+      width: 200px !important;
+      height: 200px !important;
+      flex-shrink: 0 !important;
+    }
+  }
+
+  .popup-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: rgba(5, 10, 24, 0.85);
+    backdrop-filter: blur(16px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+
+  .popup-overlay.hidden {
+    display: none;
+  }
+
+  .popup-card {
+    width: 100%;
+    max-width: 400px;
+    background: #0f1a2e;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 32px;
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    animation: popupIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  @keyframes popupIn {
+    from { opacity: 0; transform: translateY(24px) scale(0.95); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  .popup-header {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .popup-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #f1f5f9;
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  .popup-desc {
+    font-size: 0.875rem;
+    color: #64748b;
+    margin: 0;
+    line-height: 1.4;
+  }
+
+  .popup-label {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #f1f5f9;
+  }
+
+  .popup-input {
+    height: 42px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.05);
+    padding: 0 14px;
+    font-size: 0.875rem;
+    color: #f1f5f9;
+    outline: none;
+    transition: border-color 0.2s;
+    font-family: inherit;
+  }
+
+  .popup-input::placeholder {
+    color: #475569;
+  }
+
+  .popup-input:focus {
+    border-color: #4a90d9;
+  }
+
+  .popup-input.error {
+    border-color: #ef4444;
+  }
+
+  .popup-error {
+    font-size: 0.78rem;
+    color: #ef4444;
+    min-height: 16px;
+    display: block;
+  }
+
+  .popup-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin-top: 4px;
+  }
+
+  .popup-btn {
+    width: 100%;
+    padding: 10px 16px;
+    border-radius: 100px;
+    background: #f1f5f9;
+    color: #0a0f1e;
+    border: none;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+    font-family: inherit;
+  }
+
+  .popup-btn:hover {
+    background: #e2e8f0;
+    transform: translateY(-1px);
+  }
+
+  .popup-btn:active {
+    transform: translateY(0);
+  }
+
+  .popup-pregunta {
+    position: fixed;
+    inset: 0;
+    z-index: 9998;
+    background: rgba(5, 10, 24, 0.85);
+    backdrop-filter: blur(16px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+
+  .popup-pregunta.hidden { display: none; }
+
+  .popup-btn-skip {
+    width: 100%;
+    padding: 8px 16px;
+    border-radius: 100px;
+    background: transparent;
+    color: #64748b;
+    border: 1px solid rgba(255,255,255,0.1);
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: color 0.2s, border-color 0.2s;
+    font-family: inherit;
+    margin-top: 8px;
+  }
+
+  .popup-btn-skip:hover {
+    color: #94a3b8;
+    border-color: rgba(255,255,255,0.2);
+  }
+  </style>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { serif: ['Georgia', 'serif'] },
+          animation:  { 'spin-slow': 'spin 8s linear infinite' },
+          colors: {
+            background: 'var(--background)', card:    'var(--card)',
+            text:       'var(--text)',        muted:   { DEFAULT: 'var(--muted)', foreground: 'var(--muted-fg)' },
+            accent:     '#3b82f6',            primary: { DEFAULT: 'var(--primary)', foreground: 'var(--primary-fg)' },
+            border:     'var(--border)',      input:   'var(--input)', ring: 'var(--ring)'
+          }
+        }
+      }
+    }
+  </script>
+</head>
+
+<body class="font-sans antialiased selection:bg-blue-600 selection:text-white">
+
+  <div class="popup-overlay" id="popupOverlay">
+    <div class="popup-card">
+      <div class="popup-header">
+        <h3 class="popup-title">Welcome</h3>
+        <p class="popup-desc">Enter your name to access the blog</p>
+      </div>
+      <div class="popup-content">
+        <label class="popup-label">
+          Name
+          <input
+            id="popupNameInput"
+            class="popup-input"
+            type="text"
+            placeholder="Your name"
+            autocomplete="off"
+          />
+          <span class="popup-error" id="popupError"></span>
+        </label>
+      </div>
+      <div class="popup-footer">
+        <button class="popup-btn" id="popupSubmit" onclick="handlePopupSubmit()">
+          Sign Up
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="fondo-global">
+    <div class="fs fs-1"></div>
+    <div class="fs fs-2"></div>
+    <div class="fs fs-3"></div>
+    <div class="fs fs-4"></div>
+    <div class="fs fs-5"></div>
+    <div class="fs fs-6"></div>
+    <div class="fs fs-7"></div>
+    <div class="fs fs-8"></div>
+  </div>
+
+  <header class="header-inicio">
+    <div class="idioma-burbuja">
+      <button class="idioma-btn active" id="btn-es" onclick="setIdioma('es')">ES</button>
+      <button class="idioma-btn" id="btn-en" onclick="setIdioma('en')">EN</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero-inicio">
+      <div class="hero-inicio-content"></div>
+    </section>
+
+    <section class="galeria-section">
+
+      <h3 class="galeria-titulo">
+        Bienvenido a mi
+        <span class="galeria-accent"
+              data-es="Blog Personal"
+              data-en="Personal Blog">
+          Blog Personal
+        </span>
+      </h3>
+
+      <div class="galeria-stage">
+        <div class="galeria-center">
+
+          <div class="foto-card" data-order="0" data-x="-330" data-y="20" data-dir="left"
+               data-titulo="Mi trayectoria" data-sub="Acá explico en siete slides mi vida entera desde que nací hasta hoy, con 25 años."
+               onclick="abrirPopup('popupTrayectoria')">
+            <img src="./Fotos/Foto de portada de blog1.jpg" alt="Mi trayectoria" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; pointer-events:none;">
+            <div class="foto-blur-layers"></div>
+            <div class="foto-caption">
+              <p class="foto-titulo">Mi trayectoria</p>
+              <span class="foto-sub">Acá explico en siete slides mi vida entera desde que nací hasta hoy, con 25 años.</span>
+            </div>
+          </div>
+
+          <div class="foto-card" data-order="1" data-x="-110" data-y="35" data-dir="left"
+               data-titulo="Inventos" data-sub="Acá voy a dejar un registro de todas las cosas tecnológicas que fui desarrollando."
+               onclick="abrirPopup('popupInventos')">
+            <img src="./Fotos/Foto de portada de blog2.jpg" alt="Inventos" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; pointer-events:none;">
+            <div class="foto-blur-layers"></div>
+            <div class="foto-caption">
+              <p class="foto-titulo">Inventos</p>
+              <span class="foto-sub">Acá voy a dejar un registro de todas las cosas tecnológicas que fui desarrollando.</span>
+            </div>
+          </div>
+
+          <div class="foto-card" data-order="2" data-x="110" data-y="15" data-dir="right"
+               data-titulo="Hobbies y pasatiempos" data-sub="Acá muestro los hobbies que más me gustan y que siempre estoy realizando."
+               onclick="abrirPopup('popupHobbies')">
+            <img src="./Fotos/Foto de portada de blog3.jpg" alt="Hobbies y pasatiempos" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; pointer-events:none;">
+            <div class="foto-blur-layers"></div>
+            <div class="foto-caption">
+              <p class="foto-titulo">Hobbies y pasatiempos</p>
+              <span class="foto-sub">Acá muestro los hobbies que más me gustan y que siempre estoy realizando.</span>
+            </div>
+          </div>
+
+          <div class="foto-card" data-order="3" data-x="330" data-y="45" data-dir="right"
+               data-titulo="Quién soy" data-sub="Acá dejo mi perfil profesional y una explicación breve de las cosas en las que fui trabajando."
+               onclick="abrirPopup('popupQuienSoy')">
+            <img src="./Fotos/Foto de portada de blog4.jpg" alt="Quién soy" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; pointer-events:none;">
+            <div class="foto-blur-layers"></div>
+            <div class="foto-caption">
+              <p class="foto-titulo">Quién soy</p>
+              <span class="foto-sub">Acá dejo mi perfil profesional y una explicación breve de las cosas en las que fui trabajando.</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <!-- Footer Component -->
+  <footer class="border-t border-border mt-auto bg-card/50 transition-colors duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex flex-col items-center gap-10">
+      <div class="w-full text-center md:text-left">
+        <h3 data-i18n="ft-contact-title" class="text-2xl font-bold text-text">Contactame</h3>
+      </div>
+      <div class="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16 w-full">
+        <a href="mailto:k.ambrossenkov@gmail.com" class="flex items-center gap-3 text-text hover:text-accent transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+          <span class="font-medium text-lg">k.ambrossenkov@gmail.com</span>
+        </a>
+        <a href="https://www.instagram.com/konsta_ambrossenkov/?__d=1" target="_blank" class="flex items-center gap-3 text-text hover:text-accent transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+          <span class="sr-only">Instagram</span>
+        </a>
+        <a href="https://www.linkedin.com/in/konstantino-ambrossenkov/" target="_blank" class="flex items-center gap-3 text-text hover:text-accent transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
+          <span class="sr-only">LinkedIn</span>
+        </a>
+      </div>
+      <div class="mt-4">
+        <img src="Fotos/firma AK.jfif" alt="Firma AK" class="h-16 object-contain" onerror="this.outerHTML='<span class=\'text-2xl font-serif italic text-text opacity-70\'>Firma AK</span>'" />
+      </div>
+      <div class="pt-8 w-full border-t border-border/50 text-center text-muted-foreground transition-colors duration-300">
+        <p data-i18n="ft-help" class="font-medium text-lg">Estoy para ayudar</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+  var ENDPOINT = 'https://script.google.com/macros/s/AKfycbw9Sj9a45ojREEUICDwt9MsVJ-4NzqO3UgMXA1Vkw0RGjF30BK4SBSmE-oAZEoe-0dlKw/exec';
+
+  // ---- POPUPS POR CARTA ----
+
+  function abrirPopup(id) {
+    var overlay = document.getElementById(id);
+    if (!overlay) return;
+    overlay.classList.remove('hidden');
+    overlay.style.opacity = '0';
+    overlay.style.transition = 'opacity 0.3s ease';
+    setTimeout(function() { overlay.style.opacity = '1'; }, 10);
+
+    var lang = localStorage.getItem('idioma') || 'es';
+    overlay.querySelectorAll('[data-es]').forEach(function(el) {
+      if (el.tagName === 'INPUT') {
+        el.placeholder = lang === 'es'
+          ? el.getAttribute('data-placeholder-es')
+          : el.getAttribute('data-placeholder-en');
+      } else {
+        el.textContent = lang === 'es'
+          ? el.getAttribute('data-es')
+          : el.getAttribute('data-en');
+      }
+    });
+  }
+
+  function cerrarPopupPregunta(id, destino) {
+    var overlay = document.getElementById(id);
+    if (!overlay) return;
+    overlay.style.transition = 'opacity 0.3s ease';
+    overlay.style.opacity = '0';
+    setTimeout(function() {
+      overlay.classList.add('hidden');
+      overlay.style.opacity = '';
+      if (destino) window.location.href = destino;
+    }, 300);
+  }
+
+  async function submitPregunta(popupId, inputId, errorId, destino) {
+    const input = document.getElementById(inputId);
+    const error = document.getElementById(errorId);
+    const lang  = localStorage.getItem('idioma') || 'es';
+    const value = input.value.trim();
+    const soloLetras = /^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ\s]+$/.test(value);
+
+    if (!value) {
+      error.textContent = lang === 'es'
+        ? 'Por favor escribí tu respuesta.'
+        : 'Please write your answer.';
+      input.classList.add('error');
+      return;
+    }
+    if (!soloLetras) {
+      error.textContent = lang === 'es'
+        ? 'Solo se permiten letras, sin números ni símbolos.'
+        : 'Letters only, no numbers or symbols.';
+      input.classList.add('error');
+      return;
+    }
+    if (value.length < 2) {
+      error.textContent = lang === 'es'
+        ? 'La respuesta es muy corta.'
+        : 'Answer is too short.';
+      input.classList.add('error');
+      return;
+    }
+
+    input.classList.remove('error');
+    error.textContent = '';
+
+    const btn = document.querySelector('#' + popupId + ' .popup-btn');
+    if (btn) {
+      btn.disabled = true;
+      btn.textContent = lang === 'es' ? 'Enviando...' : 'Sending...';
+    }
+
+    const ENDPOINT = 'https://script.google.com/macros/s/AKfycbw9Sj9a45ojREEUICDwt9MsVJ-4NzqO3UgMXA1Vkw0RGjF30BK4SBSmE-oAZEoe-0dlKw/exec';
+
+    const tipoMap = {
+      'popupTrayectoria': 'trayectoria',
+      'popupInventos':    'inventos',
+      'popupHobbies':     'hobbies'
+    };
+
+    const nombreGuardado = localStorage.getItem('userName') || 'Anónimo';
+
+    try {
+      await fetch(ENDPOINT, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          tipo: tipoMap[popupId] || 'trayectoria',
+          nombre: nombreGuardado,
+          respuesta: value
+        })
+      });
+    } catch(err) {
+      // Continuar igual aunque falle
+    }
+
+    await new Promise(resolve => setTimeout(resolve, 800));
+
+    cerrarPopupPregunta(popupId, destino);
+  }
+
+  async function submitQuienSoy() {
+    const nombreInput = document.getElementById('inputQuienSoyNombre');
+    const emailInput  = document.getElementById('inputQuienSoyEmail');
+    const errorNombre = document.getElementById('errorQuienSoyNombre');
+    const errorEmail  = document.getElementById('errorQuienSoyEmail');
+    const lang = localStorage.getItem('idioma') || 'es';
+
+    const nombre = nombreInput.value.trim();
+    const email  = emailInput.value.trim();
+    const soloLetras = /^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ\s]+$/.test(nombre);
+    const emailValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+    let hayError = false;
+
+    if (!nombre) {
+      errorNombre.textContent = lang === 'es'
+        ? 'Por favor ingresá tu nombre.'
+        : 'Please enter your name.';
+      nombreInput.classList.add('error');
+      hayError = true;
+    } else if (!soloLetras) {
+      errorNombre.textContent = lang === 'es'
+        ? 'Solo se permiten letras.'
+        : 'Letters only.';
+      nombreInput.classList.add('error');
+      hayError = true;
+    } else {
+      errorNombre.textContent = '';
+      nombreInput.classList.remove('error');
+    }
+
+    if (!email) {
+      errorEmail.textContent = lang === 'es'
+        ? 'Por favor ingresá tu email.'
+        : 'Please enter your email.';
+      emailInput.classList.add('error');
+      hayError = true;
+    } else if (!emailValido) {
+      errorEmail.textContent = lang === 'es'
+        ? 'El email no es válido.'
+        : 'Email is not valid.';
+      emailInput.classList.add('error');
+      hayError = true;
+    } else {
+      errorEmail.textContent = '';
+      emailInput.classList.remove('error');
+    }
+
+    if (hayError) return;
+
+    const btn = document.querySelector('#popupQuienSoy .popup-btn');
+    if (btn) {
+      btn.disabled = true;
+      btn.textContent = lang === 'es' ? 'Enviando...' : 'Sending...';
+    }
+
+    const ENDPOINT = 'https://script.google.com/macros/s/AKfycbw9Sj9a45ojREEUICDwt9MsVJ-4NzqO3UgMXA1Vkw0RGjF30BK4SBSmE-oAZEoe-0dlKw/exec';
+
+    const nombreGuardado = localStorage.getItem('userName') || 'Anónimo';
+
+    try {
+      await fetch(ENDPOINT, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          tipo: 'quiensoy',
+          nombre: nombreGuardado,
+          email: email
+        })
+      });
+    } catch(err) {
+      // Continuar igual aunque falle
+    }
+
+    await new Promise(resolve => setTimeout(resolve, 800));
+
+    cerrarPopupPregunta('popupQuienSoy', 'index.html');
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    [
+      ['inputTrayectoria', 'popupTrayectoria', 'errorTrayectoria', 'curiosidades.html'],
+      ['inputInventos',    'popupInventos',    'errorInventos',    'inventos.html'],
+      ['inputHobbies',     'popupHobbies',     'errorHobbies',     'pasatiempos.html'],
+    ].forEach(function(arr) {
+      var el = document.getElementById(arr[0]);
+      if (el) el.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') submitPregunta(arr[1], arr[0], arr[2], arr[3]);
+      });
+    });
+
+    var elEmail = document.getElementById('inputQuienSoyEmail');
+    if (elEmail) elEmail.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') submitQuienSoy();
+    });
+  });
+
+  // ---- POPUP DE BIENVENIDA ----
+  (function() {
+    var savedName = localStorage.getItem('userName');
+    if (savedName) {
+      var overlay = document.getElementById('popupOverlay');
+      if (overlay) overlay.classList.add('hidden');
+    }
+
+    var input = document.getElementById('popupNameInput');
+    if (input) {
+      input.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') handlePopupSubmit();
+      });
+    }
+  })();
+
+  function handlePopupSubmit() {
+    var input = document.getElementById('popupNameInput');
+    var error = document.getElementById('popupError');
+    var value = input.value.trim();
+
+    var soloLetras = /^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ\s]+$/.test(value);
+
+    if (!value) {
+      error.textContent = 'Please enter your name.';
+      input.classList.add('error');
+      return;
+    }
+
+    if (!soloLetras) {
+      error.textContent = 'Name must contain letters only, no numbers or symbols.';
+      input.classList.add('error');
+      return;
+    }
+
+    if (value.length < 2) {
+      error.textContent = 'Name must be at least 2 characters.';
+      input.classList.add('error');
+      return;
+    }
+
+    input.classList.remove('error');
+    error.textContent = '';
+
+    fetch(ENDPOINT, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ nombre: value })
+    }).catch(function() {});
+
+    localStorage.setItem('userName', value);
+
+    var overlay = document.getElementById('popupOverlay');
+    overlay.style.transition = 'opacity 0.3s ease';
+    overlay.style.opacity = '0';
+    setTimeout(function() {
+      overlay.classList.add('hidden');
+      overlay.style.opacity = '';
+    }, 300);
+  }
+
+  function setIdioma(lang) {
+    localStorage.setItem('idioma', lang);
+    var btnEs = document.getElementById('btn-es');
+    var btnEn = document.getElementById('btn-en');
+    if (btnEs) btnEs.classList.toggle('active', lang === 'es');
+    if (btnEn) btnEn.classList.toggle('active', lang === 'en');
+    if (typeof window.aplicarIdioma === 'function') {
+      window.aplicarIdioma(lang);
+    } else {
+      document.querySelectorAll('[data-es]').forEach(function(el) {
+        el.textContent = lang === 'es' ? el.dataset.es : el.dataset.en;
+      });
+    }
+  }
+  (function() {
+    var lang = localStorage.getItem('idioma') || 'es';
+    var btnEs = document.getElementById('btn-es');
+    var btnEn = document.getElementById('btn-en');
+    if (btnEs) btnEs.classList.toggle('active', lang === 'es');
+    if (btnEn) btnEn.classList.toggle('active', lang === 'en');
+  })();
+
+  // ---- GALERÍA + PROGRESSIVE BLUR ----
+  (function() {
+    const cards = document.querySelectorAll('.foto-card');
+    if (!cards.length) return;
+
+    const zIndexes = [40, 30, 20, 10];
+
+    // Generar capas de progressive blur en cada card
+    cards.forEach(card => {
+      const container = card.querySelector('.foto-blur-layers');
+      if (!container) return;
+      const layers = 8;
+      const blurIntensity = 0.5;
+      const segmentSize = 1 / (layers + 1);
+      for (let i = 0; i < layers; i++) {
+        const stops = [
+          i * segmentSize,
+          (i + 1) * segmentSize,
+          (i + 2) * segmentSize,
+          (i + 3) * segmentSize,
+        ].map((pos, pi) =>
+          `rgba(255,255,255,${pi === 1 || pi === 2 ? 1 : 0}) ${(pos * 100).toFixed(1)}%`
+        );
+        const gradient = `linear-gradient(0deg, ${stops.join(', ')})`;
+        const div = document.createElement('div');
+        div.className = 'blur-layer';
+        div.style.maskImage = gradient;
+        div.style.webkitMaskImage = gradient;
+        div.style.backdropFilter = `blur(${(i * blurIntensity).toFixed(1)}px)`;
+        container.appendChild(div);
+      }
+    });
+
+    // Rotación aleatoria y z-index inicial
+    cards.forEach((card, i) => {
+      const dir = card.dataset.dir === 'left' ? -1 : 1;
+      const rot = (Math.random() * 3 + 1) * dir;
+      card.dataset.baseRot = rot;
+      card.style.zIndex = zIndexes[i];
+      card.style.transform = `rotate(${rot}deg)`;
+    });
+
+    // Despliegue animado con stagger
+    setTimeout(() => {
+      const isMobile = window.innerWidth <= 768;
+      cards.forEach(card => {
+        if (isMobile) {
+          card.style.transform = 'none';
+          card.style.transition = 'none';
+          return;
+        }
+        const order = parseInt(card.dataset.order);
+        const tx = parseInt(card.dataset.x);
+        const ty = parseInt(card.dataset.y);
+        const rot = parseFloat(card.dataset.baseRot);
+        setTimeout(() => {
+          card.style.transition =
+            'transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1)';
+          card.style.transform =
+            `translate(${tx}px, ${ty}px) rotate(${rot}deg)`;
+        }, order * 150);
+      });
+    }, 400);
+
+    // Hover y drag
+    cards.forEach(card => {
+      const baseRot = () => parseFloat(card.dataset.baseRot);
+      const dir = card.dataset.dir === 'left' ? -1 : 1;
+      const order = parseInt(card.dataset.order);
+      const tx = () => parseInt(card.dataset.x);
+      const ty = () => parseInt(card.dataset.y);
+
+      card.addEventListener('mouseenter', () => {
+        if (window.innerWidth <= 768) return;
+        card.style.transition = 'transform 0.15s ease';
+        card.style.transform =
+          `translate(${tx()}px,${ty()}px) rotate(${baseRot() + 2*dir}deg) scale(1.1)`;
+        card.style.zIndex = 9999;
+      });
+
+      card.addEventListener('mouseleave', () => {
+        if (window.innerWidth <= 768) return;
+        if (card._dragging) return;
+        card.style.transition = 'transform 0.25s ease';
+        card.style.transform =
+          `translate(${tx()}px,${ty()}px) rotate(${baseRot()}deg) scale(1)`;
+        card.style.zIndex = zIndexes[order];
+      });
+
+      let isDragging = false;
+      let startMouseX, startMouseY, startTx, startTy;
+
+      card.addEventListener('mousedown', e => {
+        if (window.innerWidth <= 768) return;
+        isDragging = true;
+        card._dragging = true;
+        startMouseX = e.clientX;
+        startMouseY = e.clientY;
+        startTx = tx();
+        startTy = ty();
+        card.style.zIndex = 9999;
+        card.style.transition = 'none';
+        e.preventDefault();
+      });
+
+      document.addEventListener('mousemove', e => {
+        if (!isDragging) return;
+        const dx = e.clientX - startMouseX;
+        const dy = e.clientY - startMouseY;
+        card.style.transform =
+          `translate(${startTx+dx}px,${startTy+dy}px) rotate(${baseRot()}deg) scale(1.05)`;
+      });
+
+      document.addEventListener('mouseup', e => {
+        if (!isDragging) return;
+        isDragging = false;
+        card._dragging = false;
+        card.style.transition =
+          'transform 0.4s cubic-bezier(0.34,1.56,0.64,1)';
+        card.style.transform =
+          `translate(${tx()}px,${ty()}px) rotate(${baseRot()}deg) scale(1)`;
+        card.style.zIndex = zIndexes[order];
+      });
+    });
+  })();
+  </script>
+  <!-- POPUP 1: Mi trayectoria -->
+  <div class="popup-overlay popup-pregunta hidden" id="popupTrayectoria">
+    <div class="popup-card">
+      <div class="popup-header">
+        <h3 class="popup-title" data-es="Antes de continuar..." data-en="Before you continue...">Antes de continuar...</h3>
+        <p class="popup-desc" data-es="¿Cuál fue el hito que más te marcó en tu vida?" data-en="What was the milestone that marked you most in your life?">¿Cuál fue el hito que más te marcó en tu vida?</p>
+      </div>
+      <div class="popup-content">
+        <label class="popup-label">
+          <input id="inputTrayectoria" class="popup-input" type="text" data-placeholder-es="Tu respuesta..." data-placeholder-en="Your answer..." placeholder="Tu respuesta..." />
+          <span class="popup-error" id="errorTrayectoria"></span>
+        </label>
+      </div>
+      <div class="popup-footer">
+        <button class="popup-btn" onclick="submitPregunta('popupTrayectoria','inputTrayectoria','errorTrayectoria','curiosidades.html')">
+          <span data-es="Continuar" data-en="Continue">Continuar</span>
+        </button>
+        <button class="popup-btn-skip" onclick="cerrarPopupPregunta('popupTrayectoria','curiosidades.html')">
+          <span data-es="Saltar" data-en="Skip">Saltar</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- POPUP 2: Inventos -->
+  <div class="popup-overlay popup-pregunta hidden" id="popupInventos">
+    <div class="popup-card">
+      <div class="popup-header">
+        <h3 class="popup-title" data-es="Antes de continuar..." data-en="Before you continue...">Antes de continuar...</h3>
+        <p class="popup-desc" data-es="¿Qué es lo más curioso que inventarías o que te gustaría inventar?" data-en="What is the most curious thing you would invent or would like to invent?">¿Qué es lo más curioso que inventarías o que te gustaría inventar?</p>
+      </div>
+      <div class="popup-content">
+        <label class="popup-label">
+          <input id="inputInventos" class="popup-input" type="text" data-placeholder-es="Tu respuesta..." data-placeholder-en="Your answer..." placeholder="Tu respuesta..." />
+          <span class="popup-error" id="errorInventos"></span>
+        </label>
+      </div>
+      <div class="popup-footer">
+        <button class="popup-btn" onclick="submitPregunta('popupInventos','inputInventos','errorInventos','inventos.html')">
+          <span data-es="Continuar" data-en="Continue">Continuar</span>
+        </button>
+        <button class="popup-btn-skip" onclick="cerrarPopupPregunta('popupInventos','inventos.html')">
+          <span data-es="Saltar" data-en="Skip">Saltar</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- POPUP 3: Hobbies -->
+  <div class="popup-overlay popup-pregunta hidden" id="popupHobbies">
+    <div class="popup-card">
+      <div class="popup-header">
+        <h3 class="popup-title" data-es="Antes de continuar..." data-en="Before you continue...">Antes de continuar...</h3>
+        <p class="popup-desc" data-es="¿Cuál es tu hobby preferido? ¿Qué hacés o hiciste?" data-en="What is your favorite hobby? What do you do or have done?">¿Cuál es tu hobby preferido? ¿Qué hacés o hiciste?</p>
+      </div>
+      <div class="popup-content">
+        <label class="popup-label">
+          <input id="inputHobbies" class="popup-input" type="text" data-placeholder-es="Tu respuesta..." data-placeholder-en="Your answer..." placeholder="Tu respuesta..." />
+          <span class="popup-error" id="errorHobbies"></span>
+        </label>
+      </div>
+      <div class="popup-footer">
+        <button class="popup-btn" onclick="submitPregunta('popupHobbies','inputHobbies','errorHobbies','pasatiempos.html')">
+          <span data-es="Continuar" data-en="Continue">Continuar</span>
+        </button>
+        <button class="popup-btn-skip" onclick="cerrarPopupPregunta('popupHobbies','pasatiempos.html')">
+          <span data-es="Saltar" data-en="Skip">Saltar</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- POPUP 4: Quién soy -->
+  <div class="popup-overlay popup-pregunta hidden" id="popupQuienSoy">
+    <div class="popup-card">
+      <div class="popup-header">
+        <h3 class="popup-title" data-es="Antes de continuar..." data-en="Before you continue...">Antes de continuar...</h3>
+        <p class="popup-desc" data-es="Dejá tu nombre y email para continuar" data-en="Leave your name and email to continue">Dejá tu nombre y email para continuar</p>
+      </div>
+      <div class="popup-content">
+        <label class="popup-label">
+          <span data-es="Nombre" data-en="Name">Nombre</span>
+          <input id="inputQuienSoyNombre" class="popup-input" type="text" data-placeholder-es="Tu nombre..." data-placeholder-en="Your name..." placeholder="Tu nombre..." />
+          <span class="popup-error" id="errorQuienSoyNombre"></span>
+        </label>
+        <label class="popup-label" style="margin-top:12px">
+          <span data-es="Email" data-en="Email">Email</span>
+          <input id="inputQuienSoyEmail" class="popup-input" type="email" data-placeholder-es="tu@email.com" data-placeholder-en="your@email.com" placeholder="tu@email.com" />
+          <span class="popup-error" id="errorQuienSoyEmail"></span>
+        </label>
+      </div>
+      <div class="popup-footer">
+        <button class="popup-btn" onclick="submitQuienSoy()">
+          <span data-es="Continuar" data-en="Continue">Continuar</span>
+        </button>
+        <button class="popup-btn-skip" onclick="cerrarPopupPregunta('popupQuienSoy','index.html')">
+          <span data-es="Saltar" data-en="Skip">Saltar</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js" onerror="console.info('script.js no disponible')"></script>
+  <script>
+  window.__idiomaPatch = function (lang) {
+    document.querySelectorAll('[data-es]').forEach(function (el) {
+      var val = lang === 'en' ? el.getAttribute('data-en') : el.getAttribute('data-es');
+      if (val !== null) el.textContent = val;
+    });
+  };
+  </script>
+  <script src="idioma.js"></script>
+  <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
+  <script defer src="/_vercel/insights/script.js"></script>
+
+</body>
+</html>
