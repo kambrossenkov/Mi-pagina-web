@@ -1140,6 +1140,57 @@
         card.style.zIndex = zIndexes[order] || 10;
       });
     });
+
+    // ---- TOUCH BEHAVIOR MOBILE ----
+    let activeCard = null;
+
+    cards.forEach(card => {
+      card.addEventListener('touchend', function(e) {
+        if (window.innerWidth > 768) return;
+
+        e.preventDefault();
+
+        if (activeCard && activeCard !== card) {
+          activeCard.querySelector('.foto-blur-layers').style.opacity = '0';
+          activeCard.querySelector('.foto-caption').style.opacity = '0';
+          activeCard._touched = false;
+          activeCard = null;
+        }
+
+        if (!card._touched) {
+          card.querySelector('.foto-blur-layers').style.opacity = '1';
+          card.querySelector('.foto-caption').style.opacity = '1';
+          card._touched = true;
+          activeCard = card;
+        } else {
+          card._touched = false;
+          card.querySelector('.foto-blur-layers').style.opacity = '0';
+          card.querySelector('.foto-caption').style.opacity = '0';
+          activeCard = null;
+
+          const orderMap = {
+            '0': 'popupTrayectoria',
+            '1': 'popupInventos',
+            '2': 'popupHobbies',
+            '3': 'popupQuienSoy'
+          };
+          const popupId = orderMap[card.dataset.order];
+          if (popupId) abrirPopup(popupId);
+        }
+      }, { passive: false });
+    });
+
+    document.addEventListener('touchend', function(e) {
+      if (window.innerWidth > 768) return;
+      if (!activeCard) return;
+      const clickedCard = e.target.closest('.foto-card');
+      if (!clickedCard) {
+        activeCard.querySelector('.foto-blur-layers').style.opacity = '0';
+        activeCard.querySelector('.foto-caption').style.opacity = '0';
+        activeCard._touched = false;
+        activeCard = null;
+      }
+    }, { passive: true });
   })();
   </script>
   <!-- POPUP 1: Mi trayectoria -->
